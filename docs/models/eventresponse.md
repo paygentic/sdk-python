@@ -1,0 +1,15 @@
+# EventResponse
+
+
+## Fields
+
+| Field                                                                    | Type                                                                     | Required                                                                 | Description                                                              |
+| ------------------------------------------------------------------------ | ------------------------------------------------------------------------ | ------------------------------------------------------------------------ | ------------------------------------------------------------------------ |
+| `id`                                                                     | *Optional[str]*                                                          | :heavy_minus_sign:                                                       | Server-generated event ID.                                               |
+| `object`                                                                 | [Optional[models.EventResponseObject]](../models/eventresponseobject.md) | :heavy_minus_sign:                                                       | N/A                                                                      |
+| `type`                                                                   | *Optional[str]*                                                          | :heavy_minus_sign:                                                       | N/A                                                                      |
+| `source`                                                                 | *Optional[str]*                                                          | :heavy_minus_sign:                                                       | N/A                                                                      |
+| `subject`                                                                | *Optional[str]*                                                          | :heavy_minus_sign:                                                       | N/A                                                                      |
+| `namespace`                                                              | *Optional[str]*                                                          | :heavy_minus_sign:                                                       | N/A                                                                      |
+| `timestamp`                                                              | [date](https://docs.python.org/3/library/datetime.html#date-objects)     | :heavy_minus_sign:                                                       | N/A                                                                      |
+| `idempotency_key`                                                        | *Optional[str]*                                                          | :heavy_minus_sign:                                                       | N/A                                                                      |

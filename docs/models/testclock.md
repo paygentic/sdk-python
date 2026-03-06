@@ -1,0 +1,15 @@
+# TestClock
+
+
+## Fields
+
+| Field                                                                | Type                                                                 | Required                                                             | Description                                                          |
+| -------------------------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------- |
+| `id`                                                                 | *str*                                                                | :heavy_check_mark:                                                   | Unique identifier for the test clock                                 |
+| `created_at`                                                         | [date](https://docs.python.org/3/library/datetime.html#date-objects) | :heavy_check_mark:                                                   | When the test clock was created                                      |
+| `current_time`                                                       | [date](https://docs.python.org/3/library/datetime.html#date-objects) | :heavy_check_mark:                                                   | The simulated current time of the test clock                         |
+| `deleted_at`                                                         | [date](https://docs.python.org/3/library/datetime.html#date-objects) | :heavy_minus_sign:                                                   | When the test clock was deleted (if applicable)                      |
+| `description`                                                        | *OptionalNullable[str]*                                              | :heavy_minus_sign:                                                   | Description of the test clock's purpose                              |
+| `merchant_id`                                                        | *str*                                                                | :heavy_check_mark:                                                   | The merchant organization that owns this test clock                  |
+| `name`                                                               | *OptionalNullable[str]*                                              | :heavy_minus_sign:                                                   | Name of the test clock                                               |
+| `updated_at`                                                         | [date](https://docs.python.org/3/library/datetime.html#date-objects) | :heavy_check_mark:                                                   | When the test clock was last updated                                 |

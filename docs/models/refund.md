@@ -1,0 +1,11 @@
+# Refund
+
+Refund information for the usage event when it has been refunded. This object is populated by the server and returned in GET and PATCH responses. It cannot be set directly in request bodies.
+
+
+## Fields
+
+| Field                                                                                                                  | Type                                                                                                                   | Required                                                                                                               | Description                                                                                                            |
+| ---------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| `reason`                                                                                                               | *Optional[str]*                                                                                                        | :heavy_minus_sign:                                                                                                     | Reason for the refund. Sample values: 'Customer request', 'Billing error', 'Service credit', 'System error correction' |
+| `refunded_at`                                                                                                          | [date](https://docs.python.org/3/library/datetime.html#date-objects)                                                   | :heavy_minus_sign:                                                                                                     | Timestamp when the usage event was refunded                                                                            |

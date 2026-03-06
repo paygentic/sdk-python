@@ -1,0 +1,11 @@
+# BatchUsageEventResponse
+
+
+## Fields
+
+| Field                                                                              | Type                                                                               | Required                                                                           | Description                                                                        |
+| ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
+| `object`                                                                           | [models.BatchUsageEventResponseObject](../models/batchusageeventresponseobject.md) | :heavy_check_mark:                                                                 | N/A                                                                                |
+| `failed`                                                                           | List[[models.Failed](../models/failed.md)]                                         | :heavy_check_mark:                                                                 | Array of events that failed to be created with error details                       |
+| `successful`                                                                       | List[[models.UsageEvent](../models/usageevent.md)]                                 | :heavy_check_mark:                                                                 | Array of successfully created usage events                                         |
+| `summary`                                                                          | [models.Summary](../models/summary.md)                                             | :heavy_check_mark:                                                                 | Summary of batch processing results                                                |

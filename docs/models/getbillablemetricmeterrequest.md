@@ -1,0 +1,14 @@
+# GetBillableMetricMeterRequest
+
+
+## Fields
+
+| Field                                                                | Type                                                                 | Required                                                             | Description                                                          |
+| -------------------------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------- |
+| `id`                                                                 | *str*                                                                | :heavy_check_mark:                                                   | N/A                                                                  |
+| `from_`                                                              | [date](https://docs.python.org/3/library/datetime.html#date-objects) | :heavy_check_mark:                                                   | Start of query window (ISO 8601)                                     |
+| `to`                                                                 | [date](https://docs.python.org/3/library/datetime.html#date-objects) | :heavy_check_mark:                                                   | End of query window (ISO 8601)                                       |
+| `subject`                                                            | *Optional[str]*                                                      | :heavy_minus_sign:                                                   | Filter by customer/user ID                                           |
+| `window_size`                                                        | [Optional[models.WindowSize]](../models/windowsize.md)               | :heavy_minus_sign:                                                   | Time bucket granularity                                              |
+| `filter_group_by`                                                    | *Optional[str]*                                                      | :heavy_minus_sign:                                                   | JSON-encoded dimension filter (e.g. {"key":"value"})                 |
+| `group_by`                                                           | *Optional[str]*                                                      | :heavy_minus_sign:                                                   | Comma-separated dimension keys                                       |

@@ -1,0 +1,13 @@
+# ListSourceEventsRequest
+
+
+## Fields
+
+| Field                                                                          | Type                                                                           | Required                                                                       | Description                                                                    |
+| ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ |
+| `id`                                                                           | *str*                                                                          | :heavy_check_mark:                                                             | N/A                                                                            |
+| `customer_id`                                                                  | *Optional[str]*                                                                | :heavy_minus_sign:                                                             | Filter events by customer ID                                                   |
+| `limit`                                                                        | *Optional[int]*                                                                | :heavy_minus_sign:                                                             | N/A                                                                            |
+| `offset`                                                                       | *Optional[int]*                                                                | :heavy_minus_sign:                                                             | N/A                                                                            |
+| `status`                                                                       | [Optional[models.ListSourceEventsStatus]](../models/listsourceeventsstatus.md) | :heavy_minus_sign:                                                             | Filter events by status                                                        |
+| `subscription_id`                                                              | *Optional[str]*                                                                | :heavy_minus_sign:                                                             | Filter events by subscription ID                                               |

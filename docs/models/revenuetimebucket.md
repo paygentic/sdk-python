@@ -1,0 +1,10 @@
+# RevenueTimeBucket
+
+
+## Fields
+
+| Field                                                                                   | Type                                                                                    | Required                                                                                | Description                                                                             |
+| --------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
+| `timestamp`                                                                             | [date](https://docs.python.org/3/library/datetime.html#date-objects)                    | :heavy_check_mark:                                                                      | Start time of this bucket                                                               |
+| `subscription_stats`                                                                    | Dict[str, [models.RevenueStats](../models/revenuestats.md)]                             | :heavy_minus_sign:                                                                      | Revenue stats per subscription ID. May include 'other' for subscriptions outside top N. |
+| `total_stats`                                                                           | [Optional[models.RevenueStats]](../models/revenuestats.md)                              | :heavy_minus_sign:                                                                      | N/A                                                                                     |

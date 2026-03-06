@@ -1,0 +1,13 @@
+# ListSubscriptionsRequest
+
+
+## Fields
+
+| Field                                                                            | Type                                                                             | Required                                                                         | Description                                                                      |
+| -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
+| `consumer_id`                                                                    | *Optional[str]*                                                                  | :heavy_minus_sign:                                                               | N/A                                                                              |
+| `customer_id`                                                                    | *Optional[str]*                                                                  | :heavy_minus_sign:                                                               | N/A                                                                              |
+| `limit`                                                                          | *Optional[str]*                                                                  | :heavy_minus_sign:                                                               | Number of subscriptions to return                                                |
+| `merchant_id`                                                                    | *Optional[str]*                                                                  | :heavy_minus_sign:                                                               | N/A                                                                              |
+| `offset`                                                                         | *Optional[str]*                                                                  | :heavy_minus_sign:                                                               | Number of subscriptions to skip                                                  |
+| `status`                                                                         | [Optional[models.ListSubscriptionsStatus]](../models/listsubscriptionsstatus.md) | :heavy_minus_sign:                                                               | N/A                                                                              |

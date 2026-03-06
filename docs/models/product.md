@@ -1,0 +1,15 @@
+# Product
+
+
+## Fields
+
+| Field                                                                | Type                                                                 | Required                                                             | Description                                                          |
+| -------------------------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------- |
+| `id`                                                                 | *str*                                                                | :heavy_check_mark:                                                   | Unique identifier for a product                                      |
+| `object`                                                             | [Optional[models.ProductObject]](../models/productobject.md)         | :heavy_minus_sign:                                                   | N/A                                                                  |
+| `created_at`                                                         | [date](https://docs.python.org/3/library/datetime.html#date-objects) | :heavy_check_mark:                                                   | N/A                                                                  |
+| `description`                                                        | *str*                                                                | :heavy_check_mark:                                                   | N/A                                                                  |
+| `merchant_id`                                                        | *str*                                                                | :heavy_check_mark:                                                   | Unique identifier for an organization                                |
+| `metadata`                                                           | Dict[str, *str*]                                                     | :heavy_check_mark:                                                   | N/A                                                                  |
+| `name`                                                               | *str*                                                                | :heavy_check_mark:                                                   | N/A                                                                  |
+| `updated_at`                                                         | [date](https://docs.python.org/3/library/datetime.html#date-objects) | :heavy_check_mark:                                                   | N/A                                                                  |

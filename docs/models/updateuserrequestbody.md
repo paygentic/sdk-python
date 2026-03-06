@@ -1,0 +1,13 @@
+# UpdateUserRequestBody
+
+
+## Fields
+
+| Field                                                                        | Type                                                                         | Required                                                                     | Description                                                                  |
+| ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| `address`                                                                    | [Optional[models.Address]](../models/address.md)                             | :heavy_minus_sign:                                                           | N/A                                                                          |
+| `date_of_birth`                                                              | [datetime](https://docs.python.org/3/library/datetime.html#datetime-objects) | :heavy_minus_sign:                                                           | The date of birth of the user.                                               |
+| `first_name`                                                                 | *Optional[str]*                                                              | :heavy_minus_sign:                                                           | The first name of the user.                                                  |
+| `last_name`                                                                  | *Optional[str]*                                                              | :heavy_minus_sign:                                                           | The last name of the user.                                                   |
+| `phone`                                                                      | *Optional[str]*                                                              | :heavy_minus_sign:                                                           | The phone number of the user.                                                |
+| `type`                                                                       | [Optional[models.UpdateUserType]](../models/updateusertype.md)               | :heavy_minus_sign:                                                           | Type of entity the user represents.                                          |

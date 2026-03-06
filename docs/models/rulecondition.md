@@ -1,0 +1,12 @@
+# RuleCondition
+
+A single condition that must be met for a rule to trigger auto-acceptance. Multiple conditions in a rule use AND logic.
+
+
+## Fields
+
+| Field                                                      | Type                                                       | Required                                                   | Description                                                |
+| ---------------------------------------------------------- | ---------------------------------------------------------- | ---------------------------------------------------------- | ---------------------------------------------------------- |
+| `operator`                                                 | [models.Operator](../models/operator.md)                   | :heavy_check_mark:                                         | The comparison operator to use                             |
+| `type`                                                     | [models.RuleConditionType](../models/ruleconditiontype.md) | :heavy_check_mark:                                         | The type of field to evaluate                              |
+| `value`                                                    | [models.ValueUnion](../models/valueunion.md)               | :heavy_check_mark:                                         | The value to compare against                               |

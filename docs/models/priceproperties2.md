@@ -1,0 +1,11 @@
+# PriceProperties2
+
+Dynamic pricing model
+
+
+## Fields
+
+| Field                                                                                                                                 | Type                                                                                                                                  | Required                                                                                                                              | Description                                                                                                                           |
+| ------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `max_price`                                                                                                                           | *str*                                                                                                                                 | :heavy_check_mark:                                                                                                                    | Upper limit of the price range for dynamic pricing. Sample values: '0.10' means $0.10 per token for large volumes at peak times       |
+| `min_price`                                                                                                                           | *str*                                                                                                                                 | :heavy_check_mark:                                                                                                                    | Lower limit of the price range for dynamic pricing. Sample values: '0.01' means $0.01 per token for low volumes during off-peak hours |

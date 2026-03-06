@@ -1,0 +1,17 @@
+# Feature
+
+
+## Fields
+
+| Field                                                                | Type                                                                 | Required                                                             | Description                                                          |
+| -------------------------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------- |
+| `id`                                                                 | *str*                                                                | :heavy_check_mark:                                                   | Unique identifier for a feature                                      |
+| `object`                                                             | [Optional[models.FeatureObject]](../models/featureobject.md)         | :heavy_minus_sign:                                                   | N/A                                                                  |
+| `key`                                                                | *str*                                                                | :heavy_check_mark:                                                   | N/A                                                                  |
+| `name`                                                               | *str*                                                                | :heavy_check_mark:                                                   | N/A                                                                  |
+| `type`                                                               | [models.FeatureType](../models/featuretype.md)                       | :heavy_check_mark:                                                   | N/A                                                                  |
+| `merchant_id`                                                        | *str*                                                                | :heavy_check_mark:                                                   | Unique identifier for an organization                                |
+| `product_id`                                                         | *str*                                                                | :heavy_check_mark:                                                   | Unique identifier for a product                                      |
+| `metadata`                                                           | Dict[str, *str*]                                                     | :heavy_check_mark:                                                   | N/A                                                                  |
+| `created_at`                                                         | [date](https://docs.python.org/3/library/datetime.html#date-objects) | :heavy_check_mark:                                                   | Timestamp when the feature was created                               |
+| `updated_at`                                                         | [date](https://docs.python.org/3/library/datetime.html#date-objects) | :heavy_check_mark:                                                   | Timestamp when the feature was last updated                          |
