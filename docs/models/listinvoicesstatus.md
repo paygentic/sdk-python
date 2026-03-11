@@ -12,16 +12,14 @@ value: ListInvoicesStatus = "ACTIVE"
 
 ## Values
 
-| Name             | Value            |
-| ---------------- | ---------------- |
-| `ACTIVE`         | ACTIVE           |
-| `CLOSING`        | CLOSING          |
-| `CLOSED`         | CLOSED           |
-| `CALCULATING`    | CALCULATING      |
-| `DRAFT`          | DRAFT            |
-| `ISSUED`         | ISSUED           |
-| `PAYMENT_FAILED` | PAYMENT_FAILED   |
-| `PAID`           | PAID             |
-| `CANCELLED`      | CANCELLED        |
-| `WRITTEN_OFF`    | WRITTEN_OFF      |
-| `FAILED`         | FAILED           |
+- `"ACTIVE"`
+- `"CLOSING"`
+- `"CLOSED"`
+- `"CALCULATING"`
+- `"DRAFT"`
+- `"ISSUED"`
+- `"PAYMENT_FAILED"`
+- `"PAID"`
+- `"CANCELLED"`
+- `"WRITTEN_OFF"`
+- `"FAILED"`

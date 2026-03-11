@@ -10,6 +10,4 @@ value: SubscriptionPortalObject = "subscriptionPortal"
 
 ## Values
 
-| Name                  | Value                 |
-| --------------------- | --------------------- |
-| `SUBSCRIPTION_PORTAL` | subscriptionPortal    |
+- `"subscriptionPortal"`

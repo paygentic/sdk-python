@@ -10,6 +10,4 @@ value: BatchUsageEventResponseObject = "batchUsageEvents"
 
 ## Values
 
-| Name                 | Value                |
-| -------------------- | -------------------- |
-| `BATCH_USAGE_EVENTS` | batchUsageEvents     |
+- `"batchUsageEvents"`

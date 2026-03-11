@@ -10,6 +10,4 @@ value: SchemasEntitlementObject = "entitlement"
 
 ## Values
 
-| Name          | Value         |
-| ------------- | ------------- |
-| `ENTITLEMENT` | entitlement   |
+- `"entitlement"`

@@ -103,6 +103,10 @@ if TYPE_CHECKING:
         CreateFeatureType,
     )
     from .createfeeop import CreateFeeRequest, CreateFeeRequestTypedDict
+    from .createmanuallineitemrequest import (
+        CreateManualLineItemRequest,
+        CreateManualLineItemRequestTypedDict,
+    )
     from .createpaymentop import (
         CreatePaymentLineItem,
         CreatePaymentLineItemTypedDict,
@@ -308,8 +312,8 @@ if TYPE_CHECKING:
     from .invoicelineitem import (
         EventType,
         InvoiceLineItem,
+        InvoiceLineItemLineItemType,
         InvoiceLineItemTypedDict,
-        LineItemType,
     )
     from .invoicelineitemsresponse import (
         InvoiceLineItemsResponse,
@@ -319,6 +323,19 @@ if TYPE_CHECKING:
         IssueEntitlementRequest,
         IssueEntitlementRequestTypedDict,
     )
+    from .lineitem import (
+        LineItem,
+        LineItemPaymentTerm,
+        LineItemStatus,
+        LineItemType,
+        LineItemTypedDict,
+    )
+    from .lineitemsresponse import (
+        LineItemsResponse,
+        LineItemsResponseObject,
+        LineItemsResponseTypedDict,
+    )
+    from .lineitemssummary import LineItemsSummary, LineItemsSummaryTypedDict
     from .listavailableplansop import (
         ListAvailablePlansPagination,
         ListAvailablePlansPaginationTypedDict,
@@ -386,6 +403,11 @@ if TYPE_CHECKING:
         ListInvoicesResponseTypedDict,
         ListInvoicesStatus,
         NextActionAt,
+    )
+    from .listlineitemsop import (
+        ListLineItemsRequest,
+        ListLineItemsRequestTypedDict,
+        ListLineItemsStatus,
     )
     from .listpaymentsop import (
         ListPaymentsObject,
@@ -466,9 +488,9 @@ if TYPE_CHECKING:
     )
     from .offsetpagination import OffsetPagination, OffsetPaginationTypedDict
     from .payment import (
-        LineItem,
-        LineItemTypedDict,
         Payment,
+        PaymentLineItem,
+        PaymentLineItemTypedDict,
         PaymentObject,
         PaymentStatus,
         PaymentTypedDict,
@@ -756,6 +778,8 @@ __all__ = [
     "CreateFeatureType",
     "CreateFeeRequest",
     "CreateFeeRequestTypedDict",
+    "CreateManualLineItemRequest",
+    "CreateManualLineItemRequestTypedDict",
     "CreatePaymentLineItem",
     "CreatePaymentLineItemTypedDict",
     "CreatePaymentRequest",
@@ -926,6 +950,7 @@ __all__ = [
     "IngestEventRequestTypedDict",
     "Invoice",
     "InvoiceLineItem",
+    "InvoiceLineItemLineItemType",
     "InvoiceLineItemTypedDict",
     "InvoiceLineItemsResponse",
     "InvoiceLineItemsResponseTypedDict",
@@ -937,9 +962,16 @@ __all__ = [
     "Item",
     "ItemTypedDict",
     "LineItem",
+    "LineItemPaymentTerm",
+    "LineItemStatus",
     "LineItemType",
     "LineItemTypedDict",
     "LineItems",
+    "LineItemsResponse",
+    "LineItemsResponseObject",
+    "LineItemsResponseTypedDict",
+    "LineItemsSummary",
+    "LineItemsSummaryTypedDict",
     "LineItemsTypedDict",
     "ListAvailablePlansPagination",
     "ListAvailablePlansPaginationTypedDict",
@@ -992,6 +1024,9 @@ __all__ = [
     "ListInvoicesResponse",
     "ListInvoicesResponseTypedDict",
     "ListInvoicesStatus",
+    "ListLineItemsRequest",
+    "ListLineItemsRequestTypedDict",
+    "ListLineItemsStatus",
     "ListPaymentsObject",
     "ListPaymentsRequest",
     "ListPaymentsRequestTypedDict",
@@ -1056,6 +1091,8 @@ __all__ = [
     "Parameters",
     "ParametersTypedDict",
     "Payment",
+    "PaymentLineItem",
+    "PaymentLineItemTypedDict",
     "PaymentObject",
     "PaymentStatus",
     "PaymentTypedDict",
@@ -1312,6 +1349,8 @@ _dynamic_imports: dict[str, str] = {
     "CreateFeatureType": ".createfeatureop",
     "CreateFeeRequest": ".createfeeop",
     "CreateFeeRequestTypedDict": ".createfeeop",
+    "CreateManualLineItemRequest": ".createmanuallineitemrequest",
+    "CreateManualLineItemRequestTypedDict": ".createmanuallineitemrequest",
     "CreatePaymentLineItem": ".createpaymentop",
     "CreatePaymentLineItemTypedDict": ".createpaymentop",
     "CreatePaymentRequest": ".createpaymentop",
@@ -1491,12 +1530,22 @@ _dynamic_imports: dict[str, str] = {
     "TaxTypedDict": ".invoice",
     "EventType": ".invoicelineitem",
     "InvoiceLineItem": ".invoicelineitem",
+    "InvoiceLineItemLineItemType": ".invoicelineitem",
     "InvoiceLineItemTypedDict": ".invoicelineitem",
-    "LineItemType": ".invoicelineitem",
     "InvoiceLineItemsResponse": ".invoicelineitemsresponse",
     "InvoiceLineItemsResponseTypedDict": ".invoicelineitemsresponse",
     "IssueEntitlementRequest": ".issueentitlementrequest",
     "IssueEntitlementRequestTypedDict": ".issueentitlementrequest",
+    "LineItem": ".lineitem",
+    "LineItemPaymentTerm": ".lineitem",
+    "LineItemStatus": ".lineitem",
+    "LineItemType": ".lineitem",
+    "LineItemTypedDict": ".lineitem",
+    "LineItemsResponse": ".lineitemsresponse",
+    "LineItemsResponseObject": ".lineitemsresponse",
+    "LineItemsResponseTypedDict": ".lineitemsresponse",
+    "LineItemsSummary": ".lineitemssummary",
+    "LineItemsSummaryTypedDict": ".lineitemssummary",
     "ListAvailablePlansPagination": ".listavailableplansop",
     "ListAvailablePlansPaginationTypedDict": ".listavailableplansop",
     "ListAvailablePlansRequest": ".listavailableplansop",
@@ -1549,6 +1598,9 @@ _dynamic_imports: dict[str, str] = {
     "ListInvoicesResponseTypedDict": ".listinvoicesop",
     "ListInvoicesStatus": ".listinvoicesop",
     "NextActionAt": ".listinvoicesop",
+    "ListLineItemsRequest": ".listlineitemsop",
+    "ListLineItemsRequestTypedDict": ".listlineitemsop",
+    "ListLineItemsStatus": ".listlineitemsop",
     "ListPaymentsObject": ".listpaymentsop",
     "ListPaymentsRequest": ".listpaymentsop",
     "ListPaymentsRequestTypedDict": ".listpaymentsop",
@@ -1606,9 +1658,9 @@ _dynamic_imports: dict[str, str] = {
     "MeteredEntitlementDetailTypedDict": ".meteredentitlementdetail",
     "OffsetPagination": ".offsetpagination",
     "OffsetPaginationTypedDict": ".offsetpagination",
-    "LineItem": ".payment",
-    "LineItemTypedDict": ".payment",
     "Payment": ".payment",
+    "PaymentLineItem": ".payment",
+    "PaymentLineItemTypedDict": ".payment",
     "PaymentObject": ".payment",
     "PaymentStatus": ".payment",
     "PaymentTypedDict": ".payment",

@@ -10,6 +10,4 @@ value: SubscriptionObject = "subscription"
 
 ## Values
 
-| Name           | Value          |
-| -------------- | -------------- |
-| `SUBSCRIPTION` | subscription   |
+- `"subscription"`

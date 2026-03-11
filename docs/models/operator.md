@@ -14,11 +14,11 @@ value: Operator = "equals"
 
 ## Values
 
-| Name           | Value          |
-| -------------- | -------------- |
-| `EQUALS`       | equals         |
-| `CONTAINS`     | contains       |
-| `BETWEEN`      | between        |
-| `GREATER_THAN` | greaterThan    |
-| `LESS_THAN`    | lessThan       |
-| `DOMAIN`       | domain         |
+This is an open enum. Unrecognized values will not fail type checks.
+
+- `"equals"`
+- `"contains"`
+- `"between"`
+- `"greaterThan"`
+- `"lessThan"`
+- `"domain"`

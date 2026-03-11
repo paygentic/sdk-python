@@ -12,9 +12,7 @@ value: ListSourceEventsStatus = "pending"
 
 ## Values
 
-| Name        | Value       |
-| ----------- | ----------- |
-| `PENDING`   | pending     |
-| `PROCESSED` | processed   |
-| `FAILED`    | failed      |
-| `REJECTED`  | rejected    |
+- `"pending"`
+- `"processed"`
+- `"failed"`
+- `"rejected"`

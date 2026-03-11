@@ -10,6 +10,4 @@ value: UsageResponseObject = "meter"
 
 ## Values
 
-| Name    | Value   |
-| ------- | ------- |
-| `METER` | meter   |
+- `"meter"`

@@ -12,8 +12,6 @@ value: UpdatePricePaymentTerm = "instant"
 
 ## Values
 
-| Name         | Value        |
-| ------------ | ------------ |
-| `INSTANT`    | instant      |
-| `IN_ARREARS` | in_arrears   |
-| `IN_ADVANCE` | in_advance   |
+- `"instant"`
+- `"in_arrears"`
+- `"in_advance"`

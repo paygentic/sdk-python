@@ -12,7 +12,7 @@ value: UserType = "COMPANY"
 
 ## Values
 
-| Name         | Value        |
-| ------------ | ------------ |
-| `COMPANY`    | COMPANY      |
-| `INDIVIDUAL` | INDIVIDUAL   |
+This is an open enum. Unrecognized values will not fail type checks.
+
+- `"COMPANY"`
+- `"INDIVIDUAL"`

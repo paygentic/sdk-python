@@ -10,6 +10,4 @@ value: PriceObject = "price"
 
 ## Values
 
-| Name    | Value   |
-| ------- | ------- |
-| `PRICE` | price   |
+- `"price"`

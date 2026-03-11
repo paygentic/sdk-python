@@ -10,6 +10,4 @@ value: ListBillableMetricsObject = "list"
 
 ## Values
 
-| Name   | Value  |
-| ------ | ------ |
-| `LIST` | list   |
+- `"list"`

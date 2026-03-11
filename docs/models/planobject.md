@@ -10,6 +10,4 @@ value: PlanObject = "plan"
 
 ## Values
 
-| Name   | Value  |
-| ------ | ------ |
-| `PLAN` | plan   |
+- `"plan"`

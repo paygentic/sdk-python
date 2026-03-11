@@ -12,7 +12,5 @@ value: UpdateUserType = "COMPANY"
 
 ## Values
 
-| Name         | Value        |
-| ------------ | ------------ |
-| `COMPANY`    | COMPANY      |
-| `INDIVIDUAL` | INDIVIDUAL   |
+- `"COMPANY"`
+- `"INDIVIDUAL"`

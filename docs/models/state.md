@@ -12,8 +12,8 @@ value: State = "invited"
 
 ## Values
 
-| Name        | Value       |
-| ----------- | ----------- |
-| `INVITED`   | invited     |
-| `ACTIVE`    | active      |
-| `SUSPENDED` | suspended   |
+This is an open enum. Unrecognized values will not fail type checks.
+
+- `"invited"`
+- `"active"`
+- `"suspended"`

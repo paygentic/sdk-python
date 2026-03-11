@@ -10,6 +10,4 @@ value: EventResponseObject = "event"
 
 ## Values
 
-| Name    | Value   |
-| ------- | ------- |
-| `EVENT` | event   |
+- `"event"`

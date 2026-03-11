@@ -12,7 +12,5 @@ value: UpdatePlanTaxBehavior = "exclusive"
 
 ## Values
 
-| Name        | Value       |
-| ----------- | ----------- |
-| `EXCLUSIVE` | exclusive   |
-| `INCLUSIVE` | inclusive   |
+- `"exclusive"`
+- `"inclusive"`

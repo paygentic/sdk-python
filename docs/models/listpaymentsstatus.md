@@ -12,10 +12,8 @@ value: ListPaymentsStatus = "pending"
 
 ## Values
 
-| Name         | Value        |
-| ------------ | ------------ |
-| `PENDING`    | pending      |
-| `PROCESSING` | processing   |
-| `COMPLETED`  | completed    |
-| `EXPIRED`    | expired      |
-| `CANCELLED`  | cancelled    |
+- `"pending"`
+- `"processing"`
+- `"completed"`
+- `"expired"`
+- `"cancelled"`

@@ -12,9 +12,7 @@ value: UpdatePriceModel = "standard"
 
 ## Values
 
-| Name         | Value        |
-| ------------ | ------------ |
-| `STANDARD`   | standard     |
-| `DYNAMIC`    | dynamic      |
-| `VOLUME`     | volume       |
-| `PERCENTAGE` | percentage   |
+- `"standard"`
+- `"dynamic"`
+- `"volume"`
+- `"percentage"`

@@ -12,8 +12,8 @@ value: SchemasPricePaymentTerm = "instant"
 
 ## Values
 
-| Name         | Value        |
-| ------------ | ------------ |
-| `INSTANT`    | instant      |
-| `IN_ARREARS` | in_arrears   |
-| `IN_ADVANCE` | in_advance   |
+This is an open enum. Unrecognized values will not fail type checks.
+
+- `"instant"`
+- `"in_arrears"`
+- `"in_advance"`

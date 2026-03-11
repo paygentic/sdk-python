@@ -10,6 +10,4 @@ value: DeleteCustomerError = "conflict"
 
 ## Values
 
-| Name       | Value      |
-| ---------- | ---------- |
-| `CONFLICT` | conflict   |
+- `"conflict"`

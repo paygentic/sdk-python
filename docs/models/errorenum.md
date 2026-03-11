@@ -12,6 +12,4 @@ value: ErrorEnum = "validation_error"
 
 ## Values
 
-| Name               | Value              |
-| ------------------ | ------------------ |
-| `VALIDATION_ERROR` | validation_error   |
+- `"validation_error"`

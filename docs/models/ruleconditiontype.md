@@ -14,9 +14,9 @@ value: RuleConditionType = "date"
 
 ## Values
 
-| Name             | Value            |
-| ---------------- | ---------------- |
-| `DATE`           | date             |
-| `CUSTOMER_NAME`  | customerName     |
-| `CUSTOMER_EMAIL` | customerEmail    |
-| `AMOUNT`         | amount           |
+This is an open enum. Unrecognized values will not fail type checks.
+
+- `"date"`
+- `"customerName"`
+- `"customerEmail"`
+- `"amount"`

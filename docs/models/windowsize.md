@@ -12,8 +12,6 @@ value: WindowSize = "MINUTE"
 
 ## Values
 
-| Name     | Value    |
-| -------- | -------- |
-| `MINUTE` | MINUTE   |
-| `HOUR`   | HOUR     |
-| `DAY`    | DAY      |
+- `"MINUTE"`
+- `"HOUR"`
+- `"DAY"`

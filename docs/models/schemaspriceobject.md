@@ -10,6 +10,4 @@ value: SchemasPriceObject = "price"
 
 ## Values
 
-| Name    | Value   |
-| ------- | ------- |
-| `PRICE` | price   |
+- `"price"`

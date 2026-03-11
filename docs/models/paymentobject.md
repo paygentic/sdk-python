@@ -10,6 +10,4 @@ value: PaymentObject = "payment"
 
 ## Values
 
-| Name      | Value     |
-| --------- | --------- |
-| `PAYMENT` | payment   |
+- `"payment"`

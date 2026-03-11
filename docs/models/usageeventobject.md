@@ -10,6 +10,4 @@ value: UsageEventObject = "usageEvent"
 
 ## Values
 
-| Name          | Value         |
-| ------------- | ------------- |
-| `USAGE_EVENT` | usageEvent    |
+- `"usageEvent"`

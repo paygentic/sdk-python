@@ -10,6 +10,4 @@ value: BillableMetricObject = "billableMetric"
 
 ## Values
 
-| Name              | Value             |
-| ----------------- | ----------------- |
-| `BILLABLE_METRIC` | billableMetric    |
+- `"billableMetric"`

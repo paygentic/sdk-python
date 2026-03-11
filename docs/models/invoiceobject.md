@@ -12,6 +12,4 @@ value: InvoiceObject = "invoice"
 
 ## Values
 
-| Name      | Value     |
-| --------- | --------- |
-| `INVOICE` | invoice   |
+- `"invoice"`

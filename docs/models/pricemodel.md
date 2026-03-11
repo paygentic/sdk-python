@@ -12,9 +12,9 @@ value: PriceModel = "standard"
 
 ## Values
 
-| Name         | Value        |
-| ------------ | ------------ |
-| `STANDARD`   | standard     |
-| `DYNAMIC`    | dynamic      |
-| `VOLUME`     | volume       |
-| `PERCENTAGE` | percentage   |
+This is an open enum. Unrecognized values will not fail type checks.
+
+- `"standard"`
+- `"dynamic"`
+- `"volume"`
+- `"percentage"`

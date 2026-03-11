@@ -10,6 +10,4 @@ value: FeatureObject = "feature"
 
 ## Values
 
-| Name      | Value     |
-| --------- | --------- |
-| `FEATURE` | feature   |
+- `"feature"`

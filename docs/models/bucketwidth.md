@@ -12,8 +12,6 @@ value: BucketWidth = "minute"
 
 ## Values
 
-| Name     | Value    |
-| -------- | -------- |
-| `MINUTE` | minute   |
-| `HOUR`   | hour     |
-| `DAY`    | day      |
+- `"minute"`
+- `"hour"`
+- `"day"`

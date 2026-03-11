@@ -14,8 +14,8 @@ value: SchemasEntitlementStatus = "active"
 
 ## Values
 
-| Name       | Value      |
-| ---------- | ---------- |
-| `ACTIVE`   | active     |
-| `CANCELED` | canceled   |
-| `EXPIRED`  | expired    |
+This is an open enum. Unrecognized values will not fail type checks.
+
+- `"active"`
+- `"canceled"`
+- `"expired"`

@@ -12,9 +12,7 @@ value: Currency = "USD"
 
 ## Values
 
-| Name  | Value |
-| ----- | ----- |
-| `USD` | USD   |
-| `EUR` | EUR   |
-| `GBP` | GBP   |
-| `AUD` | AUD   |
+- `"USD"`
+- `"EUR"`
+- `"GBP"`
+- `"AUD"`

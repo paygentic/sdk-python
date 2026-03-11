@@ -12,7 +12,7 @@ value: ProcessingMode = "automatic"
 
 ## Values
 
-| Name        | Value       |
-| ----------- | ----------- |
-| `AUTOMATIC` | automatic   |
-| `MANUAL`    | manual      |
+This is an open enum. Unrecognized values will not fail type checks.
+
+- `"automatic"`
+- `"manual"`

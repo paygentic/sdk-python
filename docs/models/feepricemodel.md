@@ -12,6 +12,4 @@ value: FeePriceModel = "standard"
 
 ## Values
 
-| Name       | Value      |
-| ---------- | ---------- |
-| `STANDARD` | standard   |
+- `"standard"`

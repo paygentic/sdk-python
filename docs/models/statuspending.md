@@ -12,6 +12,4 @@ value: StatusPending = "pending"
 
 ## Values
 
-| Name      | Value     |
-| --------- | --------- |
-| `PENDING` | pending   |
+- `"pending"`

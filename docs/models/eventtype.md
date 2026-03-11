@@ -14,7 +14,7 @@ value: EventType = "usage"
 
 ## Values
 
-| Name    | Value   |
-| ------- | ------- |
-| `USAGE` | usage   |
-| `FEE`   | fee     |
+This is an open enum. Unrecognized values will not fail type checks.
+
+- `"usage"`
+- `"fee"`

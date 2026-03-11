@@ -12,6 +12,4 @@ value: Function = "linear"
 
 ## Values
 
-| Name     | Value    |
-| -------- | -------- |
-| `LINEAR` | linear   |
+- `"linear"`

@@ -12,13 +12,13 @@ from typing_extensions import Annotated, NotRequired, TypedDict
 PaymentObject = Literal["payment",]
 
 
-class LineItemTypedDict(TypedDict):
+class PaymentLineItemTypedDict(TypedDict):
     description: NotRequired[str]
     amount: NotRequired[str]
     quantity: NotRequired[int]
 
 
-class LineItem(BaseModel):
+class PaymentLineItem(BaseModel):
     description: Optional[str] = None
 
     amount: Optional[str] = None
@@ -33,7 +33,7 @@ class LineItem(BaseModel):
 
         for n, f in type(self).model_fields.items():
             k = f.alias or n
-            val = serialized.get(k)
+            val = serialized.get(k, serialized.get(n))
 
             if val != UNSET_SENTINEL:
                 if val is not None or k not in optional_fields:
@@ -77,7 +77,7 @@ class PaymentTypedDict(TypedDict):
     r"""Merchant-defined reference for this payment."""
     metadata: NotRequired[Dict[str, str]]
     r"""Merchant-provided key-value metadata."""
-    line_items: NotRequired[List[LineItemTypedDict]]
+    line_items: NotRequired[List[PaymentLineItemTypedDict]]
     r"""Breakdown of what the customer is being charged for."""
     expires_at: NotRequired[datetime]
     r"""When the payment expires."""
@@ -119,7 +119,7 @@ class Payment(BaseModel):
     r"""Merchant-provided key-value metadata."""
 
     line_items: Annotated[
-        Optional[List[LineItem]], pydantic.Field(alias="lineItems")
+        Optional[List[PaymentLineItem]], pydantic.Field(alias="lineItems")
     ] = None
     r"""Breakdown of what the customer is being charged for."""
 
@@ -145,7 +145,7 @@ class Payment(BaseModel):
 
         for n, f in type(self).model_fields.items():
             k = f.alias or n
-            val = serialized.get(k)
+            val = serialized.get(k, serialized.get(n))
 
             if val != UNSET_SENTINEL:
                 if val is not None or k not in optional_fields:

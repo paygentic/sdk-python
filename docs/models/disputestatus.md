@@ -14,8 +14,8 @@ value: DisputeStatus = "pending"
 
 ## Values
 
-| Name       | Value      |
-| ---------- | ---------- |
-| `PENDING`  | pending    |
-| `ACCEPTED` | accepted   |
-| `DECLINED` | declined   |
+This is an open enum. Unrecognized values will not fail type checks.
+
+- `"pending"`
+- `"accepted"`
+- `"declined"`

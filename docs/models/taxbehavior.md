@@ -14,7 +14,7 @@ value: TaxBehavior = "exclusive"
 
 ## Values
 
-| Name        | Value       |
-| ----------- | ----------- |
-| `EXCLUSIVE` | exclusive   |
-| `INCLUSIVE` | inclusive   |
+This is an open enum. Unrecognized values will not fail type checks.
+
+- `"exclusive"`
+- `"inclusive"`

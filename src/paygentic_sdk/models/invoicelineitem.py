@@ -17,7 +17,7 @@ EventType = Union[
 r"""Type of event: 'usage' for billable metric events, 'fee' for fee events"""
 
 
-LineItemType = Union[
+InvoiceLineItemLineItemType = Union[
     Literal[
         "charge",
         "refund",
@@ -38,7 +38,7 @@ class InvoiceLineItemTypedDict(TypedDict):
     r"""HOTFIX: Mirrors eventSourceId for backward compatibility"""
     invoice_display_name: str
     r"""Display name for this line item on invoices"""
-    line_item_type: LineItemType
+    line_item_type: InvoiceLineItemLineItemType
     r"""Type of line item: 'charge' for regular billing, 'refund' for refunded items (amounts are negated)"""
     meter_event_id: str
     r"""The meter event ID (usage events only)"""
@@ -78,7 +78,9 @@ class InvoiceLineItem(BaseModel):
     invoice_display_name: Annotated[str, pydantic.Field(alias="invoiceDisplayName")]
     r"""Display name for this line item on invoices"""
 
-    line_item_type: Annotated[LineItemType, pydantic.Field(alias="lineItemType")]
+    line_item_type: Annotated[
+        InvoiceLineItemLineItemType, pydantic.Field(alias="lineItemType")
+    ]
     r"""Type of line item: 'charge' for regular billing, 'refund' for refunded items (amounts are negated)"""
 
     meter_event_id: Annotated[str, pydantic.Field(alias="meterEventId")]

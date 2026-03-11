@@ -10,6 +10,4 @@ value: SourceType = "stripe_revenue"
 
 ## Values
 
-| Name             | Value            |
-| ---------------- | ---------------- |
-| `STRIPE_REVENUE` | stripe_revenue   |
+- `"stripe_revenue"`

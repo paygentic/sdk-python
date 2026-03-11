@@ -1,6 +1,6 @@
 # LineItemType
 
-Type of line item: 'charge' for regular billing, 'refund' for refunded items (amounts are negated)
+The type of line item
 
 ## Example Usage
 
@@ -8,13 +8,14 @@ Type of line item: 'charge' for regular billing, 'refund' for refunded items (am
 from paygentic_sdk.models import LineItemType
 
 # Open enum: unrecognized values are captured as UnrecognizedStr
-value: LineItemType = "charge"
+value: LineItemType = "fee"
 ```
 
 
 ## Values
 
-| Name     | Value    |
-| -------- | -------- |
-| `CHARGE` | charge   |
-| `REFUND` | refund   |
+This is an open enum. Unrecognized values will not fail type checks.
+
+- `"fee"`
+- `"metered"`
+- `"manual"`

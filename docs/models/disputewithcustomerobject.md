@@ -10,6 +10,4 @@ value: DisputeWithCustomerObject = "dispute"
 
 ## Values
 
-| Name      | Value     |
-| --------- | --------- |
-| `DISPUTE` | dispute   |
+- `"dispute"`

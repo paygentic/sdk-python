@@ -10,6 +10,4 @@ value: ProductObject = "product"
 
 ## Values
 
-| Name      | Value     |
-| --------- | --------- |
-| `PRODUCT` | product   |
+- `"product"`

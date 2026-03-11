@@ -12,6 +12,4 @@ value: NextActionAt = "ready"
 
 ## Values
 
-| Name    | Value   |
-| ------- | ------- |
-| `READY` | ready   |
+- `"ready"`

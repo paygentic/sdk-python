@@ -10,7 +10,5 @@ value: ListSubscriptionsStatus = "active"
 
 ## Values
 
-| Name         | Value        |
-| ------------ | ------------ |
-| `ACTIVE`     | active       |
-| `TERMINATED` | terminated   |
+- `"active"`
+- `"terminated"`

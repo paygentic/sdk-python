@@ -12,9 +12,9 @@ value: DeleteCustomerType = "subscriptions"
 
 ## Values
 
-| Name            | Value           |
-| --------------- | --------------- |
-| `SUBSCRIPTIONS` | subscriptions   |
-| `INVOICES`      | invoices        |
-| `DISPUTES`      | disputes        |
-| `ENTITLEMENTS`  | entitlements    |
+This is an open enum. Unrecognized values will not fail type checks.
+
+- `"subscriptions"`
+- `"invoices"`
+- `"disputes"`
+- `"entitlements"`

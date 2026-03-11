@@ -14,10 +14,10 @@ value: PaymentStatus = "pending"
 
 ## Values
 
-| Name         | Value        |
-| ------------ | ------------ |
-| `PENDING`    | pending      |
-| `PROCESSING` | processing   |
-| `COMPLETED`  | completed    |
-| `EXPIRED`    | expired      |
-| `CANCELLED`  | cancelled    |
+This is an open enum. Unrecognized values will not fail type checks.
+
+- `"pending"`
+- `"processing"`
+- `"completed"`
+- `"expired"`
+- `"cancelled"`

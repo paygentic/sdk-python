@@ -10,6 +10,4 @@ value: SourceObject = "source"
 
 ## Values
 
-| Name     | Value    |
-| -------- | -------- |
-| `SOURCE` | source   |
+- `"source"`

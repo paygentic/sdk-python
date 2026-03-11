@@ -12,9 +12,9 @@ value: SourceEventStatus = "pending"
 
 ## Values
 
-| Name        | Value       |
-| ----------- | ----------- |
-| `PENDING`   | pending     |
-| `PROCESSED` | processed   |
-| `FAILED`    | failed      |
-| `REJECTED`  | rejected    |
+This is an open enum. Unrecognized values will not fail type checks.
+
+- `"pending"`
+- `"processed"`
+- `"failed"`
+- `"rejected"`

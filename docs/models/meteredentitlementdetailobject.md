@@ -10,6 +10,4 @@ value: MeteredEntitlementDetailObject = "entitlement"
 
 ## Values
 
-| Name          | Value         |
-| ------------- | ------------- |
-| `ENTITLEMENT` | entitlement   |
+- `"entitlement"`

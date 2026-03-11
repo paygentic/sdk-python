@@ -14,7 +14,7 @@ value: FeePricePaymentTerm = "in_advance"
 
 ## Values
 
-| Name         | Value        |
-| ------------ | ------------ |
-| `IN_ADVANCE` | in_advance   |
-| `IN_ARREARS` | in_arrears   |
+This is an open enum. Unrecognized values will not fail type checks.
+
+- `"in_advance"`
+- `"in_arrears"`

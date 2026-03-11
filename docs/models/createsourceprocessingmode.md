@@ -12,7 +12,5 @@ value: CreateSourceProcessingMode = "automatic"
 
 ## Values
 
-| Name        | Value       |
-| ----------- | ----------- |
-| `AUTOMATIC` | automatic   |
-| `MANUAL`    | manual      |
+- `"automatic"`
+- `"manual"`

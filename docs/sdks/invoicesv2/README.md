@@ -7,6 +7,8 @@ Invoice V2 operations supporting billing cycles organized by time periods. Warni
 ### Available Operations
 
 * [list](#list) - List
+* [list_line_items](#list_line_items) - List Line Items
+* [create_line_item](#create_line_item) - Create Manual Line Item
 * [get](#get) - Get
 * [get_line_items](#get_line_items) - Get Line Items
 
@@ -49,6 +51,104 @@ with Paygentic(
 | Error Type                   | Status Code                  | Content Type                 |
 | ---------------------------- | ---------------------------- | ---------------------------- |
 | errors.Error                 | 403                          | application/json             |
+| errors.Error                 | 500                          | application/json             |
+| errors.PaygenticDefaultError | 4XX, 5XX                     | \*/\*                        |
+
+## list_line_items
+
+List pending and invoiced line items for a subscription from the billing database. Returns exact fee amounts and estimated metered charges.
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="listLineItems" method="get" path="/v2/invoices/lineItems" -->
+```python
+import os
+from paygentic_sdk import Paygentic
+
+
+with Paygentic(
+    bearer_auth=os.getenv("PAYGENTIC_BEARER_AUTH", ""),
+) as paygentic:
+
+    res = paygentic.invoices_v2.list_line_items(request={})
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `request`                                                           | [models.ListLineItemsRequest](../../models/listlineitemsrequest.md) | :heavy_check_mark:                                                  | The request object to use for the request.                          |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+
+### Response
+
+**[models.LineItemsResponse](../../models/lineitemsresponse.md)**
+
+### Errors
+
+| Error Type                   | Status Code                  | Content Type                 |
+| ---------------------------- | ---------------------------- | ---------------------------- |
+| errors.Error                 | 400                          | application/json             |
+| errors.ValidationError       | 400                          | application/json             |
+| errors.Error                 | 401, 403, 404                | application/json             |
+| errors.Error                 | 500                          | application/json             |
+| errors.PaygenticDefaultError | 4XX, 5XX                     | \*/\*                        |
+
+## create_line_item
+
+Create a manual line item for a billing v1 subscription. Manual line items are ad-hoc charges or credits that flow through the same collection pipeline as auto-generated items. Exactly one of subscriptionId or invoiceId must be provided.
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="createLineItem" method="post" path="/v2/invoices/lineItems" -->
+```python
+import os
+from paygentic_sdk import Paygentic
+
+
+with Paygentic(
+    bearer_auth=os.getenv("PAYGENTIC_BEARER_AUTH", ""),
+) as paygentic:
+
+    res = paygentic.invoices_v2.create_line_item(display_name="Nathan54", currency="Rwanda Franc", quantity=6214.31, unit_price=740813)
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                                                                                                                                                                                      | Type                                                                                                                                                                                                                           | Required                                                                                                                                                                                                                       | Description                                                                                                                                                                                                                    |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `display_name`                                                                                                                                                                                                                 | *str*                                                                                                                                                                                                                          | :heavy_check_mark:                                                                                                                                                                                                             | Human-readable label shown on the invoice.                                                                                                                                                                                     |
+| `currency`                                                                                                                                                                                                                     | *str*                                                                                                                                                                                                                          | :heavy_check_mark:                                                                                                                                                                                                             | ISO 4217 currency code (e.g., USD). Must match the subscription or invoice currency.                                                                                                                                           |
+| `quantity`                                                                                                                                                                                                                     | *float*                                                                                                                                                                                                                        | :heavy_check_mark:                                                                                                                                                                                                             | Number of units.                                                                                                                                                                                                               |
+| `unit_price`                                                                                                                                                                                                                   | *float*                                                                                                                                                                                                                        | :heavy_check_mark:                                                                                                                                                                                                             | Price per unit as a decimal amount (e.g., 29.99 for $29.99). Can be negative for credits or adjustments. Must be between -99,999,999 and 99,999,999.                                                                           |
+| `subscription_id`                                                                                                                                                                                                              | *Optional[str]*                                                                                                                                                                                                                | :heavy_minus_sign:                                                                                                                                                                                                             | The subscription ID. Exactly one of subscriptionId or invoiceId must be provided.                                                                                                                                              |
+| `invoice_id`                                                                                                                                                                                                                   | *Optional[str]*                                                                                                                                                                                                                | :heavy_minus_sign:                                                                                                                                                                                                             | The invoice ID to attach this item directly to. Exactly one of subscriptionId or invoiceId must be provided. The invoice must not have reached ISSUED status (accepted states: CLOSING, CLOSED, CALCULATING, DRAFT, APPROVED). |
+| `description`                                                                                                                                                                                                                  | *OptionalNullable[str]*                                                                                                                                                                                                        | :heavy_minus_sign:                                                                                                                                                                                                             | Optional longer description shown on the invoice.                                                                                                                                                                              |
+| `invoice_at`                                                                                                                                                                                                                   | [date](https://docs.python.org/3/library/datetime.html#date-objects)                                                                                                                                                           | :heavy_minus_sign:                                                                                                                                                                                                             | When to collect this item into an invoice. Defaults to now. Ignored when invoiceId is provided.                                                                                                                                |
+| `period_start`                                                                                                                                                                                                                 | [date](https://docs.python.org/3/library/datetime.html#date-objects)                                                                                                                                                           | :heavy_minus_sign:                                                                                                                                                                                                             | Start of the billing period for display purposes. Defaults to now.                                                                                                                                                             |
+| `period_end`                                                                                                                                                                                                                   | [date](https://docs.python.org/3/library/datetime.html#date-objects)                                                                                                                                                           | :heavy_minus_sign:                                                                                                                                                                                                             | End of the billing period for display purposes. Defaults to now.                                                                                                                                                               |
+| `idempotency_key`                                                                                                                                                                                                              | *OptionalNullable[str]*                                                                                                                                                                                                        | :heavy_minus_sign:                                                                                                                                                                                                             | Optional caller-provided idempotency key. Auto-generated if not provided.                                                                                                                                                      |
+| `retries`                                                                                                                                                                                                                      | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                                                                                                                               | :heavy_minus_sign:                                                                                                                                                                                                             | Configuration to override the default retry behavior of the client.                                                                                                                                                            |
+
+### Response
+
+**[models.LineItem](../../models/lineitem.md)**
+
+### Errors
+
+| Error Type                   | Status Code                  | Content Type                 |
+| ---------------------------- | ---------------------------- | ---------------------------- |
+| errors.Error                 | 400                          | application/json             |
+| errors.ValidationError       | 400                          | application/json             |
+| errors.Error                 | 401, 403, 404, 409, 422      | application/json             |
 | errors.Error                 | 500                          | application/json             |
 | errors.PaygenticDefaultError | 4XX, 5XX                     | \*/\*                        |
 

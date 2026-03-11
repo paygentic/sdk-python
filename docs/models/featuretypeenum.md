@@ -14,8 +14,8 @@ value: FeatureTypeEnum = "boolean"
 
 ## Values
 
-| Name      | Value     |
-| --------- | --------- |
-| `BOOLEAN` | boolean   |
-| `STATIC`  | static    |
-| `METERED` | metered   |
+This is an open enum. Unrecognized values will not fail type checks.
+
+- `"boolean"`
+- `"static"`
+- `"metered"`

@@ -12,7 +12,5 @@ value: BillingVersion = 0
 
 ## Values
 
-| Name   | Value  |
-| ------ | ------ |
-| `ZERO` | 0      |
-| `ONE`  | 1      |
+- `0`
+- `1`

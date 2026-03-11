@@ -12,8 +12,6 @@ value: ListDisputesStatus = "pending"
 
 ## Values
 
-| Name       | Value      |
-| ---------- | ---------- |
-| `PENDING`  | pending    |
-| `ACCEPTED` | accepted   |
-| `DECLINED` | declined   |
+- `"pending"`
+- `"accepted"`
+- `"declined"`

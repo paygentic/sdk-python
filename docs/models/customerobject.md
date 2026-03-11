@@ -10,6 +10,4 @@ value: CustomerObject = "customer"
 
 ## Values
 
-| Name       | Value      |
-| ---------- | ---------- |
-| `CUSTOMER` | customer   |
+- `"customer"`

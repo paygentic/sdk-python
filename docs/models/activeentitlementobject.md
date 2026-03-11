@@ -10,6 +10,4 @@ value: ActiveEntitlementObject = "entitlement"
 
 ## Values
 
-| Name          | Value         |
-| ------------- | ------------- |
-| `ENTITLEMENT` | entitlement   |
+- `"entitlement"`
