@@ -2,21 +2,31 @@
 
 from __future__ import annotations
 from paygentic_sdk.types import BaseModel, UNSET_SENTINEL
-from paygentic_sdk.utils import FieldMetadata, PathParamMetadata, RequestMetadata
+from paygentic_sdk.utils import (
+    FieldMetadata,
+    PathParamMetadata,
+    RequestMetadata,
+    validate_const,
+)
+import pydantic
 from pydantic import model_serializer
-from typing import Optional
+from pydantic.functional_validators import AfterValidator
+from typing import Literal, Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class RefundUsageEventRequestBodyTypedDict(TypedDict):
-    refunded: bool
+    refunded: Literal[True]
     r"""Set to true to mark the usage event as refunded. Once refunded, the event cannot be un-refunded."""
     reason: NotRequired[str]
     r"""Optional reason for the refund. Sample values: 'Customer request', 'Billing error', 'Service credit', 'System error correction'"""
 
 
 class RefundUsageEventRequestBody(BaseModel):
-    refunded: bool
+    refunded: Annotated[
+        Annotated[Literal[True], AfterValidator(validate_const(True))],
+        pydantic.Field(alias="refunded"),
+    ] = True
     r"""Set to true to mark the usage event as refunded. Once refunded, the event cannot be un-refunded."""
 
     reason: Optional[str] = None
@@ -53,3 +63,9 @@ class RefundUsageEventRequest(BaseModel):
         RefundUsageEventRequestBody,
         FieldMetadata(request=RequestMetadata(media_type="application/json")),
     ]
+
+
+try:
+    RefundUsageEventRequestBody.model_rebuild()
+except NameError:
+    pass

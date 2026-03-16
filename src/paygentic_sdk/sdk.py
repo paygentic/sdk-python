@@ -37,20 +37,9 @@ if TYPE_CHECKING:
 
 
 class Paygentic(BaseSDK):
-    r"""Paygentic API: The Paygentic API provides a comprehensive platform for building and scaling monetization infrastructure.
+    r"""Paygentic API: The Paygentic API provides billing infrastructure for usage-based and subscription monetization — customers, subscriptions, usage metering, invoicing, entitlements, and payments.
 
-    ## Authentication
-    All API requests require authentication using an API key passed in the `Authorization` header:
-    ```
-    Authorization: Bearer YOUR_API_KEY
-    ```
-
-    ## Base URL
-    All API requests should be made to:
-    ```
-    https://api.paygentic.io/v0
-    ```
-
+    See the [Quickstart](https://docs.paygentic.io/getting-started/quickstart) to go from zero to billing in four steps.
     """
 
     billable_metrics: "BillableMetrics"

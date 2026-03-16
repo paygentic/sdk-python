@@ -72,7 +72,15 @@ with Paygentic(
     bearer_auth=os.getenv("PAYGENTIC_BEARER_AUTH", ""),
 ) as paygentic:
 
-    res = paygentic.customers.create(merchant_id="<id>")
+    res = paygentic.customers.create(merchant_id="org_YS8jkP59V71TdUvj", consumer={
+        "name": "Jane Smith",
+        "email": "jane@example.com",
+        "address": {
+            "city": "San Francisco",
+            "state": "CA",
+            "country": "US",
+        },
+    })
 
     # Handle response
     print(res)

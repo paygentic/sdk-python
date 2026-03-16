@@ -85,7 +85,10 @@ with Paygentic(
     bearer_auth=os.getenv("PAYGENTIC_BEARER_AUTH", ""),
 ) as paygentic:
 
-    res = paygentic.plans.list(request={})
+    res = paygentic.plans.list(request={
+        "merchant_id": "org_YS8jkP59V71TdUvj",
+        "product_id": "prod_abc123",
+    })
 
     # Handle response
     print(res)
@@ -129,7 +132,7 @@ with Paygentic(
     bearer_auth=os.getenv("PAYGENTIC_BEARER_AUTH", ""),
 ) as paygentic:
 
-    res = paygentic.plans.list_available(customer_id="<id>", limit=10, offset=0)
+    res = paygentic.plans.list_available(customer_id="<id>", product_id="prod_abc123", limit=10, offset=0)
 
     # Handle response
     print(res)

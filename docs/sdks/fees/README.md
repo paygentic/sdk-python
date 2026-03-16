@@ -76,7 +76,7 @@ with Paygentic(
     bearer_auth=os.getenv("PAYGENTIC_BEARER_AUTH", ""),
 ) as paygentic:
 
-    res = paygentic.fees.list(merchant_id="<id>", limit=10, offset=0)
+    res = paygentic.fees.list(merchant_id="<id>", limit=10, offset=0, product_id="prod_abc123")
 
     # Handle response
     print(res)

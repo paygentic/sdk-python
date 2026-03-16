@@ -1,12 +1,12 @@
-# SubscriptionStatus
+# SubscriptionStatusEnum
 
 ## Example Usage
 
 ```python
-from paygentic_sdk.models import SubscriptionStatus
+from paygentic_sdk.models import SubscriptionStatusEnum
 
 # Open enum: unrecognized values are captured as UnrecognizedStr
-value: SubscriptionStatus = "pending_payment"
+value: SubscriptionStatusEnum = "pending_payment"
 ```
 
 

@@ -26,7 +26,7 @@ with Paygentic(
     bearer_auth=os.getenv("PAYGENTIC_BEARER_AUTH", ""),
 ) as paygentic:
 
-    res = paygentic.entitlements.list(customer_id="cus_q3r4s5t6u7v8w9x0", limit=10, offset=0)
+    res = paygentic.entitlements.list(customer_id="cus_q3r4s5t6u7v8w9x0", product_id="prod_abc123", limit=10, offset=0)
 
     # Handle response
     print(res)
@@ -44,7 +44,7 @@ with Paygentic(
     bearer_auth=os.getenv("PAYGENTIC_BEARER_AUTH", ""),
 ) as paygentic:
 
-    res = paygentic.entitlements.list(customer_id="cus_q3r4s5t6u7v8w9x0", limit=10, offset=0)
+    res = paygentic.entitlements.list(customer_id="cus_q3r4s5t6u7v8w9x0", product_id="prod_abc123", limit=10, offset=0)
 
     # Handle response
     print(res)
@@ -62,7 +62,7 @@ with Paygentic(
     bearer_auth=os.getenv("PAYGENTIC_BEARER_AUTH", ""),
 ) as paygentic:
 
-    res = paygentic.entitlements.list(customer_id="cus_q3r4s5t6u7v8w9x0", limit=10, offset=0)
+    res = paygentic.entitlements.list(customer_id="cus_q3r4s5t6u7v8w9x0", product_id="prod_abc123", limit=10, offset=0)
 
     # Handle response
     print(res)
@@ -80,7 +80,7 @@ with Paygentic(
     bearer_auth=os.getenv("PAYGENTIC_BEARER_AUTH", ""),
 ) as paygentic:
 
-    res = paygentic.entitlements.list(customer_id="cus_q3r4s5t6u7v8w9x0", limit=10, offset=0)
+    res = paygentic.entitlements.list(customer_id="cus_q3r4s5t6u7v8w9x0", product_id="prod_abc123", limit=10, offset=0)
 
     # Handle response
     print(res)

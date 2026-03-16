@@ -683,7 +683,6 @@ class UsageEvents(BaseSDK):
         self,
         *,
         id: str,
-        refunded: bool,
         reason: Optional[str] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -695,7 +694,6 @@ class UsageEvents(BaseSDK):
         Marks a usage event as refunded. This reverts the consumption recorded by the usage event and creates a corresponding refund billing event if the usage event was already billed.
 
         :param id:
-        :param refunded: Set to true to mark the usage event as refunded. Once refunded, the event cannot be un-refunded.
         :param reason: Optional reason for the refund. Sample values: 'Customer request', 'Billing error', 'Service credit', 'System error correction'
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -715,7 +713,6 @@ class UsageEvents(BaseSDK):
         request = models.RefundUsageEventRequest(
             id=id,
             request_body=models.RefundUsageEventRequestBody(
-                refunded=refunded,
                 reason=reason,
             ),
         )
@@ -796,7 +793,6 @@ class UsageEvents(BaseSDK):
         self,
         *,
         id: str,
-        refunded: bool,
         reason: Optional[str] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -808,7 +804,6 @@ class UsageEvents(BaseSDK):
         Marks a usage event as refunded. This reverts the consumption recorded by the usage event and creates a corresponding refund billing event if the usage event was already billed.
 
         :param id:
-        :param refunded: Set to true to mark the usage event as refunded. Once refunded, the event cannot be un-refunded.
         :param reason: Optional reason for the refund. Sample values: 'Customer request', 'Billing error', 'Service credit', 'System error correction'
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -828,7 +823,6 @@ class UsageEvents(BaseSDK):
         request = models.RefundUsageEventRequest(
             id=id,
             request_body=models.RefundUsageEventRequestBody(
-                refunded=refunded,
                 reason=reason,
             ),
         )

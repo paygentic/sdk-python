@@ -414,6 +414,7 @@ class InvoicesV2(BaseSDK):
         currency: str,
         quantity: float,
         unit_price: float,
+        idempotency_key_param: Optional[str] = None,
         subscription_id: Optional[str] = None,
         invoice_id: Optional[str] = None,
         description: OptionalNullable[str] = UNSET,
@@ -433,9 +434,10 @@ class InvoicesV2(BaseSDK):
         :param display_name: Human-readable label shown on the invoice.
         :param currency: ISO 4217 currency code (e.g., USD). Must match the subscription or invoice currency.
         :param quantity: Number of units.
-        :param unit_price: Price per unit as a decimal amount (e.g., 29.99 for $29.99). Can be negative for credits or adjustments. Must be between -99,999,999 and 99,999,999.
+        :param unit_price: Price per unit as a decimal amount (e.g., 29.99 for $29.99). Can be negative for credits or adjustments.
+        :param idempotency_key_param: Optional idempotency key. If provided, duplicate requests with the same key return the previously created item.
         :param subscription_id: The subscription ID. Exactly one of subscriptionId or invoiceId must be provided.
-        :param invoice_id: The invoice ID to attach this item directly to. Exactly one of subscriptionId or invoiceId must be provided. The invoice must not have reached ISSUED status (accepted states: CLOSING, CLOSED, CALCULATING, DRAFT, APPROVED).
+        :param invoice_id: The invoice ID to attach this item directly to. Exactly one of subscriptionId or invoiceId must be provided. The invoice must be in ACTIVE or CLOSING state.
         :param description: Optional longer description shown on the invoice.
         :param invoice_at: When to collect this item into an invoice. Defaults to now. Ignored when invoiceId is provided.
         :param period_start: Start of the billing period for display purposes. Defaults to now.
@@ -456,18 +458,21 @@ class InvoicesV2(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.CreateManualLineItemRequest(
-            subscription_id=subscription_id,
-            invoice_id=invoice_id,
-            display_name=display_name,
-            description=description,
-            currency=currency,
-            quantity=quantity,
-            unit_price=unit_price,
-            invoice_at=invoice_at,
-            period_start=period_start,
-            period_end=period_end,
-            idempotency_key=idempotency_key,
+        request = models.CreateLineItemRequest(
+            idempotency_key_param=idempotency_key_param,
+            create_manual_line_item_request=models.CreateManualLineItemRequest(
+                subscription_id=subscription_id,
+                invoice_id=invoice_id,
+                display_name=display_name,
+                description=description,
+                currency=currency,
+                quantity=quantity,
+                unit_price=unit_price,
+                invoice_at=invoice_at,
+                period_start=period_start,
+                period_end=period_end,
+                idempotency_key=idempotency_key,
+            ),
         )
 
         req = self._build_request(
@@ -484,7 +489,11 @@ class InvoicesV2(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request, False, False, "json", models.CreateManualLineItemRequest
+                request.create_manual_line_item_request,
+                False,
+                False,
+                "json",
+                models.CreateManualLineItemRequest,
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,
@@ -557,6 +566,7 @@ class InvoicesV2(BaseSDK):
         currency: str,
         quantity: float,
         unit_price: float,
+        idempotency_key_param: Optional[str] = None,
         subscription_id: Optional[str] = None,
         invoice_id: Optional[str] = None,
         description: OptionalNullable[str] = UNSET,
@@ -576,9 +586,10 @@ class InvoicesV2(BaseSDK):
         :param display_name: Human-readable label shown on the invoice.
         :param currency: ISO 4217 currency code (e.g., USD). Must match the subscription or invoice currency.
         :param quantity: Number of units.
-        :param unit_price: Price per unit as a decimal amount (e.g., 29.99 for $29.99). Can be negative for credits or adjustments. Must be between -99,999,999 and 99,999,999.
+        :param unit_price: Price per unit as a decimal amount (e.g., 29.99 for $29.99). Can be negative for credits or adjustments.
+        :param idempotency_key_param: Optional idempotency key. If provided, duplicate requests with the same key return the previously created item.
         :param subscription_id: The subscription ID. Exactly one of subscriptionId or invoiceId must be provided.
-        :param invoice_id: The invoice ID to attach this item directly to. Exactly one of subscriptionId or invoiceId must be provided. The invoice must not have reached ISSUED status (accepted states: CLOSING, CLOSED, CALCULATING, DRAFT, APPROVED).
+        :param invoice_id: The invoice ID to attach this item directly to. Exactly one of subscriptionId or invoiceId must be provided. The invoice must be in ACTIVE or CLOSING state.
         :param description: Optional longer description shown on the invoice.
         :param invoice_at: When to collect this item into an invoice. Defaults to now. Ignored when invoiceId is provided.
         :param period_start: Start of the billing period for display purposes. Defaults to now.
@@ -599,18 +610,21 @@ class InvoicesV2(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.CreateManualLineItemRequest(
-            subscription_id=subscription_id,
-            invoice_id=invoice_id,
-            display_name=display_name,
-            description=description,
-            currency=currency,
-            quantity=quantity,
-            unit_price=unit_price,
-            invoice_at=invoice_at,
-            period_start=period_start,
-            period_end=period_end,
-            idempotency_key=idempotency_key,
+        request = models.CreateLineItemRequest(
+            idempotency_key_param=idempotency_key_param,
+            create_manual_line_item_request=models.CreateManualLineItemRequest(
+                subscription_id=subscription_id,
+                invoice_id=invoice_id,
+                display_name=display_name,
+                description=description,
+                currency=currency,
+                quantity=quantity,
+                unit_price=unit_price,
+                invoice_at=invoice_at,
+                period_start=period_start,
+                period_end=period_end,
+                idempotency_key=idempotency_key,
+            ),
         )
 
         req = self._build_request_async(
@@ -627,7 +641,11 @@ class InvoicesV2(BaseSDK):
             http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
-                request, False, False, "json", models.CreateManualLineItemRequest
+                request.create_manual_line_item_request,
+                False,
+                False,
+                "json",
+                models.CreateManualLineItemRequest,
             ),
             allow_empty_value=None,
             timeout_ms=timeout_ms,

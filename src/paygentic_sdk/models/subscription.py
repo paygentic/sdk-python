@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 from datetime import datetime
+from functools import partial
 from paygentic_sdk.types import (
     BaseModel,
     Nullable,
@@ -10,13 +11,43 @@ from paygentic_sdk.types import (
     UNSET_SENTINEL,
     UnrecognizedStr,
 )
+from paygentic_sdk.utils import validate_const
+from paygentic_sdk.utils.unions import parse_open_union
 import pydantic
-from pydantic import model_serializer
-from typing import Literal, Optional, Union
-from typing_extensions import Annotated, NotRequired, TypedDict
+from pydantic import ConfigDict, model_serializer
+from pydantic.functional_validators import AfterValidator, BeforeValidator
+from typing import Any, Literal, Optional, Union
+from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
 
 SubscriptionObject = Literal["subscription",]
+
+
+class PaymentPaidTypedDict(TypedDict):
+    r"""Zero-amount Invoice 0 that completed synchronously to PAID"""
+
+    invoice_id: str
+    r"""The Invoice 0 id"""
+    amount: str
+    r"""Payment amount ('0' for zero-amount subscriptions)"""
+    status: Literal["paid"]
+    r"""Payment status"""
+
+
+class PaymentPaid(BaseModel):
+    r"""Zero-amount Invoice 0 that completed synchronously to PAID"""
+
+    invoice_id: Annotated[str, pydantic.Field(alias="invoiceId")]
+    r"""The Invoice 0 id"""
+
+    amount: str
+    r"""Payment amount ('0' for zero-amount subscriptions)"""
+
+    status: Annotated[
+        Annotated[Literal["paid"], AfterValidator(validate_const("paid"))],
+        pydantic.Field(alias="status"),
+    ] = "paid"
+    r"""Payment status"""
 
 
 class BreakdownTypedDict(TypedDict):
@@ -25,7 +56,7 @@ class BreakdownTypedDict(TypedDict):
     upfront_charges: str
     r"""One-time flat fee charges in decimal dollar format. Sample values: '50.00' equals $50.00 setup fee, '100.00' equals $100.00 activation fee"""
     wallet_charge: str
-    r"""Wallet charge amount in decimal dollar format. This is the calculated difference between the minimum account balance requirement and the customer's current balance. If the customer already has sufficient balance, this will be '0.00'. Sample values: '200.00' equals $200.00 charge, '0.00' means no charge needed"""
+    r"""Wallet charge amount in decimal dollar format."""
 
 
 class Breakdown(BaseModel):
@@ -35,33 +66,25 @@ class Breakdown(BaseModel):
     r"""One-time flat fee charges in decimal dollar format. Sample values: '50.00' equals $50.00 setup fee, '100.00' equals $100.00 activation fee"""
 
     wallet_charge: Annotated[str, pydantic.Field(alias="walletCharge")]
-    r"""Wallet charge amount in decimal dollar format. This is the calculated difference between the minimum account balance requirement and the customer's current balance. If the customer already has sufficient balance, this will be '0.00'. Sample values: '200.00' equals $200.00 charge, '0.00' means no charge needed"""
+    r"""Wallet charge amount in decimal dollar format."""
 
 
-StatusPending = Literal["pending",]
-r"""Payment status"""
-
-
-class SubscriptionPaymentTypedDict(TypedDict):
-    r"""Payment session details when upfront payment is required"""
-
+class PaymentPendingTypedDict(TypedDict):
     amount: str
     r"""Total payment amount in decimal dollar format. Sample values: '250.00' equals $250.00, '99.99' equals $99.99"""
     breakdown: BreakdownTypedDict
     r"""Breakdown of payment amount"""
     checkout_url: str
-    r"""Checkout page URL for customer payment completion. Sample values: 'https://checkout.paygentic.com/session/ps_abc123', 'https://pay.example.com/checkout/xyz789'"""
+    r"""Checkout page URL for customer payment completion."""
     payment_session_id: str
-    r"""Payment session identifier for upfront payment processing. Sample values: 'ps_abc123xyz', 'ps_789def456'"""
-    status: StatusPending
-    r"""Payment status"""
+    r"""Payment session identifier for upfront payment processing."""
     invoice_id: NotRequired[str]
     r"""ID of the invoice linked to this payment."""
+    status: Literal["pending"]
+    r"""Payment status"""
 
 
-class SubscriptionPayment(BaseModel):
-    r"""Payment session details when upfront payment is required"""
-
+class PaymentPending(BaseModel):
     amount: str
     r"""Total payment amount in decimal dollar format. Sample values: '250.00' equals $250.00, '99.99' equals $99.99"""
 
@@ -69,16 +92,19 @@ class SubscriptionPayment(BaseModel):
     r"""Breakdown of payment amount"""
 
     checkout_url: Annotated[str, pydantic.Field(alias="checkoutUrl")]
-    r"""Checkout page URL for customer payment completion. Sample values: 'https://checkout.paygentic.com/session/ps_abc123', 'https://pay.example.com/checkout/xyz789'"""
+    r"""Checkout page URL for customer payment completion."""
 
     payment_session_id: Annotated[str, pydantic.Field(alias="paymentSessionId")]
-    r"""Payment session identifier for upfront payment processing. Sample values: 'ps_abc123xyz', 'ps_789def456'"""
-
-    status: StatusPending
-    r"""Payment status"""
+    r"""Payment session identifier for upfront payment processing."""
 
     invoice_id: Annotated[Optional[str], pydantic.Field(alias="invoiceId")] = None
     r"""ID of the invoice linked to this payment."""
+
+    status: Annotated[
+        Annotated[Literal["pending"], AfterValidator(validate_const("pending"))],
+        pydantic.Field(alias="status"),
+    ] = "pending"
+    r"""Payment status"""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
@@ -97,7 +123,44 @@ class SubscriptionPayment(BaseModel):
         return m
 
 
-SubscriptionStatus = Union[
+PaymentUnionTypedDict = TypeAliasType(
+    "PaymentUnionTypedDict", Union[PaymentPaidTypedDict, PaymentPendingTypedDict]
+)
+r"""Payment session details when upfront payment is required, or confirmation of a zero-amount paid invoice"""
+
+
+class UnknownPaymentUnion(BaseModel):
+    r"""A PaymentUnion variant the SDK doesn't recognize. Preserves the raw payload."""
+
+    status: Literal["UNKNOWN"] = "UNKNOWN"
+    raw: Any
+    is_unknown: Literal[True] = True
+
+    model_config = ConfigDict(frozen=True)
+
+
+_PAYMENT_UNION_VARIANTS: dict[str, Any] = {
+    "pending": PaymentPending,
+    "paid": PaymentPaid,
+}
+
+
+PaymentUnion = Annotated[
+    Union[PaymentPending, PaymentPaid, UnknownPaymentUnion],
+    BeforeValidator(
+        partial(
+            parse_open_union,
+            disc_key="status",
+            variants=_PAYMENT_UNION_VARIANTS,
+            unknown_cls=UnknownPaymentUnion,
+            union_name="PaymentUnion",
+        )
+    ),
+]
+r"""Payment session details when upfront payment is required, or confirmation of a zero-amount paid invoice"""
+
+
+SubscriptionStatusEnum = Union[
     Literal[
         "pending_payment",
         "active",
@@ -115,7 +178,7 @@ class SubscriptionTypedDict(TypedDict):
     name: str
     plan_id: str
     started_at: datetime
-    status: SubscriptionStatus
+    status: SubscriptionStatusEnum
     updated_at: datetime
     auto_charge: NotRequired[bool]
     r"""Whether automatic charging is enabled for this subscription. When true, invoices will be automatically paid using stored payment methods."""
@@ -124,8 +187,8 @@ class SubscriptionTypedDict(TypedDict):
     r"""Projected tax percentage rate. Sample values: 8.875 indicates 8.875% tax rate, 10.0 indicates 10% tax rate, 0 indicates no tax applied"""
     tax_exempt: NotRequired[bool]
     r"""When true, tax rate is forced to 0%."""
-    payment: NotRequired[SubscriptionPaymentTypedDict]
-    r"""Payment session details when upfront payment is required"""
+    payment: NotRequired[PaymentUnionTypedDict]
+    r"""Payment session details when upfront payment is required, or confirmation of a zero-amount paid invoice"""
     prefund_amount: NotRequired[str]
     r"""@deprecated Use minimumAccountBalance instead. Minimum required wallet balance in atomic units. Sample values: '200000000000' equals $200.00 minimum, '1000000000000' equals $1000.00 minimum"""
     minimum_account_balance: NotRequired[str]
@@ -160,7 +223,7 @@ class Subscription(BaseModel):
 
     started_at: Annotated[datetime, pydantic.Field(alias="startedAt")]
 
-    status: SubscriptionStatus
+    status: SubscriptionStatusEnum
 
     updated_at: Annotated[datetime, pydantic.Field(alias="updatedAt")]
 
@@ -177,8 +240,8 @@ class Subscription(BaseModel):
     tax_exempt: Annotated[Optional[bool], pydantic.Field(alias="taxExempt")] = False
     r"""When true, tax rate is forced to 0%."""
 
-    payment: Optional[SubscriptionPayment] = None
-    r"""Payment session details when upfront payment is required"""
+    payment: Optional[PaymentUnion] = None
+    r"""Payment session details when upfront payment is required, or confirmation of a zero-amount paid invoice"""
 
     prefund_amount: Annotated[Optional[str], pydantic.Field(alias="prefundAmount")] = (
         None
@@ -262,11 +325,15 @@ class Subscription(BaseModel):
 
 
 try:
+    PaymentPaid.model_rebuild()
+except NameError:
+    pass
+try:
     Breakdown.model_rebuild()
 except NameError:
     pass
 try:
-    SubscriptionPayment.model_rebuild()
+    PaymentPending.model_rebuild()
 except NameError:
     pass
 try:

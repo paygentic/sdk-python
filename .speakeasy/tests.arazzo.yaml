@@ -44,6 +44,9 @@ workflows:
           - name: offset
             in: query
             value: 0
+          - name: productId
+            in: query
+            value: prod_abc123
         successCriteria:
           - condition: $statusCode == 200
           - condition: $response.header.Content-Type == application/json
@@ -143,6 +146,10 @@ workflows:
         requestBody:
           contentType: application/json
           payload:
+            consumer:
+              address: {}
+              email: jane@example.com
+              name: Jane Smith
             merchantId: <id>
         successCriteria:
           - condition: $statusCode == 200
@@ -219,6 +226,12 @@ workflows:
           - name: offset
             in: query
             value: 0
+          - name: consumerId
+            in: query
+            value: org_YS8jkP59V71TdUvj
+          - name: merchantId
+            in: query
+            value: org_YS8jkP59V71TdUvj
         successCriteria:
           - condition: $statusCode == 200
           - condition: $response.header.Content-Type == application/json
@@ -236,6 +249,9 @@ workflows:
           - name: customerId
             in: query
             value: <id>
+          - name: productId
+            in: query
+            value: prod_abc123
         successCriteria:
           - condition: $statusCode == 200
           - condition: $response.header.Content-Type == application/json
@@ -278,6 +294,9 @@ workflows:
           - name: offset
             in: query
             value: 0
+          - name: productId
+            in: query
+            value: prod_abc123
         successCriteria:
           - condition: $statusCode == 200
           - condition: $response.header.Content-Type == application/json
@@ -301,6 +320,9 @@ workflows:
           - name: offset
             in: query
             value: 0
+          - name: productId
+            in: query
+            value: prod_abc123
         successCriteria:
           - condition: $statusCode == 200
           - condition: $response.header.Content-Type == application/json
@@ -324,6 +346,9 @@ workflows:
           - name: offset
             in: query
             value: 0
+          - name: productId
+            in: query
+            value: prod_abc123
         successCriteria:
           - condition: $statusCode == 200
           - condition: $response.header.Content-Type == application/json
@@ -347,6 +372,9 @@ workflows:
           - name: offset
             in: query
             value: 0
+          - name: productId
+            in: query
+            value: prod_abc123
         successCriteria:
           - condition: $statusCode == 200
           - condition: $response.header.Content-Type == application/json
@@ -370,6 +398,9 @@ workflows:
           - name: offset
             in: query
             value: 0
+          - name: productId
+            in: query
+            value: prod_abc123
         successCriteria:
           - condition: $statusCode == 200
           - condition: $response.header.Content-Type == application/json
@@ -634,6 +665,9 @@ workflows:
           - name: offset
             in: query
             value: 0
+          - name: productId
+            in: query
+            value: prod_abc123
         successCriteria:
           - condition: $statusCode == 200
           - condition: $response.header.Content-Type == application/json
@@ -736,6 +770,12 @@ workflows:
           - name: offset
             in: query
             value: 0
+          - name: merchantId
+            in: query
+            value: org_YS8jkP59V71TdUvj
+          - name: productId
+            in: query
+            value: prod_abc123
         successCriteria:
           - condition: $statusCode == 200
           - condition: $response.header.Content-Type == application/json
@@ -759,6 +799,9 @@ workflows:
           - name: offset
             in: query
             value: 0
+          - name: productId
+            in: query
+            value: prod_abc123
         successCriteria:
           - condition: $statusCode == 200
           - condition: $response.header.Content-Type == application/json
@@ -917,6 +960,9 @@ workflows:
           - name: offset
             in: query
             value: 0
+          - name: merchantId
+            in: query
+            value: org_YS8jkP59V71TdUvj
         successCriteria:
           - condition: $statusCode == 200
           - condition: $response.header.Content-Type == application/json
@@ -995,6 +1041,12 @@ workflows:
           - name: offset
             in: query
             value: 0
+          - name: merchantId
+            in: query
+            value: org_YS8jkP59V71TdUvj
+          - name: planId
+            in: query
+            value: plan_abc123
         successCriteria:
           - condition: $statusCode == 200
           - condition: $response.header.Content-Type == application/json
@@ -1237,6 +1289,15 @@ workflows:
           - name: offset
             in: query
             value: "0"
+          - name: consumerId
+            in: query
+            value: org_YS8jkP59V71TdUvj
+          - name: customerId
+            in: query
+            value: cus_abc123
+          - name: merchantId
+            in: query
+            value: org_YS8jkP59V71TdUvj
         successCriteria:
           - condition: $statusCode == 200
           - condition: $response.header.Content-Type == application/json
@@ -1360,6 +1421,15 @@ workflows:
           - name: startTime
             in: query
             value: "2024-02-04T03:47:15.138Z"
+          - name: consumerId
+            in: query
+            value: org_YS8jkP59V71TdUvj
+          - name: customerId
+            in: query
+            value: cus_abc123
+          - name: merchantId
+            in: query
+            value: org_YS8jkP59V71TdUvj
         successCriteria:
           - condition: $statusCode == 200
           - condition: $response.header.Content-Type == application/json
@@ -1397,7 +1467,7 @@ workflows:
         requestBody:
           contentType: application/json
           payload:
-            refunded: false
+            refunded: true
         successCriteria:
           - condition: $statusCode == 200
           - condition: $response.header.Content-Type == application/json
@@ -1557,6 +1627,9 @@ workflows:
           - name: topN
             in: query
             value: 10
+          - name: merchantId
+            in: query
+            value: org_YS8jkP59V71TdUvj
         successCriteria:
           - condition: $statusCode == 200
           - condition: $response.header.Content-Type == application/json

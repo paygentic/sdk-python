@@ -1,43 +1,45 @@
 # paygentic-sdk
 
-Developer-friendly & type-safe Python SDK specifically catered to leverage *paygentic-sdk* API.
+The official Python SDK for the [Paygentic API](https://paygentic.io) — build billing, subscriptions, and usage-based monetization into your product.
 
 [![Built by Speakeasy](https://img.shields.io/badge/Built_by-SPEAKEASY-374151?style=for-the-badge&labelColor=f3f4f6)](https://www.speakeasy.com/?utm_source=paygentic-sdk&utm_campaign=python)
 [![License: MIT](https://img.shields.io/badge/LICENSE_//_MIT-3b5bdb?style=for-the-badge&labelColor=eff6ff)](https://opensource.org/licenses/MIT)
 
 
 <br /><br />
-> [!IMPORTANT]
-> This SDK is not yet ready for production use. To complete setup please follow the steps outlined in your [workspace](https://app.speakeasy.com/org/paygentic/default). Delete this section before > publishing to a package manager.
-
 <!-- Start Summary [summary] -->
 ## Summary
 
-Paygentic API: The Paygentic API provides a comprehensive platform for building and scaling monetization infrastructure.
+Paygentic API: The Paygentic API provides billing infrastructure for usage-based and subscription monetization — customers, subscriptions, usage metering, invoicing, entitlements, and payments.
 
-## Authentication
-All API requests require authentication using an API key passed in the `Authorization` header:
-```
-Authorization: Bearer YOUR_API_KEY
-```
-
-## Base URL
-All API requests should be made to:
-```
-https://api.paygentic.io/v0
-```
+See the [Quickstart](https://docs.paygentic.io/getting-started/quickstart) to go from zero to billing in four steps.
 <!-- End Summary [summary] -->
+
+## How it works
+
+Paygentic models your billing around five connected concepts:
+
+| Concept | What it is |
+|---------|------------|
+| **Product** | The service you sell (e.g., "LLM Inference Engine") |
+| **Plan** | A subscribable package with pricing, billing interval, and currency |
+| **Customer** | An organization you bill, connected to a Plan via a Subscription |
+| **Subscription** | Ties a Customer to a Plan; activates once any upfront invoice is paid |
+| **Meter Events** | Fire-and-forget events that record consumption for metered billing |
+
+Typical flow: define a Product → configure a Plan → create a Customer → create a Subscription → send Meter Events → Paygentic handles invoicing automatically.
+
+See the [Quickstart](https://docs.paygentic.io/getting-started/quickstart) for a step-by-step walkthrough.
 
 <!-- Start Table of Contents [toc] -->
 ## Table of Contents
 <!-- $toc-max-depth=2 -->
 * [paygentic-sdk](#paygentic-sdk)
-  * [Authentication](#authentication)
-  * [Base URL](#base-url)
+  * [How it works](#how-it-works)
   * [SDK Installation](#sdk-installation)
   * [IDE Support](#ide-support)
   * [SDK Example Usage](#sdk-example-usage)
-  * [Authentication](#authentication-1)
+  * [Authentication](#authentication)
   * [Available Resources and Operations](#available-resources-and-operations)
   * [Retries](#retries)
   * [Error Handling](#error-handling)
@@ -130,7 +132,9 @@ Generally, the SDK will work well with most IDEs out of the box. However, when u
 <!-- Start SDK Example Usage [usage] -->
 ## SDK Example Usage
 
-### Example
+### Create a customer
+
+Create a customer for each organization you bill. This is the first step in the billing setup — see the [Quickstart](https://docs.paygentic.io/getting-started/quickstart) for the full flow.
 
 ```python
 # Synchronous Example
@@ -142,7 +146,15 @@ with Paygentic(
     bearer_auth=os.getenv("PAYGENTIC_BEARER_AUTH", ""),
 ) as paygentic:
 
-    res = paygentic.billable_metrics.create(aggregation="SUM", description="orange daily out slow nor smoothly", merchant_id="<id>", name="<value>", product_id="<id>", unit="meter")
+    res = paygentic.customers.create(merchant_id="org_YS8jkP59V71TdUvj", consumer={
+        "name": "Jane Smith",
+        "email": "jane@example.com",
+        "address": {
+            "city": "San Francisco",
+            "state": "CA",
+            "country": "US",
+        },
+    })
 
     # Handle response
     print(res)
@@ -164,7 +176,111 @@ async def main():
         bearer_auth=os.getenv("PAYGENTIC_BEARER_AUTH", ""),
     ) as paygentic:
 
-        res = await paygentic.billable_metrics.create_async(aggregation="SUM", description="orange daily out slow nor smoothly", merchant_id="<id>", name="<value>", product_id="<id>", unit="meter")
+        res = await paygentic.customers.create_async(merchant_id="org_YS8jkP59V71TdUvj", consumer={
+            "name": "Jane Smith",
+            "email": "jane@example.com",
+            "address": {
+                "city": "San Francisco",
+                "state": "CA",
+                "country": "US",
+            },
+        })
+
+        # Handle response
+        print(res)
+
+asyncio.run(main())
+```
+
+### Create a subscription
+
+Subscribe a customer to a plan. If the plan includes in-advance charges, Paygentic generates an initial invoice and the subscription activates once paid.
+
+```python
+# Synchronous Example
+import os
+from paygentic_sdk import Paygentic
+from paygentic_sdk.utils import parse_datetime
+
+
+with Paygentic(
+    bearer_auth=os.getenv("PAYGENTIC_BEARER_AUTH", ""),
+) as paygentic:
+
+    res = paygentic.subscriptions.create(name="Monthly API Service", plan_id="plan_abc123", started_at=parse_datetime("2024-01-15T00:00:00Z"), auto_charge=False, tax_exempt=False, customer_id="cus_abc123")
+
+    # Handle response
+    print(res)
+```
+
+</br>
+
+The same SDK client can also be used to make asynchronous requests by importing asyncio.
+
+```python
+# Asynchronous Example
+import asyncio
+import os
+from paygentic_sdk import Paygentic
+from paygentic_sdk.utils import parse_datetime
+
+async def main():
+
+    async with Paygentic(
+        bearer_auth=os.getenv("PAYGENTIC_BEARER_AUTH", ""),
+    ) as paygentic:
+
+        res = await paygentic.subscriptions.create_async(name="Monthly API Service", plan_id="plan_abc123", started_at=parse_datetime("2024-01-15T00:00:00Z"), auto_charge=False, tax_exempt=False, customer_id="cus_abc123")
+
+        # Handle response
+        print(res)
+
+asyncio.run(main())
+```
+
+### Report usage
+
+Send meter events to record consumption once a subscription is active. The endpoint is fire-and-forget — it always returns `202 Accepted`.
+
+```python
+# Synchronous Example
+import os
+from paygentic_sdk import Paygentic
+
+
+with Paygentic(
+    bearer_auth=os.getenv("PAYGENTIC_BEARER_AUTH", ""),
+) as paygentic:
+
+    res = paygentic.events.ingest(type_="ai.inference", source="https://api.myapp.com", subject="cus_abc123", data={
+        "tokens": 1500,
+        "model": "gpt-4o",
+    })
+
+    # Handle response
+    print(res)
+```
+
+</br>
+
+The same SDK client can also be used to make asynchronous requests by importing asyncio.
+
+```python
+# Asynchronous Example
+import asyncio
+import os
+from paygentic_sdk import Paygentic
+
+async def main():
+
+    async with Paygentic(
+        bearer_auth=os.getenv("PAYGENTIC_BEARER_AUTH", ""),
+    ) as paygentic:
+
+        res = await paygentic.events.ingest_async(type_="ai.inference", source="https://api.myapp.com", subject="cus_abc123", data={
+            "tokens": 1500,
+            "model": "gpt-4o",
+        })
 
         # Handle response
         print(res)
@@ -194,7 +310,7 @@ with Paygentic(
     bearer_auth=os.getenv("PAYGENTIC_BEARER_AUTH", ""),
 ) as paygentic:
 
-    res = paygentic.billable_metrics.create(aggregation="SUM", description="orange daily out slow nor smoothly", merchant_id="<id>", name="<value>", product_id="<id>", unit="meter")
+    res = paygentic.billable_metrics.create(aggregation="SUM", description="Tracks total tokens consumed per API call", merchant_id="org_YS8jkP59V71TdUvj", name="Token Counter", product_id="prod_abc123", unit="tokens")
 
     # Handle response
     print(res)
@@ -373,7 +489,7 @@ with Paygentic(
     bearer_auth=os.getenv("PAYGENTIC_BEARER_AUTH", ""),
 ) as paygentic:
 
-    res = paygentic.billable_metrics.create(aggregation="SUM", description="orange daily out slow nor smoothly", merchant_id="<id>", name="<value>", product_id="<id>", unit="meter",
+    res = paygentic.billable_metrics.create(aggregation="SUM", description="Tracks total tokens consumed per API call", merchant_id="org_YS8jkP59V71TdUvj", name="Token Counter", product_id="prod_abc123", unit="tokens",
         RetryConfig("backoff", BackoffStrategy(1, 50, 1.1, 100), False))
 
     # Handle response
@@ -393,7 +509,7 @@ with Paygentic(
     bearer_auth=os.getenv("PAYGENTIC_BEARER_AUTH", ""),
 ) as paygentic:
 
-    res = paygentic.billable_metrics.create(aggregation="SUM", description="orange daily out slow nor smoothly", merchant_id="<id>", name="<value>", product_id="<id>", unit="meter")
+    res = paygentic.billable_metrics.create(aggregation="SUM", description="Tracks total tokens consumed per API call", merchant_id="org_YS8jkP59V71TdUvj", name="Token Counter", product_id="prod_abc123", unit="tokens")
 
     # Handle response
     print(res)
@@ -427,7 +543,7 @@ with Paygentic(
     res = None
     try:
 
-        res = paygentic.billable_metrics.create(aggregation="SUM", description="orange daily out slow nor smoothly", merchant_id="<id>", name="<value>", product_id="<id>", unit="meter")
+        res = paygentic.billable_metrics.create(aggregation="SUM", description="Tracks total tokens consumed per API call", merchant_id="org_YS8jkP59V71TdUvj", name="Token Counter", product_id="prod_abc123", unit="tokens")
 
         # Handle response
         print(res)
@@ -490,7 +606,7 @@ with Paygentic(
     bearer_auth=os.getenv("PAYGENTIC_BEARER_AUTH", ""),
 ) as paygentic:
 
-    res = paygentic.billable_metrics.create(aggregation="SUM", description="orange daily out slow nor smoothly", merchant_id="<id>", name="<value>", product_id="<id>", unit="meter")
+    res = paygentic.billable_metrics.create(aggregation="SUM", description="Tracks total tokens consumed per API call", merchant_id="org_YS8jkP59V71TdUvj", name="Token Counter", product_id="prod_abc123", unit="tokens")
 
     # Handle response
     print(res)
@@ -630,9 +746,7 @@ You can also enable a default debug logger by setting an environment variable `P
 
 ## Maturity
 
-This SDK is in beta, and there may be breaking changes between versions without a major version update. Therefore, we recommend pinning usage
-to a specific package version. This way, you can install the same version each time without breaking changes unless you are intentionally
-looking for the latest version.
+This SDK is generally available. We follow semantic versioning — breaking changes will only occur in major version bumps. We recommend pinning to a specific minor version in production.
 
 ## Contributions
 

@@ -78,7 +78,7 @@ with Paygentic(
     bearer_auth=os.getenv("PAYGENTIC_BEARER_AUTH", ""),
 ) as paygentic:
 
-    res = paygentic.usage_events.list(end_time=parse_datetime("2026-03-29T00:23:32.822Z"), start_time=parse_datetime("2024-02-04T03:47:15.138Z"), limit=10, offset=0)
+    res = paygentic.usage_events.list(end_time=parse_datetime("2026-03-29T00:23:32.822Z"), start_time=parse_datetime("2024-02-04T03:47:15.138Z"), consumer_id="org_YS8jkP59V71TdUvj", customer_id="cus_abc123", limit=10, merchant_id="org_YS8jkP59V71TdUvj", offset=0)
 
     # Handle response
     print(res)
@@ -171,7 +171,7 @@ with Paygentic(
     bearer_auth=os.getenv("PAYGENTIC_BEARER_AUTH", ""),
 ) as paygentic:
 
-    res = paygentic.usage_events.refund(id="<id>", refunded=False)
+    res = paygentic.usage_events.refund(id="<id>")
 
     # Handle response
     print(res)
@@ -183,7 +183,6 @@ with Paygentic(
 | Parameter                                                                                                                       | Type                                                                                                                            | Required                                                                                                                        | Description                                                                                                                     |
 | ------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
 | `id`                                                                                                                            | *str*                                                                                                                           | :heavy_check_mark:                                                                                                              | N/A                                                                                                                             |
-| `refunded`                                                                                                                      | *bool*                                                                                                                          | :heavy_check_mark:                                                                                                              | Set to true to mark the usage event as refunded. Once refunded, the event cannot be un-refunded.                                |
 | `reason`                                                                                                                        | *Optional[str]*                                                                                                                 | :heavy_minus_sign:                                                                                                              | Optional reason for the refund. Sample values: 'Customer request', 'Billing error', 'Service credit', 'System error correction' |
 | `retries`                                                                                                                       | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                                | :heavy_minus_sign:                                                                                                              | Configuration to override the default retry behavior of the client.                                                             |
 

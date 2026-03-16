@@ -23,11 +23,11 @@ class CreateManualLineItemRequestTypedDict(TypedDict):
     quantity: float
     r"""Number of units."""
     unit_price: float
-    r"""Price per unit as a decimal amount (e.g., 29.99 for $29.99). Can be negative for credits or adjustments. Must be between -99,999,999 and 99,999,999."""
+    r"""Price per unit as a decimal amount (e.g., 29.99 for $29.99). Can be negative for credits or adjustments."""
     subscription_id: NotRequired[str]
     r"""The subscription ID. Exactly one of subscriptionId or invoiceId must be provided."""
     invoice_id: NotRequired[str]
-    r"""The invoice ID to attach this item directly to. Exactly one of subscriptionId or invoiceId must be provided. The invoice must not have reached ISSUED status (accepted states: CLOSING, CLOSED, CALCULATING, DRAFT, APPROVED)."""
+    r"""The invoice ID to attach this item directly to. Exactly one of subscriptionId or invoiceId must be provided. The invoice must be in ACTIVE or CLOSING state."""
     description: NotRequired[Nullable[str]]
     r"""Optional longer description shown on the invoice."""
     invoice_at: NotRequired[Nullable[datetime]]
@@ -51,7 +51,7 @@ class CreateManualLineItemRequest(BaseModel):
     r"""Number of units."""
 
     unit_price: Annotated[float, pydantic.Field(alias="unitPrice")]
-    r"""Price per unit as a decimal amount (e.g., 29.99 for $29.99). Can be negative for credits or adjustments. Must be between -99,999,999 and 99,999,999."""
+    r"""Price per unit as a decimal amount (e.g., 29.99 for $29.99). Can be negative for credits or adjustments."""
 
     subscription_id: Annotated[
         Optional[str], pydantic.Field(alias="subscriptionId")
@@ -59,7 +59,7 @@ class CreateManualLineItemRequest(BaseModel):
     r"""The subscription ID. Exactly one of subscriptionId or invoiceId must be provided."""
 
     invoice_id: Annotated[Optional[str], pydantic.Field(alias="invoiceId")] = None
-    r"""The invoice ID to attach this item directly to. Exactly one of subscriptionId or invoiceId must be provided. The invoice must not have reached ISSUED status (accepted states: CLOSING, CLOSED, CALCULATING, DRAFT, APPROVED)."""
+    r"""The invoice ID to attach this item directly to. Exactly one of subscriptionId or invoiceId must be provided. The invoice must be in ACTIVE or CLOSING state."""
 
     description: OptionalNullable[str] = UNSET
     r"""Optional longer description shown on the invoice."""

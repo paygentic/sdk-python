@@ -23,7 +23,7 @@ with Paygentic(
     bearer_auth=os.getenv("PAYGENTIC_BEARER_AUTH", ""),
 ) as paygentic:
 
-    res = paygentic.entitlements_v0.list_active(customer_id="<id>")
+    res = paygentic.entitlements_v0.list_active(customer_id="<id>", product_id="prod_abc123")
 
     # Handle response
     print(res)
