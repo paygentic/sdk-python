@@ -11,11 +11,15 @@ from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 BucketWidth = Literal[
-    "minute",
     "hour",
     "day",
+    "week",
 ]
-r"""Time bucket granularity"""
+r"""Time bucket granularity for trend data"""
+
+
+GroupBy = Literal["plan",]
+r"""Group invoice data by dimension. Max 5 groups (top 4 + 'other' when exceeding)."""
 
 
 class GetRevenueRequestTypedDict(TypedDict):
@@ -24,15 +28,15 @@ class GetRevenueRequestTypedDict(TypedDict):
     end_time: datetime
     r"""End of the time range (ISO 8601 format)"""
     bucket_width: NotRequired[BucketWidth]
-    r"""Time bucket granularity"""
+    r"""Time bucket granularity for trend data"""
     merchant_id: NotRequired[str]
     r"""Filter by merchant ID. At least one of merchantId, subscriptionIds, or customerId must be provided."""
     customer_id: NotRequired[str]
     r"""Filter by customer ID. At least one of merchantId, subscriptionIds, or customerId must be provided."""
     subscription_ids: NotRequired[List[str]]
     r"""Filter by subscription IDs. At least one of merchantId, subscriptionIds, or customerId must be provided."""
-    top_n: NotRequired[int]
-    r"""Limit to top N subscriptions by net revenue. Remaining subscriptions are aggregated into 'other'."""
+    group_by: NotRequired[GroupBy]
+    r"""Group invoice data by dimension. Max 5 groups (top 4 + 'other' when exceeding)."""
 
 
 class GetRevenueRequest(BaseModel):
@@ -54,8 +58,8 @@ class GetRevenueRequest(BaseModel):
         Optional[BucketWidth],
         pydantic.Field(alias="bucketWidth"),
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
-    ] = "hour"
-    r"""Time bucket granularity"""
+    ] = "day"
+    r"""Time bucket granularity for trend data"""
 
     merchant_id: Annotated[
         Optional[str],
@@ -78,17 +82,17 @@ class GetRevenueRequest(BaseModel):
     ] = None
     r"""Filter by subscription IDs. At least one of merchantId, subscriptionIds, or customerId must be provided."""
 
-    top_n: Annotated[
-        Optional[int],
-        pydantic.Field(alias="topN"),
+    group_by: Annotated[
+        Optional[GroupBy],
+        pydantic.Field(alias="groupBy"),
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
-    ] = 10
-    r"""Limit to top N subscriptions by net revenue. Remaining subscriptions are aggregated into 'other'."""
+    ] = None
+    r"""Group invoice data by dimension. Max 5 groups (top 4 + 'other' when exceeding)."""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
-            ["bucketWidth", "merchantId", "customerId", "subscriptionIds", "topN"]
+            ["bucketWidth", "merchantId", "customerId", "subscriptionIds", "groupBy"]
         )
         serialized = handler(self)
         m = {}

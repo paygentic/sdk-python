@@ -19,9 +19,9 @@ class ListCustomersRequestTypedDict(TypedDict):
     offset: NotRequired[int]
     r"""Number of customers to skip"""
     name: NotRequired[str]
-    r"""Filter customers by consumer name (case-insensitive substring match)"""
+    r"""Filter customers by consumer name (case-insensitive substring match). Minimum 3 characters required for efficient index usage."""
     email: NotRequired[str]
-    r"""Filter customers by billing email (case-insensitive substring match). Accepts partial values — e.g. a domain (\"acme.com\") or local part (\"billing\")."""
+    r"""Filter customers by billing email (case-insensitive substring match). Minimum 3 characters required for efficient index usage. Accepts partial values — e.g. a domain (\"acme.com\") or local part (\"billing\")."""
 
 
 class ListCustomersRequest(BaseModel):
@@ -48,13 +48,13 @@ class ListCustomersRequest(BaseModel):
         Optional[str],
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = None
-    r"""Filter customers by consumer name (case-insensitive substring match)"""
+    r"""Filter customers by consumer name (case-insensitive substring match). Minimum 3 characters required for efficient index usage."""
 
     email: Annotated[
         Optional[str],
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = None
-    r"""Filter customers by billing email (case-insensitive substring match). Accepts partial values — e.g. a domain (\"acme.com\") or local part (\"billing\")."""
+    r"""Filter customers by billing email (case-insensitive substring match). Minimum 3 characters required for efficient index usage. Accepts partial values — e.g. a domain (\"acme.com\") or local part (\"billing\")."""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

@@ -91,6 +91,10 @@ if TYPE_CHECKING:
         CreateDisputeRequest,
         CreateDisputeRequestTypedDict,
     )
+    from .createentitlementgrantop import (
+        CreateEntitlementGrantRequest,
+        CreateEntitlementGrantRequestTypedDict,
+    )
     from .createentitlementrequest import (
         CreateEntitlementRequest,
         CreateEntitlementRequestTypedDict,
@@ -103,6 +107,7 @@ if TYPE_CHECKING:
         CreateFeatureType,
     )
     from .createfeeop import CreateFeeRequest, CreateFeeRequestTypedDict
+    from .creategrantrequest import CreateGrantRequest, CreateGrantRequestTypedDict
     from .createlineitemop import CreateLineItemRequest, CreateLineItemRequestTypedDict
     from .createmanuallineitemrequest import (
         CreateManualLineItemRequest,
@@ -276,6 +281,10 @@ if TYPE_CHECKING:
         GetBillableMetricRequestTypedDict,
     )
     from .getcustomerop import GetCustomerRequest, GetCustomerRequestTypedDict
+    from .getentitlementgrantop import (
+        GetEntitlementGrantRequest,
+        GetEntitlementGrantRequestTypedDict,
+    )
     from .getentitlementop import GetEntitlementRequest, GetEntitlementRequestTypedDict
     from .getfeatureop import GetFeatureRequest, GetFeatureRequestTypedDict
     from .getfeeop import GetFeeRequest, GetFeeRequestTypedDict
@@ -289,7 +298,12 @@ if TYPE_CHECKING:
     from .getplanop import GetPlanRequest, GetPlanRequestTypedDict
     from .getpriceop import GetPriceRequest, GetPriceRequestTypedDict
     from .getproductop import GetProductRequest, GetProductRequestTypedDict
-    from .getrevenueop import BucketWidth, GetRevenueRequest, GetRevenueRequestTypedDict
+    from .getrevenueop import (
+        BucketWidth,
+        GetRevenueRequest,
+        GetRevenueRequestTypedDict,
+        GroupBy,
+    )
     from .getsourceop import GetSourceRequest, GetSourceRequestTypedDict
     from .getsourceruleop import GetSourceRuleRequest, GetSourceRuleRequestTypedDict
     from .getsubscriptionop import (
@@ -299,6 +313,9 @@ if TYPE_CHECKING:
     from .gettestclockop import GetTestClockRequest, GetTestClockRequestTypedDict
     from .getusageeventop import GetUsageEventRequest, GetUsageEventRequestTypedDict
     from .getuserop import GetUserRequest, GetUserRequestTypedDict
+    from .grant import Grant, GrantObject, GrantTypedDict
+    from .groupinvoicesummary import GroupInvoiceSummary, GroupInvoiceSummaryTypedDict
+    from .grouptrendentry import GroupTrendEntry, GroupTrendEntryTypedDict
     from .ingesteventop import IngestEventRequest, IngestEventRequestTypedDict
     from .invoice import (
         Invoice,
@@ -310,6 +327,10 @@ if TYPE_CHECKING:
         Tax,
         TaxTypedDict,
     )
+    from .invoicecategorysummary import (
+        InvoiceCategorySummary,
+        InvoiceCategorySummaryTypedDict,
+    )
     from .invoicelineitem import (
         EventType,
         InvoiceLineItem,
@@ -320,6 +341,7 @@ if TYPE_CHECKING:
         InvoiceLineItemsResponse,
         InvoiceLineItemsResponseTypedDict,
     )
+    from .invoicesummary import InvoiceSummary, InvoiceSummaryTypedDict
     from .issueentitlementrequest import (
         IssueEntitlementRequest,
         IssueEntitlementRequestTypedDict,
@@ -370,6 +392,13 @@ if TYPE_CHECKING:
         ListDisputesResponse,
         ListDisputesResponseTypedDict,
         ListDisputesStatus,
+    )
+    from .listentitlementgrantsop import (
+        ListEntitlementGrantsObject,
+        ListEntitlementGrantsRequest,
+        ListEntitlementGrantsRequestTypedDict,
+        ListEntitlementGrantsResponse,
+        ListEntitlementGrantsResponseTypedDict,
     )
     from .listentitlementsop import (
         ListEntitlementsObject,
@@ -496,6 +525,7 @@ if TYPE_CHECKING:
         PaymentStatus,
         PaymentTypedDict,
     )
+    from .paymentsummary import PaymentSummary, PaymentSummaryTypedDict
     from .plan import (
         Plan,
         PlanObject,
@@ -529,6 +559,21 @@ if TYPE_CHECKING:
         PricePropertiesUnionTypedDict,
     )
     from .product import Product, ProductObject, ProductTypedDict
+    from .purchaseentitlementgrantop import (
+        PurchaseEntitlementGrantRequest,
+        PurchaseEntitlementGrantRequestTypedDict,
+    )
+    from .purchasegrantrequest import (
+        PurchaseGrantRequest,
+        PurchaseGrantRequestTypedDict,
+    )
+    from .purchasegrantresponse import (
+        PaymentSession,
+        PaymentSessionTypedDict,
+        PurchaseGrantResponse,
+        PurchaseGrantResponseObject,
+        PurchaseGrantResponseTypedDict,
+    )
     from .refundusageeventop import (
         RefundUsageEventRequest,
         RefundUsageEventRequestBody,
@@ -539,12 +584,11 @@ if TYPE_CHECKING:
         RejectSourceEventRequest,
         RejectSourceEventRequestTypedDict,
     )
-    from .revenuestats import RevenueStats, RevenueStatsTypedDict
-    from .revenuetimebucket import RevenueTimeBucket, RevenueTimeBucketTypedDict
-    from .revenuetimeseriesresponse import (
-        RevenueTimeSeriesResponse,
-        RevenueTimeSeriesResponseTypedDict,
+    from .revenuesummaryresponse import (
+        RevenueSummaryResponse,
+        RevenueSummaryResponseTypedDict,
     )
+    from .revenuetrendbucket import RevenueTrendBucket, RevenueTrendBucketTypedDict
     from .rulecondition import (
         From,
         FromTypedDict,
@@ -713,6 +757,10 @@ if TYPE_CHECKING:
     )
     from .validationerror import Error, ErrorEnum, ErrorTypedDict
     from .validtaxaddress import ValidTaxAddress, ValidTaxAddressTypedDict
+    from .voidentitlementgrantop import (
+        VoidEntitlementGrantRequest,
+        VoidEntitlementGrantRequestTypedDict,
+    )
 
 __all__ = [
     "ActiveEntitlement",
@@ -776,6 +824,8 @@ __all__ = [
     "CreateCustomerResponseTypedDict",
     "CreateDisputeRequest",
     "CreateDisputeRequestTypedDict",
+    "CreateEntitlementGrantRequest",
+    "CreateEntitlementGrantRequestTypedDict",
     "CreateEntitlementRequest",
     "CreateEntitlementRequestTypedDict",
     "CreateFeatureRequest",
@@ -783,6 +833,8 @@ __all__ = [
     "CreateFeatureType",
     "CreateFeeRequest",
     "CreateFeeRequestTypedDict",
+    "CreateGrantRequest",
+    "CreateGrantRequestTypedDict",
     "CreateLineItemRequest",
     "CreateLineItemRequestTypedDict",
     "CreateManualLineItemRequest",
@@ -917,6 +969,8 @@ __all__ = [
     "GetBillableMetricRequestTypedDict",
     "GetCustomerRequest",
     "GetCustomerRequestTypedDict",
+    "GetEntitlementGrantRequest",
+    "GetEntitlementGrantRequestTypedDict",
     "GetEntitlementRequest",
     "GetEntitlementRequestTypedDict",
     "GetFeatureRequest",
@@ -951,11 +1005,21 @@ __all__ = [
     "GetUsageEventRequestTypedDict",
     "GetUserRequest",
     "GetUserRequestTypedDict",
+    "Grant",
+    "GrantObject",
+    "GrantTypedDict",
+    "GroupBy",
+    "GroupInvoiceSummary",
+    "GroupInvoiceSummaryTypedDict",
+    "GroupTrendEntry",
+    "GroupTrendEntryTypedDict",
     "GroupedValue",
     "GroupedValueTypedDict",
     "IngestEventRequest",
     "IngestEventRequestTypedDict",
     "Invoice",
+    "InvoiceCategorySummary",
+    "InvoiceCategorySummaryTypedDict",
     "InvoiceLineItem",
     "InvoiceLineItemLineItemType",
     "InvoiceLineItemTypedDict",
@@ -963,6 +1027,8 @@ __all__ = [
     "InvoiceLineItemsResponseTypedDict",
     "InvoiceObject",
     "InvoiceStatus",
+    "InvoiceSummary",
+    "InvoiceSummaryTypedDict",
     "InvoiceTypedDict",
     "IssueEntitlementRequest",
     "IssueEntitlementRequestTypedDict",
@@ -1006,6 +1072,11 @@ __all__ = [
     "ListDisputesResponse",
     "ListDisputesResponseTypedDict",
     "ListDisputesStatus",
+    "ListEntitlementGrantsObject",
+    "ListEntitlementGrantsRequest",
+    "ListEntitlementGrantsRequestTypedDict",
+    "ListEntitlementGrantsResponse",
+    "ListEntitlementGrantsResponseTypedDict",
     "ListEntitlementsObject",
     "ListEntitlementsRequest",
     "ListEntitlementsRequestTypedDict",
@@ -1105,7 +1176,11 @@ __all__ = [
     "PaymentPaidTypedDict",
     "PaymentPending",
     "PaymentPendingTypedDict",
+    "PaymentSession",
+    "PaymentSessionTypedDict",
     "PaymentStatus",
+    "PaymentSummary",
+    "PaymentSummaryTypedDict",
     "PaymentTypedDict",
     "PaymentUnion",
     "PaymentUnionTypedDict",
@@ -1142,6 +1217,13 @@ __all__ = [
     "ProductTypedDict",
     "Properties",
     "PropertiesTypedDict",
+    "PurchaseEntitlementGrantRequest",
+    "PurchaseEntitlementGrantRequestTypedDict",
+    "PurchaseGrantRequest",
+    "PurchaseGrantRequestTypedDict",
+    "PurchaseGrantResponse",
+    "PurchaseGrantResponseObject",
+    "PurchaseGrantResponseTypedDict",
     "RedirectUrls",
     "RedirectUrlsTypedDict",
     "Refund",
@@ -1156,12 +1238,10 @@ __all__ = [
     "RequestBody1TypedDict",
     "RequestBody2",
     "RequestBody2TypedDict",
-    "RevenueStats",
-    "RevenueStatsTypedDict",
-    "RevenueTimeBucket",
-    "RevenueTimeBucketTypedDict",
-    "RevenueTimeSeriesResponse",
-    "RevenueTimeSeriesResponseTypedDict",
+    "RevenueSummaryResponse",
+    "RevenueSummaryResponseTypedDict",
+    "RevenueTrendBucket",
+    "RevenueTrendBucketTypedDict",
     "RuleCondition",
     "RuleConditionType",
     "RuleConditionTypedDict",
@@ -1282,6 +1362,8 @@ __all__ = [
     "ValueTypedDict",
     "ValueUnion",
     "ValueUnionTypedDict",
+    "VoidEntitlementGrantRequest",
+    "VoidEntitlementGrantRequestTypedDict",
     "WindowSize",
     "WindowedValue",
     "WindowedValueTypedDict",
@@ -1351,6 +1433,8 @@ _dynamic_imports: dict[str, str] = {
     "CreateCustomerResponseTypedDict": ".createcustomerop",
     "CreateDisputeRequest": ".createdisputerequest",
     "CreateDisputeRequestTypedDict": ".createdisputerequest",
+    "CreateEntitlementGrantRequest": ".createentitlementgrantop",
+    "CreateEntitlementGrantRequestTypedDict": ".createentitlementgrantop",
     "CreateEntitlementRequest": ".createentitlementrequest",
     "CreateEntitlementRequestTypedDict": ".createentitlementrequest",
     "EntitlementDatum": ".createentitlementrequest",
@@ -1360,6 +1444,8 @@ _dynamic_imports: dict[str, str] = {
     "CreateFeatureType": ".createfeatureop",
     "CreateFeeRequest": ".createfeeop",
     "CreateFeeRequestTypedDict": ".createfeeop",
+    "CreateGrantRequest": ".creategrantrequest",
+    "CreateGrantRequestTypedDict": ".creategrantrequest",
     "CreateLineItemRequest": ".createlineitemop",
     "CreateLineItemRequestTypedDict": ".createlineitemop",
     "CreateManualLineItemRequest": ".createmanuallineitemrequest",
@@ -1496,6 +1582,8 @@ _dynamic_imports: dict[str, str] = {
     "GetBillableMetricRequestTypedDict": ".getbillablemetricop",
     "GetCustomerRequest": ".getcustomerop",
     "GetCustomerRequestTypedDict": ".getcustomerop",
+    "GetEntitlementGrantRequest": ".getentitlementgrantop",
+    "GetEntitlementGrantRequestTypedDict": ".getentitlementgrantop",
     "GetEntitlementRequest": ".getentitlementop",
     "GetEntitlementRequestTypedDict": ".getentitlementop",
     "GetFeatureRequest": ".getfeatureop",
@@ -1519,6 +1607,7 @@ _dynamic_imports: dict[str, str] = {
     "BucketWidth": ".getrevenueop",
     "GetRevenueRequest": ".getrevenueop",
     "GetRevenueRequestTypedDict": ".getrevenueop",
+    "GroupBy": ".getrevenueop",
     "GetSourceRequest": ".getsourceop",
     "GetSourceRequestTypedDict": ".getsourceop",
     "GetSourceRuleRequest": ".getsourceruleop",
@@ -1531,6 +1620,13 @@ _dynamic_imports: dict[str, str] = {
     "GetUsageEventRequestTypedDict": ".getusageeventop",
     "GetUserRequest": ".getuserop",
     "GetUserRequestTypedDict": ".getuserop",
+    "Grant": ".grant",
+    "GrantObject": ".grant",
+    "GrantTypedDict": ".grant",
+    "GroupInvoiceSummary": ".groupinvoicesummary",
+    "GroupInvoiceSummaryTypedDict": ".groupinvoicesummary",
+    "GroupTrendEntry": ".grouptrendentry",
+    "GroupTrendEntryTypedDict": ".grouptrendentry",
     "IngestEventRequest": ".ingesteventop",
     "IngestEventRequestTypedDict": ".ingesteventop",
     "Invoice": ".invoice",
@@ -1541,12 +1637,16 @@ _dynamic_imports: dict[str, str] = {
     "LineItemsTypedDict": ".invoice",
     "Tax": ".invoice",
     "TaxTypedDict": ".invoice",
+    "InvoiceCategorySummary": ".invoicecategorysummary",
+    "InvoiceCategorySummaryTypedDict": ".invoicecategorysummary",
     "EventType": ".invoicelineitem",
     "InvoiceLineItem": ".invoicelineitem",
     "InvoiceLineItemLineItemType": ".invoicelineitem",
     "InvoiceLineItemTypedDict": ".invoicelineitem",
     "InvoiceLineItemsResponse": ".invoicelineitemsresponse",
     "InvoiceLineItemsResponseTypedDict": ".invoicelineitemsresponse",
+    "InvoiceSummary": ".invoicesummary",
+    "InvoiceSummaryTypedDict": ".invoicesummary",
     "IssueEntitlementRequest": ".issueentitlementrequest",
     "IssueEntitlementRequestTypedDict": ".issueentitlementrequest",
     "LineItem": ".lineitem",
@@ -1585,6 +1685,11 @@ _dynamic_imports: dict[str, str] = {
     "ListDisputesResponse": ".listdisputesop",
     "ListDisputesResponseTypedDict": ".listdisputesop",
     "ListDisputesStatus": ".listdisputesop",
+    "ListEntitlementGrantsObject": ".listentitlementgrantsop",
+    "ListEntitlementGrantsRequest": ".listentitlementgrantsop",
+    "ListEntitlementGrantsRequestTypedDict": ".listentitlementgrantsop",
+    "ListEntitlementGrantsResponse": ".listentitlementgrantsop",
+    "ListEntitlementGrantsResponseTypedDict": ".listentitlementgrantsop",
     "ListEntitlementsObject": ".listentitlementsop",
     "ListEntitlementsRequest": ".listentitlementsop",
     "ListEntitlementsRequestTypedDict": ".listentitlementsop",
@@ -1677,6 +1782,8 @@ _dynamic_imports: dict[str, str] = {
     "PaymentObject": ".payment",
     "PaymentStatus": ".payment",
     "PaymentTypedDict": ".payment",
+    "PaymentSummary": ".paymentsummary",
+    "PaymentSummaryTypedDict": ".paymentsummary",
     "Plan": ".plan",
     "PlanObject": ".plan",
     "PlanPaymentTerm": ".plan",
@@ -1711,18 +1818,25 @@ _dynamic_imports: dict[str, str] = {
     "Product": ".product",
     "ProductObject": ".product",
     "ProductTypedDict": ".product",
+    "PurchaseEntitlementGrantRequest": ".purchaseentitlementgrantop",
+    "PurchaseEntitlementGrantRequestTypedDict": ".purchaseentitlementgrantop",
+    "PurchaseGrantRequest": ".purchasegrantrequest",
+    "PurchaseGrantRequestTypedDict": ".purchasegrantrequest",
+    "PaymentSession": ".purchasegrantresponse",
+    "PaymentSessionTypedDict": ".purchasegrantresponse",
+    "PurchaseGrantResponse": ".purchasegrantresponse",
+    "PurchaseGrantResponseObject": ".purchasegrantresponse",
+    "PurchaseGrantResponseTypedDict": ".purchasegrantresponse",
     "RefundUsageEventRequest": ".refundusageeventop",
     "RefundUsageEventRequestBody": ".refundusageeventop",
     "RefundUsageEventRequestBodyTypedDict": ".refundusageeventop",
     "RefundUsageEventRequestTypedDict": ".refundusageeventop",
     "RejectSourceEventRequest": ".rejectsourceeventop",
     "RejectSourceEventRequestTypedDict": ".rejectsourceeventop",
-    "RevenueStats": ".revenuestats",
-    "RevenueStatsTypedDict": ".revenuestats",
-    "RevenueTimeBucket": ".revenuetimebucket",
-    "RevenueTimeBucketTypedDict": ".revenuetimebucket",
-    "RevenueTimeSeriesResponse": ".revenuetimeseriesresponse",
-    "RevenueTimeSeriesResponseTypedDict": ".revenuetimeseriesresponse",
+    "RevenueSummaryResponse": ".revenuesummaryresponse",
+    "RevenueSummaryResponseTypedDict": ".revenuesummaryresponse",
+    "RevenueTrendBucket": ".revenuetrendbucket",
+    "RevenueTrendBucketTypedDict": ".revenuetrendbucket",
     "From": ".rulecondition",
     "FromTypedDict": ".rulecondition",
     "Operator": ".rulecondition",
@@ -1858,6 +1972,8 @@ _dynamic_imports: dict[str, str] = {
     "ErrorTypedDict": ".validationerror",
     "ValidTaxAddress": ".validtaxaddress",
     "ValidTaxAddressTypedDict": ".validtaxaddress",
+    "VoidEntitlementGrantRequest": ".voidentitlementgrantop",
+    "VoidEntitlementGrantRequestTypedDict": ".voidentitlementgrantop",
 }
 
 

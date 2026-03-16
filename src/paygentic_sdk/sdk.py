@@ -74,7 +74,7 @@ class Paygentic(BaseSDK):
     events: "Events"
     r"""Ingest raw metering events that are processed by the meters service."""
     revenue: "Revenue"
-    r"""Time-series revenue data with component breakdown including usage, fees, and refunds"""
+    r"""Revenue data from invoices and payments"""
     test_clocks: "TestClocks"
     r"""Test clocks provide programmable time control to simulate subscription and billing scenarios during testing."""
     _sub_sdk_map = {

@@ -1,0 +1,12 @@
+# RevenueTrendBucket
+
+
+## Fields
+
+| Field                                                                          | Type                                                                           | Required                                                                       | Description                                                                    |
+| ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ |
+| `timestamp`                                                                    | [date](https://docs.python.org/3/library/datetime.html#date-objects)           | :heavy_check_mark:                                                             | Start time of this bucket                                                      |
+| `issued_invoices`                                                              | *str*                                                                          | :heavy_check_mark:                                                             | Total amount of all invoices issued in this bucket (all statuses, by issuedAt) |
+| `written_off_invoices`                                                         | *str*                                                                          | :heavy_check_mark:                                                             | Amount of written-off invoices in dollars for this bucket (by writtenOffAt)    |
+| `completed_payments`                                                           | *str*                                                                          | :heavy_check_mark:                                                             | Revenue from completed payments in dollars for this bucket                     |
+| `group_breakdown`                                                              | List[[models.GroupTrendEntry](../models/grouptrendentry.md)]                   | :heavy_minus_sign:                                                             | Per-group trend entries (only present when groupBy is specified)               |

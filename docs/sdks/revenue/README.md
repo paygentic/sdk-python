@@ -2,15 +2,15 @@
 
 ## Overview
 
-Time-series revenue data with component breakdown including usage, fees, and refunds
+Revenue data from invoices and payments
 
 ### Available Operations
 
-* [get](#get) - Get revenue time series
+* [get](#get) - Get revenue summary
 
 ## get
 
-Returns time-bucketed revenue data including usage charges, fee charges, and refunds. Data is aggregated by subscription with an optional 'other' bucket for subscriptions outside the top N.
+Returns revenue summary with invoice and payment breakdowns (outstanding/paid/writtenOff), plus a time-series trend. Revenue is sourced from all issued invoices (v0 + v1) and completed payments.
 
 ### Example Usage
 
@@ -25,7 +25,7 @@ with Paygentic(
     bearer_auth=os.getenv("PAYGENTIC_BEARER_AUTH", ""),
 ) as paygentic:
 
-    res = paygentic.revenue.get(start_time=parse_datetime("2024-07-23T16:05:39.311Z"), end_time=parse_datetime("2026-04-29T18:43:05.586Z"), bucket_width="hour", merchant_id="org_YS8jkP59V71TdUvj", top_n=10)
+    res = paygentic.revenue.get(start_time=parse_datetime("2024-07-23T16:05:39.311Z"), end_time=parse_datetime("2026-04-29T18:43:05.586Z"), bucket_width="day", merchant_id="org_YS8jkP59V71TdUvj")
 
     # Handle response
     print(res)
@@ -38,16 +38,16 @@ with Paygentic(
 | -------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
 | `start_time`                                                                                             | [date](https://docs.python.org/3/library/datetime.html#date-objects)                                     | :heavy_check_mark:                                                                                       | Start of the time range (ISO 8601 format)                                                                |
 | `end_time`                                                                                               | [date](https://docs.python.org/3/library/datetime.html#date-objects)                                     | :heavy_check_mark:                                                                                       | End of the time range (ISO 8601 format)                                                                  |
-| `bucket_width`                                                                                           | [Optional[models.BucketWidth]](../../models/bucketwidth.md)                                              | :heavy_minus_sign:                                                                                       | Time bucket granularity                                                                                  |
+| `bucket_width`                                                                                           | [Optional[models.BucketWidth]](../../models/bucketwidth.md)                                              | :heavy_minus_sign:                                                                                       | Time bucket granularity for trend data                                                                   |
 | `merchant_id`                                                                                            | *Optional[str]*                                                                                          | :heavy_minus_sign:                                                                                       | Filter by merchant ID. At least one of merchantId, subscriptionIds, or customerId must be provided.      |
 | `customer_id`                                                                                            | *Optional[str]*                                                                                          | :heavy_minus_sign:                                                                                       | Filter by customer ID. At least one of merchantId, subscriptionIds, or customerId must be provided.      |
 | `subscription_ids`                                                                                       | List[*str*]                                                                                              | :heavy_minus_sign:                                                                                       | Filter by subscription IDs. At least one of merchantId, subscriptionIds, or customerId must be provided. |
-| `top_n`                                                                                                  | *Optional[int]*                                                                                          | :heavy_minus_sign:                                                                                       | Limit to top N subscriptions by net revenue. Remaining subscriptions are aggregated into 'other'.        |
+| `group_by`                                                                                               | [Optional[models.GroupBy]](../../models/groupby.md)                                                      | :heavy_minus_sign:                                                                                       | Group invoice data by dimension. Max 5 groups (top 4 + 'other' when exceeding).                          |
 | `retries`                                                                                                | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                         | :heavy_minus_sign:                                                                                       | Configuration to override the default retry behavior of the client.                                      |
 
 ### Response
 
-**[models.RevenueTimeSeriesResponse](../../models/revenuetimeseriesresponse.md)**
+**[models.RevenueSummaryResponse](../../models/revenuesummaryresponse.md)**
 
 ### Errors
 

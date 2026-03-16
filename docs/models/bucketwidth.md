@@ -1,17 +1,17 @@
 # BucketWidth
 
-Time bucket granularity
+Time bucket granularity for trend data
 
 ## Example Usage
 
 ```python
 from paygentic_sdk.models import BucketWidth
-value: BucketWidth = "minute"
+value: BucketWidth = "hour"
 ```
 
 
 ## Values
 
-- `"minute"`
 - `"hour"`
 - `"day"`
+- `"week"`

@@ -1,0 +1,15 @@
+# Grant
+
+
+## Fields
+
+| Field                                                                | Type                                                                 | Required                                                             | Description                                                          |
+| -------------------------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------- |
+| `object`                                                             | [Optional[models.GrantObject]](../models/grantobject.md)             | :heavy_minus_sign:                                                   | N/A                                                                  |
+| `id`                                                                 | *str*                                                                | :heavy_check_mark:                                                   | Unique identifier for the grant.                                     |
+| `entitlement_id`                                                     | *str*                                                                | :heavy_check_mark:                                                   | The entitlement this grant belongs to.                               |
+| `amount`                                                             | *float*                                                              | :heavy_check_mark:                                                   | The number of credits granted.                                       |
+| `effective_at`                                                       | [date](https://docs.python.org/3/library/datetime.html#date-objects) | :heavy_check_mark:                                                   | When the grant becomes effective.                                    |
+| `expires_at`                                                         | [date](https://docs.python.org/3/library/datetime.html#date-objects) | :heavy_minus_sign:                                                   | When the grant expires. Null means no expiration.                    |
+| `voided_at`                                                          | [date](https://docs.python.org/3/library/datetime.html#date-objects) | :heavy_minus_sign:                                                   | When the grant was voided. Null means the grant is active.           |
+| `created_at`                                                         | [date](https://docs.python.org/3/library/datetime.html#date-objects) | :heavy_check_mark:                                                   | When the grant was created.                                          |

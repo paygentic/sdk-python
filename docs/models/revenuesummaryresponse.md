@@ -1,0 +1,13 @@
+# RevenueSummaryResponse
+
+
+## Fields
+
+| Field                                                                         | Type                                                                          | Required                                                                      | Description                                                                   |
+| ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
+| `object`                                                                      | *Literal["revenue_summary"]*                                                  | :heavy_check_mark:                                                            | Object type identifier                                                        |
+| `net_revenue`                                                                 | *str*                                                                         | :heavy_check_mark:                                                            | Net collected revenue in dollars (paid invoices + completed payments)         |
+| `invoices`                                                                    | [models.InvoiceSummary](../models/invoicesummary.md)                          | :heavy_check_mark:                                                            | N/A                                                                           |
+| `payments`                                                                    | [models.PaymentSummary](../models/paymentsummary.md)                          | :heavy_check_mark:                                                            | N/A                                                                           |
+| `trend`                                                                       | List[[models.RevenueTrendBucket](../models/revenuetrendbucket.md)]            | :heavy_check_mark:                                                            | Time-bucketed revenue trend data                                              |
+| `group_breakdown`                                                             | List[[models.GroupInvoiceSummary](../models/groupinvoicesummary.md)]          | :heavy_minus_sign:                                                            | Invoice breakdown by group dimension (only present when groupBy is specified) |

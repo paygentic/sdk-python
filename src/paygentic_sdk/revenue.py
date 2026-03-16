@@ -11,34 +11,34 @@ from typing import Any, List, Mapping, Optional
 
 
 class Revenue(BaseSDK):
-    r"""Time-series revenue data with component breakdown including usage, fees, and refunds"""
+    r"""Revenue data from invoices and payments"""
 
     def get(
         self,
         *,
         start_time: datetime,
         end_time: datetime,
-        bucket_width: Optional[models.BucketWidth] = "hour",
+        bucket_width: Optional[models.BucketWidth] = "day",
         merchant_id: Optional[str] = None,
         customer_id: Optional[str] = None,
         subscription_ids: Optional[List[str]] = None,
-        top_n: Optional[int] = 10,
+        group_by: Optional[models.GroupBy] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.RevenueTimeSeriesResponse:
-        r"""Get revenue time series
+    ) -> models.RevenueSummaryResponse:
+        r"""Get revenue summary
 
-        Returns time-bucketed revenue data including usage charges, fee charges, and refunds. Data is aggregated by subscription with an optional 'other' bucket for subscriptions outside the top N.
+        Returns revenue summary with invoice and payment breakdowns (outstanding/paid/writtenOff), plus a time-series trend. Revenue is sourced from all issued invoices (v0 + v1) and completed payments.
 
         :param start_time: Start of the time range (ISO 8601 format)
         :param end_time: End of the time range (ISO 8601 format)
-        :param bucket_width: Time bucket granularity
+        :param bucket_width: Time bucket granularity for trend data
         :param merchant_id: Filter by merchant ID. At least one of merchantId, subscriptionIds, or customerId must be provided.
         :param customer_id: Filter by customer ID. At least one of merchantId, subscriptionIds, or customerId must be provided.
         :param subscription_ids: Filter by subscription IDs. At least one of merchantId, subscriptionIds, or customerId must be provided.
-        :param top_n: Limit to top N subscriptions by net revenue. Remaining subscriptions are aggregated into 'other'.
+        :param group_by: Group invoice data by dimension. Max 5 groups (top 4 + 'other' when exceeding).
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -61,7 +61,7 @@ class Revenue(BaseSDK):
             merchant_id=merchant_id,
             customer_id=customer_id,
             subscription_ids=subscription_ids,
-            top_n=top_n,
+            group_by=group_by,
         )
 
         req = self._build_request(
@@ -106,7 +106,7 @@ class Revenue(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.RevenueTimeSeriesResponse, http_res)
+            return unmarshal_json_response(models.RevenueSummaryResponse, http_res)
         if utils.match_response(http_res, "400", "application/json"):
             response_data = unmarshal_json_response(errors.BadRequestUnion, http_res)
             raise errors.BadRequest(response_data, http_res)
@@ -134,27 +134,27 @@ class Revenue(BaseSDK):
         *,
         start_time: datetime,
         end_time: datetime,
-        bucket_width: Optional[models.BucketWidth] = "hour",
+        bucket_width: Optional[models.BucketWidth] = "day",
         merchant_id: Optional[str] = None,
         customer_id: Optional[str] = None,
         subscription_ids: Optional[List[str]] = None,
-        top_n: Optional[int] = 10,
+        group_by: Optional[models.GroupBy] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.RevenueTimeSeriesResponse:
-        r"""Get revenue time series
+    ) -> models.RevenueSummaryResponse:
+        r"""Get revenue summary
 
-        Returns time-bucketed revenue data including usage charges, fee charges, and refunds. Data is aggregated by subscription with an optional 'other' bucket for subscriptions outside the top N.
+        Returns revenue summary with invoice and payment breakdowns (outstanding/paid/writtenOff), plus a time-series trend. Revenue is sourced from all issued invoices (v0 + v1) and completed payments.
 
         :param start_time: Start of the time range (ISO 8601 format)
         :param end_time: End of the time range (ISO 8601 format)
-        :param bucket_width: Time bucket granularity
+        :param bucket_width: Time bucket granularity for trend data
         :param merchant_id: Filter by merchant ID. At least one of merchantId, subscriptionIds, or customerId must be provided.
         :param customer_id: Filter by customer ID. At least one of merchantId, subscriptionIds, or customerId must be provided.
         :param subscription_ids: Filter by subscription IDs. At least one of merchantId, subscriptionIds, or customerId must be provided.
-        :param top_n: Limit to top N subscriptions by net revenue. Remaining subscriptions are aggregated into 'other'.
+        :param group_by: Group invoice data by dimension. Max 5 groups (top 4 + 'other' when exceeding).
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -177,7 +177,7 @@ class Revenue(BaseSDK):
             merchant_id=merchant_id,
             customer_id=customer_id,
             subscription_ids=subscription_ids,
-            top_n=top_n,
+            group_by=group_by,
         )
 
         req = self._build_request_async(
@@ -222,7 +222,7 @@ class Revenue(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.RevenueTimeSeriesResponse, http_res)
+            return unmarshal_json_response(models.RevenueSummaryResponse, http_res)
         if utils.match_response(http_res, "400", "application/json"):
             response_data = unmarshal_json_response(errors.BadRequestUnion, http_res)
             raise errors.BadRequest(response_data, http_res)
