@@ -18,6 +18,8 @@ class Customers(BaseSDK):
         organization_id: str,
         limit: Optional[int] = 10,
         offset: Optional[int] = 0,
+        name: Optional[str] = None,
+        email: Optional[str] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -28,6 +30,8 @@ class Customers(BaseSDK):
         :param organization_id: ID of the merchant organization to filter customers by
         :param limit: Number of customers to return
         :param offset: Number of customers to skip
+        :param name: Filter customers by consumer name (case-insensitive substring match)
+        :param email: Filter customers by billing email (case-insensitive substring match). Accepts partial values — e.g. a domain (\"acme.com\") or local part (\"billing\").
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -46,6 +50,8 @@ class Customers(BaseSDK):
         request = models.ListCustomersRequest(
             limit=limit,
             offset=offset,
+            name=name,
+            email=email,
             organization_id=organization_id,
         )
 
@@ -117,6 +123,8 @@ class Customers(BaseSDK):
         organization_id: str,
         limit: Optional[int] = 10,
         offset: Optional[int] = 0,
+        name: Optional[str] = None,
+        email: Optional[str] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -127,6 +135,8 @@ class Customers(BaseSDK):
         :param organization_id: ID of the merchant organization to filter customers by
         :param limit: Number of customers to return
         :param offset: Number of customers to skip
+        :param name: Filter customers by consumer name (case-insensitive substring match)
+        :param email: Filter customers by billing email (case-insensitive substring match). Accepts partial values — e.g. a domain (\"acme.com\") or local part (\"billing\").
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -145,6 +155,8 @@ class Customers(BaseSDK):
         request = models.ListCustomersRequest(
             limit=limit,
             offset=offset,
+            name=name,
+            email=email,
             organization_id=organization_id,
         )
 

@@ -18,6 +18,10 @@ class ListCustomersRequestTypedDict(TypedDict):
     r"""Number of customers to return"""
     offset: NotRequired[int]
     r"""Number of customers to skip"""
+    name: NotRequired[str]
+    r"""Filter customers by consumer name (case-insensitive substring match)"""
+    email: NotRequired[str]
+    r"""Filter customers by billing email (case-insensitive substring match). Accepts partial values — e.g. a domain (\"acme.com\") or local part (\"billing\")."""
 
 
 class ListCustomersRequest(BaseModel):
@@ -40,9 +44,21 @@ class ListCustomersRequest(BaseModel):
     ] = 0
     r"""Number of customers to skip"""
 
+    name: Annotated[
+        Optional[str],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Filter customers by consumer name (case-insensitive substring match)"""
+
+    email: Annotated[
+        Optional[str],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Filter customers by billing email (case-insensitive substring match). Accepts partial values — e.g. a domain (\"acme.com\") or local part (\"billing\")."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["limit", "offset"])
+        optional_fields = set(["limit", "offset", "name", "email"])
         serialized = handler(self)
         m = {}
 
