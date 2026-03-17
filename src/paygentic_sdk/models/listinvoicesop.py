@@ -39,6 +39,8 @@ class ListInvoicesRequestTypedDict(TypedDict):
     r"""Filter invoices by status"""
     subscription_id: NotRequired[str]
     r"""Filter invoices by subscription ID"""
+    merchant_id: NotRequired[str]
+    r"""Filter invoices by merchant ID"""
 
 
 class ListInvoicesRequest(BaseModel):
@@ -68,9 +70,18 @@ class ListInvoicesRequest(BaseModel):
     ] = None
     r"""Filter invoices by subscription ID"""
 
+    merchant_id: Annotated[
+        Optional[str],
+        pydantic.Field(alias="merchantId"),
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Filter invoices by merchant ID"""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["limit", "nextActionAt", "status", "subscriptionId"])
+        optional_fields = set(
+            ["limit", "nextActionAt", "status", "subscriptionId", "merchantId"]
+        )
         serialized = handler(self)
         m = {}
 
