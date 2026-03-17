@@ -1,4 +1,4 @@
-# Consumer
+# Merchant
 
 
 ## Fields

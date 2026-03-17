@@ -170,6 +170,75 @@ SubscriptionStatusEnum = Union[
 ]
 
 
+class MerchantTypedDict(TypedDict):
+    id: str
+    name: str
+    email: str
+
+
+class Merchant(BaseModel):
+    id: str
+
+    name: str
+
+    email: str
+
+
+class ConsumerTypedDict(TypedDict):
+    id: str
+    name: str
+    email: str
+
+
+class Consumer(BaseModel):
+    id: str
+
+    name: str
+
+    email: str
+
+
+class SubscriptionCustomerTypedDict(TypedDict):
+    r"""Customer details with merchant and consumer information. Only included when include=customer is specified in the list query."""
+
+    id: NotRequired[str]
+    r"""Customer ID"""
+    merchant_id: NotRequired[str]
+    r"""Merchant organization ID"""
+    merchant: NotRequired[MerchantTypedDict]
+    consumer: NotRequired[ConsumerTypedDict]
+
+
+class SubscriptionCustomer(BaseModel):
+    r"""Customer details with merchant and consumer information. Only included when include=customer is specified in the list query."""
+
+    id: Optional[str] = None
+    r"""Customer ID"""
+
+    merchant_id: Annotated[Optional[str], pydantic.Field(alias="merchantId")] = None
+    r"""Merchant organization ID"""
+
+    merchant: Optional[Merchant] = None
+
+    consumer: Optional[Consumer] = None
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(["id", "merchantId", "merchant", "consumer"])
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k, serialized.get(n))
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m
+
+
 class SubscriptionTypedDict(TypedDict):
     id: str
     object: SubscriptionObject
@@ -206,6 +275,8 @@ class SubscriptionTypedDict(TypedDict):
     r"""Whether renewal reminder emails are enabled for this subscription. Null means use plan default."""
     renewal_reminder_days: NotRequired[Nullable[int]]
     r"""Number of days before renewal to send the reminder. Null means use plan default."""
+    customer: NotRequired[SubscriptionCustomerTypedDict]
+    r"""Customer details with merchant and consumer information. Only included when include=customer is specified in the list query."""
 
 
 class Subscription(BaseModel):
@@ -281,6 +352,9 @@ class Subscription(BaseModel):
     ] = UNSET
     r"""Number of days before renewal to send the reminder. Null means use plan default."""
 
+    customer: Optional[SubscriptionCustomer] = None
+    r"""Customer details with merchant and consumer information. Only included when include=customer is specified in the list query."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
@@ -299,6 +373,7 @@ class Subscription(BaseModel):
                 "walletId",
                 "renewalReminderEnabled",
                 "renewalReminderDays",
+                "customer",
             ]
         )
         nullable_fields = set(["renewalReminderEnabled", "renewalReminderDays"])
@@ -334,6 +409,10 @@ except NameError:
     pass
 try:
     PaymentPending.model_rebuild()
+except NameError:
+    pass
+try:
+    SubscriptionCustomer.model_rebuild()
 except NameError:
     pass
 try:

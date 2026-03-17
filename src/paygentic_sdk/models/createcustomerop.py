@@ -10,7 +10,7 @@ from typing import Dict, Optional, Union
 from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
 
-class ConsumerTypedDict(TypedDict):
+class CreateCustomerConsumerTypedDict(TypedDict):
     r"""Fields to create a new consumer. Will use an existing consumer if one exists with the same email address. Required if `consumerId` is not provided. Address with complete tax information (country, state, zipCode) is required for tax calculation when using Paygentic Tax."""
 
     name: str
@@ -22,7 +22,7 @@ class ConsumerTypedDict(TypedDict):
     r"""Consumer phone number. Sample values: '+1-555-123-4567', '+44-20-7946-0958', '+49-30-12345678'"""
 
 
-class Consumer(BaseModel):
+class CreateCustomerConsumer(BaseModel):
     r"""Fields to create a new consumer. Will use an existing consumer if one exists with the same email address. Required if `consumerId` is not provided. Address with complete tax information (country, state, zipCode) is required for tax calculation when using Paygentic Tax."""
 
     name: str
@@ -56,7 +56,7 @@ class Consumer(BaseModel):
 class CreateCustomerRequestTypedDict(TypedDict):
     merchant_id: str
     r"""Unique identifier for an organization"""
-    consumer: NotRequired[ConsumerTypedDict]
+    consumer: NotRequired[CreateCustomerConsumerTypedDict]
     r"""Fields to create a new consumer. Will use an existing consumer if one exists with the same email address. Required if `consumerId` is not provided. Address with complete tax information (country, state, zipCode) is required for tax calculation when using Paygentic Tax."""
     consumer_id: NotRequired[str]
     r"""Unique identifier for an organization"""
@@ -70,7 +70,7 @@ class CreateCustomerRequest(BaseModel):
     merchant_id: Annotated[str, pydantic.Field(alias="merchantId")]
     r"""Unique identifier for an organization"""
 
-    consumer: Optional[Consumer] = None
+    consumer: Optional[CreateCustomerConsumer] = None
     r"""Fields to create a new consumer. Will use an existing consumer if one exists with the same email address. Required if `consumerId` is not provided. Address with complete tax information (country, state, zipCode) is required for tax calculation when using Paygentic Tax."""
 
     consumer_id: Annotated[Optional[str], pydantic.Field(alias="consumerId")] = None

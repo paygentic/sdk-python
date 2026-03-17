@@ -3,6 +3,7 @@
 from __future__ import annotations
 from .offsetpagination import OffsetPagination, OffsetPaginationTypedDict
 from .subscription import Subscription, SubscriptionTypedDict
+from datetime import datetime
 from paygentic_sdk.types import BaseModel, UNSET_SENTINEL
 from paygentic_sdk.utils import FieldMetadata, QueryParamMetadata
 import pydantic
@@ -14,7 +15,12 @@ from typing_extensions import Annotated, NotRequired, TypedDict
 ListSubscriptionsStatus = Literal[
     "active",
     "terminated",
+    "pending_payment",
 ]
+
+
+Include = Literal["customer",]
+r"""Include related resources. When 'customer' is specified, each subscription includes merchant and consumer details."""
 
 
 class ListSubscriptionsRequestTypedDict(TypedDict):
@@ -26,6 +32,10 @@ class ListSubscriptionsRequestTypedDict(TypedDict):
     offset: NotRequired[str]
     r"""Number of subscriptions to skip"""
     status: NotRequired[ListSubscriptionsStatus]
+    started_before: NotRequired[datetime]
+    r"""Filter subscriptions started at or before this ISO 8601 date-time"""
+    include: NotRequired[Include]
+    r"""Include related resources. When 'customer' is specified, each subscription includes merchant and consumer details."""
 
 
 class ListSubscriptionsRequest(BaseModel):
@@ -64,10 +74,32 @@ class ListSubscriptionsRequest(BaseModel):
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = None
 
+    started_before: Annotated[
+        Optional[datetime],
+        pydantic.Field(alias="startedBefore"),
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Filter subscriptions started at or before this ISO 8601 date-time"""
+
+    include: Annotated[
+        Optional[Include],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Include related resources. When 'customer' is specified, each subscription includes merchant and consumer details."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
-            ["consumerId", "customerId", "limit", "merchantId", "offset", "status"]
+            [
+                "consumerId",
+                "customerId",
+                "limit",
+                "merchantId",
+                "offset",
+                "status",
+                "startedBefore",
+                "include",
+            ]
         )
         serialized = handler(self)
         m = {}

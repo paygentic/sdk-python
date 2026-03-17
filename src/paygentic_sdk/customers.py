@@ -232,7 +232,9 @@ class Customers(BaseSDK):
         self,
         *,
         merchant_id: str,
-        consumer: Optional[Union[models.Consumer, models.ConsumerTypedDict]] = None,
+        consumer: Optional[
+            Union[models.CreateCustomerConsumer, models.CreateCustomerConsumerTypedDict]
+        ] = None,
         consumer_id: Optional[str] = None,
         tax_id: Optional[str] = None,
         tax_rates: Optional[Dict[str, float]] = None,
@@ -266,7 +268,9 @@ class Customers(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.CreateCustomerRequest(
-            consumer=utils.get_pydantic_model(consumer, Optional[models.Consumer]),
+            consumer=utils.get_pydantic_model(
+                consumer, Optional[models.CreateCustomerConsumer]
+            ),
             consumer_id=consumer_id,
             merchant_id=merchant_id,
             tax_id=tax_id,
@@ -347,7 +351,9 @@ class Customers(BaseSDK):
         self,
         *,
         merchant_id: str,
-        consumer: Optional[Union[models.Consumer, models.ConsumerTypedDict]] = None,
+        consumer: Optional[
+            Union[models.CreateCustomerConsumer, models.CreateCustomerConsumerTypedDict]
+        ] = None,
         consumer_id: Optional[str] = None,
         tax_id: Optional[str] = None,
         tax_rates: Optional[Dict[str, float]] = None,
@@ -381,7 +387,9 @@ class Customers(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.CreateCustomerRequest(
-            consumer=utils.get_pydantic_model(consumer, Optional[models.Consumer]),
+            consumer=utils.get_pydantic_model(
+                consumer, Optional[models.CreateCustomerConsumer]
+            ),
             consumer_id=consumer_id,
             merchant_id=merchant_id,
             tax_id=tax_id,

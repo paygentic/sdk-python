@@ -12,3 +12,4 @@ value: ListSubscriptionsStatus = "active"
 
 - `"active"`
 - `"terminated"`
+- `"pending_payment"`
