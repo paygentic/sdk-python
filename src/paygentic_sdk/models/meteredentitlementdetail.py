@@ -49,6 +49,8 @@ class MeteredEntitlementDetailTypedDict(TypedDict):
     r"""When the entitlement becomes active."""
     has_access: bool
     r"""Whether the customer currently has active access to this entitlement."""
+    is_soft_limit: bool
+    r"""When false (hard limit), access is blocked when balance is exhausted and overage is not charged on invoices. When true (soft limit), access continues past the grant and overage is charged at the per-unit rate."""
     balance: float
     r"""Remaining grant balance for the current period."""
     usage_in_period: float
@@ -92,6 +94,9 @@ class MeteredEntitlementDetail(BaseModel):
 
     has_access: Annotated[bool, pydantic.Field(alias="hasAccess")]
     r"""Whether the customer currently has active access to this entitlement."""
+
+    is_soft_limit: Annotated[bool, pydantic.Field(alias="isSoftLimit")]
+    r"""When false (hard limit), access is blocked when balance is exhausted and overage is not charged on invoices. When true (soft limit), access continues past the grant and overage is charged at the per-unit rate."""
 
     balance: float
     r"""Remaining grant balance for the current period."""

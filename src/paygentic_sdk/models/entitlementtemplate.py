@@ -46,7 +46,7 @@ class EntitlementTemplateMeteredTypedDict(TypedDict):
     usage_period: UsagePeriodTypedDict
     type: Literal["metered"]
     is_soft_limit: NotRequired[bool]
-    r"""When true, access is granted even when balance is exhausted."""
+    r"""When false (hard limit), access is blocked when balance is exhausted and overage is not charged on invoices. When true (soft limit), access continues past the grant and overage is charged at the per-unit rate."""
     issue_after_reset: NotRequired[float]
     r"""Amount of grants to issue after each period reset."""
     issue_after_reset_priority: NotRequired[int]
@@ -68,7 +68,7 @@ class EntitlementTemplateMetered(BaseModel):
     ] = "metered"
 
     is_soft_limit: Annotated[Optional[bool], pydantic.Field(alias="isSoftLimit")] = None
-    r"""When true, access is granted even when balance is exhausted."""
+    r"""When false (hard limit), access is blocked when balance is exhausted and overage is not charged on invoices. When true (soft limit), access continues past the grant and overage is charged at the per-unit rate."""
 
     issue_after_reset: Annotated[
         Optional[float], pydantic.Field(alias="issueAfterReset")
