@@ -24,6 +24,8 @@ TaxRates = TypeAliasType("TaxRates", Union[float, Dict[str, float]])
 class UpdateCustomerRequestBodyTypedDict(TypedDict):
     tax_id: NotRequired[Nullable[str]]
     r"""Business tax registration identifier. Sample values: 'GB123456789' for UK VAT, 'DE123456789' for German VAT, 'FR12345678901' for French VAT. Enables inter-company tax handling and exemption from standard tax collection. Assign null to delete the identifier."""
+    external_id: NotRequired[Nullable[str]]
+    r"""Merchant-defined identifier for this customer in their own system. Set to null to clear."""
     tax_rates: NotRequired[TaxRatesTypedDict]
 
 
@@ -31,12 +33,17 @@ class UpdateCustomerRequestBody(BaseModel):
     tax_id: Annotated[OptionalNullable[str], pydantic.Field(alias="taxId")] = UNSET
     r"""Business tax registration identifier. Sample values: 'GB123456789' for UK VAT, 'DE123456789' for German VAT, 'FR12345678901' for French VAT. Enables inter-company tax handling and exemption from standard tax collection. Assign null to delete the identifier."""
 
+    external_id: Annotated[
+        OptionalNullable[str], pydantic.Field(alias="externalId")
+    ] = UNSET
+    r"""Merchant-defined identifier for this customer in their own system. Set to null to clear."""
+
     tax_rates: Annotated[Optional[TaxRates], pydantic.Field(alias="taxRates")] = None
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["taxId", "taxRates"])
-        nullable_fields = set(["taxId"])
+        optional_fields = set(["taxId", "externalId", "taxRates"])
+        nullable_fields = set(["taxId", "externalId"])
         serialized = handler(self)
         m = {}
 

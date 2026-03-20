@@ -20,6 +20,7 @@ class Customers(BaseSDK):
         offset: Optional[int] = 0,
         name: Optional[str] = None,
         email: Optional[str] = None,
+        external_id: Optional[str] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -32,6 +33,7 @@ class Customers(BaseSDK):
         :param offset: Number of customers to skip
         :param name: Filter customers by consumer name (case-insensitive substring match). Minimum 3 characters required for efficient index usage.
         :param email: Filter customers by billing email (case-insensitive substring match). Minimum 3 characters required for efficient index usage. Accepts partial values — e.g. a domain (\"acme.com\") or local part (\"billing\").
+        :param external_id: Filter customers by exact external ID match.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -52,6 +54,7 @@ class Customers(BaseSDK):
             offset=offset,
             name=name,
             email=email,
+            external_id=external_id,
             organization_id=organization_id,
         )
 
@@ -128,6 +131,7 @@ class Customers(BaseSDK):
         offset: Optional[int] = 0,
         name: Optional[str] = None,
         email: Optional[str] = None,
+        external_id: Optional[str] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -140,6 +144,7 @@ class Customers(BaseSDK):
         :param offset: Number of customers to skip
         :param name: Filter customers by consumer name (case-insensitive substring match). Minimum 3 characters required for efficient index usage.
         :param email: Filter customers by billing email (case-insensitive substring match). Minimum 3 characters required for efficient index usage. Accepts partial values — e.g. a domain (\"acme.com\") or local part (\"billing\").
+        :param external_id: Filter customers by exact external ID match.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -160,6 +165,7 @@ class Customers(BaseSDK):
             offset=offset,
             name=name,
             email=email,
+            external_id=external_id,
             organization_id=organization_id,
         )
 
@@ -237,6 +243,7 @@ class Customers(BaseSDK):
         ] = None,
         consumer_id: Optional[str] = None,
         tax_id: Optional[str] = None,
+        external_id: Optional[str] = None,
         tax_rates: Optional[Dict[str, float]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -251,6 +258,7 @@ class Customers(BaseSDK):
         :param consumer: Fields to create a new consumer. Will use an existing consumer if one exists with the same email address. Required if `consumerId` is not provided. Address with complete tax information (country, state, zipCode) is required for tax calculation when using Paygentic Tax.
         :param consumer_id: Unique identifier for an organization
         :param tax_id: Optional business tax registration identifier. Sample values: 'GB123456789' for UK VAT, 'DE123456789' for German VAT, 'FR12345678901' for French VAT. Supplying this value enables inter-company tax handling and exemption from standard tax collection.
+        :param external_id: Merchant-defined identifier for this customer in their own system.
         :param tax_rates: An object mapping plan IDs, metric IDs, or 'default' to a tax rate percentage (e.g., 13 for 13%)
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -274,6 +282,7 @@ class Customers(BaseSDK):
             consumer_id=consumer_id,
             merchant_id=merchant_id,
             tax_id=tax_id,
+            external_id=external_id,
             tax_rates=tax_rates,
         )
 
@@ -316,7 +325,7 @@ class Customers(BaseSDK):
                 ),
             ),
             request=req,
-            error_status_codes=["400", "403", "404", "4XX", "500", "5XX"],
+            error_status_codes=["400", "403", "404", "409", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -328,7 +337,7 @@ class Customers(BaseSDK):
         if utils.match_response(http_res, "400", "application/json"):
             response_data = unmarshal_json_response(errors.BadRequestUnion, http_res)
             raise errors.BadRequest(response_data, http_res)
-        if utils.match_response(http_res, ["403", "404"], "application/json"):
+        if utils.match_response(http_res, ["403", "404", "409"], "application/json"):
             response_data = unmarshal_json_response(errors.ErrorData, http_res)
             raise errors.Error(response_data, http_res)
         if utils.match_response(http_res, "500", "application/json"):
@@ -356,6 +365,7 @@ class Customers(BaseSDK):
         ] = None,
         consumer_id: Optional[str] = None,
         tax_id: Optional[str] = None,
+        external_id: Optional[str] = None,
         tax_rates: Optional[Dict[str, float]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -370,6 +380,7 @@ class Customers(BaseSDK):
         :param consumer: Fields to create a new consumer. Will use an existing consumer if one exists with the same email address. Required if `consumerId` is not provided. Address with complete tax information (country, state, zipCode) is required for tax calculation when using Paygentic Tax.
         :param consumer_id: Unique identifier for an organization
         :param tax_id: Optional business tax registration identifier. Sample values: 'GB123456789' for UK VAT, 'DE123456789' for German VAT, 'FR12345678901' for French VAT. Supplying this value enables inter-company tax handling and exemption from standard tax collection.
+        :param external_id: Merchant-defined identifier for this customer in their own system.
         :param tax_rates: An object mapping plan IDs, metric IDs, or 'default' to a tax rate percentage (e.g., 13 for 13%)
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -393,6 +404,7 @@ class Customers(BaseSDK):
             consumer_id=consumer_id,
             merchant_id=merchant_id,
             tax_id=tax_id,
+            external_id=external_id,
             tax_rates=tax_rates,
         )
 
@@ -435,7 +447,7 @@ class Customers(BaseSDK):
                 ),
             ),
             request=req,
-            error_status_codes=["400", "403", "404", "4XX", "500", "5XX"],
+            error_status_codes=["400", "403", "404", "409", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -447,7 +459,7 @@ class Customers(BaseSDK):
         if utils.match_response(http_res, "400", "application/json"):
             response_data = unmarshal_json_response(errors.BadRequestUnion, http_res)
             raise errors.BadRequest(response_data, http_res)
-        if utils.match_response(http_res, ["403", "404"], "application/json"):
+        if utils.match_response(http_res, ["403", "404", "409"], "application/json"):
             response_data = unmarshal_json_response(errors.ErrorData, http_res)
             raise errors.Error(response_data, http_res)
         if utils.match_response(http_res, "500", "application/json"):
@@ -853,6 +865,7 @@ class Customers(BaseSDK):
         *,
         id: str,
         tax_id: OptionalNullable[str] = UNSET,
+        external_id: OptionalNullable[str] = UNSET,
         tax_rates: Optional[Union[models.TaxRates, models.TaxRatesTypedDict]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -863,6 +876,7 @@ class Customers(BaseSDK):
 
         :param id: The unique identifier of the customer.
         :param tax_id: Business tax registration identifier. Sample values: 'GB123456789' for UK VAT, 'DE123456789' for German VAT, 'FR12345678901' for French VAT. Enables inter-company tax handling and exemption from standard tax collection. Assign null to delete the identifier.
+        :param external_id: Merchant-defined identifier for this customer in their own system. Set to null to clear.
         :param tax_rates:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -883,6 +897,7 @@ class Customers(BaseSDK):
             id=id,
             request_body=models.UpdateCustomerRequestBody(
                 tax_id=tax_id,
+                external_id=external_id,
                 tax_rates=tax_rates,
             ),
         )
@@ -930,7 +945,7 @@ class Customers(BaseSDK):
                 ),
             ),
             request=req,
-            error_status_codes=["400", "401", "403", "404", "4XX", "500", "5XX"],
+            error_status_codes=["400", "401", "403", "404", "409", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -940,7 +955,9 @@ class Customers(BaseSDK):
         if utils.match_response(http_res, "400", "application/json"):
             response_data = unmarshal_json_response(errors.BadRequestUnion, http_res)
             raise errors.BadRequest(response_data, http_res)
-        if utils.match_response(http_res, ["401", "403", "404"], "application/json"):
+        if utils.match_response(
+            http_res, ["401", "403", "404", "409"], "application/json"
+        ):
             response_data = unmarshal_json_response(errors.ErrorData, http_res)
             raise errors.Error(response_data, http_res)
         if utils.match_response(http_res, "500", "application/json"):
@@ -964,6 +981,7 @@ class Customers(BaseSDK):
         *,
         id: str,
         tax_id: OptionalNullable[str] = UNSET,
+        external_id: OptionalNullable[str] = UNSET,
         tax_rates: Optional[Union[models.TaxRates, models.TaxRatesTypedDict]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -974,6 +992,7 @@ class Customers(BaseSDK):
 
         :param id: The unique identifier of the customer.
         :param tax_id: Business tax registration identifier. Sample values: 'GB123456789' for UK VAT, 'DE123456789' for German VAT, 'FR12345678901' for French VAT. Enables inter-company tax handling and exemption from standard tax collection. Assign null to delete the identifier.
+        :param external_id: Merchant-defined identifier for this customer in their own system. Set to null to clear.
         :param tax_rates:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -994,6 +1013,7 @@ class Customers(BaseSDK):
             id=id,
             request_body=models.UpdateCustomerRequestBody(
                 tax_id=tax_id,
+                external_id=external_id,
                 tax_rates=tax_rates,
             ),
         )
@@ -1041,7 +1061,7 @@ class Customers(BaseSDK):
                 ),
             ),
             request=req,
-            error_status_codes=["400", "401", "403", "404", "4XX", "500", "5XX"],
+            error_status_codes=["400", "401", "403", "404", "409", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1051,7 +1071,9 @@ class Customers(BaseSDK):
         if utils.match_response(http_res, "400", "application/json"):
             response_data = unmarshal_json_response(errors.BadRequestUnion, http_res)
             raise errors.BadRequest(response_data, http_res)
-        if utils.match_response(http_res, ["401", "403", "404"], "application/json"):
+        if utils.match_response(
+            http_res, ["401", "403", "404", "409"], "application/json"
+        ):
             response_data = unmarshal_json_response(errors.ErrorData, http_res)
             raise errors.Error(response_data, http_res)
         if utils.match_response(http_res, "500", "application/json"):

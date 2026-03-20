@@ -65,6 +65,8 @@ class CustomerTypedDict(TypedDict):
     organization: NotRequired[CustomerOrganizationTypedDict]
     tax_id: NotRequired[str]
     r"""Business tax registration identifier. Sample values: 'GB123456789' for UK VAT, 'DE123456789' for German VAT, 'FR12345678901' for French VAT. Enables inter-company tax handling and exemption from standard tax collection."""
+    external_id: NotRequired[str]
+    r"""Merchant-defined identifier for this customer in their own system."""
     tax_rates: NotRequired[Dict[str, float]]
     r"""An object mapping plan IDs, metric IDs, or 'default' to a tax rate percentage (e.g., 13 for 13%)"""
 
@@ -95,6 +97,9 @@ class Customer(BaseModel):
     tax_id: Annotated[Optional[str], pydantic.Field(alias="taxId")] = None
     r"""Business tax registration identifier. Sample values: 'GB123456789' for UK VAT, 'DE123456789' for German VAT, 'FR12345678901' for French VAT. Enables inter-company tax handling and exemption from standard tax collection."""
 
+    external_id: Annotated[Optional[str], pydantic.Field(alias="externalId")] = None
+    r"""Merchant-defined identifier for this customer in their own system."""
+
     tax_rates: Annotated[
         Optional[Dict[str, float]], pydantic.Field(alias="taxRates")
     ] = None
@@ -102,7 +107,9 @@ class Customer(BaseModel):
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["object", "organization", "taxId", "taxRates"])
+        optional_fields = set(
+            ["object", "organization", "taxId", "externalId", "taxRates"]
+        )
         serialized = handler(self)
         m = {}
 

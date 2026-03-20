@@ -22,6 +22,8 @@ class ListCustomersRequestTypedDict(TypedDict):
     r"""Filter customers by consumer name (case-insensitive substring match). Minimum 3 characters required for efficient index usage."""
     email: NotRequired[str]
     r"""Filter customers by billing email (case-insensitive substring match). Minimum 3 characters required for efficient index usage. Accepts partial values — e.g. a domain (\"acme.com\") or local part (\"billing\")."""
+    external_id: NotRequired[str]
+    r"""Filter customers by exact external ID match."""
 
 
 class ListCustomersRequest(BaseModel):
@@ -56,9 +58,16 @@ class ListCustomersRequest(BaseModel):
     ] = None
     r"""Filter customers by billing email (case-insensitive substring match). Minimum 3 characters required for efficient index usage. Accepts partial values — e.g. a domain (\"acme.com\") or local part (\"billing\")."""
 
+    external_id: Annotated[
+        Optional[str],
+        pydantic.Field(alias="externalId"),
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Filter customers by exact external ID match."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["limit", "offset", "name", "email"])
+        optional_fields = set(["limit", "offset", "name", "email", "externalId"])
         serialized = handler(self)
         m = {}
 
