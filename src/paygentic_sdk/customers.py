@@ -867,6 +867,12 @@ class Customers(BaseSDK):
         tax_id: OptionalNullable[str] = UNSET,
         external_id: OptionalNullable[str] = UNSET,
         tax_rates: Optional[Union[models.TaxRates, models.TaxRatesTypedDict]] = None,
+        notification_settings: Optional[
+            Union[
+                models.UpdateCustomerNotificationSettings,
+                models.UpdateCustomerNotificationSettingsTypedDict,
+            ]
+        ] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -878,6 +884,7 @@ class Customers(BaseSDK):
         :param tax_id: Business tax registration identifier. Sample values: 'GB123456789' for UK VAT, 'DE123456789' for German VAT, 'FR12345678901' for French VAT. Enables inter-company tax handling and exemption from standard tax collection. Assign null to delete the identifier.
         :param external_id: Merchant-defined identifier for this customer in their own system. Set to null to clear.
         :param tax_rates:
+        :param notification_settings: Notification preferences for this customer. Only provided fields are updated.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -899,6 +906,10 @@ class Customers(BaseSDK):
                 tax_id=tax_id,
                 external_id=external_id,
                 tax_rates=tax_rates,
+                notification_settings=utils.get_pydantic_model(
+                    notification_settings,
+                    Optional[models.UpdateCustomerNotificationSettings],
+                ),
             ),
         )
 
@@ -983,6 +994,12 @@ class Customers(BaseSDK):
         tax_id: OptionalNullable[str] = UNSET,
         external_id: OptionalNullable[str] = UNSET,
         tax_rates: Optional[Union[models.TaxRates, models.TaxRatesTypedDict]] = None,
+        notification_settings: Optional[
+            Union[
+                models.UpdateCustomerNotificationSettings,
+                models.UpdateCustomerNotificationSettingsTypedDict,
+            ]
+        ] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -994,6 +1011,7 @@ class Customers(BaseSDK):
         :param tax_id: Business tax registration identifier. Sample values: 'GB123456789' for UK VAT, 'DE123456789' for German VAT, 'FR12345678901' for French VAT. Enables inter-company tax handling and exemption from standard tax collection. Assign null to delete the identifier.
         :param external_id: Merchant-defined identifier for this customer in their own system. Set to null to clear.
         :param tax_rates:
+        :param notification_settings: Notification preferences for this customer. Only provided fields are updated.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1015,6 +1033,10 @@ class Customers(BaseSDK):
                 tax_id=tax_id,
                 external_id=external_id,
                 tax_rates=tax_rates,
+                notification_settings=utils.get_pydantic_model(
+                    notification_settings,
+                    Optional[models.UpdateCustomerNotificationSettings],
+                ),
             ),
         )
 

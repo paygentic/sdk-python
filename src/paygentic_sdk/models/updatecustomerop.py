@@ -21,12 +21,58 @@ TaxRatesTypedDict = TypeAliasType("TaxRatesTypedDict", Union[float, Dict[str, fl
 TaxRates = TypeAliasType("TaxRates", Union[float, Dict[str, float]])
 
 
+class UpdateCustomerNotificationSettingsTypedDict(TypedDict):
+    r"""Notification preferences for this customer. Only provided fields are updated."""
+
+    invoice_issued: NotRequired[bool]
+    r"""Whether to send invoice issued emails to this customer."""
+    invoice_paid: NotRequired[bool]
+    r"""Whether to send invoice paid emails to this customer."""
+    renewal_reminder: NotRequired[bool]
+    r"""Whether to send renewal reminder emails to this customer."""
+
+
+class UpdateCustomerNotificationSettings(BaseModel):
+    r"""Notification preferences for this customer. Only provided fields are updated."""
+
+    invoice_issued: Annotated[Optional[bool], pydantic.Field(alias="invoiceIssued")] = (
+        None
+    )
+    r"""Whether to send invoice issued emails to this customer."""
+
+    invoice_paid: Annotated[Optional[bool], pydantic.Field(alias="invoicePaid")] = None
+    r"""Whether to send invoice paid emails to this customer."""
+
+    renewal_reminder: Annotated[
+        Optional[bool], pydantic.Field(alias="renewalReminder")
+    ] = None
+    r"""Whether to send renewal reminder emails to this customer."""
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(["invoiceIssued", "invoicePaid", "renewalReminder"])
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k, serialized.get(n))
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m
+
+
 class UpdateCustomerRequestBodyTypedDict(TypedDict):
     tax_id: NotRequired[Nullable[str]]
     r"""Business tax registration identifier. Sample values: 'GB123456789' for UK VAT, 'DE123456789' for German VAT, 'FR12345678901' for French VAT. Enables inter-company tax handling and exemption from standard tax collection. Assign null to delete the identifier."""
     external_id: NotRequired[Nullable[str]]
     r"""Merchant-defined identifier for this customer in their own system. Set to null to clear."""
     tax_rates: NotRequired[TaxRatesTypedDict]
+    notification_settings: NotRequired[UpdateCustomerNotificationSettingsTypedDict]
+    r"""Notification preferences for this customer. Only provided fields are updated."""
 
 
 class UpdateCustomerRequestBody(BaseModel):
@@ -40,9 +86,17 @@ class UpdateCustomerRequestBody(BaseModel):
 
     tax_rates: Annotated[Optional[TaxRates], pydantic.Field(alias="taxRates")] = None
 
+    notification_settings: Annotated[
+        Optional[UpdateCustomerNotificationSettings],
+        pydantic.Field(alias="notificationSettings"),
+    ] = None
+    r"""Notification preferences for this customer. Only provided fields are updated."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["taxId", "externalId", "taxRates"])
+        optional_fields = set(
+            ["taxId", "externalId", "taxRates", "notificationSettings"]
+        )
         nullable_fields = set(["taxId", "externalId"])
         serialized = handler(self)
         m = {}
@@ -84,6 +138,10 @@ class UpdateCustomerRequest(BaseModel):
     ]
 
 
+try:
+    UpdateCustomerNotificationSettings.model_rebuild()
+except NameError:
+    pass
 try:
     UpdateCustomerRequestBody.model_rebuild()
 except NameError:

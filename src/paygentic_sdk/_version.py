@@ -3,10 +3,10 @@
 import importlib.metadata
 
 __title__: str = "paygentic-sdk"
-__version__: str = "0.1.11"
+__version__: str = "0.1.14"
 __openapi_doc_version__: str = "0.1.0"
-__gen_version__: str = "2.869.3"
-__user_agent__: str = "speakeasy-sdk/python 0.1.11 2.869.3 0.1.0 paygentic-sdk"
+__gen_version__: str = "2.869.23"
+__user_agent__: str = "speakeasy-sdk/python 0.1.14 2.869.23 0.1.0 paygentic-sdk"
 
 try:
     if __package__ is not None:

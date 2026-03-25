@@ -103,7 +103,7 @@ class Price(BaseModel):
     r"""Features associated with this price"""
 
     @model_serializer(mode="wrap")
-    def serialize_model(self, handler):
+    def _serialize_model(self, handler):
         optional_fields = set(
             [
                 "object",

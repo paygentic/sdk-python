@@ -7,7 +7,7 @@ from datetime import datetime
 from paygentic_sdk.types import BaseModel, UNSET_SENTINEL
 import pydantic
 from pydantic import model_serializer
-from typing import Dict, Literal, Optional
+from typing import Dict, List, Literal, Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
 
 
@@ -18,7 +18,7 @@ class CustomerOrganizationTypedDict(TypedDict):
     id: str
     name: str
     address: NotRequired[AddressTypedDict]
-    billing_email: NotRequired[str]
+    billing_emails: NotRequired[List[str]]
     phone: NotRequired[str]
 
 
@@ -29,13 +29,15 @@ class CustomerOrganization(BaseModel):
 
     address: Optional[Address] = None
 
-    billing_email: Annotated[Optional[str], pydantic.Field(alias="billingEmail")] = None
+    billing_emails: Annotated[
+        Optional[List[str]], pydantic.Field(alias="billingEmails")
+    ] = None
 
     phone: Optional[str] = None
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["address", "billingEmail", "phone"])
+        optional_fields = set(["address", "billingEmails", "phone"])
         serialized = handler(self)
         m = {}
 
@@ -48,6 +50,26 @@ class CustomerOrganization(BaseModel):
                     m[k] = val
 
         return m
+
+
+class NotificationSettingsTypedDict(TypedDict):
+    invoice_issued: bool
+    r"""Whether to send invoice issued emails to this customer."""
+    invoice_paid: bool
+    r"""Whether to send invoice paid emails to this customer."""
+    renewal_reminder: bool
+    r"""Whether to send renewal reminder emails to this customer."""
+
+
+class NotificationSettings(BaseModel):
+    invoice_issued: Annotated[bool, pydantic.Field(alias="invoiceIssued")]
+    r"""Whether to send invoice issued emails to this customer."""
+
+    invoice_paid: Annotated[bool, pydantic.Field(alias="invoicePaid")]
+    r"""Whether to send invoice paid emails to this customer."""
+
+    renewal_reminder: Annotated[bool, pydantic.Field(alias="renewalReminder")]
+    r"""Whether to send renewal reminder emails to this customer."""
 
 
 class CustomerTypedDict(TypedDict):
@@ -69,6 +91,7 @@ class CustomerTypedDict(TypedDict):
     r"""Merchant-defined identifier for this customer in their own system."""
     tax_rates: NotRequired[Dict[str, float]]
     r"""An object mapping plan IDs, metric IDs, or 'default' to a tax rate percentage (e.g., 13 for 13%)"""
+    notification_settings: NotRequired[NotificationSettingsTypedDict]
 
 
 class Customer(BaseModel):
@@ -105,10 +128,21 @@ class Customer(BaseModel):
     ] = None
     r"""An object mapping plan IDs, metric IDs, or 'default' to a tax rate percentage (e.g., 13 for 13%)"""
 
+    notification_settings: Annotated[
+        Optional[NotificationSettings], pydantic.Field(alias="notificationSettings")
+    ] = None
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
-            ["object", "organization", "taxId", "externalId", "taxRates"]
+            [
+                "object",
+                "organization",
+                "taxId",
+                "externalId",
+                "taxRates",
+                "notificationSettings",
+            ]
         )
         serialized = handler(self)
         m = {}
@@ -126,6 +160,10 @@ class Customer(BaseModel):
 
 try:
     CustomerOrganization.model_rebuild()
+except NameError:
+    pass
+try:
+    NotificationSettings.model_rebuild()
 except NameError:
     pass
 try:
