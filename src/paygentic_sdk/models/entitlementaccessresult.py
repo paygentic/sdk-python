@@ -59,6 +59,16 @@ class EntitlementAccessResultTypedDict(TypedDict):
     r"""Configuration values for `static` features. Null for other types."""
     active_to: NotRequired[Nullable[datetime]]
     r"""When the entitlement expires. Null means no expiration."""
+    balance: NotRequired[Nullable[float]]
+    r"""Remaining grant balance. Only present for `metered` features."""
+    usage_in_period: NotRequired[Nullable[float]]
+    r"""Total usage in the current period. Only present for `metered` features."""
+    overage: NotRequired[Nullable[float]]
+    r"""Amount of overage beyond granted balance. Only present for `metered` features."""
+    current_period_start: NotRequired[Nullable[datetime]]
+    r"""Start of the current usage period. Only present for `metered` features with a usage period configured."""
+    current_period_end: NotRequired[Nullable[datetime]]
+    r"""End of the current usage period. Only present for `metered` features with a usage period configured."""
 
 
 class EntitlementAccessResult(BaseModel):
@@ -93,10 +103,51 @@ class EntitlementAccessResult(BaseModel):
     ] = UNSET
     r"""When the entitlement expires. Null means no expiration."""
 
+    balance: OptionalNullable[float] = UNSET
+    r"""Remaining grant balance. Only present for `metered` features."""
+
+    usage_in_period: Annotated[
+        OptionalNullable[float], pydantic.Field(alias="usageInPeriod")
+    ] = UNSET
+    r"""Total usage in the current period. Only present for `metered` features."""
+
+    overage: OptionalNullable[float] = UNSET
+    r"""Amount of overage beyond granted balance. Only present for `metered` features."""
+
+    current_period_start: Annotated[
+        OptionalNullable[datetime], pydantic.Field(alias="currentPeriodStart")
+    ] = UNSET
+    r"""Start of the current usage period. Only present for `metered` features with a usage period configured."""
+
+    current_period_end: Annotated[
+        OptionalNullable[datetime], pydantic.Field(alias="currentPeriodEnd")
+    ] = UNSET
+    r"""End of the current usage period. Only present for `metered` features with a usage period configured."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["config", "activeTo"])
-        nullable_fields = set(["config", "activeTo"])
+        optional_fields = set(
+            [
+                "config",
+                "activeTo",
+                "balance",
+                "usageInPeriod",
+                "overage",
+                "currentPeriodStart",
+                "currentPeriodEnd",
+            ]
+        )
+        nullable_fields = set(
+            [
+                "config",
+                "activeTo",
+                "balance",
+                "usageInPeriod",
+                "overage",
+                "currentPeriodStart",
+                "currentPeriodEnd",
+            ]
+        )
         serialized = handler(self)
         m = {}
 
