@@ -16,6 +16,7 @@ import weakref
 
 if TYPE_CHECKING:
     from paygentic_sdk.billablemetrics import BillableMetrics
+    from paygentic_sdk.costs import Costs
     from paygentic_sdk.customers import Customers
     from paygentic_sdk.disputes import Disputes
     from paygentic_sdk.entitlements import Entitlements
@@ -73,6 +74,8 @@ class Paygentic(BaseSDK):
     r"""Create and manage one-off payments. A payment represents a single charge that a merchant wants to collect from a customer."""
     events: "Events"
     r"""Ingest raw metering events that are processed by the meters service."""
+    costs: "Costs"
+    r"""A Cost represents the operational or infrastructure expense of serving customers for a given product. Costs are metered (driven by event-based usage) and are tracked in parallel with billable metrics to give merchants visibility into both revenue and cost per customer."""
     revenue: "Revenue"
     r"""Revenue data from invoices and payments"""
     test_clocks: "TestClocks"
@@ -95,6 +98,7 @@ class Paygentic(BaseSDK):
         "invoices_v2": ("paygentic_sdk.invoices_v2", "InvoicesV2"),
         "payments": ("paygentic_sdk.payments", "Payments"),
         "events": ("paygentic_sdk.events", "Events"),
+        "costs": ("paygentic_sdk.costs", "Costs"),
         "revenue": ("paygentic_sdk.revenue", "Revenue"),
         "test_clocks": ("paygentic_sdk.test_clocks", "TestClocks"),
     }

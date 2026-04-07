@@ -16,10 +16,13 @@ from typing import Dict, Literal, Optional, Union
 from typing_extensions import Annotated, NotRequired, TypedDict
 
 
-BillableMetricObject = Literal["billableMetric",]
+CostObject = Literal["cost",]
 
 
-BillableMetricAggregation = Union[
+CostType = Literal["metered",]
+
+
+CostAggregation = Union[
     Literal[
         "SUM",
         "COUNT",
@@ -33,49 +36,58 @@ BillableMetricAggregation = Union[
 ]
 
 
-class BillableMetricTypedDict(TypedDict):
+class CostTypedDict(TypedDict):
     id: str
-    r"""Unique identifier for a billable metric"""
-    aggregation: BillableMetricAggregation
-    created_at: datetime
-    description: str
-    merchant_id: str
-    r"""Unique identifier for an organization"""
+    r"""Unique identifier for a cost"""
+    type: CostType
     name: str
+    currency: str
+    unit_cost: str
+    r"""Decimal as string to avoid floating point precision loss."""
     product_id: str
     r"""Unique identifier for a product"""
-    unit: str
+    merchant_id: str
+    r"""Unique identifier for an organization"""
+    created_at: datetime
     updated_at: datetime
-    object: NotRequired[BillableMetricObject]
+    object: NotRequired[CostObject]
+    unit: NotRequired[Nullable[str]]
+    aggregation: NotRequired[Nullable[CostAggregation]]
     event_type: NotRequired[Nullable[str]]
     value_property: NotRequired[Nullable[str]]
     group_by: NotRequired[Nullable[Dict[str, str]]]
-    event_from: NotRequired[Nullable[datetime]]
+    deleted_at: NotRequired[Nullable[datetime]]
+    r"""Soft-delete timestamp. Always null for active costs returned by the API."""
 
 
-class BillableMetric(BaseModel):
+class Cost(BaseModel):
     id: str
-    r"""Unique identifier for a billable metric"""
+    r"""Unique identifier for a cost"""
 
-    aggregation: BillableMetricAggregation
-
-    created_at: Annotated[datetime, pydantic.Field(alias="createdAt")]
-
-    description: str
-
-    merchant_id: Annotated[str, pydantic.Field(alias="merchantId")]
-    r"""Unique identifier for an organization"""
+    type: CostType
 
     name: str
+
+    currency: str
+
+    unit_cost: Annotated[str, pydantic.Field(alias="unitCost")]
+    r"""Decimal as string to avoid floating point precision loss."""
 
     product_id: Annotated[str, pydantic.Field(alias="productId")]
     r"""Unique identifier for a product"""
 
-    unit: str
+    merchant_id: Annotated[str, pydantic.Field(alias="merchantId")]
+    r"""Unique identifier for an organization"""
+
+    created_at: Annotated[datetime, pydantic.Field(alias="createdAt")]
 
     updated_at: Annotated[datetime, pydantic.Field(alias="updatedAt")]
 
-    object: Optional[BillableMetricObject] = "billableMetric"
+    object: Optional[CostObject] = "cost"
+
+    unit: OptionalNullable[str] = UNSET
+
+    aggregation: OptionalNullable[CostAggregation] = UNSET
 
     event_type: Annotated[OptionalNullable[str], pydantic.Field(alias="eventType")] = (
         UNSET
@@ -89,16 +101,34 @@ class BillableMetric(BaseModel):
         OptionalNullable[Dict[str, str]], pydantic.Field(alias="groupBy")
     ] = UNSET
 
-    event_from: Annotated[
-        OptionalNullable[datetime], pydantic.Field(alias="eventFrom")
+    deleted_at: Annotated[
+        OptionalNullable[datetime], pydantic.Field(alias="deletedAt")
     ] = UNSET
+    r"""Soft-delete timestamp. Always null for active costs returned by the API."""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
-            ["object", "eventType", "valueProperty", "groupBy", "eventFrom"]
+            [
+                "object",
+                "unit",
+                "aggregation",
+                "eventType",
+                "valueProperty",
+                "groupBy",
+                "deletedAt",
+            ]
         )
-        nullable_fields = set(["eventType", "valueProperty", "groupBy", "eventFrom"])
+        nullable_fields = set(
+            [
+                "unit",
+                "aggregation",
+                "eventType",
+                "valueProperty",
+                "groupBy",
+                "deletedAt",
+            ]
+        )
         serialized = handler(self)
         m = {}
 
@@ -122,6 +152,6 @@ class BillableMetric(BaseModel):
 
 
 try:
-    BillableMetric.model_rebuild()
+    Cost.model_rebuild()
 except NameError:
     pass

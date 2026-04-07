@@ -332,6 +332,15 @@ with Paygentic(
 * [update](docs/sdks/billablemetrics/README.md#update) - Update
 * [meter](docs/sdks/billablemetrics/README.md#meter) - Query Meter Usage
 
+### [Costs](docs/sdks/costs/README.md)
+
+* [create_cost](docs/sdks/costs/README.md#create_cost) - Create
+* [list_costs](docs/sdks/costs/README.md#list_costs) - List
+* [get_cost](docs/sdks/costs/README.md#get_cost) - Get
+* [update_cost](docs/sdks/costs/README.md#update_cost) - Update
+* [delete_cost](docs/sdks/costs/README.md#delete_cost) - Delete
+* [get_cost_summary](docs/sdks/costs/README.md#get_cost_summary) - Query Summary
+
 ### [Customers](docs/sdks/customers/README.md)
 
 * [list](docs/sdks/customers/README.md#list) - List by Merchant
@@ -588,9 +597,9 @@ with Paygentic(
 
 
 **Inherit from [`PaygenticError`](./src/paygentic_sdk/errors/paygenticerror.py)**:
-* [`ValidationError`](./src/paygentic_sdk/errors/validationerror.py): Bad Request - The request could not be understood or was missing required parameters. Status code `400`. Applicable to 56 of 88 methods.*
-* [`DeleteCustomerConflictError`](./src/paygentic_sdk/errors/deletecustomerconflicterror.py): Customer cannot be deleted due to active dependencies. Status code `409`. Applicable to 1 of 88 methods.*
-* [`DeleteFeeConflictError`](./src/paygentic_sdk/errors/deletefeeconflicterror.py): Fee cannot be deleted because it has associated prices. Status code `409`. Applicable to 1 of 88 methods.*
+* [`ValidationError`](./src/paygentic_sdk/errors/validationerror.py): Bad Request - The request could not be understood or was missing required parameters. Status code `400`. Applicable to 59 of 94 methods.*
+* [`DeleteCustomerConflictError`](./src/paygentic_sdk/errors/deletecustomerconflicterror.py): Customer cannot be deleted due to active dependencies. Status code `409`. Applicable to 1 of 94 methods.*
+* [`DeleteFeeConflictError`](./src/paygentic_sdk/errors/deletefeeconflicterror.py): Fee cannot be deleted because it has associated prices. Status code `409`. Applicable to 1 of 94 methods.*
 * [`ResponseValidationError`](./src/paygentic_sdk/errors/responsevalidationerror.py): Type mismatch between the response data and the expected Pydantic model. Provides access to the Pydantic validation error via the `cause` attribute.
 
 </details>

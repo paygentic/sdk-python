@@ -1,12 +1,12 @@
-# Aggregation
+# CostAggregation
 
 ## Example Usage
 
 ```python
-from paygentic_sdk.models import Aggregation
+from paygentic_sdk.models import CostAggregation
 
 # Open enum: unrecognized values are captured as UnrecognizedStr
-value: Aggregation = "SUM"
+value: CostAggregation = "SUM"
 ```
 
 
