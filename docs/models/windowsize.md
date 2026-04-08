@@ -15,3 +15,4 @@ value: WindowSize = "MINUTE"
 - `"MINUTE"`
 - `"HOUR"`
 - `"DAY"`
+- `"MONTH"`

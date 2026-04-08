@@ -14,6 +14,7 @@ WindowSize = Literal[
     "MINUTE",
     "HOUR",
     "DAY",
+    "MONTH",
 ]
 r"""Time bucket granularity"""
 
