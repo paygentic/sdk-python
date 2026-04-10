@@ -11,10 +11,11 @@ EventType = Union[
     Literal[
         "usage",
         "fee",
+        "discount",
     ],
     UnrecognizedStr,
 ]
-r"""Type of event: 'usage' for billable metric events, 'fee' for fee events"""
+r"""Type of event: 'usage' for billable metric events, 'fee' for fee events, 'discount' for grant discount line items (subtotal/total are negative, representing a credit)"""
 
 
 InvoiceLineItemLineItemType = Union[
@@ -29,7 +30,7 @@ r"""Type of line item: 'charge' for regular billing, 'refund' for refunded items
 
 class InvoiceLineItemTypedDict(TypedDict):
     event_type: EventType
-    r"""Type of event: 'usage' for billable metric events, 'fee' for fee events"""
+    r"""Type of event: 'usage' for billable metric events, 'fee' for fee events, 'discount' for grant discount line items (subtotal/total are negative, representing a credit)"""
     event_id: str
     r"""The event ID (usage_event_id or fee_event_id)"""
     event_source_id: str
@@ -64,7 +65,7 @@ class InvoiceLineItemTypedDict(TypedDict):
 
 class InvoiceLineItem(BaseModel):
     event_type: Annotated[EventType, pydantic.Field(alias="eventType")]
-    r"""Type of event: 'usage' for billable metric events, 'fee' for fee events"""
+    r"""Type of event: 'usage' for billable metric events, 'fee' for fee events, 'discount' for grant discount line items (subtotal/total are negative, representing a credit)"""
 
     event_id: Annotated[str, pydantic.Field(alias="eventId")]
     r"""The event ID (usage_event_id or fee_event_id)"""

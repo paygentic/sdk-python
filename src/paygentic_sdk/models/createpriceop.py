@@ -48,6 +48,8 @@ class CreatePriceRequestTypedDict(TypedDict):
     billing_cadence: NotRequired[Nullable[str]]
     r"""ISO 8601 duration for recurring charges (e.g., 'P1M' for monthly, 'P1Y' for yearly) or 'P0D' for one-time charges. Required for fees, optional for billable metrics. Sample values: 'P0D' for one-time, 'P1M' for monthly recurring, 'P1Y' for yearly recurring"""
     feature: NotRequired[PriceFeatureInputTypedDict]
+    grant_discount_enabled: NotRequired[bool]
+    r"""When true, grants applied to a subscription will discount usage charged by this price. Only supported for standard metered prices."""
 
 
 class CreatePriceRequest(BaseModel):
@@ -77,10 +79,22 @@ class CreatePriceRequest(BaseModel):
 
     feature: Optional[PriceFeatureInput] = None
 
+    grant_discount_enabled: Annotated[
+        Optional[bool], pydantic.Field(alias="grantDiscountEnabled")
+    ] = False
+    r"""When true, grants applied to a subscription will discount usage charged by this price. Only supported for standard metered prices."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
-            ["billableMetricId", "feeId", "model", "billingCadence", "feature"]
+            [
+                "billableMetricId",
+                "feeId",
+                "model",
+                "billingCadence",
+                "feature",
+                "grantDiscountEnabled",
+            ]
         )
         nullable_fields = set(["billingCadence"])
         serialized = handler(self)

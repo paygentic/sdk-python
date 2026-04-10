@@ -48,6 +48,8 @@ class UpdatePriceRequestBodyTypedDict(TypedDict):
     r"""ISO 8601 duration for recurring fees (e.g., 'P1M' for monthly, 'P1Y' for yearly, or 'P0D' for one-time)"""
     feature: NotRequired[Nullable[PriceFeatureInputTypedDict]]
     r"""Feature to associate. Set to null to remove existing feature. Omit to leave unchanged."""
+    grant_discount_enabled: NotRequired[bool]
+    r"""When true, grants applied to a subscription will discount usage charged by this price. Only supported for standard metered prices."""
 
 
 class UpdatePriceRequestBody(BaseModel):
@@ -79,6 +81,11 @@ class UpdatePriceRequestBody(BaseModel):
     feature: OptionalNullable[PriceFeatureInput] = UNSET
     r"""Feature to associate. Set to null to remove existing feature. Omit to leave unchanged."""
 
+    grant_discount_enabled: Annotated[
+        Optional[bool], pydantic.Field(alias="grantDiscountEnabled")
+    ] = None
+    r"""When true, grants applied to a subscription will discount usage charged by this price. Only supported for standard metered prices."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
@@ -90,6 +97,7 @@ class UpdatePriceRequestBody(BaseModel):
                 "paymentTerm",
                 "billingCadence",
                 "feature",
+                "grantDiscountEnabled",
             ]
         )
         nullable_fields = set(["billingCadence", "feature"])

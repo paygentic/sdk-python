@@ -8,6 +8,23 @@ from typing import List, Literal, Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
 
 
+CreatePlanBillingCadence = Literal[
+    "P1M",
+    "P3M",
+    "P1Y",
+]
+r"""ISO 8601 duration for the billing period. Takes precedence over billingInterval when both are provided."""
+
+
+CreatePlanBillingInterval = Literal[
+    "monthly",
+    "quarterly",
+    "yearly",
+    "annual",
+]
+r"""Recurring billing period frequency. Sample values: 'monthly' for monthly billing, 'quarterly' for quarterly billing, 'yearly' for annual billing"""
+
+
 CreatePlanTaxBehavior = Literal[
     "exclusive",
     "inclusive",
@@ -29,8 +46,10 @@ class CreatePlanRequestTypedDict(TypedDict):
     r"""Unique identifier for an organization"""
     name: str
     r"""Plan identifier visible to customers. Sample values: 'Basic Tier', 'Business Package', 'Enterprise Solution', 'Metered Billing', 'Free Tier', 'Premium Access'"""
-    billing_interval: NotRequired[str]
-    r"""Recurring billing period frequency. Sample values: 'monthly' for monthly billing, 'yearly' for annual billing, 'weekly' for weekly billing"""
+    billing_cadence: NotRequired[CreatePlanBillingCadence]
+    r"""ISO 8601 duration for the billing period. Takes precedence over billingInterval when both are provided."""
+    billing_interval: NotRequired[CreatePlanBillingInterval]
+    r"""Recurring billing period frequency. Sample values: 'monthly' for monthly billing, 'quarterly' for quarterly billing, 'yearly' for annual billing"""
     default_tax_code: NotRequired[str]
     r"""Default tax code for plan line items. Common values: 'eservice' (electronically supplied services), 'saas' (software as a service), 'consulting', 'ebook', 'standard', 'reduced', 'exempt'. Full list available via GET /tax/codes endpoint."""
     default_tax_rate: NotRequired[float]
@@ -63,10 +82,15 @@ class CreatePlanRequest(BaseModel):
     name: str
     r"""Plan identifier visible to customers. Sample values: 'Basic Tier', 'Business Package', 'Enterprise Solution', 'Metered Billing', 'Free Tier', 'Premium Access'"""
 
-    billing_interval: Annotated[
-        Optional[str], pydantic.Field(alias="billingInterval")
+    billing_cadence: Annotated[
+        Optional[CreatePlanBillingCadence], pydantic.Field(alias="billingCadence")
     ] = None
-    r"""Recurring billing period frequency. Sample values: 'monthly' for monthly billing, 'yearly' for annual billing, 'weekly' for weekly billing"""
+    r"""ISO 8601 duration for the billing period. Takes precedence over billingInterval when both are provided."""
+
+    billing_interval: Annotated[
+        Optional[CreatePlanBillingInterval], pydantic.Field(alias="billingInterval")
+    ] = None
+    r"""Recurring billing period frequency. Sample values: 'monthly' for monthly billing, 'quarterly' for quarterly billing, 'yearly' for annual billing"""
 
     default_tax_code: Annotated[
         Optional[str], pydantic.Field(alias="defaultTaxCode")
@@ -116,6 +140,7 @@ class CreatePlanRequest(BaseModel):
     def serialize_model(self, handler):
         optional_fields = set(
             [
+                "billingCadence",
                 "billingInterval",
                 "defaultTaxCode",
                 "defaultTaxRate",

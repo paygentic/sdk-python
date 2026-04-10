@@ -60,6 +60,8 @@ class SchemasPriceTypedDict(TypedDict):
     model: NotRequired[SchemasPriceModel]
     features: NotRequired[List[PriceFeatureTypedDict]]
     r"""Features associated with this price"""
+    grant_discount_enabled: NotRequired[bool]
+    r"""When true, grants applied to a subscription will discount usage charged by this price. Only supported for standard metered prices."""
 
 
 class SchemasPrice(BaseModel):
@@ -98,6 +100,11 @@ class SchemasPrice(BaseModel):
     features: Optional[List[PriceFeature]] = None
     r"""Features associated with this price"""
 
+    grant_discount_enabled: Annotated[
+        Optional[bool], pydantic.Field(alias="grantDiscountEnabled")
+    ] = False
+    r"""When true, grants applied to a subscription will discount usage charged by this price. Only supported for standard metered prices."""
+
     @model_serializer(mode="wrap")
     def _serialize_model(self, handler):
         optional_fields = set(
@@ -108,6 +115,7 @@ class SchemasPrice(BaseModel):
                 "billingCadence",
                 "model",
                 "features",
+                "grantDiscountEnabled",
             ]
         )
         nullable_fields = set(["billingCadence"])

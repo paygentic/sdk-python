@@ -1,6 +1,6 @@
 # LineItemType
 
-The type of line item
+The type of line item. 'discount' line items represent grant discounts with negative subtotal/total amounts.
 
 ## Example Usage
 
@@ -19,3 +19,4 @@ This is an open enum. Unrecognized values will not fail type checks.
 - `"fee"`
 - `"metered"`
 - `"manual"`
+- `"discount"`

@@ -13,6 +13,17 @@ from typing_extensions import Annotated, NotRequired, TypedDict
 PlanObject = Literal["plan",]
 
 
+BillingCadence = Union[
+    Literal[
+        "P1M",
+        "P3M",
+        "P1Y",
+    ],
+    UnrecognizedStr,
+]
+r"""ISO 8601 duration for the billing period."""
+
+
 class PlanPaymentTermTypedDict(TypedDict):
     in_arrears: NotRequired[bool]
     instant: NotRequired[bool]
@@ -55,6 +66,7 @@ class PlanTypedDict(TypedDict):
     r"""Unique identifier for a plan"""
     object: PlanObject
     billing_interval: str
+    r"""Deprecated. Human-readable billing period derived from billingCadence. Use billingCadence instead."""
     created_at: datetime
     currency: str
     merchant_id: str
@@ -63,6 +75,8 @@ class PlanTypedDict(TypedDict):
     product_id: str
     r"""Unique identifier for a product"""
     updated_at: datetime
+    billing_cadence: NotRequired[BillingCadence]
+    r"""ISO 8601 duration for the billing period."""
     default_tax_code: NotRequired[str]
     r"""Default tax code for plan line items. Common values: 'eservice' (electronically supplied services), 'saas' (software as a service), 'consulting', 'ebook', 'standard', 'reduced', 'exempt'. Full list available via GET /tax/codes endpoint."""
     default_tax_rate: NotRequired[float]
@@ -90,7 +104,14 @@ class Plan(BaseModel):
 
     object: PlanObject
 
-    billing_interval: Annotated[str, pydantic.Field(alias="billingInterval")]
+    billing_interval: Annotated[
+        str,
+        pydantic.Field(
+            deprecated="warning: ** DEPRECATED ** - Use billingCadence (ISO 8601 duration: P1M, P3M, P1Y) instead..",
+            alias="billingInterval",
+        ),
+    ]
+    r"""Deprecated. Human-readable billing period derived from billingCadence. Use billingCadence instead."""
 
     created_at: Annotated[datetime, pydantic.Field(alias="createdAt")]
 
@@ -105,6 +126,11 @@ class Plan(BaseModel):
     r"""Unique identifier for a product"""
 
     updated_at: Annotated[datetime, pydantic.Field(alias="updatedAt")]
+
+    billing_cadence: Annotated[
+        Optional[BillingCadence], pydantic.Field(alias="billingCadence")
+    ] = "P1M"
+    r"""ISO 8601 duration for the billing period."""
 
     default_tax_code: Annotated[
         Optional[str], pydantic.Field(alias="defaultTaxCode")
@@ -159,6 +185,7 @@ class Plan(BaseModel):
     def serialize_model(self, handler):
         optional_fields = set(
             [
+                "billingCadence",
                 "defaultTaxCode",
                 "defaultTaxRate",
                 "deletedAt",

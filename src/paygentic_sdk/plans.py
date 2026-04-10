@@ -18,7 +18,8 @@ class Plans(BaseSDK):
         currency: str,
         merchant_id: str,
         name: str,
-        billing_interval: Optional[str] = None,
+        billing_cadence: Optional[models.CreatePlanBillingCadence] = None,
+        billing_interval: Optional[models.CreatePlanBillingInterval] = None,
         default_tax_code: Optional[str] = "eservice",
         default_tax_rate: Optional[float] = 0,
         description: Optional[str] = None,
@@ -39,7 +40,8 @@ class Plans(BaseSDK):
         :param currency: Three-letter ISO 4217 currency code for plan pricing. Must be one of the merchant's supported currencies. Sample values: 'USD' for US dollars, 'EUR' for euros, 'GBP' for British pounds
         :param merchant_id: Unique identifier for an organization
         :param name: Plan identifier visible to customers. Sample values: 'Basic Tier', 'Business Package', 'Enterprise Solution', 'Metered Billing', 'Free Tier', 'Premium Access'
-        :param billing_interval: Recurring billing period frequency. Sample values: 'monthly' for monthly billing, 'yearly' for annual billing, 'weekly' for weekly billing
+        :param billing_cadence: ISO 8601 duration for the billing period. Takes precedence over billingInterval when both are provided.
+        :param billing_interval: Recurring billing period frequency. Sample values: 'monthly' for monthly billing, 'quarterly' for quarterly billing, 'yearly' for annual billing
         :param default_tax_code: Default tax code for plan line items. Common values: 'eservice' (electronically supplied services), 'saas' (software as a service), 'consulting', 'ebook', 'standard', 'reduced', 'exempt'. Full list available via GET /tax/codes endpoint.
         :param default_tax_rate: Fallback tax rate percentage when automatic tax calculation fails. Sample values: 8.5 represents 8.5% tax, 10.0 represents 10% tax, 0 represents no tax
         :param description: Plan details explaining included features and limits. Sample values: 'Claude API access with 500K tokens monthly allowance', 'Unlimited cloud storage plus real-time analytics tools', 'Complete machine learning infrastructure with GPU access', 'Flexible usage-based pricing with no monthly commitment'
@@ -66,6 +68,7 @@ class Plans(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.CreatePlanRequest(
+            billing_cadence=billing_cadence,
             billing_interval=billing_interval,
             currency=currency,
             default_tax_code=default_tax_code,
@@ -156,7 +159,8 @@ class Plans(BaseSDK):
         currency: str,
         merchant_id: str,
         name: str,
-        billing_interval: Optional[str] = None,
+        billing_cadence: Optional[models.CreatePlanBillingCadence] = None,
+        billing_interval: Optional[models.CreatePlanBillingInterval] = None,
         default_tax_code: Optional[str] = "eservice",
         default_tax_rate: Optional[float] = 0,
         description: Optional[str] = None,
@@ -177,7 +181,8 @@ class Plans(BaseSDK):
         :param currency: Three-letter ISO 4217 currency code for plan pricing. Must be one of the merchant's supported currencies. Sample values: 'USD' for US dollars, 'EUR' for euros, 'GBP' for British pounds
         :param merchant_id: Unique identifier for an organization
         :param name: Plan identifier visible to customers. Sample values: 'Basic Tier', 'Business Package', 'Enterprise Solution', 'Metered Billing', 'Free Tier', 'Premium Access'
-        :param billing_interval: Recurring billing period frequency. Sample values: 'monthly' for monthly billing, 'yearly' for annual billing, 'weekly' for weekly billing
+        :param billing_cadence: ISO 8601 duration for the billing period. Takes precedence over billingInterval when both are provided.
+        :param billing_interval: Recurring billing period frequency. Sample values: 'monthly' for monthly billing, 'quarterly' for quarterly billing, 'yearly' for annual billing
         :param default_tax_code: Default tax code for plan line items. Common values: 'eservice' (electronically supplied services), 'saas' (software as a service), 'consulting', 'ebook', 'standard', 'reduced', 'exempt'. Full list available via GET /tax/codes endpoint.
         :param default_tax_rate: Fallback tax rate percentage when automatic tax calculation fails. Sample values: 8.5 represents 8.5% tax, 10.0 represents 10% tax, 0 represents no tax
         :param description: Plan details explaining included features and limits. Sample values: 'Claude API access with 500K tokens monthly allowance', 'Unlimited cloud storage plus real-time analytics tools', 'Complete machine learning infrastructure with GPU access', 'Flexible usage-based pricing with no monthly commitment'
@@ -204,6 +209,7 @@ class Plans(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.CreatePlanRequest(
+            billing_cadence=billing_cadence,
             billing_interval=billing_interval,
             currency=currency,
             default_tax_code=default_tax_code,
@@ -900,7 +906,8 @@ class Plans(BaseSDK):
         self,
         *,
         id: str,
-        billing_interval: Optional[str] = None,
+        billing_cadence: Optional[models.UpdatePlanBillingCadence] = None,
+        billing_interval: Optional[models.UpdatePlanBillingInterval] = None,
         default_tax_code: Optional[str] = None,
         default_tax_rate: Optional[float] = None,
         description: Optional[str] = None,
@@ -918,7 +925,8 @@ class Plans(BaseSDK):
         r"""Update
 
         :param id: The unique identifier of the plan
-        :param billing_interval: Recurring billing period frequency. Sample values: 'monthly' for monthly billing, 'yearly' for annual billing, 'weekly' for weekly billing
+        :param billing_cadence: ISO 8601 duration for the billing period. Takes precedence over billingInterval when both are provided.
+        :param billing_interval: Recurring billing period frequency. Sample values: 'monthly' for monthly billing, 'quarterly' for quarterly billing, 'yearly' for annual billing
         :param default_tax_code: Default tax code for plan line items. Common values: 'eservice' (electronically supplied services), 'saas' (software as a service), 'consulting', 'ebook', 'standard', 'reduced', 'exempt'. Full list available via GET /tax/codes endpoint.
         :param default_tax_rate: Fallback tax rate (as percentage) if automatic tax calculation is unavailable
         :param description: Plan details explaining included features and limits. Sample values: 'Claude API access with 500K tokens monthly allowance', 'Unlimited cloud storage plus real-time analytics tools', 'Complete machine learning infrastructure with GPU access', 'Flexible usage-based pricing with no monthly commitment'
@@ -946,6 +954,7 @@ class Plans(BaseSDK):
         request = models.UpdatePlanRequest(
             id=id,
             request_body=models.UpdatePlanRequestBody(
+                billing_cadence=billing_cadence,
                 billing_interval=billing_interval,
                 default_tax_code=default_tax_code,
                 default_tax_rate=default_tax_rate,
@@ -1031,7 +1040,8 @@ class Plans(BaseSDK):
         self,
         *,
         id: str,
-        billing_interval: Optional[str] = None,
+        billing_cadence: Optional[models.UpdatePlanBillingCadence] = None,
+        billing_interval: Optional[models.UpdatePlanBillingInterval] = None,
         default_tax_code: Optional[str] = None,
         default_tax_rate: Optional[float] = None,
         description: Optional[str] = None,
@@ -1049,7 +1059,8 @@ class Plans(BaseSDK):
         r"""Update
 
         :param id: The unique identifier of the plan
-        :param billing_interval: Recurring billing period frequency. Sample values: 'monthly' for monthly billing, 'yearly' for annual billing, 'weekly' for weekly billing
+        :param billing_cadence: ISO 8601 duration for the billing period. Takes precedence over billingInterval when both are provided.
+        :param billing_interval: Recurring billing period frequency. Sample values: 'monthly' for monthly billing, 'quarterly' for quarterly billing, 'yearly' for annual billing
         :param default_tax_code: Default tax code for plan line items. Common values: 'eservice' (electronically supplied services), 'saas' (software as a service), 'consulting', 'ebook', 'standard', 'reduced', 'exempt'. Full list available via GET /tax/codes endpoint.
         :param default_tax_rate: Fallback tax rate (as percentage) if automatic tax calculation is unavailable
         :param description: Plan details explaining included features and limits. Sample values: 'Claude API access with 500K tokens monthly allowance', 'Unlimited cloud storage plus real-time analytics tools', 'Complete machine learning infrastructure with GPU access', 'Flexible usage-based pricing with no monthly commitment'
@@ -1077,6 +1088,7 @@ class Plans(BaseSDK):
         request = models.UpdatePlanRequest(
             id=id,
             request_body=models.UpdatePlanRequestBody(
+                billing_cadence=billing_cadence,
                 billing_interval=billing_interval,
                 default_tax_code=default_tax_code,
                 default_tax_rate=default_tax_rate,

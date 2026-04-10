@@ -139,6 +139,8 @@ if TYPE_CHECKING:
     )
     from .createplanop import (
         BillingVersion,
+        CreatePlanBillingCadence,
+        CreatePlanBillingInterval,
         CreatePlanRequest,
         CreatePlanRequestTypedDict,
         CreatePlanTaxBehavior,
@@ -563,6 +565,7 @@ if TYPE_CHECKING:
     )
     from .paymentsummary import PaymentSummary, PaymentSummaryTypedDict
     from .plan import (
+        BillingCadence,
         Plan,
         PlanObject,
         PlanPaymentTerm,
@@ -738,6 +741,8 @@ if TYPE_CHECKING:
         UpdateFeeRequestTypedDict,
     )
     from .updateplanop import (
+        UpdatePlanBillingCadence,
+        UpdatePlanBillingInterval,
         UpdatePlanRequest,
         UpdatePlanRequestBody,
         UpdatePlanRequestBodyTypedDict,
@@ -835,6 +840,7 @@ __all__ = [
     "BillableMetricObject",
     "BillableMetricTypedDict",
     "Billing",
+    "BillingCadence",
     "BillingTypedDict",
     "BillingVersion",
     "BooleanEntitlementDetail",
@@ -909,6 +915,8 @@ __all__ = [
     "CreatePaymentLineItemTypedDict",
     "CreatePaymentRequest",
     "CreatePaymentRequestTypedDict",
+    "CreatePlanBillingCadence",
+    "CreatePlanBillingInterval",
     "CreatePlanRequest",
     "CreatePlanRequestTypedDict",
     "CreatePlanTaxBehavior",
@@ -1408,6 +1416,8 @@ __all__ = [
     "UpdateFeeRequestBody",
     "UpdateFeeRequestBodyTypedDict",
     "UpdateFeeRequestTypedDict",
+    "UpdatePlanBillingCadence",
+    "UpdatePlanBillingInterval",
     "UpdatePlanRequest",
     "UpdatePlanRequestBody",
     "UpdatePlanRequestBodyTypedDict",
@@ -1571,6 +1581,8 @@ _dynamic_imports: dict[str, str] = {
     "CreatePaymentRequestTypedDict": ".createpaymentop",
     "Currency": ".createpaymentop",
     "BillingVersion": ".createplanop",
+    "CreatePlanBillingCadence": ".createplanop",
+    "CreatePlanBillingInterval": ".createplanop",
     "CreatePlanRequest": ".createplanop",
     "CreatePlanRequestTypedDict": ".createplanop",
     "CreatePlanTaxBehavior": ".createplanop",
@@ -1916,6 +1928,7 @@ _dynamic_imports: dict[str, str] = {
     "PaymentTypedDict": ".payment",
     "PaymentSummary": ".paymentsummary",
     "PaymentSummaryTypedDict": ".paymentsummary",
+    "BillingCadence": ".plan",
     "Plan": ".plan",
     "PlanObject": ".plan",
     "PlanPaymentTerm": ".plan",
@@ -2060,6 +2073,8 @@ _dynamic_imports: dict[str, str] = {
     "UpdateFeeRequestBody": ".updatefeeop",
     "UpdateFeeRequestBodyTypedDict": ".updatefeeop",
     "UpdateFeeRequestTypedDict": ".updatefeeop",
+    "UpdatePlanBillingCadence": ".updateplanop",
+    "UpdatePlanBillingInterval": ".updateplanop",
     "UpdatePlanRequest": ".updateplanop",
     "UpdatePlanRequestBody": ".updateplanop",
     "UpdatePlanRequestBodyTypedDict": ".updateplanop",
