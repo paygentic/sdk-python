@@ -6,6 +6,7 @@ from .entitlementaccessresult import (
     EntitlementAccessResultTypedDict,
 )
 from .offsetpagination import OffsetPagination, OffsetPaginationTypedDict
+from datetime import datetime
 from paygentic_sdk.types import BaseModel, UNSET_SENTINEL
 from paygentic_sdk.utils import FieldMetadata, QueryParamMetadata
 import pydantic
@@ -27,6 +28,8 @@ class ListEntitlementsRequestTypedDict(TypedDict):
     r"""Maximum number of entitlements to return per page. Use with `offset` for pagination."""
     offset: NotRequired[int]
     r"""Number of entitlements to skip. Use with `limit` for pagination through large result sets."""
+    at: NotRequired[datetime]
+    r"""Evaluate balance and access at this point in time (RFC 3339 datetime with any UTC offset, e.g. 2024-01-15T10:30:00Z or 2024-01-15T15:30:00+05:30). Defaults to current time."""
 
 
 class ListEntitlementsRequest(BaseModel):
@@ -70,10 +73,16 @@ class ListEntitlementsRequest(BaseModel):
     ] = 0
     r"""Number of entitlements to skip. Use with `limit` for pagination through large result sets."""
 
+    at: Annotated[
+        Optional[datetime],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Evaluate balance and access at this point in time (RFC 3339 datetime with any UTC offset, e.g. 2024-01-15T10:30:00Z or 2024-01-15T15:30:00+05:30). Defaults to current time."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
-            ["featureKey", "productId", "subscriptionId", "limit", "offset"]
+            ["featureKey", "productId", "subscriptionId", "limit", "offset", "at"]
         )
         serialized = handler(self)
         m = {}

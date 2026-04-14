@@ -36,6 +36,7 @@ class Entitlements(BaseSDK):
         subscription_id: Optional[str] = None,
         limit: Optional[int] = 10,
         offset: Optional[int] = 0,
+        at: Optional[datetime] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -51,6 +52,7 @@ class Entitlements(BaseSDK):
         :param subscription_id: Filter results to entitlements for a specific subscription.
         :param limit: Maximum number of entitlements to return per page. Use with `offset` for pagination.
         :param offset: Number of entitlements to skip. Use with `limit` for pagination through large result sets.
+        :param at: Evaluate balance and access at this point in time (RFC 3339 datetime with any UTC offset, e.g. 2024-01-15T10:30:00Z or 2024-01-15T15:30:00+05:30). Defaults to current time.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -73,6 +75,7 @@ class Entitlements(BaseSDK):
             subscription_id=subscription_id,
             limit=limit,
             offset=offset,
+            at=at,
         )
 
         req = self._build_request(
@@ -149,6 +152,7 @@ class Entitlements(BaseSDK):
         subscription_id: Optional[str] = None,
         limit: Optional[int] = 10,
         offset: Optional[int] = 0,
+        at: Optional[datetime] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -164,6 +168,7 @@ class Entitlements(BaseSDK):
         :param subscription_id: Filter results to entitlements for a specific subscription.
         :param limit: Maximum number of entitlements to return per page. Use with `offset` for pagination.
         :param offset: Number of entitlements to skip. Use with `limit` for pagination through large result sets.
+        :param at: Evaluate balance and access at this point in time (RFC 3339 datetime with any UTC offset, e.g. 2024-01-15T10:30:00Z or 2024-01-15T15:30:00+05:30). Defaults to current time.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -186,6 +191,7 @@ class Entitlements(BaseSDK):
             subscription_id=subscription_id,
             limit=limit,
             offset=offset,
+            at=at,
         )
 
         req = self._build_request_async(
@@ -499,6 +505,7 @@ class Entitlements(BaseSDK):
         self,
         *,
         entitlement_id: str,
+        at: Optional[datetime] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -509,6 +516,7 @@ class Entitlements(BaseSDK):
         Retrieve a specific entitlement by ID. For metered entitlements, the response includes live balance, usage, and access status for the current billing period.
 
         :param entitlement_id: The unique identifier of the entitlement.
+        :param at: Evaluate balance and access at this point in time (RFC 3339 datetime with any UTC offset, e.g. 2024-01-15T10:30:00Z or 2024-01-15T15:30:00+05:30). Defaults to current time.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -526,6 +534,7 @@ class Entitlements(BaseSDK):
 
         request = models.GetEntitlementRequest(
             entitlement_id=entitlement_id,
+            at=at,
         )
 
         req = self._build_request(
@@ -597,6 +606,7 @@ class Entitlements(BaseSDK):
         self,
         *,
         entitlement_id: str,
+        at: Optional[datetime] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -607,6 +617,7 @@ class Entitlements(BaseSDK):
         Retrieve a specific entitlement by ID. For metered entitlements, the response includes live balance, usage, and access status for the current billing period.
 
         :param entitlement_id: The unique identifier of the entitlement.
+        :param at: Evaluate balance and access at this point in time (RFC 3339 datetime with any UTC offset, e.g. 2024-01-15T10:30:00Z or 2024-01-15T15:30:00+05:30). Defaults to current time.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -624,6 +635,7 @@ class Entitlements(BaseSDK):
 
         request = models.GetEntitlementRequest(
             entitlement_id=entitlement_id,
+            at=at,
         )
 
         req = self._build_request_async(

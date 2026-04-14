@@ -1924,7 +1924,7 @@ workflows:
           - condition: $response.header.Content-Type == application/json
           - context: $response.body
             condition: |
-              {"object":"grant","id":"<id>","entitlementId":"<id>","amount":2509.85,"effectiveAt":"2024-07-12T06:42:15.153Z","createdAt":"2026-06-27T19:29:58.560Z"}
+              {"object":"grant","id":"<id>","entitlementId":"<id>","amount":2509.85,"effectiveAt":"2024-07-12T06:42:15.153Z","createdAt":"2026-06-27T19:29:58.560Z","recurrencePeriod":"<value>","idempotencyKey":"<value>"}
             type: simple
     x-speakeasy-test-group: grants
     x-speakeasy-test-rebuild: true
@@ -1948,7 +1948,7 @@ workflows:
           - condition: $response.header.Content-Type == application/json
           - context: $response.body
             condition: |
-              {"object":"grant","id":"<id>","entitlementId":"<id>","amount":2509.85,"effectiveAt":"2024-07-12T06:42:15.153Z","createdAt":"2026-06-27T19:29:58.560Z"}
+              {"object":"grant","id":"<id>","entitlementId":"<id>","amount":2509.85,"effectiveAt":"2024-07-12T06:42:15.153Z","createdAt":"2026-06-27T19:29:58.560Z","recurrencePeriod":"<value>","idempotencyKey":"<value>"}
             type: simple
     x-speakeasy-test-group: grants
     x-speakeasy-test-rebuild: true
@@ -1970,7 +1970,7 @@ workflows:
           - condition: $response.header.Content-Type == application/json
           - context: $response.body
             condition: |
-              {"object":"grant","id":"<id>","entitlementId":"<id>","amount":2509.85,"effectiveAt":"2024-07-12T06:42:15.153Z","createdAt":"2026-06-27T19:29:58.560Z"}
+              {"object":"grant","id":"<id>","entitlementId":"<id>","amount":2509.85,"effectiveAt":"2024-07-12T06:42:15.153Z","createdAt":"2026-06-27T19:29:58.560Z","recurrencePeriod":"<value>","idempotencyKey":"<value>"}
             type: simple
     x-speakeasy-test-group: grants
     x-speakeasy-test-rebuild: true
@@ -2064,7 +2064,7 @@ workflows:
           - condition: $response.header.Content-Type == application/json
           - context: $response.body
             condition: |
-              {"object":"grant","id":"<id>","entitlementId":"<id>","amount":4991.16,"effectiveAt":"2024-09-22T15:49:08.483Z","createdAt":"2026-11-16T03:45:11.345Z"}
+              {"object":"grant","id":"<id>","entitlementId":"<id>","amount":4991.16,"effectiveAt":"2024-09-22T15:49:08.483Z","createdAt":"2026-11-16T03:45:11.345Z","recurrencePeriod":"<value>","idempotencyKey":"<value>"}
             type: simple
     x-speakeasy-test-group: grants
     x-speakeasy-test-rebuild: true
@@ -2084,7 +2084,7 @@ workflows:
           - condition: $response.header.Content-Type == application/json
           - context: $response.body
             condition: |
-              {"object":"grant","id":"<id>","entitlementId":"<id>","amount":2546.27,"effectiveAt":"2024-11-09T23:13:48.090Z","createdAt":"2026-04-05T05:12:44.830Z"}
+              {"object":"grant","id":"<id>","entitlementId":"<id>","amount":2546.27,"effectiveAt":"2024-11-09T23:13:48.090Z","createdAt":"2026-04-05T05:12:44.830Z","recurrencePeriod":"<value>","idempotencyKey":"<value>"}
             type: simple
     x-speakeasy-test-group: grants
     x-speakeasy-test-rebuild: true

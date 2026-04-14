@@ -29,6 +29,10 @@ class GrantTypedDict(TypedDict):
     r"""When the grant becomes effective."""
     created_at: datetime
     r"""When the grant was created."""
+    recurrence_period: Nullable[str]
+    r"""The recurrence interval (ISO 8601 duration) if this is a recurring grant. Null for one-time grants."""
+    idempotency_key: Nullable[str]
+    r"""The idempotency key used when creating this grant. Null if not provided."""
     object: NotRequired[GrantObject]
     expires_at: NotRequired[Nullable[datetime]]
     r"""When the grant expires. Null means no expiration."""
@@ -52,6 +56,14 @@ class Grant(BaseModel):
     created_at: Annotated[datetime, pydantic.Field(alias="createdAt")]
     r"""When the grant was created."""
 
+    recurrence_period: Annotated[
+        Nullable[str], pydantic.Field(alias="recurrencePeriod")
+    ]
+    r"""The recurrence interval (ISO 8601 duration) if this is a recurring grant. Null for one-time grants."""
+
+    idempotency_key: Annotated[Nullable[str], pydantic.Field(alias="idempotencyKey")]
+    r"""The idempotency key used when creating this grant. Null if not provided."""
+
     object: Optional[GrantObject] = "grant"
 
     expires_at: Annotated[
@@ -67,7 +79,9 @@ class Grant(BaseModel):
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(["object", "expiresAt", "voidedAt"])
-        nullable_fields = set(["expiresAt", "voidedAt"])
+        nullable_fields = set(
+            ["expiresAt", "voidedAt", "recurrencePeriod", "idempotencyKey"]
+        )
         serialized = handler(self)
         m = {}
 
