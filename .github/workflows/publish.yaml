@@ -25,6 +25,11 @@ jobs:
       name: pypi
       url: https://pypi.org/project/paygentic-sdk/
     steps:
+      # fetch-depth: 0 is required so Detect version can read tag history.
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
       - uses: speakeasy-api/sdk-generation-action@v15
         with:
           speakeasy_version: 1.761.4
@@ -32,9 +37,6 @@ jobs:
           mode: direct
         env:
           SPEAKEASY_API_KEY: ${{ secrets.ORG_SPEAKEASY_API_KEY }}
-
-      - name: Fetch tags
-        run: git fetch --tags --depth=1
 
       - name: Detect version and tag
         id: version
