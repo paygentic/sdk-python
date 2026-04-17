@@ -44,7 +44,6 @@ class Paygentic(BaseSDK):
     """
 
     billable_metrics: "BillableMetrics"
-    r"""A `Billable Metric` defines a measurable quantity tied to a `Product`'s consumption. Each metric stores details including its label, explanatory text, and measurement units."""
     customers: "Customers"
     r"""A `Customer` is an entity connected to a `Merchant` via a `Subscription`. This represents the merchant-facing perspective of `Consumers` who purchase their `Products`."""
     disputes: "Disputes"

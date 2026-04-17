@@ -70,10 +70,7 @@ with Paygentic(
     bearer_auth=os.getenv("PAYGENTIC_BEARER_AUTH", ""),
 ) as paygentic:
 
-    res = paygentic.disputes.list(request={
-        "consumer_id": "org_YS8jkP59V71TdUvj",
-        "merchant_id": "org_YS8jkP59V71TdUvj",
-    })
+    res = paygentic.disputes.list(request={})
 
     # Handle response
     print(res)

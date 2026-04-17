@@ -1,0 +1,41 @@
+speakeasyVersion: 1.761.4
+sources:
+    Paygentic API:
+        sourceNamespace: paygentic-api
+        sourceRevisionDigest: sha256:8ea4c3cff23deeaff4a74e94dafaa3240570a98266c73528136af9dd59e0777b
+        sourceBlobDigest: sha256:faacaeebf1571d9d9199ed4a88935e46d53c88ab3a945482b7636ca583092670
+        tags:
+            - latest
+            - 0.1.0
+targets:
+    python:
+        source: Paygentic API
+        sourceNamespace: paygentic-api
+        sourceRevisionDigest: sha256:8ea4c3cff23deeaff4a74e94dafaa3240570a98266c73528136af9dd59e0777b
+        sourceBlobDigest: sha256:faacaeebf1571d9d9199ed4a88935e46d53c88ab3a945482b7636ca583092670
+        codeSamplesNamespace: paygentic-api-python-code-samples
+        codeSamplesRevisionDigest: sha256:a4160a6c1015a6e88b342dcee0c329ca131c1c5ee8231f3122b1f54f23890372
+workflow:
+    workflowVersion: 1.0.0
+    speakeasyVersion: 1.761.4
+    sources:
+        Paygentic API:
+            inputs:
+                - location: .speakeasy/openapi.json
+            overlays:
+                - location: .speakeasy/speakeasy-modifications-overlay.yaml
+            output: .speakeasy/out.openapi.yaml
+            registry:
+                location: registry.speakeasyapi.dev/paygentic/default/paygentic-api
+    targets:
+        python:
+            target: python
+            source: Paygentic API
+            codeSamples:
+                registry:
+                    location: registry.speakeasyapi.dev/paygentic/default/paygentic-api-python-code-samples
+                labelOverride:
+                    fixedValue: Python (SDK)
+                blocking: false
+            testing:
+                enabled: true

@@ -11,8 +11,6 @@ from typing import Any, Dict, Mapping, Optional
 
 
 class BillableMetrics(BaseSDK):
-    r"""A `Billable Metric` defines a measurable quantity tied to a `Product`'s consumption. Each metric stores details including its label, explanatory text, and measurement units."""
-
     def create(
         self,
         *,
@@ -1137,7 +1135,7 @@ class BillableMetrics(BaseSDK):
 
         raise errors.PaygenticDefaultError("Unexpected response received", http_res)
 
-    def list_billable_metric_events(
+    def list_events(
         self,
         *,
         id: str,
@@ -1250,7 +1248,7 @@ class BillableMetrics(BaseSDK):
 
         raise errors.PaygenticDefaultError("Unexpected response received", http_res)
 
-    async def list_billable_metric_events_async(
+    async def list_events_async(
         self,
         *,
         id: str,

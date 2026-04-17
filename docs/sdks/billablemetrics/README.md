@@ -2,8 +2,6 @@
 
 ## Overview
 
-A `Billable Metric` defines a measurable quantity tied to a `Product`'s consumption. Each metric stores details including its label, explanatory text, and measurement units.
-
 ### Available Operations
 
 * [create](#create) - Create
@@ -11,7 +9,7 @@ A `Billable Metric` defines a measurable quantity tied to a `Product`'s consumpt
 * [get](#get) - Get
 * [update](#update) - Update
 * [meter](#meter) - Query Meter Usage
-* [list_billable_metric_events](#list_billable_metric_events) - List Meter Events
+* [list_events](#list_events) - List Meter Events
 
 ## create
 
@@ -82,7 +80,7 @@ with Paygentic(
     bearer_auth=os.getenv("PAYGENTIC_BEARER_AUTH", ""),
 ) as paygentic:
 
-    res = paygentic.billable_metrics.list(merchant_id="<id>", limit=10, offset=0, product_id="prod_abc123")
+    res = paygentic.billable_metrics.list(merchant_id="<id>", limit=10, offset=0)
 
     # Handle response
     print(res)
@@ -253,7 +251,7 @@ with Paygentic(
 | errors.Error                 | 500                          | application/json             |
 | errors.PaygenticDefaultError | 4XX, 5XX                     | \*/\*                        |
 
-## list_billable_metric_events
+## list_events
 
 List raw underlying events for a billable metric from the metering service. Returns events ordered by time descending.
 
@@ -270,7 +268,7 @@ with Paygentic(
     bearer_auth=os.getenv("PAYGENTIC_BEARER_AUTH", ""),
 ) as paygentic:
 
-    res = paygentic.billable_metrics.list_billable_metric_events(id="<id>", from_=parse_datetime("2024-09-28T08:04:20.478Z"), to=parse_datetime("2025-07-03T05:08:35.498Z"), limit=20, offset=0)
+    res = paygentic.billable_metrics.list_events(id="<id>", from_=parse_datetime("2024-09-28T08:04:20.478Z"), to=parse_datetime("2025-07-03T05:08:35.498Z"), limit=20, offset=0)
 
     # Handle response
     print(res)

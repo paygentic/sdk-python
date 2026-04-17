@@ -25,7 +25,7 @@ with Paygentic(
     bearer_auth=os.getenv("PAYGENTIC_BEARER_AUTH", ""),
 ) as paygentic:
 
-    res = paygentic.revenue.get(start_time=parse_datetime("2024-07-23T16:05:39.311Z"), end_time=parse_datetime("2026-04-29T18:43:05.586Z"), bucket_width="day", merchant_id="org_YS8jkP59V71TdUvj")
+    res = paygentic.revenue.get(start_time=parse_datetime("2024-07-23T16:05:39.311Z"), end_time=parse_datetime("2026-04-29T18:43:05.586Z"), bucket_width="day")
 
     # Handle response
     print(res)

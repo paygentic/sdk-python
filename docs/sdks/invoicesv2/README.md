@@ -114,7 +114,7 @@ with Paygentic(
     bearer_auth=os.getenv("PAYGENTIC_BEARER_AUTH", ""),
 ) as paygentic:
 
-    res = paygentic.invoices_v2.create_line_item(display_name="Nathan54", currency="Rwanda Franc", quantity=6214.31, unit_price=740813)
+    res = paygentic.invoices_v2.create_line_item(display_name="Nathan54", currency="Rwanda Franc", quantity=6214.31, unit_price=7408.13)
 
     # Handle response
     print(res)

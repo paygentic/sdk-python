@@ -28,11 +28,7 @@ with Paygentic(
     bearer_auth=os.getenv("PAYGENTIC_BEARER_AUTH", ""),
 ) as paygentic:
 
-    res = paygentic.subscriptions.list(request={
-        "consumer_id": "org_YS8jkP59V71TdUvj",
-        "customer_id": "cus_abc123",
-        "merchant_id": "org_YS8jkP59V71TdUvj",
-    })
+    res = paygentic.subscriptions.list(request={})
 
     # Handle response
     print(res)

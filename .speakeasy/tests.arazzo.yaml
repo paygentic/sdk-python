@@ -16,17 +16,17 @@ workflows:
           contentType: application/json
           payload:
             aggregation: SUM
-            description: orange daily out slow nor smoothly
+            description: Tracks total tokens consumed per API call
             merchantId: <id>
-            name: <value>
+            name: Token Counter
             productId: <id>
-            unit: meter
+            unit: tokens
         successCriteria:
           - condition: $statusCode == 201
           - condition: $response.header.Content-Type == application/json
           - context: $response.body
             condition: |
-              {"id":"<id>","object":"billableMetric","aggregation":"SUM","createdAt":"2025-07-16T12:08:58.467Z","description":"ultimately legal justly polarisation truly warmly before","merchantId":"<id>","name":"<value>","productId":"<id>","unit":"newton","updatedAt":"2025-11-22T03:57:19.578Z"}
+              {"id":"<id>","object":"billableMetric","aggregation":"AVG","createdAt":"2026-11-27T06:33:28.146Z","description":"odd drat spherical regularly","merchantId":"<id>","name":"<value>","productId":"<id>","unit":"second","updatedAt":"2026-11-05T18:27:48.113Z"}
             type: simple
     x-speakeasy-test-group: billableMetrics
     x-speakeasy-test-rebuild: true
@@ -44,9 +44,6 @@ workflows:
           - name: offset
             in: query
             value: 0
-          - name: productId
-            in: query
-            value: prod_abc123
         successCriteria:
           - condition: $statusCode == 200
           - condition: $response.header.Content-Type == application/json
@@ -226,12 +223,6 @@ workflows:
           - name: offset
             in: query
             value: 0
-          - name: consumerId
-            in: query
-            value: org_YS8jkP59V71TdUvj
-          - name: merchantId
-            in: query
-            value: org_YS8jkP59V71TdUvj
         successCriteria:
           - condition: $statusCode == 200
           - condition: $response.header.Content-Type == application/json
@@ -249,9 +240,6 @@ workflows:
           - name: customerId
             in: query
             value: <id>
-          - name: productId
-            in: query
-            value: prod_abc123
         successCriteria:
           - condition: $statusCode == 200
           - condition: $response.header.Content-Type == application/json
@@ -294,9 +282,6 @@ workflows:
           - name: offset
             in: query
             value: 0
-          - name: productId
-            in: query
-            value: prod_abc123
         successCriteria:
           - condition: $statusCode == 200
           - condition: $response.header.Content-Type == application/json
@@ -320,9 +305,6 @@ workflows:
           - name: offset
             in: query
             value: 0
-          - name: productId
-            in: query
-            value: prod_abc123
         successCriteria:
           - condition: $statusCode == 200
           - condition: $response.header.Content-Type == application/json
@@ -346,9 +328,6 @@ workflows:
           - name: offset
             in: query
             value: 0
-          - name: productId
-            in: query
-            value: prod_abc123
         successCriteria:
           - condition: $statusCode == 200
           - condition: $response.header.Content-Type == application/json
@@ -372,9 +351,6 @@ workflows:
           - name: offset
             in: query
             value: 0
-          - name: productId
-            in: query
-            value: prod_abc123
         successCriteria:
           - condition: $statusCode == 200
           - condition: $response.header.Content-Type == application/json
@@ -398,9 +374,6 @@ workflows:
           - name: offset
             in: query
             value: 0
-          - name: productId
-            in: query
-            value: prod_abc123
         successCriteria:
           - condition: $statusCode == 200
           - condition: $response.header.Content-Type == application/json
@@ -665,9 +638,6 @@ workflows:
           - name: offset
             in: query
             value: 0
-          - name: productId
-            in: query
-            value: prod_abc123
         successCriteria:
           - condition: $statusCode == 200
           - condition: $response.header.Content-Type == application/json
@@ -770,12 +740,6 @@ workflows:
           - name: offset
             in: query
             value: 0
-          - name: merchantId
-            in: query
-            value: org_YS8jkP59V71TdUvj
-          - name: productId
-            in: query
-            value: prod_abc123
         successCriteria:
           - condition: $statusCode == 200
           - condition: $response.header.Content-Type == application/json
@@ -799,9 +763,6 @@ workflows:
           - name: offset
             in: query
             value: 0
-          - name: productId
-            in: query
-            value: prod_abc123
         successCriteria:
           - condition: $statusCode == 200
           - condition: $response.header.Content-Type == application/json
@@ -961,9 +922,6 @@ workflows:
           - name: offset
             in: query
             value: 0
-          - name: merchantId
-            in: query
-            value: org_YS8jkP59V71TdUvj
         successCriteria:
           - condition: $statusCode == 200
           - condition: $response.header.Content-Type == application/json
@@ -1042,12 +1000,6 @@ workflows:
           - name: offset
             in: query
             value: 0
-          - name: merchantId
-            in: query
-            value: org_YS8jkP59V71TdUvj
-          - name: planId
-            in: query
-            value: plan_abc123
         successCriteria:
           - condition: $statusCode == 200
           - condition: $response.header.Content-Type == application/json
@@ -1290,15 +1242,6 @@ workflows:
           - name: offset
             in: query
             value: "0"
-          - name: consumerId
-            in: query
-            value: org_YS8jkP59V71TdUvj
-          - name: customerId
-            in: query
-            value: cus_abc123
-          - name: merchantId
-            in: query
-            value: org_YS8jkP59V71TdUvj
         successCriteria:
           - condition: $statusCode == 200
           - condition: $response.header.Content-Type == application/json
@@ -1316,7 +1259,7 @@ workflows:
           contentType: application/json
           payload:
             autoCharge: false
-            name: <value>
+            name: Monthly API Service
             planId: <id>
             startedAt: "2026-08-09T13:09:26.829Z"
             taxExempt: false
@@ -1422,15 +1365,6 @@ workflows:
           - name: startTime
             in: query
             value: "2024-02-04T03:47:15.138Z"
-          - name: consumerId
-            in: query
-            value: org_YS8jkP59V71TdUvj
-          - name: customerId
-            in: query
-            value: cus_abc123
-          - name: merchantId
-            in: query
-            value: org_YS8jkP59V71TdUvj
         successCriteria:
           - condition: $statusCode == 200
           - condition: $response.header.Content-Type == application/json
@@ -1474,7 +1408,7 @@ workflows:
           - condition: $response.header.Content-Type == application/json
           - context: $response.body
             condition: |
-              {"id":"<id>","object":"usageEvent","createdAt":"2024-01-05T00:31:58.591Z","customerId":"<id>","merchantId":"<id>","properties":[{"billableMetricId":"<id>","quantity":12220}],"subscriptionId":"<id>","timestamp":"2026-10-19T12:24:44.858Z"}
+              {"id":"<id>","object":"usageEvent","createdAt":"2026-03-29T08:53:18.655Z","customerId":"<id>","merchantId":"<id>","properties":[],"subscriptionId":"<id>","timestamp":"2025-10-02T15:09:41.592Z"}
             type: simple
     x-speakeasy-test-group: usageEvents
     x-speakeasy-test-rebuild: true
@@ -1597,11 +1531,11 @@ workflows:
           contentType: application/json
           payload:
             data:
-              key: <value>
-              key1: <value>
-            source: <value>
-            subject: <value>
-            type: <value>
+              model: gpt-4o
+              tokens: 1500
+            source: https://api.myapp.com
+            subject: cus_abc123
+            type: ai.inference
         successCriteria:
           - condition: $statusCode == 202
           - condition: $response.header.Content-Type == application/json
@@ -1625,15 +1559,12 @@ workflows:
           - name: bucketWidth
             in: query
             value: day
-          - name: merchantId
-            in: query
-            value: org_YS8jkP59V71TdUvj
         successCriteria:
           - condition: $statusCode == 200
           - condition: $response.header.Content-Type == application/json
           - context: $response.body
             condition: |
-              {"object":"revenue_summary","netRevenue":"<value>","invoices":{"issued":{"count":186743,"amount":"775.35"},"outstanding":{"count":186743,"amount":"775.35"},"paid":{"count":290758,"amount":"20.75"},"writtenOff":{"count":86320,"amount":"735.88"}},"payments":{"completedCount":290758,"completedAmount":"<value>","pendingCount":186743,"pendingAmount":"<value>","expiredCount":186743,"expiredAmount":"<value>"},"trend":[]}
+              {"object":"revenue_summary","netRevenue":"<value>","invoices":{"issued":{"count":290758,"amount":"20.75"},"outstanding":{"count":86320,"amount":"735.88"},"paid":{"count":744387,"amount":"440.67"},"writtenOff":{"count":390905,"amount":"744.63"}},"payments":{"completedCount":13144,"completedAmount":"<value>","pendingCount":290186,"pendingAmount":"<value>","expiredCount":489645,"expiredAmount":"<value>"},"trend":[{"timestamp":"2026-07-15T23:15:12.204Z","issuedInvoices":"<value>","writtenOffInvoices":"<value>","completedPayments":"<value>"}]}
             type: simple
     x-speakeasy-test-group: Revenue
     x-speakeasy-test-rebuild: true
@@ -1870,13 +1801,13 @@ workflows:
             currency: Rwanda Franc
             displayName: Nathan54
             quantity: 6214.31
-            unitPrice: 740813
+            unitPrice: 7408.13
         successCriteria:
           - condition: $statusCode == 200
           - condition: $response.header.Content-Type == application/json
           - context: $response.body
             condition: |
-              {"id":"<id>","subscriptionId":"<id>","type":"manual","status":"pending","displayName":"Roscoe_Haag","currency":"Belize Dollar","periodStart":"2025-06-18T03:33:03.362Z","periodEnd":"2025-11-09T02:25:51.382Z","invoiceAt":"2024-04-26T04:27:52.258Z","unitPrice":"<value>","createdAt":"2025-10-18T18:51:06.413Z","updatedAt":"2025-04-29T04:46:04.080Z"}
+              {"id":"<id>","subscriptionId":"<id>","type":"discount","status":"pending","displayName":"Roscoe_Haag","currency":"Belize Dollar","periodStart":"2025-06-18T03:33:03.362Z","periodEnd":"2025-11-09T02:25:51.382Z","invoiceAt":"2024-04-26T04:27:52.258Z","unitPrice":"<value>","createdAt":"2025-10-18T18:51:06.413Z","updatedAt":"2025-04-29T04:46:04.080Z"}
             type: simple
     x-speakeasy-test-group: Invoices V2
     x-speakeasy-test-rebuild: true
@@ -1963,7 +1894,7 @@ workflows:
         requestBody:
           contentType: application/json
           payload:
-            amount: 1830.35
+            amount: 4545.92
             idempotencyKey: <value>
         successCriteria:
           - condition: $statusCode == 201
@@ -2199,18 +2130,18 @@ workflows:
           - name: id
             in: path
             value: <id>
-          - name: limit
-            in: query
-            value: 20
-          - name: offset
-            in: query
-            value: 0
           - name: from
             in: query
             value: "2024-09-28T08:04:20.478Z"
           - name: to
             in: query
             value: "2025-07-03T05:08:35.498Z"
+          - name: limit
+            in: query
+            value: 20
+          - name: offset
+            in: query
+            value: 0
         successCriteria:
           - condition: $statusCode == 200
           - condition: $response.header.Content-Type == application/json

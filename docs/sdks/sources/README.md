@@ -78,10 +78,7 @@ with Paygentic(
     bearer_auth=os.getenv("PAYGENTIC_BEARER_AUTH", ""),
 ) as paygentic:
 
-    res = paygentic.sources.list(request={
-        "merchant_id": "org_YS8jkP59V71TdUvj",
-        "plan_id": "plan_abc123",
-    })
+    res = paygentic.sources.list(request={})
 
     # Handle response
     print(res)

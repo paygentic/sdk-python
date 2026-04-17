@@ -34,22 +34,22 @@ See the [Quickstart](https://docs.paygentic.io/getting-started/quickstart) for a
 <!-- Start Table of Contents [toc] -->
 ## Table of Contents
 <!-- $toc-max-depth=2 -->
-* [paygentic-sdk](#paygentic-sdk)
-  * [How it works](#how-it-works)
-  * [SDK Installation](#sdk-installation)
-  * [IDE Support](#ide-support)
-  * [SDK Example Usage](#sdk-example-usage)
-  * [Authentication](#authentication)
-  * [Available Resources and Operations](#available-resources-and-operations)
-  * [Retries](#retries)
-  * [Error Handling](#error-handling)
-  * [Server Selection](#server-selection)
-  * [Custom HTTP Client](#custom-http-client)
-  * [Resource Management](#resource-management)
-  * [Debugging](#debugging)
-* [Development](#development)
-  * [Maturity](#maturity)
-  * [Contributions](#contributions)
+* [paygentic-sdk](https://github.com/paygentic/sdk-python/blob/master/#paygentic-sdk)
+  * [How it works](https://github.com/paygentic/sdk-python/blob/master/#how-it-works)
+  * [SDK Installation](https://github.com/paygentic/sdk-python/blob/master/#sdk-installation)
+  * [IDE Support](https://github.com/paygentic/sdk-python/blob/master/#ide-support)
+  * [SDK Example Usage](https://github.com/paygentic/sdk-python/blob/master/#sdk-example-usage)
+  * [Authentication](https://github.com/paygentic/sdk-python/blob/master/#authentication)
+  * [Available Resources and Operations](https://github.com/paygentic/sdk-python/blob/master/#available-resources-and-operations)
+  * [Retries](https://github.com/paygentic/sdk-python/blob/master/#retries)
+  * [Error Handling](https://github.com/paygentic/sdk-python/blob/master/#error-handling)
+  * [Server Selection](https://github.com/paygentic/sdk-python/blob/master/#server-selection)
+  * [Custom HTTP Client](https://github.com/paygentic/sdk-python/blob/master/#custom-http-client)
+  * [Resource Management](https://github.com/paygentic/sdk-python/blob/master/#resource-management)
+  * [Debugging](https://github.com/paygentic/sdk-python/blob/master/#debugging)
+* [Development](https://github.com/paygentic/sdk-python/blob/master/#development)
+  * [Maturity](https://github.com/paygentic/sdk-python/blob/master/#maturity)
+  * [Contributions](https://github.com/paygentic/sdk-python/blob/master/#contributions)
 
 <!-- End Table of Contents [toc] -->
 
@@ -328,169 +328,169 @@ with Paygentic(
 <details open>
 <summary>Available methods</summary>
 
-### [BillableMetrics](docs/sdks/billablemetrics/README.md)
+### [BillableMetrics](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/billablemetrics/README.md)
 
-* [create](docs/sdks/billablemetrics/README.md#create) - Create
-* [list](docs/sdks/billablemetrics/README.md#list) - List
-* [get](docs/sdks/billablemetrics/README.md#get) - Get
-* [update](docs/sdks/billablemetrics/README.md#update) - Update
-* [meter](docs/sdks/billablemetrics/README.md#meter) - Query Meter Usage
-* [list_events](docs/sdks/billablemetrics/README.md#list_events) - List Meter Events
+* [create](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/billablemetrics/README.md#create) - Create
+* [list](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/billablemetrics/README.md#list) - List
+* [get](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/billablemetrics/README.md#get) - Get
+* [update](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/billablemetrics/README.md#update) - Update
+* [meter](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/billablemetrics/README.md#meter) - Query Meter Usage
+* [list_events](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/billablemetrics/README.md#list_events) - List Meter Events
 
-### [Costs](docs/sdks/costs/README.md)
+### [Costs](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/costs/README.md)
 
-* [create_cost](docs/sdks/costs/README.md#create_cost) - Create
-* [list_costs](docs/sdks/costs/README.md#list_costs) - List
-* [get_cost](docs/sdks/costs/README.md#get_cost) - Get
-* [update_cost](docs/sdks/costs/README.md#update_cost) - Update
-* [delete_cost](docs/sdks/costs/README.md#delete_cost) - Delete
-* [get_cost_summary](docs/sdks/costs/README.md#get_cost_summary) - Query Summary
+* [create_cost](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/costs/README.md#create_cost) - Create
+* [list_costs](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/costs/README.md#list_costs) - List
+* [get_cost](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/costs/README.md#get_cost) - Get
+* [update_cost](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/costs/README.md#update_cost) - Update
+* [delete_cost](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/costs/README.md#delete_cost) - Delete
+* [get_cost_summary](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/costs/README.md#get_cost_summary) - Query Summary
 
-### [Customers](docs/sdks/customers/README.md)
+### [Customers](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/customers/README.md)
 
-* [list](docs/sdks/customers/README.md#list) - List by Merchant
-* [create](docs/sdks/customers/README.md#create) - Create
-* [get](docs/sdks/customers/README.md#get) - Get
-* [delete](docs/sdks/customers/README.md#delete) - Delete
-* [update](docs/sdks/customers/README.md#update) - Update
+* [list](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/customers/README.md#list) - List by Merchant
+* [create](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/customers/README.md#create) - Create
+* [get](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/customers/README.md#get) - Get
+* [delete](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/customers/README.md#delete) - Delete
+* [update](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/customers/README.md#update) - Update
 
-### [Disputes](docs/sdks/disputes/README.md)
+### [Disputes](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/disputes/README.md)
 
-* [create](docs/sdks/disputes/README.md#create) - Create
-* [list](docs/sdks/disputes/README.md#list) - List
+* [create](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/disputes/README.md#create) - Create
+* [list](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/disputes/README.md#list) - List
 
-### [Entitlements](docs/sdks/entitlements/README.md)
+### [Entitlements](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/entitlements/README.md)
 
-* [list](docs/sdks/entitlements/README.md#list) - List Entitlements
-* [issue](docs/sdks/entitlements/README.md#issue) - Issue Entitlement
-* [get](docs/sdks/entitlements/README.md#get) - Get Entitlement
+* [list](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/entitlements/README.md#list) - List Entitlements
+* [issue](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/entitlements/README.md#issue) - Issue Entitlement
+* [get](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/entitlements/README.md#get) - Get Entitlement
 
-### [Entitlements.Grants](docs/sdks/grants/README.md)
+### [Entitlements.Grants](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/grants/README.md)
 
-* [list](docs/sdks/grants/README.md#list) - List Grants
-* [create](docs/sdks/grants/README.md#create) - Create Grant
-* [purchase](docs/sdks/grants/README.md#purchase) - Purchase Grant
-* [get](docs/sdks/grants/README.md#get) - Get Grant
-* [void](docs/sdks/grants/README.md#void) - Void Grant
+* [list](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/grants/README.md#list) - List Grants
+* [create](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/grants/README.md#create) - Create Grant
+* [purchase](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/grants/README.md#purchase) - Purchase Grant
+* [get](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/grants/README.md#get) - Get Grant
+* [void](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/grants/README.md#void) - Void Grant
 
-### [EntitlementsV0](docs/sdks/entitlementsv0/README.md)
+### [EntitlementsV0](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/entitlementsv0/README.md)
 
-* [list_active](docs/sdks/entitlementsv0/README.md#list_active) - List by Customer
-* [create](docs/sdks/entitlementsv0/README.md#create) - Create
+* [list_active](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/entitlementsv0/README.md#list_active) - List by Customer
+* [create](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/entitlementsv0/README.md#create) - Create
 
-### [Events](docs/sdks/events/README.md)
+### [Events](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/events/README.md)
 
-* [ingest](docs/sdks/events/README.md#ingest) - Ingest Event
+* [ingest](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/events/README.md#ingest) - Ingest Event
 
-### [Features](docs/sdks/features/README.md)
+### [Features](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/features/README.md)
 
-* [list](docs/sdks/features/README.md#list) - List
-* [create](docs/sdks/features/README.md#create) - Create
-* [get](docs/sdks/features/README.md#get) - Get
-* [update](docs/sdks/features/README.md#update) - Update
-* [delete](docs/sdks/features/README.md#delete) - Delete
+* [list](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/features/README.md#list) - List
+* [create](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/features/README.md#create) - Create
+* [get](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/features/README.md#get) - Get
+* [update](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/features/README.md#update) - Update
+* [delete](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/features/README.md#delete) - Delete
 
-### [Fees](docs/sdks/fees/README.md)
+### [Fees](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/fees/README.md)
 
-* [create](docs/sdks/fees/README.md#create) - Create
-* [list](docs/sdks/fees/README.md#list) - List
-* [get](docs/sdks/fees/README.md#get) - Get
-* [update](docs/sdks/fees/README.md#update) - Update
-* [delete](docs/sdks/fees/README.md#delete) - Delete
-* [get_price](docs/sdks/fees/README.md#get_price) - Get Fee Price
+* [create](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/fees/README.md#create) - Create
+* [list](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/fees/README.md#list) - List
+* [get](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/fees/README.md#get) - Get
+* [update](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/fees/README.md#update) - Update
+* [delete](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/fees/README.md#delete) - Delete
+* [get_price](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/fees/README.md#get_price) - Get Fee Price
 
-### [InvoicesV2](docs/sdks/invoicesv2/README.md)
+### [InvoicesV2](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/invoicesv2/README.md)
 
-* [list](docs/sdks/invoicesv2/README.md#list) - List
-* [list_line_items](docs/sdks/invoicesv2/README.md#list_line_items) - List Line Items
-* [create_line_item](docs/sdks/invoicesv2/README.md#create_line_item) - Create Manual Line Item
-* [get](docs/sdks/invoicesv2/README.md#get) - Get
-* [get_line_items](docs/sdks/invoicesv2/README.md#get_line_items) - Get Line Items
+* [list](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/invoicesv2/README.md#list) - List
+* [list_line_items](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/invoicesv2/README.md#list_line_items) - List Line Items
+* [create_line_item](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/invoicesv2/README.md#create_line_item) - Create Manual Line Item
+* [get](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/invoicesv2/README.md#get) - Get
+* [get_line_items](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/invoicesv2/README.md#get_line_items) - Get Line Items
 
-### [Payments](docs/sdks/payments/README.md)
+### [Payments](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/payments/README.md)
 
-* [list](docs/sdks/payments/README.md#list) - List Payments
-* [create](docs/sdks/payments/README.md#create) - Create Payment
-* [get](docs/sdks/payments/README.md#get) - Get Payment
+* [list](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/payments/README.md#list) - List Payments
+* [create](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/payments/README.md#create) - Create Payment
+* [get](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/payments/README.md#get) - Get Payment
 
-### [Plans](docs/sdks/plans/README.md)
+### [Plans](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/plans/README.md)
 
-* [create](docs/sdks/plans/README.md#create) - Create
-* [list](docs/sdks/plans/README.md#list) - List
-* [list_available](docs/sdks/plans/README.md#list_available) - List Available Plans
-* [get](docs/sdks/plans/README.md#get) - Get
-* [update](docs/sdks/plans/README.md#update) - Update
+* [create](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/plans/README.md#create) - Create
+* [list](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/plans/README.md#list) - List
+* [list_available](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/plans/README.md#list_available) - List Available Plans
+* [get](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/plans/README.md#get) - Get
+* [update](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/plans/README.md#update) - Update
 
-### [Prices](docs/sdks/prices/README.md)
+### [Prices](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/prices/README.md)
 
-* [create](docs/sdks/prices/README.md#create) - Create
-* [list](docs/sdks/prices/README.md#list) - List
-* [get](docs/sdks/prices/README.md#get) - Get
-* [update](docs/sdks/prices/README.md#update) - Update
-* [delete](docs/sdks/prices/README.md#delete) - Delete
+* [create](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/prices/README.md#create) - Create
+* [list](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/prices/README.md#list) - List
+* [get](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/prices/README.md#get) - Get
+* [update](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/prices/README.md#update) - Update
+* [delete](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/prices/README.md#delete) - Delete
 
-### [Products](docs/sdks/products/README.md)
+### [Products](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/products/README.md)
 
-* [create](docs/sdks/products/README.md#create) - Create
-* [list](docs/sdks/products/README.md#list) - List
-* [get](docs/sdks/products/README.md#get) - Get
-* [update](docs/sdks/products/README.md#update) - Update
+* [create](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/products/README.md#create) - Create
+* [list](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/products/README.md#list) - List
+* [get](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/products/README.md#get) - Get
+* [update](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/products/README.md#update) - Update
 
-### [Revenue](docs/sdks/revenue/README.md)
+### [Revenue](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/revenue/README.md)
 
-* [get](docs/sdks/revenue/README.md#get) - Get revenue summary
+* [get](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/revenue/README.md#get) - Get revenue summary
 
-### [Sources](docs/sdks/sources/README.md)
+### [Sources](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/sources/README.md)
 
-* [create](docs/sdks/sources/README.md#create) - Create
-* [list](docs/sdks/sources/README.md#list) - List
-* [get](docs/sdks/sources/README.md#get) - Get
-* [update](docs/sdks/sources/README.md#update) - Update
+* [create](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/sources/README.md#create) - Create
+* [list](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/sources/README.md#list) - List
+* [get](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/sources/README.md#get) - Get
+* [update](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/sources/README.md#update) - Update
 
-### [Sources.Events](docs/sdks/sourcesevents/README.md)
+### [Sources.Events](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/sourcesevents/README.md)
 
-* [list](docs/sdks/sourcesevents/README.md#list) - List Events
-* [approve](docs/sdks/sourcesevents/README.md#approve) - Approve
-* [reject](docs/sdks/sourcesevents/README.md#reject) - Reject
-* [bulk_approve](docs/sdks/sourcesevents/README.md#bulk_approve) - Bulk Approve
-* [bulk_reject](docs/sdks/sourcesevents/README.md#bulk_reject) - Bulk Reject
+* [list](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/sourcesevents/README.md#list) - List Events
+* [approve](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/sourcesevents/README.md#approve) - Approve
+* [reject](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/sourcesevents/README.md#reject) - Reject
+* [bulk_approve](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/sourcesevents/README.md#bulk_approve) - Bulk Approve
+* [bulk_reject](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/sourcesevents/README.md#bulk_reject) - Bulk Reject
 
-### [Sources.Rules](docs/sdks/rules/README.md)
+### [Sources.Rules](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/rules/README.md)
 
-* [list](docs/sdks/rules/README.md#list) - List Rules
-* [create](docs/sdks/rules/README.md#create) - Create Rule
-* [get](docs/sdks/rules/README.md#get) - Get Rule
-* [update](docs/sdks/rules/README.md#update) - Update Rule
-* [delete](docs/sdks/rules/README.md#delete) - Delete Rule
+* [list](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/rules/README.md#list) - List Rules
+* [create](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/rules/README.md#create) - Create Rule
+* [get](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/rules/README.md#get) - Get Rule
+* [update](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/rules/README.md#update) - Update Rule
+* [delete](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/rules/README.md#delete) - Delete Rule
 
-### [Subscriptions](docs/sdks/subscriptions/README.md)
+### [Subscriptions](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/subscriptions/README.md)
 
-* [list](docs/sdks/subscriptions/README.md#list) - List
-* [create](docs/sdks/subscriptions/README.md#create) - Create
-* [get](docs/sdks/subscriptions/README.md#get) - Get
-* [generate_portal_link](docs/sdks/subscriptions/README.md#generate_portal_link) - Generate Portal Link
-* [terminate](docs/sdks/subscriptions/README.md#terminate) - Terminate
+* [list](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/subscriptions/README.md#list) - List
+* [create](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/subscriptions/README.md#create) - Create
+* [get](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/subscriptions/README.md#get) - Get
+* [generate_portal_link](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/subscriptions/README.md#generate_portal_link) - Generate Portal Link
+* [terminate](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/subscriptions/README.md#terminate) - Terminate
 
-### [TestClocks](docs/sdks/testclocks/README.md)
+### [TestClocks](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/testclocks/README.md)
 
-* [list](docs/sdks/testclocks/README.md#list) - List
-* [create](docs/sdks/testclocks/README.md#create) - Create
-* [get](docs/sdks/testclocks/README.md#get) - Get
-* [advance](docs/sdks/testclocks/README.md#advance) - Advance
-* [delete](docs/sdks/testclocks/README.md#delete) - Delete
+* [list](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/testclocks/README.md#list) - List
+* [create](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/testclocks/README.md#create) - Create
+* [get](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/testclocks/README.md#get) - Get
+* [advance](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/testclocks/README.md#advance) - Advance
+* [delete](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/testclocks/README.md#delete) - Delete
 
-### [UsageEvents](docs/sdks/usageevents/README.md)
+### [UsageEvents](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/usageevents/README.md)
 
-* [create](docs/sdks/usageevents/README.md#create) - Create
-* [list](docs/sdks/usageevents/README.md#list) - List
-* [get](docs/sdks/usageevents/README.md#get) - Get
-* [refund](docs/sdks/usageevents/README.md#refund) - Refund
-* [batch_create](docs/sdks/usageevents/README.md#batch_create) - Batch Create
+* [create](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/usageevents/README.md#create) - Create
+* [list](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/usageevents/README.md#list) - List
+* [get](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/usageevents/README.md#get) - Get
+* [refund](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/usageevents/README.md#refund) - Refund
+* [batch_create](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/usageevents/README.md#batch_create) - Batch Create
 
-### [Users](docs/sdks/users/README.md)
+### [Users](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/users/README.md)
 
-* [get](docs/sdks/users/README.md#get) - Get
-* [update](docs/sdks/users/README.md#update) - Update
+* [get](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/users/README.md#get) - Get
+* [update](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/users/README.md#update) - Update
 
 </details>
 <!-- End Available Resources and Operations [operations] -->
@@ -542,7 +542,7 @@ with Paygentic(
 <!-- Start Error Handling [errors] -->
 ## Error Handling
 
-[`PaygenticError`](./src/paygentic_sdk/errors/paygenticerror.py) is the base class for all HTTP error responses. It has the following properties:
+[`PaygenticError`](https://github.com/paygentic/sdk-python/blob/master/./src/paygentic_sdk/errors/paygenticerror.py) is the base class for all HTTP error responses. It has the following properties:
 
 | Property           | Type             | Description                                                                             |
 | ------------------ | ---------------- | --------------------------------------------------------------------------------------- |
@@ -551,7 +551,7 @@ with Paygentic(
 | `err.headers`      | `httpx.Headers`  | HTTP response headers                                                                   |
 | `err.body`         | `str`            | HTTP body. Can be empty string if no body is returned.                                  |
 | `err.raw_response` | `httpx.Response` | Raw HTTP response                                                                       |
-| `err.data`         |                  | Optional. Some errors may contain structured data. [See Error Classes](#error-classes). |
+| `err.data`         |                  | Optional. Some errors may contain structured data. [See Error Classes](https://github.com/paygentic/sdk-python/blob/master/#error-classes). |
 
 ### Example
 ```python
@@ -588,8 +588,8 @@ with Paygentic(
 
 ### Error Classes
 **Primary errors:**
-* [`PaygenticError`](./src/paygentic_sdk/errors/paygenticerror.py): The base class for HTTP error responses.
-  * [`Error`](./src/paygentic_sdk/errors/error.py): Generic error.
+* [`PaygenticError`](https://github.com/paygentic/sdk-python/blob/master/./src/paygentic_sdk/errors/paygenticerror.py): The base class for HTTP error responses.
+  * [`Error`](https://github.com/paygentic/sdk-python/blob/master/./src/paygentic_sdk/errors/error.py): Generic error.
 
 <details><summary>Less common errors (8)</summary>
 
@@ -601,15 +601,15 @@ with Paygentic(
     * [`httpx.TimeoutException`](https://www.python-httpx.org/exceptions/#httpx.TimeoutException): HTTP request timed out.
 
 
-**Inherit from [`PaygenticError`](./src/paygentic_sdk/errors/paygenticerror.py)**:
-* [`ValidationError`](./src/paygentic_sdk/errors/validationerror.py): Bad Request - The request could not be understood or was missing required parameters. Status code `400`. Applicable to 60 of 95 methods.*
-* [`DeleteCustomerConflictError`](./src/paygentic_sdk/errors/deletecustomerconflicterror.py): Customer cannot be deleted due to active dependencies. Status code `409`. Applicable to 1 of 95 methods.*
-* [`DeleteFeeConflictError`](./src/paygentic_sdk/errors/deletefeeconflicterror.py): Fee cannot be deleted because it has associated prices. Status code `409`. Applicable to 1 of 95 methods.*
-* [`ResponseValidationError`](./src/paygentic_sdk/errors/responsevalidationerror.py): Type mismatch between the response data and the expected Pydantic model. Provides access to the Pydantic validation error via the `cause` attribute.
+**Inherit from [`PaygenticError`](https://github.com/paygentic/sdk-python/blob/master/./src/paygentic_sdk/errors/paygenticerror.py)**:
+* [`ValidationError`](https://github.com/paygentic/sdk-python/blob/master/./src/paygentic_sdk/errors/validationerror.py): Bad Request - The request could not be understood or was missing required parameters. Status code `400`. Applicable to 60 of 95 methods.*
+* [`DeleteCustomerConflictError`](https://github.com/paygentic/sdk-python/blob/master/./src/paygentic_sdk/errors/deletecustomerconflicterror.py): Customer cannot be deleted due to active dependencies. Status code `409`. Applicable to 1 of 95 methods.*
+* [`DeleteFeeConflictError`](https://github.com/paygentic/sdk-python/blob/master/./src/paygentic_sdk/errors/deletefeeconflicterror.py): Fee cannot be deleted because it has associated prices. Status code `409`. Applicable to 1 of 95 methods.*
+* [`ResponseValidationError`](https://github.com/paygentic/sdk-python/blob/master/./src/paygentic_sdk/errors/responsevalidationerror.py): Type mismatch between the response data and the expected Pydantic model. Provides access to the Pydantic validation error via the `cause` attribute.
 
 </details>
 
-\* Check [the method documentation](#available-resources-and-operations) to see if the error is applicable.
+\* Check [the method documentation](https://github.com/paygentic/sdk-python/blob/master/#available-resources-and-operations) to see if the error is applicable.
 <!-- End Error Handling [errors] -->
 
 <!-- Start Server Selection [server] -->
