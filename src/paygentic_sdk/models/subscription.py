@@ -23,6 +23,36 @@ from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 SubscriptionObject = Literal["subscription",]
 
 
+class PaymentAwaitingApprovalTypedDict(TypedDict):
+    r"""Invoice 0 awaiting merchant approval before payment can proceed. The invoice is in DRAFT status with totals calculated. Approval is currently platform-only — do not call PATCH /v2/invoices/{id} with {\"trigger\": \"APPROVE\"} from merchant credentials (it will return 403). A merchant-accessible approval endpoint is planned for PAYG-754."""
+
+    invoice_id: str
+    r"""The Invoice 0 id awaiting approval"""
+    amount: str
+    r"""Total payment amount in decimal dollar format"""
+    status: Literal["awaiting_approval"]
+    r"""Payment status"""
+
+
+class PaymentAwaitingApproval(BaseModel):
+    r"""Invoice 0 awaiting merchant approval before payment can proceed. The invoice is in DRAFT status with totals calculated. Approval is currently platform-only — do not call PATCH /v2/invoices/{id} with {\"trigger\": \"APPROVE\"} from merchant credentials (it will return 403). A merchant-accessible approval endpoint is planned for PAYG-754."""
+
+    invoice_id: Annotated[str, pydantic.Field(alias="invoiceId")]
+    r"""The Invoice 0 id awaiting approval"""
+
+    amount: str
+    r"""Total payment amount in decimal dollar format"""
+
+    status: Annotated[
+        Annotated[
+            Literal["awaiting_approval"],
+            AfterValidator(validate_const("awaiting_approval")),
+        ],
+        pydantic.Field(alias="status"),
+    ] = "awaiting_approval"
+    r"""Payment status"""
+
+
 class PaymentPaidTypedDict(TypedDict):
     r"""Zero-amount Invoice 0 that completed synchronously to PAID"""
 
@@ -124,7 +154,10 @@ class PaymentPending(BaseModel):
 
 
 PaymentUnionTypedDict = TypeAliasType(
-    "PaymentUnionTypedDict", Union[PaymentPaidTypedDict, PaymentPendingTypedDict]
+    "PaymentUnionTypedDict",
+    Union[
+        PaymentPaidTypedDict, PaymentAwaitingApprovalTypedDict, PaymentPendingTypedDict
+    ],
 )
 r"""Payment session details when upfront payment is required, or confirmation of a zero-amount paid invoice"""
 
@@ -142,11 +175,12 @@ class UnknownPaymentUnion(BaseModel):
 _PAYMENT_UNION_VARIANTS: dict[str, Any] = {
     "pending": PaymentPending,
     "paid": PaymentPaid,
+    "awaiting_approval": PaymentAwaitingApproval,
 }
 
 
 PaymentUnion = Annotated[
-    Union[PaymentPending, PaymentPaid, UnknownPaymentUnion],
+    Union[PaymentPending, PaymentPaid, PaymentAwaitingApproval, UnknownPaymentUnion],
     BeforeValidator(
         partial(
             parse_open_union,
@@ -399,6 +433,10 @@ class Subscription(BaseModel):
         return m
 
 
+try:
+    PaymentAwaitingApproval.model_rebuild()
+except NameError:
+    pass
 try:
     PaymentPaid.model_rebuild()
 except NameError:

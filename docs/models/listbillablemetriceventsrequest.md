@@ -1,0 +1,13 @@
+# ListBillableMetricEventsRequest
+
+
+## Fields
+
+| Field                                                                | Type                                                                 | Required                                                             | Description                                                          |
+| -------------------------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------- |
+| `id`                                                                 | *str*                                                                | :heavy_check_mark:                                                   | N/A                                                                  |
+| `from_`                                                              | [date](https://docs.python.org/3/library/datetime.html#date-objects) | :heavy_check_mark:                                                   | Start of query window (ISO 8601)                                     |
+| `to`                                                                 | [date](https://docs.python.org/3/library/datetime.html#date-objects) | :heavy_check_mark:                                                   | End of query window (ISO 8601)                                       |
+| `subject`                                                            | *Optional[str]*                                                      | :heavy_minus_sign:                                                   | Filter by subject (typically the customer/user ID)                   |
+| `limit`                                                              | *Optional[int]*                                                      | :heavy_minus_sign:                                                   | Maximum number of events to return                                   |
+| `offset`                                                             | *Optional[int]*                                                      | :heavy_minus_sign:                                                   | Number of events to skip                                             |

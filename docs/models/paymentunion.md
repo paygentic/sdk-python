@@ -17,3 +17,9 @@ value: models.PaymentPending = /* values here */
 value: models.PaymentPaid = /* values here */
 ```
 
+### `models.PaymentAwaitingApproval`
+
+```python
+value: models.PaymentAwaitingApproval = /* values here */
+```
+

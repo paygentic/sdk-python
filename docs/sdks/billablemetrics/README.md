@@ -2,6 +2,8 @@
 
 ## Overview
 
+A `Billable Metric` defines a measurable quantity tied to a `Product`'s consumption. Each metric stores details including its label, explanatory text, and measurement units.
+
 ### Available Operations
 
 * [create](#create) - Create
@@ -9,6 +11,7 @@
 * [get](#get) - Get
 * [update](#update) - Update
 * [meter](#meter) - Query Meter Usage
+* [list_billable_metric_events](#list_billable_metric_events) - List Meter Events
 
 ## create
 
@@ -239,6 +242,56 @@ with Paygentic(
 ### Response
 
 **[models.UsageResponse](../../models/usageresponse.md)**
+
+### Errors
+
+| Error Type                   | Status Code                  | Content Type                 |
+| ---------------------------- | ---------------------------- | ---------------------------- |
+| errors.Error                 | 400                          | application/json             |
+| errors.ValidationError       | 400                          | application/json             |
+| errors.Error                 | 403                          | application/json             |
+| errors.Error                 | 500                          | application/json             |
+| errors.PaygenticDefaultError | 4XX, 5XX                     | \*/\*                        |
+
+## list_billable_metric_events
+
+List raw underlying events for a billable metric from the metering service. Returns events ordered by time descending.
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="listBillableMetricEvents" method="get" path="/v0/billableMetrics/{id}/events" -->
+```python
+import os
+from paygentic_sdk import Paygentic
+from paygentic_sdk.utils import parse_datetime
+
+
+with Paygentic(
+    bearer_auth=os.getenv("PAYGENTIC_BEARER_AUTH", ""),
+) as paygentic:
+
+    res = paygentic.billable_metrics.list_billable_metric_events(id="<id>", from_=parse_datetime("2024-09-28T08:04:20.478Z"), to=parse_datetime("2025-07-03T05:08:35.498Z"), limit=20, offset=0)
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                            | Type                                                                 | Required                                                             | Description                                                          |
+| -------------------------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------- |
+| `id`                                                                 | *str*                                                                | :heavy_check_mark:                                                   | N/A                                                                  |
+| `from_`                                                              | [date](https://docs.python.org/3/library/datetime.html#date-objects) | :heavy_check_mark:                                                   | Start of query window (ISO 8601)                                     |
+| `to`                                                                 | [date](https://docs.python.org/3/library/datetime.html#date-objects) | :heavy_check_mark:                                                   | End of query window (ISO 8601)                                       |
+| `subject`                                                            | *Optional[str]*                                                      | :heavy_minus_sign:                                                   | Filter by subject (typically the customer/user ID)                   |
+| `limit`                                                              | *Optional[int]*                                                      | :heavy_minus_sign:                                                   | Maximum number of events to return                                   |
+| `offset`                                                             | *Optional[int]*                                                      | :heavy_minus_sign:                                                   | Number of events to skip                                             |
+| `retries`                                                            | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)     | :heavy_minus_sign:                                                   | Configuration to override the default retry behavior of the client.  |
+
+### Response
+
+**[models.MeterEventList](../../models/metereventlist.md)**
 
 ### Errors
 

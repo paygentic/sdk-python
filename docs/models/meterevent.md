@@ -1,0 +1,15 @@
+# MeterEvent
+
+
+## Fields
+
+| Field                                                                | Type                                                                 | Required                                                             | Description                                                          |
+| -------------------------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------- |
+| `id`                                                                 | *str*                                                                | :heavy_check_mark:                                                   | Unique event identifier                                              |
+| `object`                                                             | [Optional[models.MeterEventObject]](../models/metereventobject.md)   | :heavy_minus_sign:                                                   | N/A                                                                  |
+| `type`                                                               | *str*                                                                | :heavy_check_mark:                                                   | CloudEvents event type (matches the meter's eventType)               |
+| `source`                                                             | *str*                                                                | :heavy_check_mark:                                                   | CloudEvents source that published the event                          |
+| `subject`                                                            | *str*                                                                | :heavy_check_mark:                                                   | Subject of the event — typically the customer ID                     |
+| `time`                                                               | [date](https://docs.python.org/3/library/datetime.html#date-objects) | :heavy_check_mark:                                                   | Time the event occurred                                              |
+| `idempotency_key`                                                    | *str*                                                                | :heavy_check_mark:                                                   | Caller-supplied idempotency key                                      |
+| `data`                                                               | Dict[str, *Any*]                                                     | :heavy_check_mark:                                                   | Event payload                                                        |

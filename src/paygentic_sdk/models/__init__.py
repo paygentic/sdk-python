@@ -395,6 +395,10 @@ if TYPE_CHECKING:
         ListAvailablePlansResponse,
         ListAvailablePlansResponseTypedDict,
     )
+    from .listbillablemetriceventsop import (
+        ListBillableMetricEventsRequest,
+        ListBillableMetricEventsRequestTypedDict,
+    )
     from .listbillablemetricsop import (
         ListBillableMetricsObject,
         ListBillableMetricsPagination,
@@ -554,6 +558,12 @@ if TYPE_CHECKING:
         MeteredEntitlementDetailStatus,
         MeteredEntitlementDetailTypedDict,
     )
+    from .meterevent import MeterEvent, MeterEventObject, MeterEventTypedDict
+    from .metereventlist import (
+        MeterEventList,
+        MeterEventListObject,
+        MeterEventListTypedDict,
+    )
     from .offsetpagination import OffsetPagination, OffsetPaginationTypedDict
     from .payment import (
         Payment,
@@ -678,6 +688,8 @@ if TYPE_CHECKING:
         ConsumerTypedDict,
         Merchant,
         MerchantTypedDict,
+        PaymentAwaitingApproval,
+        PaymentAwaitingApprovalTypedDict,
         PaymentPaid,
         PaymentPaidTypedDict,
         PaymentPending,
@@ -1135,6 +1147,8 @@ __all__ = [
     "ListAvailablePlansRequestTypedDict",
     "ListAvailablePlansResponse",
     "ListAvailablePlansResponseTypedDict",
+    "ListBillableMetricEventsRequest",
+    "ListBillableMetricEventsRequestTypedDict",
     "ListBillableMetricsObject",
     "ListBillableMetricsPagination",
     "ListBillableMetricsPaginationTypedDict",
@@ -1250,6 +1264,12 @@ __all__ = [
     "MerchantTypedDict",
     "Metadata",
     "MetadataTypedDict",
+    "MeterEvent",
+    "MeterEventList",
+    "MeterEventListObject",
+    "MeterEventListTypedDict",
+    "MeterEventObject",
+    "MeterEventTypedDict",
     "MeteredEntitlementDetail",
     "MeteredEntitlementDetailObject",
     "MeteredEntitlementDetailStatus",
@@ -1263,6 +1283,8 @@ __all__ = [
     "Parameters",
     "ParametersTypedDict",
     "Payment",
+    "PaymentAwaitingApproval",
+    "PaymentAwaitingApprovalTypedDict",
     "PaymentLineItem",
     "PaymentLineItemTypedDict",
     "PaymentObject",
@@ -1801,6 +1823,8 @@ _dynamic_imports: dict[str, str] = {
     "ListAvailablePlansRequestTypedDict": ".listavailableplansop",
     "ListAvailablePlansResponse": ".listavailableplansop",
     "ListAvailablePlansResponseTypedDict": ".listavailableplansop",
+    "ListBillableMetricEventsRequest": ".listbillablemetriceventsop",
+    "ListBillableMetricEventsRequestTypedDict": ".listbillablemetriceventsop",
     "ListBillableMetricsObject": ".listbillablemetricsop",
     "ListBillableMetricsPagination": ".listbillablemetricsop",
     "ListBillableMetricsPaginationTypedDict": ".listbillablemetricsop",
@@ -1918,6 +1942,12 @@ _dynamic_imports: dict[str, str] = {
     "MeteredEntitlementDetailObject": ".meteredentitlementdetail",
     "MeteredEntitlementDetailStatus": ".meteredentitlementdetail",
     "MeteredEntitlementDetailTypedDict": ".meteredentitlementdetail",
+    "MeterEvent": ".meterevent",
+    "MeterEventObject": ".meterevent",
+    "MeterEventTypedDict": ".meterevent",
+    "MeterEventList": ".metereventlist",
+    "MeterEventListObject": ".metereventlist",
+    "MeterEventListTypedDict": ".metereventlist",
     "OffsetPagination": ".offsetpagination",
     "OffsetPaginationTypedDict": ".offsetpagination",
     "Payment": ".payment",
@@ -2025,6 +2055,8 @@ _dynamic_imports: dict[str, str] = {
     "ConsumerTypedDict": ".subscription",
     "Merchant": ".subscription",
     "MerchantTypedDict": ".subscription",
+    "PaymentAwaitingApproval": ".subscription",
+    "PaymentAwaitingApprovalTypedDict": ".subscription",
     "PaymentPaid": ".subscription",
     "PaymentPaidTypedDict": ".subscription",
     "PaymentPending": ".subscription",

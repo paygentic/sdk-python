@@ -11,6 +11,8 @@ from typing import Any, Dict, Mapping, Optional
 
 
 class BillableMetrics(BaseSDK):
+    r"""A `Billable Metric` defines a measurable quantity tied to a `Product`'s consumption. Each metric stores details including its label, explanatory text, and measurement units."""
+
     def create(
         self,
         *,
@@ -1113,6 +1115,232 @@ class BillableMetrics(BaseSDK):
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return unmarshal_json_response(models.UsageResponse, http_res)
+        if utils.match_response(http_res, "400", "application/json"):
+            response_data = unmarshal_json_response(errors.BadRequestUnion, http_res)
+            raise errors.BadRequest(response_data, http_res)
+        if utils.match_response(http_res, "403", "application/json"):
+            response_data = unmarshal_json_response(errors.ErrorData, http_res)
+            raise errors.Error(response_data, http_res)
+        if utils.match_response(http_res, "500", "application/json"):
+            response_data = unmarshal_json_response(errors.ErrorData, http_res)
+            raise errors.Error(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.PaygenticDefaultError(
+                "API error occurred", http_res, http_res_text
+            )
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.PaygenticDefaultError(
+                "API error occurred", http_res, http_res_text
+            )
+
+        raise errors.PaygenticDefaultError("Unexpected response received", http_res)
+
+    def list_billable_metric_events(
+        self,
+        *,
+        id: str,
+        from_: datetime,
+        to: datetime,
+        subject: Optional[str] = None,
+        limit: Optional[int] = 20,
+        offset: Optional[int] = 0,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.MeterEventList:
+        r"""List Meter Events
+
+        List raw underlying events for a billable metric from the metering service. Returns events ordered by time descending.
+
+        :param id:
+        :param from_: Start of query window (ISO 8601)
+        :param to: End of query window (ISO 8601)
+        :param subject: Filter by subject (typically the customer/user ID)
+        :param limit: Maximum number of events to return
+        :param offset: Number of events to skip
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.ListBillableMetricEventsRequest(
+            id=id,
+            from_=from_,
+            to=to,
+            subject=subject,
+            limit=limit,
+            offset=offset,
+        )
+
+        req = self._build_request(
+            method="GET",
+            path="/v0/billableMetrics/{id}/events",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = self.do_request(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="listBillableMetricEvents",
+                oauth2_scopes=None,
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+            ),
+            request=req,
+            error_status_codes=["400", "403", "4XX", "500", "5XX"],
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(models.MeterEventList, http_res)
+        if utils.match_response(http_res, "400", "application/json"):
+            response_data = unmarshal_json_response(errors.BadRequestUnion, http_res)
+            raise errors.BadRequest(response_data, http_res)
+        if utils.match_response(http_res, "403", "application/json"):
+            response_data = unmarshal_json_response(errors.ErrorData, http_res)
+            raise errors.Error(response_data, http_res)
+        if utils.match_response(http_res, "500", "application/json"):
+            response_data = unmarshal_json_response(errors.ErrorData, http_res)
+            raise errors.Error(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.PaygenticDefaultError(
+                "API error occurred", http_res, http_res_text
+            )
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.PaygenticDefaultError(
+                "API error occurred", http_res, http_res_text
+            )
+
+        raise errors.PaygenticDefaultError("Unexpected response received", http_res)
+
+    async def list_billable_metric_events_async(
+        self,
+        *,
+        id: str,
+        from_: datetime,
+        to: datetime,
+        subject: Optional[str] = None,
+        limit: Optional[int] = 20,
+        offset: Optional[int] = 0,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.MeterEventList:
+        r"""List Meter Events
+
+        List raw underlying events for a billable metric from the metering service. Returns events ordered by time descending.
+
+        :param id:
+        :param from_: Start of query window (ISO 8601)
+        :param to: End of query window (ISO 8601)
+        :param subject: Filter by subject (typically the customer/user ID)
+        :param limit: Maximum number of events to return
+        :param offset: Number of events to skip
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.ListBillableMetricEventsRequest(
+            id=id,
+            from_=from_,
+            to=to,
+            subject=subject,
+            limit=limit,
+            offset=offset,
+        )
+
+        req = self._build_request_async(
+            method="GET",
+            path="/v0/billableMetrics/{id}/events",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = await self.do_request_async(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="listBillableMetricEvents",
+                oauth2_scopes=None,
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+            ),
+            request=req,
+            error_status_codes=["400", "403", "4XX", "500", "5XX"],
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(models.MeterEventList, http_res)
         if utils.match_response(http_res, "400", "application/json"):
             response_data = unmarshal_json_response(errors.BadRequestUnion, http_res)
             raise errors.BadRequest(response_data, http_res)
