@@ -34,6 +34,10 @@ jobs:
         with:
           speakeasy_version: 1.761.4
           github_access_token: ${{ secrets.GITHUB_TOKEN }}
+          # Force regen so a version-only bump in gen.yaml still rewrites
+          # pyproject.toml — otherwise the action skips regen when it sees no
+          # spec diff and Detect version reads the stale version.
+          force: "true"
           mode: direct
         env:
           SPEAKEASY_API_KEY: ${{ secrets.ORG_SPEAKEASY_API_KEY }}
