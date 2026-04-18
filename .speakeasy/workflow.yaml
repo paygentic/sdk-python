@@ -13,6 +13,9 @@ targets:
     python:
         target: python
         source: Paygentic API
+        publish:
+            pypi:
+                useTrustedPublishing: true
         codeSamples:
             registry:
                 location: registry.speakeasyapi.dev/paygentic/default/paygentic-api-python-code-samples
