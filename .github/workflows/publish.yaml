@@ -1,9 +1,5 @@
-# Managed file — do not edit directly.
-#
-# Flow:
-# 1. Monorepo's sdk_release.yaml pushes spec + overlay + gen.yaml here
-# 2. This workflow generates the SDK, tags, builds, and publishes to PyPI (OIDC)
-
+# Managed file — owned by paygentic/sdk-python.
+# Delegates to Speakeasy's canonical reusable publish workflow.
 name: Generate and Publish SDK
 
 on:
@@ -12,115 +8,17 @@ on:
   workflow_dispatch: {}
 
 permissions:
-  checks: write
   contents: write
-  statuses: write
   id-token: write
+  checks: write
+  statuses: write
 
 jobs:
-  generate:
-    name: Generate Python SDK
-    runs-on: ubuntu-latest
-    environment:
-      name: pypi
-      url: https://pypi.org/project/paygentic-sdk/
-    steps:
-      # fetch-depth: 0 is required so Detect version can read tag history.
-      - uses: actions/checkout@v6
-        with:
-          fetch-depth: 0
-
-      - uses: speakeasy-api/sdk-generation-action@v15
-        with:
-          speakeasy_version: 1.761.4
-          github_access_token: ${{ secrets.GITHUB_TOKEN }}
-          # Force regen so a version-only bump in gen.yaml still rewrites
-          # pyproject.toml — otherwise the action skips regen when it sees no
-          # spec diff and Detect version reads the stale version.
-          force: "true"
-          mode: direct
-        env:
-          SPEAKEASY_API_KEY: ${{ secrets.ORG_SPEAKEASY_API_KEY }}
-
-      - name: Detect version and tag
-        id: version
-        run: |
-          VERSION=$(grep '^version = ' pyproject.toml | sed 's/version = "//;s/"//')
-          echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
-
-          if git rev-parse -q --verify "refs/tags/v${VERSION}" >/dev/null 2>&1; then
-            echo "::warning::Tag v${VERSION} already exists — version was not bumped. Skipping publish. If this was intentional, trigger a manual dispatch after bumping the version."
-            echo "should_publish=false" >> "$GITHUB_OUTPUT"
-          else
-            echo "New version detected: v${VERSION}"
-            echo "should_publish=true" >> "$GITHUB_OUTPUT"
-          fi
-
-      - name: Create tag
-        if: steps.version.outputs.should_publish == 'true'
-        run: |
-          VERSION="${{ steps.version.outputs.version }}"
-          git config user.name "paygentic-bot"
-          git config user.email "bot@paygentic.io"
-          git tag -a "v${VERSION}" -m "Release v${VERSION}"
-          git push origin "v${VERSION}"
-
-      - uses: astral-sh/setup-uv@v7
-        if: steps.version.outputs.should_publish == 'true'
-        with:
-          version: "latest"
-
-      - name: Install Python
-        if: steps.version.outputs.should_publish == 'true'
-        run: uv python install 3.13
-
-      - name: Build
-        if: steps.version.outputs.should_publish == 'true'
-        run: uv build
-
-      - name: Publish to PyPI
-        if: steps.version.outputs.should_publish == 'true'
-        uses: pypa/gh-action-pypi-publish@release/v1
-
-      - name: Create GitHub Release
-        if: steps.version.outputs.should_publish == 'true'
-        run: |
-          VERSION="${{ steps.version.outputs.version }}"
-          gh release create "v${VERSION}" \
-            --title "v${VERSION}" \
-            --notes "## Installation
-
-          \`\`\`bash
-          pip install paygentic-sdk==${VERSION}
-          \`\`\`"
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Failed (slack)
-        uses: slackapi/slack-github-action@v3.0.1
-        if: failure()
-        with:
-          webhook: ${{ secrets.ORG_SLACK_WEBHOOK_URL }}
-          webhook-type: incoming-webhook
-          payload: |
-            {
-              "text": "Python SDK generation/publish failed",
-              "blocks": [
-                {
-                  "type": "section",
-                  "text": {
-                    "type": "mrkdwn",
-                    "text": "Python SDK generation/publish failed in <https://github.com/${{ github.repository }}|${{ github.repository }}>"
-                  },
-                  "accessory": {
-                    "type": "button",
-                    "text": {
-                      "type": "plain_text",
-                      "text": "View Logs",
-                      "emoji": true
-                    },
-                    "url": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-                  }
-                }
-              ]
-            }
+  publish:
+    uses: speakeasy-api/sdk-generation-action/.github/workflows/sdk-publish.yaml@v15
+    with:
+      target: python
+    secrets:
+      github_access_token: ${{ secrets.GITHUB_TOKEN }}
+      speakeasy_api_key: ${{ secrets.ORG_SPEAKEASY_API_KEY }}
+      slack_webhook_url: ${{ secrets.ORG_SLACK_WEBHOOK_URL }}
