@@ -3,6 +3,10 @@
 name: Generate and Publish SDK
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - .speakeasy/gen.lock
   repository_dispatch:
     types: [monorepo-release]
   workflow_dispatch: {}
