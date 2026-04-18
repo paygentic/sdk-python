@@ -5,15 +5,15 @@ management:
   docVersion: 0.1.0
   speakeasyVersion: 1.761.4
   generationVersion: 2.879.13
-  releaseVersion: 0.1.32
-  configChecksum: f34cff684e7ecd430c779ae1f540cfc1
+  releaseVersion: 0.1.33
+  configChecksum: 31fddcc3a80416f1bfed1e0cb8741f1c
   repoURL: https://github.com/paygentic/sdk-python.git
   installationURL: https://github.com/paygentic/sdk-python.git
   published: true
 persistentEdits:
-  generation_id: a9a1825f-aee3-4d3f-a810-94eeff713603
-  pristine_commit_hash: 11cbfacdbf1c084c4b977bfade13d588f64ac862
-  pristine_tree_hash: f8eb68919e587eca9b5e02e7f04bbc2266526ea2
+  generation_id: 7ba2996e-8e01-431c-b14a-861e557a87c4
+  pristine_commit_hash: f0ac2387cd780b05a509dfa2061e3ceda7d6298c
+  pristine_tree_hash: c29a454915b63731661c8eb1ba2ef387dff35e46
 features:
   python:
     additionalDependencies: 1.0.0
@@ -1746,8 +1746,8 @@ trackedFiles:
     pristine_git_object: ba50994ac7aceefe62e1571a6cbff467d9a067da
   pyproject.toml:
     id: 5d07e7d72637
-    last_write_checksum: sha1:8e4867b84a26bc891fda532602990ab7e029c808
-    pristine_git_object: e2d96487c0a6e13c2c4c502be3b941441196b775
+    last_write_checksum: sha1:906b3d2f029c8b26dc56a5da9a7a3a704e570a79
+    pristine_git_object: b3a302eb6d517ceaa5e2de88ef6dd66bcb4e4933
   scripts/prepare_readme.py:
     id: e0c5957a6035
     last_write_checksum: sha1:e2ebd355f72567204499ca62ee72728d9c3dfd95
@@ -1774,8 +1774,8 @@ trackedFiles:
     pristine_git_object: 6dbd4dcba3a5bac1c92beb0f5db31ef3d2944dea
   src/paygentic_sdk/_version.py:
     id: 52c8c5a320dc
-    last_write_checksum: sha1:f880fcfa1a7d988f8c55a25d07fd6328667760bf
-    pristine_git_object: 8128f68d9f53d0c41f70168b83b9ca07f799a44b
+    last_write_checksum: sha1:79617c006c8664ac41a7ab004c00905c434fed60
+    pristine_git_object: febdb0132f106d2eca5c1014930fe6140e5f0ba6
   src/paygentic_sdk/basesdk.py:
     id: a086dd8cd1b3
     last_write_checksum: sha1:275b3ea45e9bf52519d3c7f179816ab1a0e823a2
