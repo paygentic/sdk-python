@@ -12,7 +12,7 @@ The official Python SDK for the [Paygentic API](https://paygentic.io) — build 
 
 Paygentic API: The Paygentic API provides billing infrastructure for usage-based and subscription monetization — customers, subscriptions, usage metering, invoicing, entitlements, and payments.
 
-See the [Quickstart](https://docs.paygentic.io/getting-started/quickstart) to go from zero to billing in four steps.
+See the [Quickstart](https://docs.paygentic.io/getting-started/quickstart) to go from zero to billing in a handful of steps.
 <!-- End Summary [summary] -->
 
 ## How it works
@@ -56,10 +56,6 @@ See the [Quickstart](https://docs.paygentic.io/getting-started/quickstart) for a
 <!-- Start SDK Installation [installation] -->
 ## SDK Installation
 
-> [!TIP]
-> To finish publishing your SDK to PyPI you must [run your first generation action](https://www.speakeasy.com/docs/github-setup#step-by-step-guide).
-
-
 > [!NOTE]
 > **Python version upgrade policy**
 >
@@ -72,7 +68,7 @@ The SDK can be installed with *uv*, *pip*, or *poetry* package managers.
 *uv* is a fast Python package installer and resolver, designed as a drop-in replacement for pip and pip-tools. It's recommended for its speed and modern Python tooling capabilities.
 
 ```bash
-uv add git+https://github.com/paygentic/sdk-python.git
+uv add paygentic-sdk
 ```
 
 ### PIP
@@ -80,7 +76,7 @@ uv add git+https://github.com/paygentic/sdk-python.git
 *PIP* is the default package installer for Python, enabling easy installation and management of packages from PyPI via the command line.
 
 ```bash
-pip install git+https://github.com/paygentic/sdk-python.git
+pip install paygentic-sdk
 ```
 
 ### Poetry
@@ -88,7 +84,7 @@ pip install git+https://github.com/paygentic/sdk-python.git
 *Poetry* is a modern tool that simplifies dependency management and package publishing by using a single `pyproject.toml` file to handle project metadata and dependencies.
 
 ```bash
-poetry add git+https://github.com/paygentic/sdk-python.git
+poetry add paygentic-sdk
 ```
 
 ### Shell and script usage with `uv`
@@ -314,7 +310,7 @@ with Paygentic(
     bearer_auth=os.getenv("PAYGENTIC_BEARER_AUTH", ""),
 ) as paygentic:
 
-    res = paygentic.billable_metrics.create(aggregation="SUM", description="Tracks total tokens consumed per API call", merchant_id="org_YS8jkP59V71TdUvj", name="Token Counter", product_id="prod_abc123", unit="tokens")
+    res = paygentic.billable_metrics.create(aggregation="SUM", description="Tracks total tokens consumed per API call.", merchant_id="org_YS8jkP59V71TdUvj", name="Token Counter", product_id="prod_abc123", unit="tokens")
 
     # Handle response
     print(res)
@@ -511,7 +507,7 @@ with Paygentic(
     bearer_auth=os.getenv("PAYGENTIC_BEARER_AUTH", ""),
 ) as paygentic:
 
-    res = paygentic.billable_metrics.create(aggregation="SUM", description="Tracks total tokens consumed per API call", merchant_id="org_YS8jkP59V71TdUvj", name="Token Counter", product_id="prod_abc123", unit="tokens",
+    res = paygentic.billable_metrics.create(aggregation="SUM", description="Tracks total tokens consumed per API call.", merchant_id="org_YS8jkP59V71TdUvj", name="Token Counter", product_id="prod_abc123", unit="tokens",
         RetryConfig("backoff", BackoffStrategy(1, 50, 1.1, 100), False))
 
     # Handle response
@@ -531,7 +527,7 @@ with Paygentic(
     bearer_auth=os.getenv("PAYGENTIC_BEARER_AUTH", ""),
 ) as paygentic:
 
-    res = paygentic.billable_metrics.create(aggregation="SUM", description="Tracks total tokens consumed per API call", merchant_id="org_YS8jkP59V71TdUvj", name="Token Counter", product_id="prod_abc123", unit="tokens")
+    res = paygentic.billable_metrics.create(aggregation="SUM", description="Tracks total tokens consumed per API call.", merchant_id="org_YS8jkP59V71TdUvj", name="Token Counter", product_id="prod_abc123", unit="tokens")
 
     # Handle response
     print(res)
@@ -565,7 +561,7 @@ with Paygentic(
     res = None
     try:
 
-        res = paygentic.billable_metrics.create(aggregation="SUM", description="Tracks total tokens consumed per API call", merchant_id="org_YS8jkP59V71TdUvj", name="Token Counter", product_id="prod_abc123", unit="tokens")
+        res = paygentic.billable_metrics.create(aggregation="SUM", description="Tracks total tokens consumed per API call.", merchant_id="org_YS8jkP59V71TdUvj", name="Token Counter", product_id="prod_abc123", unit="tokens")
 
         # Handle response
         print(res)
@@ -628,7 +624,7 @@ with Paygentic(
     bearer_auth=os.getenv("PAYGENTIC_BEARER_AUTH", ""),
 ) as paygentic:
 
-    res = paygentic.billable_metrics.create(aggregation="SUM", description="Tracks total tokens consumed per API call", merchant_id="org_YS8jkP59V71TdUvj", name="Token Counter", product_id="prod_abc123", unit="tokens")
+    res = paygentic.billable_metrics.create(aggregation="SUM", description="Tracks total tokens consumed per API call.", merchant_id="org_YS8jkP59V71TdUvj", name="Token Counter", product_id="prod_abc123", unit="tokens")
 
     # Handle response
     print(res)

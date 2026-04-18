@@ -40,7 +40,7 @@ if TYPE_CHECKING:
 class Paygentic(BaseSDK):
     r"""Paygentic API: The Paygentic API provides billing infrastructure for usage-based and subscription monetization — customers, subscriptions, usage metering, invoicing, entitlements, and payments.
 
-    See the [Quickstart](https://docs.paygentic.io/getting-started/quickstart) to go from zero to billing in four steps.
+    See the [Quickstart](https://docs.paygentic.io/getting-started/quickstart) to go from zero to billing in a handful of steps.
     """
 
     billable_metrics: "BillableMetrics"

@@ -1,18 +1,19 @@
 lockVersion: 2.0.0
 id: d05de326-b60d-4921-81eb-a16eab66dffd
 management:
-  docChecksum: bee9d730fcf6a00ce1674814e4c3a41e
+  docChecksum: f92e30d5b7b95e9123dd32884b552a8b
   docVersion: 0.1.0
   speakeasyVersion: 1.761.4
   generationVersion: 2.879.13
-  releaseVersion: 0.1.29
-  configChecksum: 32d21d3de43590e350e8fac7fdd483f8
+  releaseVersion: 0.1.32
+  configChecksum: f34cff684e7ecd430c779ae1f540cfc1
   repoURL: https://github.com/paygentic/sdk-python.git
   installationURL: https://github.com/paygentic/sdk-python.git
+  published: true
 persistentEdits:
-  generation_id: 879d9c5c-8b8c-4611-b688-c38436125501
-  pristine_commit_hash: a5066ae3d06d94f3075cf9d9df3afe579d5e3fb2
-  pristine_tree_hash: b0dcf1ca8bf033acd1215bef78995230dec4b311
+  generation_id: a9a1825f-aee3-4d3f-a810-94eeff713603
+  pristine_commit_hash: 11cbfacdbf1c084c4b977bfade13d588f64ac862
+  pristine_tree_hash: f8eb68919e587eca9b5e02e7f04bbc2266526ea2
 features:
   python:
     additionalDependencies: 1.0.0
@@ -221,8 +222,8 @@ trackedFiles:
     pristine_git_object: 20811b4dae9628d6bd7737061e7538d6ac352b91
   docs/models/createbillablemetricrequest.md:
     id: 93cdf7d62550
-    last_write_checksum: sha1:5155b01b0eebd54d778431292ae2ca5e22f11140
-    pristine_git_object: 578d34ea97b34ce32b11d55ca26af2c448132d17
+    last_write_checksum: sha1:76b326a25e451f5304faf038950fbb3818947962
+    pristine_git_object: a6980c9738a2ef1cc0cc84f09c70b335879af5b0
   docs/models/createcostaggregation.md:
     id: 28c6840521c2
     last_write_checksum: sha1:a5860f3bb7ccdb77a43e4bf4ed172a5ba666708b
@@ -1645,8 +1646,8 @@ trackedFiles:
     pristine_git_object: c105dcb473b2d7444af7ac558b67b7f772cd71d8
   docs/sdks/billablemetrics/README.md:
     id: 4a5403fb7335
-    last_write_checksum: sha1:e8103f82fc4ef29e3309e63457d16ebf9e1e4804
-    pristine_git_object: b77ab7342e872577295cbb919723ad73cff80a7e
+    last_write_checksum: sha1:7b51e3b01fd4c8f2bddcf3cfc8c1f8296b6bcf0f
+    pristine_git_object: 9286df076f035dc48a50499d2460df1aaa2ae7e9
   docs/sdks/costs/README.md:
     id: 8d96b80b9dde
     last_write_checksum: sha1:8847f1691683668f20c6cc5236c2dd7b932051e3
@@ -1745,8 +1746,8 @@ trackedFiles:
     pristine_git_object: ba50994ac7aceefe62e1571a6cbff467d9a067da
   pyproject.toml:
     id: 5d07e7d72637
-    last_write_checksum: sha1:e01e5f6b318316528dac6c38371870eef3d3587b
-    pristine_git_object: 0dee70bd00199054207365ef2220fb079a46259e
+    last_write_checksum: sha1:8e4867b84a26bc891fda532602990ab7e029c808
+    pristine_git_object: e2d96487c0a6e13c2c4c502be3b941441196b775
   scripts/prepare_readme.py:
     id: e0c5957a6035
     last_write_checksum: sha1:e2ebd355f72567204499ca62ee72728d9c3dfd95
@@ -1773,8 +1774,8 @@ trackedFiles:
     pristine_git_object: 6dbd4dcba3a5bac1c92beb0f5db31ef3d2944dea
   src/paygentic_sdk/_version.py:
     id: 52c8c5a320dc
-    last_write_checksum: sha1:df7d3917162c7b74c551509b2e82bb16e1a9ac32
-    pristine_git_object: e56bbb9f7a5b13e5aa0c6697761ec943deeed83b
+    last_write_checksum: sha1:f880fcfa1a7d988f8c55a25d07fd6328667760bf
+    pristine_git_object: 8128f68d9f53d0c41f70168b83b9ca07f799a44b
   src/paygentic_sdk/basesdk.py:
     id: a086dd8cd1b3
     last_write_checksum: sha1:275b3ea45e9bf52519d3c7f179816ab1a0e823a2
@@ -2537,8 +2538,8 @@ trackedFiles:
     pristine_git_object: f2b6fce3d0b71ee90198727dc50c7d795256e7f6
   src/paygentic_sdk/sdk.py:
     id: d1287b10e6f7
-    last_write_checksum: sha1:b7809d62dc4ebc901c047649ea0298065b072a55
-    pristine_git_object: afe0e2467c9d657084d6d35762faf8bb4832a195
+    last_write_checksum: sha1:2f8df09a7d6d6e8dc0a177764897d65f37f265d9
+    pristine_git_object: 4d2bf0a161f47ed32910cfe0f0ff3cbf1e3b4ee3
   src/paygentic_sdk/sdkconfiguration.py:
     id: 06c96b6a24d8
     last_write_checksum: sha1:a5717c8a33c253341b049a52519dfc9cbbd956b0
