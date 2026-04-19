@@ -263,6 +263,7 @@ if TYPE_CHECKING:
         UsagePeriod,
         UsagePeriodTypedDict,
     )
+    from .error import Code
     from .eventresponse import (
         EventResponse,
         EventResponseObject,
@@ -878,6 +879,7 @@ __all__ = [
     "BulkRejectSourceEventsRequestTypedDict",
     "BulkRejectSourceEventsResponse",
     "BulkRejectSourceEventsResponseTypedDict",
+    "Code",
     "Consumer",
     "ConsumerTypedDict",
     "Cost",
@@ -1701,6 +1703,7 @@ _dynamic_imports: dict[str, str] = {
     "EntitlementTemplateTypedDict": ".entitlementtemplate",
     "UsagePeriod": ".entitlementtemplate",
     "UsagePeriodTypedDict": ".entitlementtemplate",
+    "Code": ".error",
     "EventResponse": ".eventresponse",
     "EventResponseObject": ".eventresponse",
     "EventResponseTypedDict": ".eventresponse",

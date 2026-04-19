@@ -579,6 +579,7 @@ with Paygentic(
         if isinstance(e, errors.Error):
             print(e.data.error)  # Optional[str]
             print(e.data.message)  # str
+            print(e.data.code)  # Optional[models.Code]
             print(e.data.details)  # Optional[Dict[str, Any]]
 ```
 
