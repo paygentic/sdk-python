@@ -13,7 +13,7 @@ targets:
         sourceRevisionDigest: sha256:1be1ea983eea1c3f4ba3340e19f143b0e7f4af6988eb6d10d7e1d28744c64cab
         sourceBlobDigest: sha256:6782f892c39952dbde3d6a221c958a9e8103c7e5d27437c96a569309e9f997c9
         codeSamplesNamespace: paygentic-api-python-code-samples
-        codeSamplesRevisionDigest: sha256:b10eb4285aee911f211fd791a70366eb4d1ff2256f8bd3e647efe393dc0e372f
+        codeSamplesRevisionDigest: sha256:5c17e3b6ef7f5aec5248cff8dcdafe4e53c59958f15ba4b3af62a7937d69ad7f
 workflow:
     workflowVersion: 1.0.0
     speakeasyVersion: 1.761.4
@@ -28,7 +28,7 @@ workflow:
             source: Paygentic API
             publish:
                 pypi:
-                    useTrustedPublishing: true
+                    token: $pypi_token
             codeSamples:
                 registry:
                     location: registry.speakeasyapi.dev/paygentic/default/paygentic-api-python-code-samples
