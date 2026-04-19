@@ -1,14 +1,13 @@
 # Managed file — owned by paygentic/sdk-python.
-# Canonical Speakeasy publish setup with PyPI OIDC trusted publishing.
-name: Generate and Publish SDK
+# Canonical Speakeasy publish workflow. Fires when sdk_generation.yaml
+# commits a new gen.lock to main (or via manual workflow_dispatch).
+name: Publish
 
 on:
   push:
     branches: [main]
     paths:
       - .speakeasy/gen.lock
-  repository_dispatch:
-    types: [monorepo-release]
   workflow_dispatch: {}
 
 permissions:
@@ -25,21 +24,6 @@ jobs:
       target: python
     secrets:
       github_access_token: ${{ secrets.GITHUB_TOKEN }}
+      pypi_token: ${{ secrets.ORG_PYPI_TOKEN }}
       speakeasy_api_key: ${{ secrets.ORG_SPEAKEASY_API_KEY }}
       slack_webhook_url: ${{ secrets.ORG_SLACK_WEBHOOK_URL }}
-
-  publish-pypi:
-    needs: [publish]
-    if: ${{ needs.publish.outputs.python_regenerated == 'true' && needs.publish.outputs.publish_python == 'true' && needs.publish.outputs.use_pypi_trusted_publishing == 'true' }}
-    runs-on: ubuntu-latest
-    permissions:
-      id-token: write
-      contents: write
-    steps:
-      - uses: actions/checkout@v4
-      - uses: speakeasy-api/sdk-generation-action/publish-pypi@v15
-        with:
-          github_access_token: ${{ secrets.GITHUB_TOKEN }}
-          python-directory: ${{ needs.publish.outputs.python_directory }}
-          speakeasy_api_key: ${{ secrets.ORG_SPEAKEASY_API_KEY }}
-          slack_webhook_url: ${{ secrets.ORG_SLACK_WEBHOOK_URL }}
