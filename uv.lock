@@ -221,7 +221,7 @@ wheels = [
 
 [[package]]
 name = "paygentic-sdk"
-version = "0.1.99rc0"
+version = "0.1.30"
 source = { editable = "." }
 dependencies = [
     { name = "httpcore" },
