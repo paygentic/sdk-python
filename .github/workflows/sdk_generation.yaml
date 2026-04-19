@@ -1,7 +1,8 @@
 # Managed file — owned by paygentic/sdk-python.
 # Canonical Speakeasy generation workflow. Regenerates the SDK from the
 # Speakeasy Registry spec and commits the result directly to main; that
-# push triggers sdk_publish.yaml for PyPI OIDC trusted publishing.
+# push triggers sdk_publish.yaml (also handles PyPI token-based publish
+# via workflow-executor in direct mode).
 name: Generate
 
 on:
@@ -33,5 +34,6 @@ jobs:
       set_version: ${{ github.event.inputs.set_version || '' }}
     secrets:
       github_access_token: ${{ secrets.GITHUB_TOKEN }}
+      pypi_token: ${{ secrets.ORG_PYPI_TOKEN }}
       speakeasy_api_key: ${{ secrets.ORG_SPEAKEASY_API_KEY }}
       slack_webhook_url: ${{ secrets.ORG_SLACK_WEBHOOK_URL }}
