@@ -341,6 +341,7 @@ with Paygentic(
 * [update_cost](docs/sdks/costs/README.md#update_cost) - Update
 * [delete_cost](docs/sdks/costs/README.md#delete_cost) - Delete
 * [get_cost_summary](docs/sdks/costs/README.md#get_cost_summary) - Query Summary
+* [get_cost_report](docs/sdks/costs/README.md#get_cost_report) - Report
 
 ### [Customers](docs/sdks/customers/README.md)
 
@@ -349,11 +350,6 @@ with Paygentic(
 * [get](docs/sdks/customers/README.md#get) - Get
 * [delete](docs/sdks/customers/README.md#delete) - Delete
 * [update](docs/sdks/customers/README.md#update) - Update
-
-### [Disputes](docs/sdks/disputes/README.md)
-
-* [create](docs/sdks/disputes/README.md#create) - Create
-* [list](docs/sdks/disputes/README.md#list) - List
 
 ### [Entitlements](docs/sdks/entitlements/README.md)
 
@@ -368,11 +364,6 @@ with Paygentic(
 * [purchase](docs/sdks/grants/README.md#purchase) - Purchase Grant
 * [get](docs/sdks/grants/README.md#get) - Get Grant
 * [void](docs/sdks/grants/README.md#void) - Void Grant
-
-### [EntitlementsV0](docs/sdks/entitlementsv0/README.md)
-
-* [list_active](docs/sdks/entitlementsv0/README.md#list_active) - List by Customer
-* [create](docs/sdks/entitlementsv0/README.md#create) - Create
 
 ### [Events](docs/sdks/events/README.md)
 
@@ -475,14 +466,6 @@ with Paygentic(
 * [advance](docs/sdks/testclocks/README.md#advance) - Advance
 * [delete](docs/sdks/testclocks/README.md#delete) - Delete
 
-### [UsageEvents](docs/sdks/usageevents/README.md)
-
-* [create](docs/sdks/usageevents/README.md#create) - Create
-* [list](docs/sdks/usageevents/README.md#list) - List
-* [get](docs/sdks/usageevents/README.md#get) - Get
-* [refund](docs/sdks/usageevents/README.md#refund) - Refund
-* [batch_create](docs/sdks/usageevents/README.md#batch_create) - Batch Create
-
 ### [Users](docs/sdks/users/README.md)
 
 * [get](docs/sdks/users/README.md#get) - Get
@@ -579,7 +562,7 @@ with Paygentic(
         if isinstance(e, errors.Error):
             print(e.data.error)  # Optional[str]
             print(e.data.message)  # str
-            print(e.data.code)  # Optional[models.Code]
+            print(e.data.code)  # Optional[str]
             print(e.data.details)  # Optional[Dict[str, Any]]
 ```
 
@@ -599,9 +582,9 @@ with Paygentic(
 
 
 **Inherit from [`PaygenticError`](./src/paygentic_sdk/errors/paygenticerror.py)**:
-* [`ValidationError`](./src/paygentic_sdk/errors/validationerror.py): Bad Request - The request could not be understood or was missing required parameters. Status code `400`. Applicable to 60 of 95 methods.*
-* [`DeleteCustomerConflictError`](./src/paygentic_sdk/errors/deletecustomerconflicterror.py): Customer cannot be deleted due to active dependencies. Status code `409`. Applicable to 1 of 95 methods.*
-* [`DeleteFeeConflictError`](./src/paygentic_sdk/errors/deletefeeconflicterror.py): Fee cannot be deleted because it has associated prices. Status code `409`. Applicable to 1 of 95 methods.*
+* [`ValidationError`](./src/paygentic_sdk/errors/validationerror.py): Bad Request - The request could not be understood or was missing required parameters. Status code `400`. Applicable to 53 of 87 methods.*
+* [`DeleteCustomerConflictError`](./src/paygentic_sdk/errors/deletecustomerconflicterror.py): Customer cannot be deleted due to active dependencies. Status code `409`. Applicable to 1 of 87 methods.*
+* [`DeleteFeeConflictError`](./src/paygentic_sdk/errors/deletefeeconflicterror.py): Fee cannot be deleted because it has associated prices. Status code `409`. Applicable to 1 of 87 methods.*
 * [`ResponseValidationError`](./src/paygentic_sdk/errors/responsevalidationerror.py): Type mismatch between the response data and the expected Pydantic model. Provides access to the Pydantic validation error via the `cause` attribute.
 
 </details>
@@ -612,16 +595,44 @@ with Paygentic(
 <!-- Start Server Selection [server] -->
 ## Server Selection
 
-### Override Server URL Per-Client
+### Select Server by Index
 
-The default server can be overridden globally by passing a URL to the `server_url: str` optional parameter when initializing the SDK client instance. For example:
+You can override the default server globally by passing a server index to the `server_idx: int` optional parameter when initializing the SDK client instance. The selected server will then be used as the default on the operations that use it. This table lists the indexes associated with the available servers:
+
+| #   | Server                             | Description    |
+| --- | ---------------------------------- | -------------- |
+| 0   | `https://api.paygentic.io`         | Production API |
+| 1   | `https://api.sandbox.paygentic.io` | Sandbox API    |
+
+#### Example
+
 ```python
 import os
 from paygentic_sdk import Paygentic
 
 
 with Paygentic(
-    server_url="https://api.paygentic.io",
+    server_idx=0,
+    bearer_auth=os.getenv("PAYGENTIC_BEARER_AUTH", ""),
+) as paygentic:
+
+    res = paygentic.billable_metrics.create(aggregation="SUM", description="Tracks total tokens consumed per API call.", merchant_id="org_YS8jkP59V71TdUvj", name="Token Counter", product_id="prod_abc123", unit="tokens")
+
+    # Handle response
+    print(res)
+
+```
+
+### Override Server URL Per-Client
+
+The default server can also be overridden globally by passing a URL to the `server_url: str` optional parameter when initializing the SDK client instance. For example:
+```python
+import os
+from paygentic_sdk import Paygentic
+
+
+with Paygentic(
+    server_url="https://api.sandbox.paygentic.io",
     bearer_auth=os.getenv("PAYGENTIC_BEARER_AUTH", ""),
 ) as paygentic:
 

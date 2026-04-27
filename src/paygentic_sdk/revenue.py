@@ -22,6 +22,7 @@ class Revenue(BaseSDK):
         merchant_id: Optional[str] = None,
         customer_id: Optional[str] = None,
         subscription_ids: Optional[List[str]] = None,
+        currency: Optional[str] = None,
         group_by: Optional[models.GroupBy] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -38,7 +39,8 @@ class Revenue(BaseSDK):
         :param merchant_id: Filter by merchant ID. At least one of merchantId, subscriptionIds, or customerId must be provided.
         :param customer_id: Filter by customer ID. At least one of merchantId, subscriptionIds, or customerId must be provided.
         :param subscription_ids: Filter by subscription IDs. At least one of merchantId, subscriptionIds, or customerId must be provided.
-        :param group_by: Group invoice data by dimension. Max 5 groups (top 4 + 'other' when exceeding).
+        :param currency: Filter all results to a single ISO 4217 currency code (e.g. 'USD'). When omitted, results include all currencies.
+        :param group_by: Group invoice data by dimension. Allowed values: 'plan' (max 5 groups, top 4 + 'other' when exceeding), 'customer' (max 25 groups, top 24 + 'other' when exceeding, sorted by revenue descending), 'currency' (one entry per currency, primary currency first then alphabetical). Note: groupBy values are mutually exclusive — combining them returns a 400 error. When groupBy=currency is active, top-level netRevenue, invoices, and payments fields are omitted; currencyBreakdown is the sole data source.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -61,6 +63,7 @@ class Revenue(BaseSDK):
             merchant_id=merchant_id,
             customer_id=customer_id,
             subscription_ids=subscription_ids,
+            currency=currency,
             group_by=group_by,
         )
 
@@ -138,6 +141,7 @@ class Revenue(BaseSDK):
         merchant_id: Optional[str] = None,
         customer_id: Optional[str] = None,
         subscription_ids: Optional[List[str]] = None,
+        currency: Optional[str] = None,
         group_by: Optional[models.GroupBy] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -154,7 +158,8 @@ class Revenue(BaseSDK):
         :param merchant_id: Filter by merchant ID. At least one of merchantId, subscriptionIds, or customerId must be provided.
         :param customer_id: Filter by customer ID. At least one of merchantId, subscriptionIds, or customerId must be provided.
         :param subscription_ids: Filter by subscription IDs. At least one of merchantId, subscriptionIds, or customerId must be provided.
-        :param group_by: Group invoice data by dimension. Max 5 groups (top 4 + 'other' when exceeding).
+        :param currency: Filter all results to a single ISO 4217 currency code (e.g. 'USD'). When omitted, results include all currencies.
+        :param group_by: Group invoice data by dimension. Allowed values: 'plan' (max 5 groups, top 4 + 'other' when exceeding), 'customer' (max 25 groups, top 24 + 'other' when exceeding, sorted by revenue descending), 'currency' (one entry per currency, primary currency first then alphabetical). Note: groupBy values are mutually exclusive — combining them returns a 400 error. When groupBy=currency is active, top-level netRevenue, invoices, and payments fields are omitted; currencyBreakdown is the sole data source.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -177,6 +182,7 @@ class Revenue(BaseSDK):
             merchant_id=merchant_id,
             customer_id=customer_id,
             subscription_ids=subscription_ids,
+            currency=currency,
             group_by=group_by,
         )
 

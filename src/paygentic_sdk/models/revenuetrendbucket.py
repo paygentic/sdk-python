@@ -20,7 +20,7 @@ class RevenueTrendBucketTypedDict(TypedDict):
     completed_payments: str
     r"""Revenue from completed payments in dollars for this bucket"""
     group_breakdown: NotRequired[List[GroupTrendEntryTypedDict]]
-    r"""Per-group trend entries (only present when groupBy is specified)"""
+    r"""Per-group trend entries (present when groupBy=plan or groupBy=customer)"""
 
 
 class RevenueTrendBucket(BaseModel):
@@ -39,7 +39,7 @@ class RevenueTrendBucket(BaseModel):
     group_breakdown: Annotated[
         Optional[List[GroupTrendEntry]], pydantic.Field(alias="groupBreakdown")
     ] = None
-    r"""Per-group trend entries (only present when groupBy is specified)"""
+    r"""Per-group trend entries (present when groupBy=plan or groupBy=customer)"""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

@@ -2,151 +2,116 @@
 
 from __future__ import annotations
 from datetime import datetime
-from paygentic_sdk.types import BaseModel, UNSET_SENTINEL
+from paygentic_sdk.types import (
+    BaseModel,
+    Nullable,
+    OptionalNullable,
+    UNSET,
+    UNSET_SENTINEL,
+    UnrecognizedStr,
+)
 import pydantic
 from pydantic import model_serializer
-from typing import List, Literal, Optional
+from typing import Any, Dict, Literal, Optional, Union
 from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 EntitlementObject = Literal["entitlement",]
 
 
-class EntitlementBillableMetricTypedDict(TypedDict):
-    billable_metric_id: NotRequired[str]
-    r"""Unique identifier for a billable metric"""
-    price: NotRequired[str]
-    r"""Custom price override in decimal dollars. Sample values: '0.000012' sets $0.000012 per unit, '0.50' sets $0.50 per unit, '1.25' sets $1.25 per unit"""
-    quantity: NotRequired[float]
-    r"""Pre-authorized metric quantity amount. Sample values: 10000 tokens, 500 GB storage, 1000 API calls, 24 compute hours"""
-
-
-class EntitlementBillableMetric(BaseModel):
-    billable_metric_id: Annotated[
-        Optional[str], pydantic.Field(alias="billableMetricId")
-    ] = None
-    r"""Unique identifier for a billable metric"""
-
-    price: Optional[str] = None
-    r"""Custom price override in decimal dollars. Sample values: '0.000012' sets $0.000012 per unit, '0.50' sets $0.50 per unit, '1.25' sets $1.25 per unit"""
-
-    quantity: Optional[float] = None
-    r"""Pre-authorized metric quantity amount. Sample values: 10000 tokens, 500 GB storage, 1000 API calls, 24 compute hours"""
-
-    @model_serializer(mode="wrap")
-    def serialize_model(self, handler):
-        optional_fields = set(["billableMetricId", "price", "quantity"])
-        serialized = handler(self)
-        m = {}
-
-        for n, f in type(self).model_fields.items():
-            k = f.alias or n
-            val = serialized.get(k, serialized.get(n))
-
-            if val != UNSET_SENTINEL:
-                if val is not None or k not in optional_fields:
-                    m[k] = val
-
-        return m
+EntitlementStatus = Union[
+    Literal[
+        "active",
+        "canceled",
+        "expired",
+    ],
+    UnrecognizedStr,
+]
+r"""Current status of the entitlement."""
 
 
 class EntitlementTypedDict(TypedDict):
-    id: NotRequired[str]
-    r"""Unique identifier for an entitlement"""
-    object: NotRequired[EntitlementObject]
-    billable_metrics: NotRequired[List[EntitlementBillableMetricTypedDict]]
-    r"""Billable metrics and quantities reserved stored as JSON."""
-    created_at: NotRequired[datetime]
-    r"""Entitlement creation timestamp in ISO 8601 format. Sample values: '2024-01-15T10:30:00Z', '2024-02-01T14:45:30Z'"""
-    customer_id: NotRequired[str]
+    id: str
+    r"""Unique identifier for the entitlement."""
+    customer_id: str
     r"""Unique identifier for a customer"""
-    expires_at: NotRequired[datetime]
-    r"""Entitlement expiration timestamp in ISO 8601 format. Sample values: '2024-12-31T23:59:59Z', '2025-01-15T10:30:00Z'"""
-    max_uses: NotRequired[int]
-    r"""Maximum consumption events allowed before entitlement expires. Sample values: 1 allows single use, 10 allows ten uses, 100 allows one hundred uses"""
-    merchant_id: NotRequired[str]
-    r"""Unique identifier for a merchant/organization"""
-    region: NotRequired[str]
-    r"""Geographic restriction zone limiting where this entitlement applies. Sample values: 'us-west-2' confines usage to AWS US West 2 region, 'eu-central-1' confines usage to EU Central 1 region, 'global' permits usage from all regions"""
-    remaining_balance: NotRequired[str]
-    r"""Unused entitlement balance in atomic units (string representation of BigInt). Sample values: '100000000000' equals $100.00 remaining, '50000000000' equals $50.00 remaining, '0' equals fully consumed"""
-    used_count: NotRequired[int]
-    r"""Count of consumption events processed using this entitlement. Sample values: 0 indicates unused, 5 indicates five events processed, 10 indicates ten events processed"""
+    feature_id: str
+    r"""The feature this entitlement grants access to."""
+    status: EntitlementStatus
+    r"""Current status of the entitlement."""
+    active_from: datetime
+    r"""When the entitlement becomes active."""
+    config: Nullable[Dict[str, Any]]
+    r"""Configuration values for static features."""
+    object: NotRequired[EntitlementObject]
+    subscription_id: NotRequired[Nullable[str]]
+    r"""The subscription this entitlement is associated with, if any."""
+    active_to: NotRequired[Nullable[datetime]]
+    r"""When the entitlement expires. Null means no expiration."""
+    metadata: NotRequired[Dict[str, str]]
+    r"""Additional metadata for the entitlement."""
 
 
 class Entitlement(BaseModel):
-    id: Optional[str] = None
-    r"""Unique identifier for an entitlement"""
+    id: str
+    r"""Unique identifier for the entitlement."""
+
+    customer_id: Annotated[str, pydantic.Field(alias="customerId")]
+    r"""Unique identifier for a customer"""
+
+    feature_id: Annotated[str, pydantic.Field(alias="featureId")]
+    r"""The feature this entitlement grants access to."""
+
+    status: EntitlementStatus
+    r"""Current status of the entitlement."""
+
+    active_from: Annotated[datetime, pydantic.Field(alias="activeFrom")]
+    r"""When the entitlement becomes active."""
+
+    config: Nullable[Dict[str, Any]]
+    r"""Configuration values for static features."""
 
     object: Optional[EntitlementObject] = "entitlement"
 
-    billable_metrics: Annotated[
-        Optional[List[EntitlementBillableMetric]],
-        pydantic.Field(alias="billableMetrics"),
-    ] = None
-    r"""Billable metrics and quantities reserved stored as JSON."""
+    subscription_id: Annotated[
+        OptionalNullable[str], pydantic.Field(alias="subscriptionId")
+    ] = UNSET
+    r"""The subscription this entitlement is associated with, if any."""
 
-    created_at: Annotated[Optional[datetime], pydantic.Field(alias="createdAt")] = None
-    r"""Entitlement creation timestamp in ISO 8601 format. Sample values: '2024-01-15T10:30:00Z', '2024-02-01T14:45:30Z'"""
+    active_to: Annotated[
+        OptionalNullable[datetime], pydantic.Field(alias="activeTo")
+    ] = UNSET
+    r"""When the entitlement expires. Null means no expiration."""
 
-    customer_id: Annotated[Optional[str], pydantic.Field(alias="customerId")] = None
-    r"""Unique identifier for a customer"""
-
-    expires_at: Annotated[Optional[datetime], pydantic.Field(alias="expiresAt")] = None
-    r"""Entitlement expiration timestamp in ISO 8601 format. Sample values: '2024-12-31T23:59:59Z', '2025-01-15T10:30:00Z'"""
-
-    max_uses: Annotated[Optional[int], pydantic.Field(alias="maxUses")] = None
-    r"""Maximum consumption events allowed before entitlement expires. Sample values: 1 allows single use, 10 allows ten uses, 100 allows one hundred uses"""
-
-    merchant_id: Annotated[Optional[str], pydantic.Field(alias="merchantId")] = None
-    r"""Unique identifier for a merchant/organization"""
-
-    region: Optional[str] = None
-    r"""Geographic restriction zone limiting where this entitlement applies. Sample values: 'us-west-2' confines usage to AWS US West 2 region, 'eu-central-1' confines usage to EU Central 1 region, 'global' permits usage from all regions"""
-
-    remaining_balance: Annotated[
-        Optional[str], pydantic.Field(alias="remainingBalance")
-    ] = None
-    r"""Unused entitlement balance in atomic units (string representation of BigInt). Sample values: '100000000000' equals $100.00 remaining, '50000000000' equals $50.00 remaining, '0' equals fully consumed"""
-
-    used_count: Annotated[Optional[int], pydantic.Field(alias="usedCount")] = None
-    r"""Count of consumption events processed using this entitlement. Sample values: 0 indicates unused, 5 indicates five events processed, 10 indicates ten events processed"""
+    metadata: Optional[Dict[str, str]] = None
+    r"""Additional metadata for the entitlement."""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(
-            [
-                "id",
-                "object",
-                "billableMetrics",
-                "createdAt",
-                "customerId",
-                "expiresAt",
-                "maxUses",
-                "merchantId",
-                "region",
-                "remainingBalance",
-                "usedCount",
-            ]
-        )
+        optional_fields = set(["object", "subscriptionId", "activeTo", "metadata"])
+        nullable_fields = set(["subscriptionId", "activeTo", "config"])
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
             k = f.alias or n
             val = serialized.get(k, serialized.get(n))
+            is_nullable_and_explicitly_set = (
+                k in nullable_fields
+                and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
+            )
 
             if val != UNSET_SENTINEL:
-                if val is not None or k not in optional_fields:
+                if (
+                    val is not None
+                    or k not in optional_fields
+                    or is_nullable_and_explicitly_set
+                ):
                     m[k] = val
 
         return m
 
 
-try:
-    EntitlementBillableMetric.model_rebuild()
-except NameError:
-    pass
 try:
     Entitlement.model_rebuild()
 except NameError:

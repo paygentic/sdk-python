@@ -4,7 +4,6 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 import httpx
 from paygentic_sdk.errors import PaygenticError
-from paygentic_sdk.models import error as models_error
 from paygentic_sdk.types import BaseModel
 from typing import Any, Dict, Optional
 
@@ -14,7 +13,7 @@ class ErrorData(BaseModel):
     r"""Human-readable error message. Clients must not parse this field programmatically."""
     error: Optional[str] = None
     r"""Coarse HTTP error category (e.g. 'bad_request', 'forbidden'). Maps to the HTTP status code."""
-    code: Optional[models_error.Code] = None
+    code: Optional[str] = None
     r"""Optional semantic business error code for machine-readable discrimination (e.g. 'TAX_NOT_ENABLED'). UPPER_SNAKE_CASE. Clients should check this field, not message."""
     details: Optional[Dict[str, Any]] = None
     r"""Additional error details"""

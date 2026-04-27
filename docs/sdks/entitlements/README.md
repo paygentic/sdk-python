@@ -2,8 +2,6 @@
 
 ## Overview
 
-An `Entitlement` grants a customer the right to access and use a specific product feature.
-
 ### Available Operations
 
 * [list](#list) - List Entitlements
@@ -199,7 +197,7 @@ with Paygentic(
 
 ### Response
 
-**[models.SchemasEntitlement](../../models/schemasentitlement.md)**
+**[models.Entitlement](../../models/entitlement.md)**
 
 ### Errors
 

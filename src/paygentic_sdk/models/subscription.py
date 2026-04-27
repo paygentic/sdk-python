@@ -24,7 +24,7 @@ SubscriptionObject = Literal["subscription",]
 
 
 class PaymentAwaitingApprovalTypedDict(TypedDict):
-    r"""Invoice 0 awaiting merchant approval before payment can proceed. The invoice is in DRAFT status with totals calculated. Approval is currently platform-only — do not call PATCH /v2/invoices/{id} with {\"trigger\": \"APPROVE\"} from merchant credentials (it will return 403). A merchant-accessible approval endpoint is planned for PAYG-754."""
+    r"""Invoice 0 awaiting merchant approval before payment can proceed. The invoice is in DRAFT status with totals calculated. Approval is a platform-managed action and will be available via a public endpoint in a future release."""
 
     invoice_id: str
     r"""The Invoice 0 id awaiting approval"""
@@ -35,7 +35,7 @@ class PaymentAwaitingApprovalTypedDict(TypedDict):
 
 
 class PaymentAwaitingApproval(BaseModel):
-    r"""Invoice 0 awaiting merchant approval before payment can proceed. The invoice is in DRAFT status with totals calculated. Approval is currently platform-only — do not call PATCH /v2/invoices/{id} with {\"trigger\": \"APPROVE\"} from merchant credentials (it will return 403). A merchant-accessible approval endpoint is planned for PAYG-754."""
+    r"""Invoice 0 awaiting merchant approval before payment can proceed. The invoice is in DRAFT status with totals calculated. Approval is a platform-managed action and will be available via a public endpoint in a future release."""
 
     invoice_id: Annotated[str, pydantic.Field(alias="invoiceId")]
     r"""The Invoice 0 id awaiting approval"""
@@ -309,6 +309,8 @@ class SubscriptionTypedDict(TypedDict):
     r"""Whether renewal reminder emails are enabled for this subscription. Null means use plan default."""
     renewal_reminder_days: NotRequired[Nullable[int]]
     r"""Number of days before renewal to send the reminder. Null means use plan default."""
+    auto_approve: NotRequired[Nullable[bool]]
+    r"""Subscription-level auto-approval override. Null means plan default is used."""
     customer: NotRequired[SubscriptionCustomerTypedDict]
     r"""Customer details with merchant and consumer information. Only included when include=customer is specified in the list query."""
 
@@ -386,6 +388,11 @@ class Subscription(BaseModel):
     ] = UNSET
     r"""Number of days before renewal to send the reminder. Null means use plan default."""
 
+    auto_approve: Annotated[
+        OptionalNullable[bool], pydantic.Field(alias="autoApprove")
+    ] = UNSET
+    r"""Subscription-level auto-approval override. Null means plan default is used."""
+
     customer: Optional[SubscriptionCustomer] = None
     r"""Customer details with merchant and consumer information. Only included when include=customer is specified in the list query."""
 
@@ -407,10 +414,13 @@ class Subscription(BaseModel):
                 "walletId",
                 "renewalReminderEnabled",
                 "renewalReminderDays",
+                "autoApprove",
                 "customer",
             ]
         )
-        nullable_fields = set(["renewalReminderEnabled", "renewalReminderDays"])
+        nullable_fields = set(
+            ["renewalReminderEnabled", "renewalReminderDays", "autoApprove"]
+        )
         serialized = handler(self)
         m = {}
 

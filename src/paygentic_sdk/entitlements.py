@@ -13,8 +13,6 @@ from typing import Any, Dict, Mapping, Optional, Union
 
 
 class Entitlements(BaseSDK):
-    r"""An `Entitlement` grants a customer the right to access and use a specific product feature."""
-
     grants: Grants
 
     def __init__(
@@ -275,7 +273,7 @@ class Entitlements(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.SchemasEntitlement:
+    ) -> models.Entitlement:
         r"""Issue Entitlement
 
         Issue a new entitlement to a customer, granting them access to a specific feature. The feature must exist and belong to the same merchant as the customer.
@@ -357,7 +355,7 @@ class Entitlements(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "201", "application/json"):
-            return unmarshal_json_response(models.SchemasEntitlement, http_res)
+            return unmarshal_json_response(models.Entitlement, http_res)
         if utils.match_response(http_res, "400", "application/json"):
             response_data = unmarshal_json_response(errors.BadRequestUnion, http_res)
             raise errors.BadRequest(response_data, http_res)
@@ -396,7 +394,7 @@ class Entitlements(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.SchemasEntitlement:
+    ) -> models.Entitlement:
         r"""Issue Entitlement
 
         Issue a new entitlement to a customer, granting them access to a specific feature. The feature must exist and belong to the same merchant as the customer.
@@ -478,7 +476,7 @@ class Entitlements(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "201", "application/json"):
-            return unmarshal_json_response(models.SchemasEntitlement, http_res)
+            return unmarshal_json_response(models.Entitlement, http_res)
         if utils.match_response(http_res, "400", "application/json"):
             response_data = unmarshal_json_response(errors.BadRequestUnion, http_res)
             raise errors.BadRequest(response_data, http_res)

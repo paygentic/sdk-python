@@ -35,12 +35,12 @@ class BulkApproveSourceEventsRequest(BaseModel):
     ]
 
 
-class BulkApproveSourceEventsFailedTypedDict(TypedDict):
+class FailedTypedDict(TypedDict):
     id: NotRequired[str]
     error: NotRequired[str]
 
 
-class BulkApproveSourceEventsFailed(BaseModel):
+class Failed(BaseModel):
     id: Optional[str] = None
 
     error: Optional[str] = None
@@ -65,7 +65,7 @@ class BulkApproveSourceEventsFailed(BaseModel):
 class BulkApproveSourceEventsDetailsTypedDict(TypedDict):
     processed: NotRequired[List[str]]
     r"""IDs of successfully processed events"""
-    failed: NotRequired[List[BulkApproveSourceEventsFailedTypedDict]]
+    failed: NotRequired[List[FailedTypedDict]]
     r"""Failed events with error messages"""
 
 
@@ -73,7 +73,7 @@ class BulkApproveSourceEventsDetails(BaseModel):
     processed: Optional[List[str]] = None
     r"""IDs of successfully processed events"""
 
-    failed: Optional[List[BulkApproveSourceEventsFailed]] = None
+    failed: Optional[List[Failed]] = None
     r"""Failed events with error messages"""
 
     @model_serializer(mode="wrap")

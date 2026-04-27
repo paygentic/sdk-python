@@ -10,7 +10,7 @@ from typing import Literal, Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
 
 
-WindowSize = Literal[
+GetBillableMetricMeterWindowSize = Literal[
     "MINUTE",
     "HOUR",
     "DAY",
@@ -27,7 +27,7 @@ class GetBillableMetricMeterRequestTypedDict(TypedDict):
     r"""End of query window (ISO 8601)"""
     subject: NotRequired[str]
     r"""Filter by customer/user ID"""
-    window_size: NotRequired[WindowSize]
+    window_size: NotRequired[GetBillableMetricMeterWindowSize]
     r"""Time bucket granularity"""
     filter_group_by: NotRequired[str]
     r"""JSON-encoded dimension filter (e.g. {\"key\":\"value\"})"""
@@ -59,7 +59,7 @@ class GetBillableMetricMeterRequest(BaseModel):
     r"""Filter by customer/user ID"""
 
     window_size: Annotated[
-        Optional[WindowSize],
+        Optional[GetBillableMetricMeterWindowSize],
         pydantic.Field(alias="windowSize"),
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = None

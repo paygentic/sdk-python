@@ -27,6 +27,8 @@ class UserOrganizationTypedDict(TypedDict):
     id: NotRequired[str]
     r"""Unique identifier for an organization"""
     state: NotRequired[State]
+    roles: NotRequired[List[str]]
+    r"""Roles assigned to the user in this organization."""
 
 
 class UserOrganization(BaseModel):
@@ -35,9 +37,12 @@ class UserOrganization(BaseModel):
 
     state: Optional[State] = None
 
+    roles: Optional[List[str]] = None
+    r"""Roles assigned to the user in this organization."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["id", "state"])
+        optional_fields = set(["id", "state", "roles"])
         serialized = handler(self)
         m = {}
 

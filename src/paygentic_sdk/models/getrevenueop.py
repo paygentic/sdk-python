@@ -18,8 +18,12 @@ BucketWidth = Literal[
 r"""Time bucket granularity for trend data"""
 
 
-GroupBy = Literal["plan",]
-r"""Group invoice data by dimension. Max 5 groups (top 4 + 'other' when exceeding)."""
+GroupBy = Literal[
+    "plan",
+    "customer",
+    "currency",
+]
+r"""Group invoice data by dimension. Allowed values: 'plan' (max 5 groups, top 4 + 'other' when exceeding), 'customer' (max 25 groups, top 24 + 'other' when exceeding, sorted by revenue descending), 'currency' (one entry per currency, primary currency first then alphabetical). Note: groupBy values are mutually exclusive — combining them returns a 400 error. When groupBy=currency is active, top-level netRevenue, invoices, and payments fields are omitted; currencyBreakdown is the sole data source."""
 
 
 class GetRevenueRequestTypedDict(TypedDict):
@@ -35,8 +39,10 @@ class GetRevenueRequestTypedDict(TypedDict):
     r"""Filter by customer ID. At least one of merchantId, subscriptionIds, or customerId must be provided."""
     subscription_ids: NotRequired[List[str]]
     r"""Filter by subscription IDs. At least one of merchantId, subscriptionIds, or customerId must be provided."""
+    currency: NotRequired[str]
+    r"""Filter all results to a single ISO 4217 currency code (e.g. 'USD'). When omitted, results include all currencies."""
     group_by: NotRequired[GroupBy]
-    r"""Group invoice data by dimension. Max 5 groups (top 4 + 'other' when exceeding)."""
+    r"""Group invoice data by dimension. Allowed values: 'plan' (max 5 groups, top 4 + 'other' when exceeding), 'customer' (max 25 groups, top 24 + 'other' when exceeding, sorted by revenue descending), 'currency' (one entry per currency, primary currency first then alphabetical). Note: groupBy values are mutually exclusive — combining them returns a 400 error. When groupBy=currency is active, top-level netRevenue, invoices, and payments fields are omitted; currencyBreakdown is the sole data source."""
 
 
 class GetRevenueRequest(BaseModel):
@@ -82,17 +88,30 @@ class GetRevenueRequest(BaseModel):
     ] = None
     r"""Filter by subscription IDs. At least one of merchantId, subscriptionIds, or customerId must be provided."""
 
+    currency: Annotated[
+        Optional[str],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Filter all results to a single ISO 4217 currency code (e.g. 'USD'). When omitted, results include all currencies."""
+
     group_by: Annotated[
         Optional[GroupBy],
         pydantic.Field(alias="groupBy"),
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = None
-    r"""Group invoice data by dimension. Max 5 groups (top 4 + 'other' when exceeding)."""
+    r"""Group invoice data by dimension. Allowed values: 'plan' (max 5 groups, top 4 + 'other' when exceeding), 'customer' (max 25 groups, top 24 + 'other' when exceeding, sorted by revenue descending), 'currency' (one entry per currency, primary currency first then alphabetical). Note: groupBy values are mutually exclusive — combining them returns a 400 error. When groupBy=currency is active, top-level netRevenue, invoices, and payments fields are omitted; currencyBreakdown is the sole data source."""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
-            ["bucketWidth", "merchantId", "customerId", "subscriptionIds", "groupBy"]
+            [
+                "bucketWidth",
+                "merchantId",
+                "customerId",
+                "subscriptionIds",
+                "currency",
+                "groupBy",
+            ]
         )
         serialized = handler(self)
         m = {}

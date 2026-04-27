@@ -18,9 +18,7 @@ if TYPE_CHECKING:
     from paygentic_sdk.billablemetrics import BillableMetrics
     from paygentic_sdk.costs import Costs
     from paygentic_sdk.customers import Customers
-    from paygentic_sdk.disputes import Disputes
     from paygentic_sdk.entitlements import Entitlements
-    from paygentic_sdk.entitlementsv0 import EntitlementsV0
     from paygentic_sdk.events import Events
     from paygentic_sdk.features import Features
     from paygentic_sdk.fees import Fees
@@ -33,7 +31,6 @@ if TYPE_CHECKING:
     from paygentic_sdk.sources import Sources
     from paygentic_sdk.subscriptions import Subscriptions
     from paygentic_sdk.test_clocks import TestClocks
-    from paygentic_sdk.usageevents import UsageEvents
     from paygentic_sdk.users import Users
 
 
@@ -46,11 +43,7 @@ class Paygentic(BaseSDK):
     billable_metrics: "BillableMetrics"
     customers: "Customers"
     r"""A `Customer` is an entity connected to a `Merchant` via a `Subscription`. This represents the merchant-facing perspective of `Consumers` who purchase their `Products`."""
-    disputes: "Disputes"
-    r"""A `Dispute` enables customers to contest usage events that they consider to be inaccurately recorded or billed."""
-    entitlements_v0: "EntitlementsV0"
     entitlements: "Entitlements"
-    r"""An `Entitlement` grants a customer the right to access and use a specific product feature."""
     features: "Features"
     r"""A `Feature` represents a specific capability or functionality provided by a `Product`. Features can be metered (usage-based), static (fixed allocation), or boolean (enabled/disabled)."""
     fees: "Fees"
@@ -65,7 +58,6 @@ class Paygentic(BaseSDK):
     r"""A `Source` is an external data provider capable of automatically creating usage events. Configuration occurs at the plan level, enabling data retrieval from third-party platforms such as Stripe to produce billable events."""
     subscriptions: "Subscriptions"
     r"""A `Subscription` is a customer's commitment to purchase a `Product` following the terms of a `Plan` and its linked `Prices`."""
-    usage_events: "UsageEvents"
     users: "Users"
     r"""A `User` is an entity granted access to an Organization's resources. All operations are performed by users."""
     invoices_v2: "InvoicesV2"
@@ -83,8 +75,6 @@ class Paygentic(BaseSDK):
     _sub_sdk_map = {
         "billable_metrics": ("paygentic_sdk.billablemetrics", "BillableMetrics"),
         "customers": ("paygentic_sdk.customers", "Customers"),
-        "disputes": ("paygentic_sdk.disputes", "Disputes"),
-        "entitlements_v0": ("paygentic_sdk.entitlementsv0", "EntitlementsV0"),
         "entitlements": ("paygentic_sdk.entitlements", "Entitlements"),
         "features": ("paygentic_sdk.features", "Features"),
         "fees": ("paygentic_sdk.fees", "Fees"),
@@ -93,7 +83,6 @@ class Paygentic(BaseSDK):
         "products": ("paygentic_sdk.products", "Products"),
         "sources": ("paygentic_sdk.sources", "Sources"),
         "subscriptions": ("paygentic_sdk.subscriptions", "Subscriptions"),
-        "usage_events": ("paygentic_sdk.usageevents", "UsageEvents"),
         "users": ("paygentic_sdk.users", "Users"),
         "invoices_v2": ("paygentic_sdk.invoices_v2", "InvoicesV2"),
         "payments": ("paygentic_sdk.payments", "Payments"),
