@@ -1144,6 +1144,7 @@ class BillableMetrics(BaseSDK):
         subject: Optional[str] = None,
         limit: Optional[int] = 20,
         offset: Optional[int] = 0,
+        external_id: Optional[str] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -1159,6 +1160,7 @@ class BillableMetrics(BaseSDK):
         :param subject: Filter by subject (typically the customer/user ID)
         :param limit: Maximum number of events to return
         :param offset: Number of events to skip
+        :param external_id: Filter by external identifier. Alphanumeric characters, hyphens, and underscores only.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1181,6 +1183,7 @@ class BillableMetrics(BaseSDK):
             subject=subject,
             limit=limit,
             offset=offset,
+            external_id=external_id,
         )
 
         req = self._build_request(
@@ -1257,6 +1260,7 @@ class BillableMetrics(BaseSDK):
         subject: Optional[str] = None,
         limit: Optional[int] = 20,
         offset: Optional[int] = 0,
+        external_id: Optional[str] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -1272,6 +1276,7 @@ class BillableMetrics(BaseSDK):
         :param subject: Filter by subject (typically the customer/user ID)
         :param limit: Maximum number of events to return
         :param offset: Number of events to skip
+        :param external_id: Filter by external identifier. Alphanumeric characters, hyphens, and underscores only.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1294,6 +1299,7 @@ class BillableMetrics(BaseSDK):
             subject=subject,
             limit=limit,
             offset=offset,
+            external_id=external_id,
         )
 
         req = self._build_request_async(
