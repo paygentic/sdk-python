@@ -303,8 +303,13 @@ if TYPE_CHECKING:
     from .getplanop import GetPlanRequest, GetPlanRequestTypedDict
     from .getpriceop import GetPriceRequest, GetPriceRequestTypedDict
     from .getproductop import GetProductRequest, GetProductRequestTypedDict
+    from .getprofitabilityop import (
+        GetProfitabilityBucketWidth,
+        GetProfitabilityRequest,
+        GetProfitabilityRequestTypedDict,
+    )
     from .getrevenueop import (
-        BucketWidth,
+        GetRevenueBucketWidth,
         GetRevenueRequest,
         GetRevenueRequestTypedDict,
         GroupBy,
@@ -446,6 +451,15 @@ if TYPE_CHECKING:
         ListLineItemsRequestTypedDict,
         ListLineItemsStatus,
     )
+    from .listpaymentsessionsop import (
+        EntityType,
+        ListPaymentSessionsObject,
+        ListPaymentSessionsRequest,
+        ListPaymentSessionsRequestTypedDict,
+        ListPaymentSessionsResponse,
+        ListPaymentSessionsResponseTypedDict,
+        ListPaymentSessionsStatus,
+    )
     from .listpaymentsop import (
         ListPaymentsObject,
         ListPaymentsRequest,
@@ -532,6 +546,12 @@ if TYPE_CHECKING:
         PaymentStatus,
         PaymentTypedDict,
     )
+    from .paymentsession import (
+        PaymentSession,
+        PaymentSessionObject,
+        PaymentSessionStatus,
+        PaymentSessionTypedDict,
+    )
     from .paymentsummary import PaymentSummary, PaymentSummaryTypedDict
     from .plan import (
         BillingCadence,
@@ -567,6 +587,12 @@ if TYPE_CHECKING:
         PricePropertiesUnionTypedDict,
     )
     from .product import Product, ProductObject, ProductTypedDict
+    from .profitabilityrow import ProfitabilityRow, ProfitabilityRowTypedDict
+    from .profitabilitysummaryresponse import (
+        ProfitabilitySummaryResponse,
+        ProfitabilitySummaryResponseTypedDict,
+    )
+    from .profitabilitytrend import ProfitabilityTrend, ProfitabilityTrendTypedDict
     from .purchaseentitlementgrantop import (
         PurchaseEntitlementGrantRequest,
         PurchaseEntitlementGrantRequestTypedDict,
@@ -576,10 +602,10 @@ if TYPE_CHECKING:
         PurchaseGrantRequestTypedDict,
     )
     from .purchasegrantresponse import (
-        PaymentSession,
-        PaymentSessionTypedDict,
         PurchaseGrantResponse,
         PurchaseGrantResponseObject,
+        PurchaseGrantResponsePaymentSession,
+        PurchaseGrantResponsePaymentSessionTypedDict,
         PurchaseGrantResponseTypedDict,
     )
     from .rejectsourceeventop import (
@@ -787,7 +813,6 @@ __all__ = [
     "BooleanEntitlementDetailTypedDict",
     "Breakdown",
     "BreakdownTypedDict",
-    "BucketWidth",
     "BulkApproveSourceEventsDetails",
     "BulkApproveSourceEventsDetailsTypedDict",
     "BulkApproveSourceEventsRequest",
@@ -928,6 +953,7 @@ __all__ = [
     "EntitlementTemplateStaticTypedDict",
     "EntitlementTemplateTypedDict",
     "EntitlementTypedDict",
+    "EntityType",
     "Error",
     "ErrorEnum",
     "ErrorTypedDict",
@@ -992,6 +1018,10 @@ __all__ = [
     "GetPriceRequestTypedDict",
     "GetProductRequest",
     "GetProductRequestTypedDict",
+    "GetProfitabilityBucketWidth",
+    "GetProfitabilityRequest",
+    "GetProfitabilityRequestTypedDict",
+    "GetRevenueBucketWidth",
     "GetRevenueRequest",
     "GetRevenueRequestTypedDict",
     "GetSourceRequest",
@@ -1108,6 +1138,12 @@ __all__ = [
     "ListLineItemsRequest",
     "ListLineItemsRequestTypedDict",
     "ListLineItemsStatus",
+    "ListPaymentSessionsObject",
+    "ListPaymentSessionsRequest",
+    "ListPaymentSessionsRequestTypedDict",
+    "ListPaymentSessionsResponse",
+    "ListPaymentSessionsResponseTypedDict",
+    "ListPaymentSessionsStatus",
     "ListPaymentsObject",
     "ListPaymentsRequest",
     "ListPaymentsRequestTypedDict",
@@ -1189,6 +1225,8 @@ __all__ = [
     "PaymentPending",
     "PaymentPendingTypedDict",
     "PaymentSession",
+    "PaymentSessionObject",
+    "PaymentSessionStatus",
     "PaymentSessionTypedDict",
     "PaymentStatus",
     "PaymentSummary",
@@ -1231,6 +1269,12 @@ __all__ = [
     "Product",
     "ProductObject",
     "ProductTypedDict",
+    "ProfitabilityRow",
+    "ProfitabilityRowTypedDict",
+    "ProfitabilitySummaryResponse",
+    "ProfitabilitySummaryResponseTypedDict",
+    "ProfitabilityTrend",
+    "ProfitabilityTrendTypedDict",
     "Properties",
     "PropertiesTypedDict",
     "PurchaseEntitlementGrantRequest",
@@ -1239,6 +1283,8 @@ __all__ = [
     "PurchaseGrantRequestTypedDict",
     "PurchaseGrantResponse",
     "PurchaseGrantResponseObject",
+    "PurchaseGrantResponsePaymentSession",
+    "PurchaseGrantResponsePaymentSessionTypedDict",
     "PurchaseGrantResponseTypedDict",
     "RedirectUrls",
     "RedirectUrlsTypedDict",
@@ -1626,7 +1672,10 @@ _dynamic_imports: dict[str, str] = {
     "GetPriceRequestTypedDict": ".getpriceop",
     "GetProductRequest": ".getproductop",
     "GetProductRequestTypedDict": ".getproductop",
-    "BucketWidth": ".getrevenueop",
+    "GetProfitabilityBucketWidth": ".getprofitabilityop",
+    "GetProfitabilityRequest": ".getprofitabilityop",
+    "GetProfitabilityRequestTypedDict": ".getprofitabilityop",
+    "GetRevenueBucketWidth": ".getrevenueop",
     "GetRevenueRequest": ".getrevenueop",
     "GetRevenueRequestTypedDict": ".getrevenueop",
     "GroupBy": ".getrevenueop",
@@ -1740,6 +1789,13 @@ _dynamic_imports: dict[str, str] = {
     "ListLineItemsRequest": ".listlineitemsop",
     "ListLineItemsRequestTypedDict": ".listlineitemsop",
     "ListLineItemsStatus": ".listlineitemsop",
+    "EntityType": ".listpaymentsessionsop",
+    "ListPaymentSessionsObject": ".listpaymentsessionsop",
+    "ListPaymentSessionsRequest": ".listpaymentsessionsop",
+    "ListPaymentSessionsRequestTypedDict": ".listpaymentsessionsop",
+    "ListPaymentSessionsResponse": ".listpaymentsessionsop",
+    "ListPaymentSessionsResponseTypedDict": ".listpaymentsessionsop",
+    "ListPaymentSessionsStatus": ".listpaymentsessionsop",
     "ListPaymentsObject": ".listpaymentsop",
     "ListPaymentsRequest": ".listpaymentsop",
     "ListPaymentsRequestTypedDict": ".listpaymentsop",
@@ -1805,6 +1861,10 @@ _dynamic_imports: dict[str, str] = {
     "PaymentObject": ".payment",
     "PaymentStatus": ".payment",
     "PaymentTypedDict": ".payment",
+    "PaymentSession": ".paymentsession",
+    "PaymentSessionObject": ".paymentsession",
+    "PaymentSessionStatus": ".paymentsession",
+    "PaymentSessionTypedDict": ".paymentsession",
     "PaymentSummary": ".paymentsummary",
     "PaymentSummaryTypedDict": ".paymentsummary",
     "BillingCadence": ".plan",
@@ -1842,14 +1902,20 @@ _dynamic_imports: dict[str, str] = {
     "Product": ".product",
     "ProductObject": ".product",
     "ProductTypedDict": ".product",
+    "ProfitabilityRow": ".profitabilityrow",
+    "ProfitabilityRowTypedDict": ".profitabilityrow",
+    "ProfitabilitySummaryResponse": ".profitabilitysummaryresponse",
+    "ProfitabilitySummaryResponseTypedDict": ".profitabilitysummaryresponse",
+    "ProfitabilityTrend": ".profitabilitytrend",
+    "ProfitabilityTrendTypedDict": ".profitabilitytrend",
     "PurchaseEntitlementGrantRequest": ".purchaseentitlementgrantop",
     "PurchaseEntitlementGrantRequestTypedDict": ".purchaseentitlementgrantop",
     "PurchaseGrantRequest": ".purchasegrantrequest",
     "PurchaseGrantRequestTypedDict": ".purchasegrantrequest",
-    "PaymentSession": ".purchasegrantresponse",
-    "PaymentSessionTypedDict": ".purchasegrantresponse",
     "PurchaseGrantResponse": ".purchasegrantresponse",
     "PurchaseGrantResponseObject": ".purchasegrantresponse",
+    "PurchaseGrantResponsePaymentSession": ".purchasegrantresponse",
+    "PurchaseGrantResponsePaymentSessionTypedDict": ".purchasegrantresponse",
     "PurchaseGrantResponseTypedDict": ".purchasegrantresponse",
     "RejectSourceEventRequest": ".rejectsourceeventop",
     "RejectSourceEventRequestTypedDict": ".rejectsourceeventop",

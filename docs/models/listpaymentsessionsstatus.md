@@ -1,14 +1,20 @@
 # ListPaymentSessionsStatus
 
-Filter by payment status.
+Filter by payment session status.
+
+## Example Usage
+
+```python
+from paygentic_sdk.models import ListPaymentSessionsStatus
+value: ListPaymentSessionsStatus = "pending"
+```
 
 
 ## Values
 
-| Name         | Value        |
-| ------------ | ------------ |
-| `PENDING`    | pending      |
-| `PROCESSING` | processing   |
-| `COMPLETED`  | completed    |
-| `EXPIRED`    | expired      |
-| `CANCELLED`  | cancelled    |
+- `"pending"`
+- `"processing"`
+- `"completed"`
+- `"failed"`
+- `"expired"`
+- `"cancelled"`

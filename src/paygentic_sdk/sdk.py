@@ -23,10 +23,12 @@ if TYPE_CHECKING:
     from paygentic_sdk.features import Features
     from paygentic_sdk.fees import Fees
     from paygentic_sdk.invoices_v2 import InvoicesV2
+    from paygentic_sdk.payment_sessions import PaymentSessions
     from paygentic_sdk.payments import Payments
     from paygentic_sdk.plans import Plans
     from paygentic_sdk.prices import Prices
     from paygentic_sdk.products import Products
+    from paygentic_sdk.profitability import Profitability
     from paygentic_sdk.revenue import Revenue
     from paygentic_sdk.sources import Sources
     from paygentic_sdk.subscriptions import Subscriptions
@@ -64,12 +66,16 @@ class Paygentic(BaseSDK):
     r"""Invoice V2 operations supporting billing cycles organized by time periods. Warning: v0 invoice endpoints are no longer supported."""
     payments: "Payments"
     r"""Create and manage one-off payments. A payment represents a single charge that a merchant wants to collect from a customer."""
+    payment_sessions: "PaymentSessions"
+    r"""Handle payment session lifecycle and processing across various entity types including invoices and subscriptions"""
     events: "Events"
     r"""Ingest raw metering events that are processed by the meters service."""
     costs: "Costs"
     r"""A Cost represents the operational or infrastructure expense of serving customers for a given product. Costs are metered (driven by event-based usage) and are tracked in parallel with billable metrics to give merchants visibility into both revenue and cost per customer."""
     revenue: "Revenue"
     r"""Revenue data from invoices and payments"""
+    profitability: "Profitability"
+    r"""Per-customer profitability summaries"""
     test_clocks: "TestClocks"
     r"""Test clocks provide programmable time control to simulate subscription and billing scenarios during testing."""
     _sub_sdk_map = {
@@ -86,9 +92,11 @@ class Paygentic(BaseSDK):
         "users": ("paygentic_sdk.users", "Users"),
         "invoices_v2": ("paygentic_sdk.invoices_v2", "InvoicesV2"),
         "payments": ("paygentic_sdk.payments", "Payments"),
+        "payment_sessions": ("paygentic_sdk.payment_sessions", "PaymentSessions"),
         "events": ("paygentic_sdk.events", "Events"),
         "costs": ("paygentic_sdk.costs", "Costs"),
         "revenue": ("paygentic_sdk.revenue", "Revenue"),
+        "profitability": ("paygentic_sdk.profitability", "Profitability"),
         "test_clocks": ("paygentic_sdk.test_clocks", "TestClocks"),
     }
 

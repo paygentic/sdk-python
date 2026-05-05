@@ -5,8 +5,8 @@ Offset-based pagination response.
 
 ## Fields
 
-| Field                                         | Type                                          | Required                                      | Description                                   |
-| --------------------------------------------- | --------------------------------------------- | --------------------------------------------- | --------------------------------------------- |
-| `limit`                                       | *Optional[int]*                               | :heavy_minus_sign:                            | Number of items returned in the current page. |
-| `offset`                                      | *Optional[int]*                               | :heavy_minus_sign:                            | Number of items skipped.                      |
-| `total`                                       | *Optional[int]*                               | :heavy_minus_sign:                            | Total number of items available.              |
+| Field                            | Type                             | Required                         | Description                      |
+| -------------------------------- | -------------------------------- | -------------------------------- | -------------------------------- |
+| `limit`                          | *int*                            | :heavy_check_mark:               | Requested page size.             |
+| `offset`                         | *int*                            | :heavy_check_mark:               | Number of items skipped.         |
+| `total`                          | *int*                            | :heavy_check_mark:               | Total number of items available. |

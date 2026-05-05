@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 from .offsetpagination import OffsetPagination, OffsetPaginationTypedDict
-from .payment import Payment, PaymentTypedDict
+from .paymentsession import PaymentSession, PaymentSessionTypedDict
 from paygentic_sdk.types import BaseModel, UNSET_SENTINEL
 from paygentic_sdk.utils import FieldMetadata, QueryParamMetadata
 import pydantic
@@ -15,23 +15,37 @@ ListPaymentSessionsStatus = Literal[
     "pending",
     "processing",
     "completed",
+    "failed",
     "expired",
     "cancelled",
 ]
-r"""Filter by payment status."""
+r"""Filter by payment session status."""
+
+
+EntityType = Literal[
+    "invoice",
+    "subscription",
+    "payment",
+    "topup",
+]
+r"""Filter by the kind of entity the session pays for."""
 
 
 class ListPaymentSessionsRequestTypedDict(TypedDict):
     merchant_id: NotRequired[str]
     r"""Merchant organization ID. Required when using an API key that is not scoped to a single merchant."""
-    status: NotRequired[ListPaymentSessionsStatus]
-    r"""Filter by payment status."""
+    subscription_id: NotRequired[str]
+    r"""Filter to sessions linked to this subscription (its own activation session plus all of its invoices' sessions)."""
     customer_id: NotRequired[str]
-    r"""Filter by customer ID."""
+    r"""Filter to sessions linked to a payment for this customer."""
+    status: NotRequired[ListPaymentSessionsStatus]
+    r"""Filter by payment session status."""
+    entity_type: NotRequired[EntityType]
+    r"""Filter by the kind of entity the session pays for."""
     limit: NotRequired[int]
-    r"""Number of payments to return."""
+    r"""Number of sessions to return."""
     offset: NotRequired[int]
-    r"""Number of payments to skip."""
+    r"""Number of sessions to skip."""
 
 
 class ListPaymentSessionsRequest(BaseModel):
@@ -42,40 +56,64 @@ class ListPaymentSessionsRequest(BaseModel):
     ] = None
     r"""Merchant organization ID. Required when using an API key that is not scoped to a single merchant."""
 
-    status: Annotated[
-        Optional[ListPaymentSessionsStatus],
+    subscription_id: Annotated[
+        Optional[str],
+        pydantic.Field(alias="subscriptionId"),
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = None
-    r"""Filter by payment status."""
+    r"""Filter to sessions linked to this subscription (its own activation session plus all of its invoices' sessions)."""
 
     customer_id: Annotated[
         Optional[str],
         pydantic.Field(alias="customerId"),
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = None
-    r"""Filter by customer ID."""
+    r"""Filter to sessions linked to a payment for this customer."""
+
+    status: Annotated[
+        Optional[ListPaymentSessionsStatus],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Filter by payment session status."""
+
+    entity_type: Annotated[
+        Optional[EntityType],
+        pydantic.Field(alias="entityType"),
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Filter by the kind of entity the session pays for."""
 
     limit: Annotated[
         Optional[int],
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = 10
-    r"""Number of payments to return."""
+    r"""Number of sessions to return."""
 
     offset: Annotated[
         Optional[int],
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = 0
-    r"""Number of payments to skip."""
+    r"""Number of sessions to skip."""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["merchantId", "status", "customerId", "limit", "offset"])
+        optional_fields = set(
+            [
+                "merchantId",
+                "subscriptionId",
+                "customerId",
+                "status",
+                "entityType",
+                "limit",
+                "offset",
+            ]
+        )
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
             k = f.alias or n
-            val = serialized.get(k)
+            val = serialized.get(k, serialized.get(n))
 
             if val != UNSET_SENTINEL:
                 if val is not None or k not in optional_fields:
@@ -88,20 +126,20 @@ ListPaymentSessionsObject = Literal["list",]
 
 
 class ListPaymentSessionsResponseTypedDict(TypedDict):
-    r"""List of payments"""
+    r"""List of payment sessions"""
 
     object: ListPaymentSessionsObject
-    data: List[PaymentTypedDict]
+    data: List[PaymentSessionTypedDict]
     pagination: OffsetPaginationTypedDict
     r"""Offset-based pagination response."""
 
 
 class ListPaymentSessionsResponse(BaseModel):
-    r"""List of payments"""
+    r"""List of payment sessions"""
 
     object: ListPaymentSessionsObject
 
-    data: List[Payment]
+    data: List[PaymentSession]
 
     pagination: OffsetPagination
     r"""Offset-based pagination response."""

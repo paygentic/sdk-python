@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 from .invoice import Invoice, InvoiceTypedDict
+from .offsetpagination import OffsetPagination, OffsetPaginationTypedDict
 from paygentic_sdk.types import BaseModel, UNSET_SENTINEL
 from paygentic_sdk.utils import FieldMetadata, QueryParamMetadata
 import pydantic
@@ -33,6 +34,8 @@ r"""Filter invoices by status"""
 class ListInvoicesRequestTypedDict(TypedDict):
     limit: NotRequired[int]
     r"""Maximum number of invoices to return"""
+    offset: NotRequired[int]
+    r"""Number of invoices to skip for pagination"""
     next_action_at: NotRequired[NextActionAt]
     r"""Filter for invoices ready for processing (platform only)"""
     status: NotRequired[ListInvoicesStatus]
@@ -49,6 +52,12 @@ class ListInvoicesRequest(BaseModel):
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = 10
     r"""Maximum number of invoices to return"""
+
+    offset: Annotated[
+        Optional[int],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = 0
+    r"""Number of invoices to skip for pagination"""
 
     next_action_at: Annotated[
         Optional[NextActionAt],
@@ -80,7 +89,14 @@ class ListInvoicesRequest(BaseModel):
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
-            ["limit", "nextActionAt", "status", "subscriptionId", "merchantId"]
+            [
+                "limit",
+                "offset",
+                "nextActionAt",
+                "status",
+                "subscriptionId",
+                "merchantId",
+            ]
         )
         serialized = handler(self)
         m = {}
@@ -104,6 +120,8 @@ class ListInvoicesResponseTypedDict(TypedDict):
 
     object: ListInvoicesObject
     data: List[InvoiceTypedDict]
+    pagination: NotRequired[OffsetPaginationTypedDict]
+    r"""Offset-based pagination response."""
 
 
 class ListInvoicesResponse(BaseModel):
@@ -112,3 +130,22 @@ class ListInvoicesResponse(BaseModel):
     object: ListInvoicesObject
 
     data: List[Invoice]
+
+    pagination: Optional[OffsetPagination] = None
+    r"""Offset-based pagination response."""
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(["pagination"])
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k, serialized.get(n))
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m

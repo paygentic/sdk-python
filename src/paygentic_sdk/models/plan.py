@@ -3,7 +3,14 @@
 from __future__ import annotations
 from .price import Price, PriceTypedDict
 from datetime import datetime
-from paygentic_sdk.types import BaseModel, UNSET_SENTINEL, UnrecognizedStr
+from paygentic_sdk.types import (
+    BaseModel,
+    Nullable,
+    OptionalNullable,
+    UNSET,
+    UNSET_SENTINEL,
+    UnrecognizedStr,
+)
 import pydantic
 from pydantic import model_serializer
 from typing import List, Literal, Optional, Union
@@ -96,6 +103,8 @@ class PlanTypedDict(TypedDict):
     r"""Number of days before renewal to send the reminder email"""
     billing_version: NotRequired[int]
     r"""Billing engine version. Managed by Paygentic support."""
+    billing_anchor: NotRequired[Nullable[datetime]]
+    r"""ISO 8601 datetime reference point for billing period alignment. Must be in the past or present at the time of creation or update. When set, all subscriptions created under this plan align their first billing period to the next recurrence of this anchor. Null means each subscription uses its own start time (hour-rounded) as the anchor."""
 
 
 class Plan(BaseModel):
@@ -181,6 +190,11 @@ class Plan(BaseModel):
     ] = None
     r"""Billing engine version. Managed by Paygentic support."""
 
+    billing_anchor: Annotated[
+        OptionalNullable[datetime], pydantic.Field(alias="billingAnchor")
+    ] = UNSET
+    r"""ISO 8601 datetime reference point for billing period alignment. Must be in the past or present at the time of creation or update. When set, all subscriptions created under this plan align their first billing period to the next recurrence of this anchor. Null means each subscription uses its own start time (hour-rounded) as the anchor."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
@@ -198,17 +212,27 @@ class Plan(BaseModel):
                 "renewalReminderEnabled",
                 "renewalReminderDays",
                 "billingVersion",
+                "billingAnchor",
             ]
         )
+        nullable_fields = set(["billingAnchor"])
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
             k = f.alias or n
             val = serialized.get(k, serialized.get(n))
+            is_nullable_and_explicitly_set = (
+                k in nullable_fields
+                and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
+            )
 
             if val != UNSET_SENTINEL:
-                if val is not None or k not in optional_fields:
+                if (
+                    val is not None
+                    or k not in optional_fields
+                    or is_nullable_and_explicitly_set
+                ):
                     m[k] = val
 
         return m

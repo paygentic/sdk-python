@@ -18,7 +18,7 @@ from typing_extensions import Annotated, NotRequired, TypedDict
 PurchaseGrantResponseObject = Literal["grant_purchase",]
 
 
-class PaymentSessionTypedDict(TypedDict):
+class PurchaseGrantResponsePaymentSessionTypedDict(TypedDict):
     url: str
     r"""The Stripe checkout URL for the customer to complete payment."""
     expires_at: NotRequired[Nullable[datetime]]
@@ -27,7 +27,7 @@ class PaymentSessionTypedDict(TypedDict):
     r"""The payment amount in the currency's minor unit (e.g., cents)."""
 
 
-class PaymentSession(BaseModel):
+class PurchaseGrantResponsePaymentSession(BaseModel):
     url: str
     r"""The Stripe checkout URL for the customer to complete payment."""
 
@@ -76,7 +76,7 @@ class PurchaseGrantResponseTypedDict(TypedDict):
     r"""The price in decimal format (e.g., '5.00')."""
     currency: str
     r"""The three-letter ISO 4217 currency code (e.g., 'usd')."""
-    payment_sessions: List[PaymentSessionTypedDict]
+    payment_sessions: List[PurchaseGrantResponsePaymentSessionTypedDict]
     r"""Payment session(s) for the customer to complete the purchase."""
     object: NotRequired[PurchaseGrantResponseObject]
 
@@ -98,7 +98,8 @@ class PurchaseGrantResponse(BaseModel):
     r"""The three-letter ISO 4217 currency code (e.g., 'usd')."""
 
     payment_sessions: Annotated[
-        List[PaymentSession], pydantic.Field(alias="paymentSessions")
+        List[PurchaseGrantResponsePaymentSession],
+        pydantic.Field(alias="paymentSessions"),
     ]
     r"""Payment session(s) for the customer to complete the purchase."""
 
@@ -122,7 +123,7 @@ class PurchaseGrantResponse(BaseModel):
 
 
 try:
-    PaymentSession.model_rebuild()
+    PurchaseGrantResponsePaymentSession.model_rebuild()
 except NameError:
     pass
 try:

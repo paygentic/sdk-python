@@ -7,40 +7,36 @@ from paygentic_sdk._hooks import HookContext
 from paygentic_sdk.types import OptionalNullable, UNSET
 from paygentic_sdk.utils import get_security_from_env
 from paygentic_sdk.utils.unmarshal_json_response import unmarshal_json_response
-from typing import Any, List, Mapping, Optional
+from typing import Any, Mapping, Optional
 
 
-class Revenue(BaseSDK):
-    r"""Revenue data from invoices and payments"""
+class Profitability(BaseSDK):
+    r"""Per-customer profitability summaries"""
 
-    def get(
+    def get_profitability(
         self,
         *,
-        start_time: datetime,
-        end_time: datetime,
-        bucket_width: Optional[models.GetRevenueBucketWidth] = "day",
-        merchant_id: Optional[str] = None,
-        customer_id: Optional[str] = None,
-        subscription_ids: Optional[List[str]] = None,
+        merchant_id: str,
+        from_: datetime,
+        to: datetime,
+        top_n: Optional[int] = 10,
         currency: Optional[str] = None,
-        group_by: Optional[models.GroupBy] = None,
+        bucket_width: Optional[models.GetProfitabilityBucketWidth] = "day",
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.RevenueSummaryResponse:
-        r"""Get revenue summary
+    ) -> models.ProfitabilitySummaryResponse:
+        r"""Get profitability summary
 
-        Returns revenue summary with invoice and payment breakdowns (outstanding/paid/writtenOff), plus a time-series trend. Revenue is sourced from all issued invoices (v0 + v1) and completed payments.
+        Returns a per-customer profitability summary for a merchant over a date range. Each row aggregates revenue (from issued + paid invoices), cost (from metered cost discovery), profit, and margin. Customers are ranked by profit descending and capped at topN; the remainder is rolled into a single self-consistent 'Other' row whose revenue, cost, and profit reflect the same set of customers. Rows are inner-joined against the merchant's customer list, so orphaned meter subjects from deleted or unknown customers are dropped.
 
-        :param start_time: Start of the time range (ISO 8601 format)
-        :param end_time: End of the time range (ISO 8601 format)
-        :param bucket_width: Time bucket granularity for trend data
-        :param merchant_id: Filter by merchant ID. At least one of merchantId, subscriptionIds, or customerId must be provided.
-        :param customer_id: Filter by customer ID. At least one of merchantId, subscriptionIds, or customerId must be provided.
-        :param subscription_ids: Filter by subscription IDs. At least one of merchantId, subscriptionIds, or customerId must be provided.
-        :param currency: Filter all results to a single ISO 4217 currency code (e.g. 'USD'). When omitted, results include all currencies.
-        :param group_by: Group invoice data by dimension. Allowed values: 'plan' (max 5 groups, top 4 + 'other' when exceeding), 'customer' (max 25 groups, top 24 + 'other' when exceeding, sorted by revenue descending), 'currency' (one entry per currency, primary currency first then alphabetical). Note: groupBy values are mutually exclusive — combining them returns a 400 error. When groupBy=currency is active, top-level netRevenue, invoices, and payments fields are omitted; currencyBreakdown is the sole data source.
+        :param merchant_id: Merchant whose customers to summarize
+        :param from_: Start of the time range (ISO 8601 format)
+        :param to: End of the time range (ISO 8601 format)
+        :param top_n: Number of top customers (by profit) to return individually. The rest are rolled into a single 'Other' row.
+        :param currency: ISO 4217 currency code to scope the summary. Defaults to the merchant's primary currency.
+        :param bucket_width: Time bucket granularity for the per-customer revenue trend. When omitted, the server picks a reasonable bucket from the window length.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -56,20 +52,18 @@ class Revenue(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.GetRevenueRequest(
-            start_time=start_time,
-            end_time=end_time,
-            bucket_width=bucket_width,
+        request = models.GetProfitabilityRequest(
             merchant_id=merchant_id,
-            customer_id=customer_id,
-            subscription_ids=subscription_ids,
+            from_=from_,
+            to=to,
+            top_n=top_n,
             currency=currency,
-            group_by=group_by,
+            bucket_width=bucket_width,
         )
 
         req = self._build_request(
             method="GET",
-            path="/v0/revenue",
+            path="/v0/profitability",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -96,7 +90,7 @@ class Revenue(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="getRevenue",
+                operation_id="getProfitability",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -109,7 +103,9 @@ class Revenue(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.RevenueSummaryResponse, http_res)
+            return unmarshal_json_response(
+                models.ProfitabilitySummaryResponse, http_res
+            )
         if utils.match_response(http_res, "400", "application/json"):
             response_data = unmarshal_json_response(errors.BadRequestUnion, http_res)
             raise errors.BadRequest(response_data, http_res)
@@ -132,34 +128,30 @@ class Revenue(BaseSDK):
 
         raise errors.PaygenticDefaultError("Unexpected response received", http_res)
 
-    async def get_async(
+    async def get_profitability_async(
         self,
         *,
-        start_time: datetime,
-        end_time: datetime,
-        bucket_width: Optional[models.GetRevenueBucketWidth] = "day",
-        merchant_id: Optional[str] = None,
-        customer_id: Optional[str] = None,
-        subscription_ids: Optional[List[str]] = None,
+        merchant_id: str,
+        from_: datetime,
+        to: datetime,
+        top_n: Optional[int] = 10,
         currency: Optional[str] = None,
-        group_by: Optional[models.GroupBy] = None,
+        bucket_width: Optional[models.GetProfitabilityBucketWidth] = "day",
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.RevenueSummaryResponse:
-        r"""Get revenue summary
+    ) -> models.ProfitabilitySummaryResponse:
+        r"""Get profitability summary
 
-        Returns revenue summary with invoice and payment breakdowns (outstanding/paid/writtenOff), plus a time-series trend. Revenue is sourced from all issued invoices (v0 + v1) and completed payments.
+        Returns a per-customer profitability summary for a merchant over a date range. Each row aggregates revenue (from issued + paid invoices), cost (from metered cost discovery), profit, and margin. Customers are ranked by profit descending and capped at topN; the remainder is rolled into a single self-consistent 'Other' row whose revenue, cost, and profit reflect the same set of customers. Rows are inner-joined against the merchant's customer list, so orphaned meter subjects from deleted or unknown customers are dropped.
 
-        :param start_time: Start of the time range (ISO 8601 format)
-        :param end_time: End of the time range (ISO 8601 format)
-        :param bucket_width: Time bucket granularity for trend data
-        :param merchant_id: Filter by merchant ID. At least one of merchantId, subscriptionIds, or customerId must be provided.
-        :param customer_id: Filter by customer ID. At least one of merchantId, subscriptionIds, or customerId must be provided.
-        :param subscription_ids: Filter by subscription IDs. At least one of merchantId, subscriptionIds, or customerId must be provided.
-        :param currency: Filter all results to a single ISO 4217 currency code (e.g. 'USD'). When omitted, results include all currencies.
-        :param group_by: Group invoice data by dimension. Allowed values: 'plan' (max 5 groups, top 4 + 'other' when exceeding), 'customer' (max 25 groups, top 24 + 'other' when exceeding, sorted by revenue descending), 'currency' (one entry per currency, primary currency first then alphabetical). Note: groupBy values are mutually exclusive — combining them returns a 400 error. When groupBy=currency is active, top-level netRevenue, invoices, and payments fields are omitted; currencyBreakdown is the sole data source.
+        :param merchant_id: Merchant whose customers to summarize
+        :param from_: Start of the time range (ISO 8601 format)
+        :param to: End of the time range (ISO 8601 format)
+        :param top_n: Number of top customers (by profit) to return individually. The rest are rolled into a single 'Other' row.
+        :param currency: ISO 4217 currency code to scope the summary. Defaults to the merchant's primary currency.
+        :param bucket_width: Time bucket granularity for the per-customer revenue trend. When omitted, the server picks a reasonable bucket from the window length.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -175,20 +167,18 @@ class Revenue(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.GetRevenueRequest(
-            start_time=start_time,
-            end_time=end_time,
-            bucket_width=bucket_width,
+        request = models.GetProfitabilityRequest(
             merchant_id=merchant_id,
-            customer_id=customer_id,
-            subscription_ids=subscription_ids,
+            from_=from_,
+            to=to,
+            top_n=top_n,
             currency=currency,
-            group_by=group_by,
+            bucket_width=bucket_width,
         )
 
         req = self._build_request_async(
             method="GET",
-            path="/v0/revenue",
+            path="/v0/profitability",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -215,7 +205,7 @@ class Revenue(BaseSDK):
             hook_ctx=HookContext(
                 config=self.sdk_configuration,
                 base_url=base_url or "",
-                operation_id="getRevenue",
+                operation_id="getProfitability",
                 oauth2_scopes=None,
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
@@ -228,7 +218,9 @@ class Revenue(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.RevenueSummaryResponse, http_res)
+            return unmarshal_json_response(
+                models.ProfitabilitySummaryResponse, http_res
+            )
         if utils.match_response(http_res, "400", "application/json"):
             response_data = unmarshal_json_response(errors.BadRequestUnion, http_res)
             raise errors.BadRequest(response_data, http_res)

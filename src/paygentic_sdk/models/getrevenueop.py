@@ -10,7 +10,7 @@ from typing import List, Literal, Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
 
 
-BucketWidth = Literal[
+GetRevenueBucketWidth = Literal[
     "hour",
     "day",
     "week",
@@ -31,7 +31,7 @@ class GetRevenueRequestTypedDict(TypedDict):
     r"""Start of the time range (ISO 8601 format)"""
     end_time: datetime
     r"""End of the time range (ISO 8601 format)"""
-    bucket_width: NotRequired[BucketWidth]
+    bucket_width: NotRequired[GetRevenueBucketWidth]
     r"""Time bucket granularity for trend data"""
     merchant_id: NotRequired[str]
     r"""Filter by merchant ID. At least one of merchantId, subscriptionIds, or customerId must be provided."""
@@ -61,7 +61,7 @@ class GetRevenueRequest(BaseModel):
     r"""End of the time range (ISO 8601 format)"""
 
     bucket_width: Annotated[
-        Optional[BucketWidth],
+        Optional[GetRevenueBucketWidth],
         pydantic.Field(alias="bucketWidth"),
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = "day"
