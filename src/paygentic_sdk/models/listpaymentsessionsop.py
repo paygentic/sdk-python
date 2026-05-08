@@ -2,7 +2,10 @@
 
 from __future__ import annotations
 from .offsetpagination import OffsetPagination, OffsetPaginationTypedDict
-from .paymentsession import PaymentSession, PaymentSessionTypedDict
+from .schemas_paymentsession import (
+    SchemasPaymentSession,
+    SchemasPaymentSessionTypedDict,
+)
 from paygentic_sdk.types import BaseModel, UNSET_SENTINEL
 from paygentic_sdk.utils import FieldMetadata, QueryParamMetadata
 import pydantic
@@ -129,7 +132,7 @@ class ListPaymentSessionsResponseTypedDict(TypedDict):
     r"""List of payment sessions"""
 
     object: ListPaymentSessionsObject
-    data: List[PaymentSessionTypedDict]
+    data: List[SchemasPaymentSessionTypedDict]
     pagination: OffsetPaginationTypedDict
     r"""Offset-based pagination response."""
 
@@ -139,7 +142,7 @@ class ListPaymentSessionsResponse(BaseModel):
 
     object: ListPaymentSessionsObject
 
-    data: List[PaymentSession]
+    data: List[SchemasPaymentSession]
 
     pagination: OffsetPagination
     r"""Offset-based pagination response."""

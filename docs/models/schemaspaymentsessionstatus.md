@@ -1,12 +1,14 @@
-# PaymentSessionStatus
+# SchemasPaymentSessionStatus
+
+Lifecycle status of the session.
 
 ## Example Usage
 
 ```python
-from paygentic_sdk.models import PaymentSessionStatus
+from paygentic_sdk.models import SchemasPaymentSessionStatus
 
 # Open enum: unrecognized values are captured as UnrecognizedStr
-value: PaymentSessionStatus = "pending"
+value: SchemasPaymentSessionStatus = "pending"
 ```
 
 

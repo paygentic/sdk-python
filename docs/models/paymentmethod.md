@@ -1,0 +1,15 @@
+# PaymentMethod
+
+
+## Fields
+
+| Field                                                                | Type                                                                 | Required                                                             | Description                                                          |
+| -------------------------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------- |
+| `object`                                                             | [models.PaymentMethodObject](../models/paymentmethodobject.md)       | :heavy_check_mark:                                                   | N/A                                                                  |
+| `id`                                                                 | *str*                                                                | :heavy_check_mark:                                                   | Payment method identifier.                                           |
+| `type`                                                               | *OptionalNullable[str]*                                              | :heavy_minus_sign:                                                   | Payment method type (e.g. `card`, `sepa_debit`).                     |
+| `brand`                                                              | *OptionalNullable[str]*                                              | :heavy_minus_sign:                                                   | N/A                                                                  |
+| `last4`                                                              | *OptionalNullable[str]*                                              | :heavy_minus_sign:                                                   | N/A                                                                  |
+| `exp_month`                                                          | *OptionalNullable[int]*                                              | :heavy_minus_sign:                                                   | N/A                                                                  |
+| `exp_year`                                                           | *OptionalNullable[int]*                                              | :heavy_minus_sign:                                                   | N/A                                                                  |
+| `created_at`                                                         | [date](https://docs.python.org/3/library/datetime.html#date-objects) | :heavy_check_mark:                                                   | N/A                                                                  |

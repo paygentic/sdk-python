@@ -12,11 +12,20 @@ from paygentic_sdk.types import (
 )
 import pydantic
 from pydantic import model_serializer
-from typing import Literal, Union
+from typing import Any, Dict, Literal, Optional, Union
 from typing_extensions import Annotated, NotRequired, TypedDict
 
 
-PaymentSessionObject = Literal["payment_session",]
+PaymentSessionObject = Literal["paymentSession",]
+
+
+Mode = Union[
+    Literal[
+        "payment",
+        "setup",
+    ],
+    UnrecognizedStr,
+]
 
 
 PaymentSessionStatus = Union[
@@ -30,70 +39,63 @@ PaymentSessionStatus = Union[
     ],
     UnrecognizedStr,
 ]
-r"""Lifecycle status of the session."""
 
 
 class PaymentSessionTypedDict(TypedDict):
     object: PaymentSessionObject
     id: str
-    r"""Payment session ID (ps_*)."""
-    entity_type: str
-    r"""Type of entity the session pays for (invoice, subscription, payment, topup)."""
-    entity_id: str
-    r"""ID of the entity the session pays for."""
-    amount: str
-    r"""Amount in decimal dollars."""
-    currency: str
-    r"""ISO 4217 currency code."""
+    r"""Payment session identifier (e.g. `ps_...`)."""
+    mode: Mode
     status: PaymentSessionStatus
-    r"""Lifecycle status of the session."""
+    url: str
+    r"""Hosted page URL. Redirect the customer here, or load it inside an iframe — when iframed, the page reports outcomes via `postMessage` (`payment_success` / `payment_error`) to the parent window."""
+    expires_at: datetime
     created_at: datetime
-    updated_at: datetime
-    merchant_payment_account_id: NotRequired[Nullable[str]]
-    r"""Stripe Connect account ID (acct_*) when the session is routed to a connected account."""
+    success_redirect_url: NotRequired[Nullable[str]]
+    failure_redirect_url: NotRequired[Nullable[str]]
+    metadata: NotRequired[Dict[str, Any]]
     completed_at: NotRequired[Nullable[datetime]]
-    r"""Timestamp the session reached terminal completion. Null until the session completes."""
 
 
 class PaymentSession(BaseModel):
     object: PaymentSessionObject
 
     id: str
-    r"""Payment session ID (ps_*)."""
+    r"""Payment session identifier (e.g. `ps_...`)."""
 
-    entity_type: Annotated[str, pydantic.Field(alias="entityType")]
-    r"""Type of entity the session pays for (invoice, subscription, payment, topup)."""
-
-    entity_id: Annotated[str, pydantic.Field(alias="entityId")]
-    r"""ID of the entity the session pays for."""
-
-    amount: str
-    r"""Amount in decimal dollars."""
-
-    currency: str
-    r"""ISO 4217 currency code."""
+    mode: Mode
 
     status: PaymentSessionStatus
-    r"""Lifecycle status of the session."""
+
+    url: str
+    r"""Hosted page URL. Redirect the customer here, or load it inside an iframe — when iframed, the page reports outcomes via `postMessage` (`payment_success` / `payment_error`) to the parent window."""
+
+    expires_at: Annotated[datetime, pydantic.Field(alias="expiresAt")]
 
     created_at: Annotated[datetime, pydantic.Field(alias="createdAt")]
 
-    updated_at: Annotated[datetime, pydantic.Field(alias="updatedAt")]
-
-    merchant_payment_account_id: Annotated[
-        OptionalNullable[str], pydantic.Field(alias="merchantPaymentAccountId")
+    success_redirect_url: Annotated[
+        OptionalNullable[str], pydantic.Field(alias="successRedirectUrl")
     ] = UNSET
-    r"""Stripe Connect account ID (acct_*) when the session is routed to a connected account."""
+
+    failure_redirect_url: Annotated[
+        OptionalNullable[str], pydantic.Field(alias="failureRedirectUrl")
+    ] = UNSET
+
+    metadata: Optional[Dict[str, Any]] = None
 
     completed_at: Annotated[
         OptionalNullable[datetime], pydantic.Field(alias="completedAt")
     ] = UNSET
-    r"""Timestamp the session reached terminal completion. Null until the session completes."""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["merchantPaymentAccountId", "completedAt"])
-        nullable_fields = set(["merchantPaymentAccountId", "completedAt"])
+        optional_fields = set(
+            ["successRedirectUrl", "failureRedirectUrl", "metadata", "completedAt"]
+        )
+        nullable_fields = set(
+            ["successRedirectUrl", "failureRedirectUrl", "completedAt"]
+        )
         serialized = handler(self)
         m = {}
 

@@ -4,10 +4,10 @@
 
 ```python
 from paygentic_sdk.models import PaymentSessionObject
-value: PaymentSessionObject = "payment_session"
+value: PaymentSessionObject = "paymentSession"
 ```
 
 
 ## Values
 
-- `"payment_session"`
+- `"paymentSession"`

@@ -1,0 +1,9 @@
+# CreateCustomerPaymentMethodRequest
+
+
+## Fields
+
+| Field                                                                                                          | Type                                                                                                           | Required                                                                                                       | Description                                                                                                    |
+| -------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
+| `id`                                                                                                           | *str*                                                                                                          | :heavy_check_mark:                                                                                             | The unique identifier of the customer.                                                                         |
+| `request_body`                                                                                                 | [Optional[models.CreateCustomerPaymentMethodRequestBody]](../models/createcustomerpaymentmethodrequestbody.md) | :heavy_minus_sign:                                                                                             | N/A                                                                                                            |

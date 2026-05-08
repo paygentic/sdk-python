@@ -11,6 +11,8 @@ A `Customer` is an entity connected to a `Merchant` via a `Subscription`. This r
 * [get](#get) - Get
 * [delete](#delete) - Delete
 * [update](#update) - Update
+* [list_customer_payment_methods](#list_customer_payment_methods) - List payment methods
+* [create_customer_payment_method](#create_customer_payment_method) - Set up a payment method
 
 ## list
 
@@ -243,5 +245,94 @@ with Paygentic(
 | errors.Error                 | 400                          | application/json             |
 | errors.ValidationError       | 400                          | application/json             |
 | errors.Error                 | 401, 403, 404, 409           | application/json             |
+| errors.Error                 | 500                          | application/json             |
+| errors.PaygenticDefaultError | 4XX, 5XX                     | \*/\*                        |
+
+## list_customer_payment_methods
+
+List off-session payment methods saved for this customer.
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="listCustomerPaymentMethods" method="get" path="/v0/customers/{id}/paymentMethods" -->
+```python
+import os
+from paygentic_sdk import Paygentic
+
+
+with Paygentic(
+    bearer_auth=os.getenv("PAYGENTIC_BEARER_AUTH", ""),
+) as paygentic:
+
+    res = paygentic.customers.list_customer_payment_methods(id="<id>")
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `id`                                                                | *str*                                                               | :heavy_check_mark:                                                  | The unique identifier of the customer.                              |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+
+### Response
+
+**[models.ListCustomerPaymentMethodsResponse](../../models/listcustomerpaymentmethodsresponse.md)**
+
+### Errors
+
+| Error Type                   | Status Code                  | Content Type                 |
+| ---------------------------- | ---------------------------- | ---------------------------- |
+| errors.Error                 | 403, 404                     | application/json             |
+| errors.Error                 | 500                          | application/json             |
+| errors.PaygenticDefaultError | 4XX, 5XX                     | \*/\*                        |
+
+## create_customer_payment_method
+
+Create a payment session that captures a new off-session payment method for this customer without charging. The response contains a hosted-page URL — redirect the customer to it, or load it inside an iframe (when iframed, the page reports outcomes via `postMessage` to the parent window).
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="createCustomerPaymentMethod" method="post" path="/v0/customers/{id}/paymentMethods" -->
+```python
+import os
+from paygentic_sdk import Paygentic
+
+
+with Paygentic(
+    bearer_auth=os.getenv("PAYGENTIC_BEARER_AUTH", ""),
+) as paygentic:
+
+    res = paygentic.customers.create_customer_payment_method(id="<id>")
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                                                                              | Type                                                                                                                   | Required                                                                                                               | Description                                                                                                            |
+| ---------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| `id`                                                                                                                   | *str*                                                                                                                  | :heavy_check_mark:                                                                                                     | The unique identifier of the customer.                                                                                 |
+| `success_redirect_url`                                                                                                 | *Optional[str]*                                                                                                        | :heavy_minus_sign:                                                                                                     | URL the customer is redirected to on success. When the page is iframed, success is reported via `postMessage` instead. |
+| `failure_redirect_url`                                                                                                 | *Optional[str]*                                                                                                        | :heavy_minus_sign:                                                                                                     | URL the customer is redirected to on failure. When the page is iframed, failure is reported via `postMessage` instead. |
+| `metadata`                                                                                                             | Dict[str, *Any*]                                                                                                       | :heavy_minus_sign:                                                                                                     | Arbitrary key/value pairs to attach to the session.                                                                    |
+| `retries`                                                                                                              | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                       | :heavy_minus_sign:                                                                                                     | Configuration to override the default retry behavior of the client.                                                    |
+
+### Response
+
+**[models.PaymentSession](../../models/paymentsession.md)**
+
+### Errors
+
+| Error Type                   | Status Code                  | Content Type                 |
+| ---------------------------- | ---------------------------- | ---------------------------- |
+| errors.Error                 | 400                          | application/json             |
+| errors.ValidationError       | 400                          | application/json             |
+| errors.Error                 | 403, 404                     | application/json             |
 | errors.Error                 | 500                          | application/json             |
 | errors.PaygenticDefaultError | 4XX, 5XX                     | \*/\*                        |

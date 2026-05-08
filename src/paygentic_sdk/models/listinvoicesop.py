@@ -120,7 +120,7 @@ class ListInvoicesResponseTypedDict(TypedDict):
 
     object: ListInvoicesObject
     data: List[InvoiceTypedDict]
-    pagination: NotRequired[OffsetPaginationTypedDict]
+    pagination: OffsetPaginationTypedDict
     r"""Offset-based pagination response."""
 
 
@@ -131,21 +131,5 @@ class ListInvoicesResponse(BaseModel):
 
     data: List[Invoice]
 
-    pagination: Optional[OffsetPagination] = None
+    pagination: OffsetPagination
     r"""Offset-based pagination response."""
-
-    @model_serializer(mode="wrap")
-    def serialize_model(self, handler):
-        optional_fields = set(["pagination"])
-        serialized = handler(self)
-        m = {}
-
-        for n, f in type(self).model_fields.items():
-            k = f.alias or n
-            val = serialized.get(k, serialized.get(n))
-
-            if val != UNSET_SENTINEL:
-                if val is not None or k not in optional_fields:
-                    m[k] = val
-
-        return m
