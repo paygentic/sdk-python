@@ -70,7 +70,7 @@ class PurchaseGrantResponseTypedDict(TypedDict):
     r"""The invoice ID for this grant purchase."""
     entitlement_id: str
     r"""The entitlement that will receive the grant."""
-    grant_amount: int
+    grant_amount: float
     r"""The number of credits that will be granted on payment."""
     price: str
     r"""The price in decimal format (e.g., '5.00')."""
@@ -88,7 +88,7 @@ class PurchaseGrantResponse(BaseModel):
     entitlement_id: Annotated[str, pydantic.Field(alias="entitlementId")]
     r"""The entitlement that will receive the grant."""
 
-    grant_amount: Annotated[int, pydantic.Field(alias="grantAmount")]
+    grant_amount: Annotated[float, pydantic.Field(alias="grantAmount")]
     r"""The number of credits that will be granted on payment."""
 
     price: str
