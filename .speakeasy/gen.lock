@@ -1,19 +1,19 @@
 lockVersion: 2.0.0
 id: d05de326-b60d-4921-81eb-a16eab66dffd
 management:
-  docChecksum: fa3e27396067f66bf1d337bbb2d92518
+  docChecksum: 5dd54decad06d46302f72b92aed26116
   docVersion: 0.1.0
   speakeasyVersion: 1.761.4
   generationVersion: 2.879.13
-  releaseVersion: 0.2.4
-  configChecksum: 3b84fc517239c1bd0a76bddb882135c7
+  releaseVersion: 0.2.5
+  configChecksum: 3e3388d8e06a2d759f18869ce3922bdb
   repoURL: https://github.com/paygentic/sdk-python.git
   installationURL: https://github.com/paygentic/sdk-python.git
   published: true
 persistentEdits:
-  generation_id: fe6835ad-5889-4647-b39d-0a95ce27fb7a
-  pristine_commit_hash: 47446928b38b5f51655f796bc3e2380f003d9c7c
-  pristine_tree_hash: b337aacf1152f7e2e7a38ded27f3b8cfca3c314e
+  generation_id: 629f30dc-0862-4160-9317-9592d08bd3d6
+  pristine_commit_hash: 848e3827f3f24c71cab38df8c3c80a76e213240c
+  pristine_tree_hash: 817f316d528454d8fab69a716671426a9d6bc8b1
 features:
   python:
     additionalDependencies: 1.0.0
@@ -205,16 +205,16 @@ trackedFiles:
     pristine_git_object: 20811b4dae9628d6bd7737061e7538d6ac352b91
   docs/models/createbillablemetricrequest.md:
     id: 93cdf7d62550
-    last_write_checksum: sha1:76b326a25e451f5304faf038950fbb3818947962
-    pristine_git_object: a6980c9738a2ef1cc0cc84f09c70b335879af5b0
+    last_write_checksum: sha1:1b89e879daa5d60fcc1b31ff0b8860723af0200f
+    pristine_git_object: a9bac538a7f46ab09e5f60a35e298bd2544e124d
   docs/models/createcostaggregation.md:
     id: 28c6840521c2
     last_write_checksum: sha1:a5860f3bb7ccdb77a43e4bf4ed172a5ba666708b
     pristine_git_object: c221b68d2fe1fb1eba9615442d2e0861bdf62b7b
   docs/models/createcostrequest.md:
     id: b829c41cc374
-    last_write_checksum: sha1:57b28213c8f64bfa811986ea51bccbde9f127f1b
-    pristine_git_object: b67deeffc7f8da00097bbec1cc501974bb2e44bb
+    last_write_checksum: sha1:e0aec714853b9997ad9b0b93226587675e80d2d2
+    pristine_git_object: b966374276575fe2e76b9b8a470c8ca57a70c907
   docs/models/createcosttype.md:
     id: b6b10ba8398c
     last_write_checksum: sha1:6fb58e96cfddd6f735b1fe58a42f43ddce5af80e
@@ -265,8 +265,8 @@ trackedFiles:
     pristine_git_object: c010d7ba6ec82142ce463e3e2a1419e8c17b7c4f
   docs/models/creategrantrequest.md:
     id: 6563a0a72e7e
-    last_write_checksum: sha1:231d8994049a17b0276fa6c576972c1137b15fcb
-    pristine_git_object: c23c04813c9bea8c4aa2ed58eb71409832d75133
+    last_write_checksum: sha1:391de7b812cb2c2852a5b7b490bf76c58fae8428
+    pristine_git_object: 6d58402fb55f02057b512ae70cd7405a9c487924
   docs/models/createlineitemrequest.md:
     id: 6a769d1c2024
     last_write_checksum: sha1:34e123b76eb9d2db9432bec5cf4ede029e87be14
@@ -453,8 +453,8 @@ trackedFiles:
     pristine_git_object: 359c4b3e4c0e5c73224c9f77fcdb27e10a12122b
   docs/models/entitlementtemplatemetered.md:
     id: 8691611e3d33
-    last_write_checksum: sha1:31dfdee029fda3e3d690b79b27b38ea3a5686704
-    pristine_git_object: ecf3081bee1e87874bafe8e9bdc4bdc273643ce4
+    last_write_checksum: sha1:23ba0f3b4f27a62e37ea03b5fb2def1fddec1547
+    pristine_git_object: 9b14f95c6286b1d0ecd6ddde5263d01ce035320a
   docs/models/entitlementtemplatestatic.md:
     id: 6a676d839b5a
     last_write_checksum: sha1:f3741a560d0400a5fd4b99d15ea6bfbc48219041
@@ -653,8 +653,8 @@ trackedFiles:
     pristine_git_object: 7ae9e938e4f40cd6bee054d6179ebed893adc8ac
   docs/models/grant.md:
     id: 8538445a9899
-    last_write_checksum: sha1:0c65ae5ea5bad9e3602c3445eef385521e9ba1f1
-    pristine_git_object: e5cd19fe73c32d3e79140038e6ae414252f4ef3a
+    last_write_checksum: sha1:fcb620db5dfffbb15749daf63511f5aeee2eda25
+    pristine_git_object: 0c544e611c3ab085fbbc87eb7836317e99640865
   docs/models/grantobject.md:
     id: 2eca2a9dfdd6
     last_write_checksum: sha1:2ee804d227771b8fc8fac42fa92c3359207b5f7e
@@ -1253,8 +1253,8 @@ trackedFiles:
     pristine_git_object: 26fea20c0db168a1d591c3fd48c53f1360cdfa70
   docs/models/purchasegrantrequest.md:
     id: 61064907aa00
-    last_write_checksum: sha1:50b72192f734196568eac51a0f0c9b0855b97ec3
-    pristine_git_object: e9f3c6469cea4ac201a7a56cab1a10c1fc3a4a15
+    last_write_checksum: sha1:7481414e97cc8fb6cdc11c4e5bb77e387da481c2
+    pristine_git_object: 697b492eaf0924fd988eef7d076eb5f8a97522d4
   docs/models/purchasegrantresponse.md:
     id: eef7c8f30621
     last_write_checksum: sha1:308c2a387d2f14b6189277da1008a98b3093867a
@@ -1441,8 +1441,8 @@ trackedFiles:
     pristine_git_object: 028c8098611e83059fde2b38eafd1645a98a044c
   docs/models/updatebillablemetricrequestbody.md:
     id: f9eefae14dae
-    last_write_checksum: sha1:a05e84472c4296cf37fc75d621ab0ed361c1704b
-    pristine_git_object: 8f1be7f7601e17921eb8ac2aec262f628a3ad0b5
+    last_write_checksum: sha1:81943a3a5d015c59d17c28ab2c3d552ddb24053a
+    pristine_git_object: e8d3fd36d21ceec884ee5db0ee01888051f3f834
   docs/models/updatecostaggregation.md:
     id: d6a603e3e4bd
     last_write_checksum: sha1:ad1caa5d65d3fb4a8abb8d6ef5b6973f7e59faa2
@@ -1453,8 +1453,8 @@ trackedFiles:
     pristine_git_object: 8dc492a424c5efed896616c1bf5e95d9ce48fcba
   docs/models/updatecostrequestbody.md:
     id: 83c4ce9ae3c8
-    last_write_checksum: sha1:db40767004b3fae48af24d2ead49415f0de43def
-    pristine_git_object: a412a92e28eaf3ce96eec38ebe073500c74db931
+    last_write_checksum: sha1:1736391f6bf8dfb6b9e7e07cfbeb32605de106b8
+    pristine_git_object: d2e6ac54e035dcd9c13b459ab0682c2728815914
   docs/models/updatecustomernotificationsettings.md:
     id: 9b3c34f0df37
     last_write_checksum: sha1:3d19411f4a2db8866ecc37c5ad343504e9afbc6a
@@ -1565,8 +1565,8 @@ trackedFiles:
     pristine_git_object: 07aab6577dcb3075aa9950cc2984ba12c6d0471a
   docs/models/usageperiod.md:
     id: 5c88ff0e1e4a
-    last_write_checksum: sha1:374f4f75d54567db282d2083cdff304ef7af674f
-    pristine_git_object: c2238484509bd2ebe2e6620786b48386b45fab14
+    last_write_checksum: sha1:a4104362de2703a16ae0f7387144728fd0a0536e
+    pristine_git_object: faad22d729b1c1e29275e7d6eaa2f80ae9cb84ce
   docs/models/usageresponse.md:
     id: 7361a5b740de
     last_write_checksum: sha1:676205a53104cff960c94e75d7702f8d696f44a3
@@ -1621,12 +1621,12 @@ trackedFiles:
     pristine_git_object: f3badfb1c3b1dc697879faea3c90e1e71b5380de
   docs/sdks/billablemetrics/README.md:
     id: 4a5403fb7335
-    last_write_checksum: sha1:cf1d68974eebccfacd8edead4061e372bf0d6e27
-    pristine_git_object: 534c7e36db70fcce02f33561dbf344eeb951c862
+    last_write_checksum: sha1:68d12f8fb096acf301bbafadfebdc2c7a15edd6a
+    pristine_git_object: a887031c212aaaf13cda675d8e2a2f77aadee824
   docs/sdks/costs/README.md:
     id: 8d96b80b9dde
-    last_write_checksum: sha1:984d695dfed5378a2c1ee527b2a9f8adfee6b8bb
-    pristine_git_object: 3b91762742e6bf0851d8f7b1fb2ca33922a35f90
+    last_write_checksum: sha1:093d073000bdb3e8d7705c10869e21e8271c87c6
+    pristine_git_object: cf3d1cb0157b71a01562e81d351c57abc295813f
   docs/sdks/customers/README.md:
     id: 9332759cffc2
     last_write_checksum: sha1:775687eb239ce07fa6d4c9bf2feebd2744a74660
@@ -1649,8 +1649,8 @@ trackedFiles:
     pristine_git_object: 6996403f2984f7eab86aa3948fc51ff08ec9eabb
   docs/sdks/grants/README.md:
     id: f4371a3352ee
-    last_write_checksum: sha1:0d552961bf141a4ec7a3d73296334303b4077252
-    pristine_git_object: 0de42d3649c1eada2ece00836563fa36ac2f65ed
+    last_write_checksum: sha1:5c7c1be98e1537ca674ffb33bdf81c24f11bebed
+    pristine_git_object: a440efaff459bda2c998b9e9f5d4cfaf7236c2ac
   docs/sdks/invoicesv2/README.md:
     id: 671851b727bc
     last_write_checksum: sha1:8c44ab5eab3e48f687c99a675575b399a75f9128
@@ -1717,8 +1717,8 @@ trackedFiles:
     pristine_git_object: ba50994ac7aceefe62e1571a6cbff467d9a067da
   pyproject.toml:
     id: 5d07e7d72637
-    last_write_checksum: sha1:3448c90487c08041a6f53ec251d5cbc0bbff39de
-    pristine_git_object: f1030a551340c152e80b332371f29a8b8be50b68
+    last_write_checksum: sha1:e9dbea433686a20f05b75fa46198437b2d4fbdc0
+    pristine_git_object: 43a7409c2a44d85bbf0a2a34cc9630dd51004757
   scripts/prepare_readme.py:
     id: e0c5957a6035
     last_write_checksum: sha1:e2ebd355f72567204499ca62ee72728d9c3dfd95
@@ -1745,20 +1745,20 @@ trackedFiles:
     pristine_git_object: 6dbd4dcba3a5bac1c92beb0f5db31ef3d2944dea
   src/paygentic_sdk/_version.py:
     id: 52c8c5a320dc
-    last_write_checksum: sha1:f3a95c46b2150d7c922a35fd672a9e06cfb7dbcb
-    pristine_git_object: 1265b989c6fa336dc66f1501694a90f13fc5501b
+    last_write_checksum: sha1:e3c3f0f7249fd2b486cabbd17940f00c266ecfe9
+    pristine_git_object: e871dcfec530522c872a547189a6bc6581087870
   src/paygentic_sdk/basesdk.py:
     id: a086dd8cd1b3
     last_write_checksum: sha1:275b3ea45e9bf52519d3c7f179816ab1a0e823a2
     pristine_git_object: b51d7eacd4d3f78e55ae3e2d9a1593d4c33b5538
   src/paygentic_sdk/billablemetrics.py:
     id: ecbb145b7f82
-    last_write_checksum: sha1:83cd4028e9fafbc5e66281560aa2b1b5c17a349f
-    pristine_git_object: 2de4b81caabfa619d9b6546df2597e7a652dce96
+    last_write_checksum: sha1:68bfb42bc5df1a4113801818c58929c70ad07d44
+    pristine_git_object: ddb0382366aa3d56212420c76e59a56678ec88dd
   src/paygentic_sdk/costs.py:
     id: c1b286bad440
-    last_write_checksum: sha1:cb41349bdc476693bee015a3111e72f117abd46a
-    pristine_git_object: e0ba7cd0b07976d1d9c0b6013be58bade51523bd
+    last_write_checksum: sha1:5f40b187aae1041c2123233ad61a9962b13d1060
+    pristine_git_object: f89c9e38f8e1b52c0dec650ffb41b0deeef1db4f
   src/paygentic_sdk/customers.py:
     id: 25b8fbe344a7
     last_write_checksum: sha1:1fdd3ba5285926dd12a51689ac42aa6eb90e6fd7
@@ -1821,8 +1821,8 @@ trackedFiles:
     pristine_git_object: 5a04b0311be060f1e0e94cf49a0d07b2d9465ea7
   src/paygentic_sdk/grants.py:
     id: 6e05182f113f
-    last_write_checksum: sha1:cb2e6d1eb0ab00df1a3c79d200bc48b6aaa6dd9c
-    pristine_git_object: 5f358bda0fc0e65279905b8258f19d47d91966c8
+    last_write_checksum: sha1:4eb8edf55ed79e4ba9f728fd1c6ec2b78fda7412
+    pristine_git_object: fd0b41791f00fca6d8c9546673f70ff170c91447
   src/paygentic_sdk/httpclient.py:
     id: 391f57829e9a
     last_write_checksum: sha1:5e55338d6ee9f01ab648cad4380201a8a3da7dd7
@@ -1885,12 +1885,12 @@ trackedFiles:
     pristine_git_object: 7564f78b37d6c58bb6d6b1740cb3b35ca631fc17
   src/paygentic_sdk/models/createbillablemetricop.py:
     id: 95d4b8c4615d
-    last_write_checksum: sha1:062a0098fa5136553dee995e94c62ccdbed5288e
-    pristine_git_object: ec230263baf135d79c89caf255754dc473bbe710
+    last_write_checksum: sha1:1ef5949408304e44ca49beafdad11edf62d103bc
+    pristine_git_object: faf7d335cebbd0bb3de1dbdd35d5e05a93ca6892
   src/paygentic_sdk/models/createcostop.py:
     id: 22cd645a31ef
-    last_write_checksum: sha1:00a745f9b9a0664dcd83deb4a35efac270f30fb5
-    pristine_git_object: 233408358a8b3c3d308b6bc0f2d081ba57392c0e
+    last_write_checksum: sha1:27869597f3554fcf874eaec7dcdb1766b5ecd17d
+    pristine_git_object: 1b0398a2cae23941d01adc1af7edb2079656d558
   src/paygentic_sdk/models/createcustomerop.py:
     id: 65eebac814b8
     last_write_checksum: sha1:4c9a35056bcccf14b39133e7b184f8fc59a185c5
@@ -1913,8 +1913,8 @@ trackedFiles:
     pristine_git_object: 0cbe7b2f1171700630f1052d8ab2e89b0f917129
   src/paygentic_sdk/models/creategrantrequest.py:
     id: ab821887dacc
-    last_write_checksum: sha1:865446df80dafedd04f8212f7ce1e7f0c71a4112
-    pristine_git_object: 8118945f27a864dd529a654af5304d346697571a
+    last_write_checksum: sha1:c31943838ff5677d915a75b4c13930032a79ccf8
+    pristine_git_object: 50dc9c3cdc0c21456246506d53aa6a660b8b380f
   src/paygentic_sdk/models/createlineitemop.py:
     id: 46e79609030d
     last_write_checksum: sha1:d45105d8881a813414aadea985d302db0f37d7c0
@@ -2005,8 +2005,8 @@ trackedFiles:
     pristine_git_object: 7d7386163f4cbefad9c514586aa3c2a2f22866b4
   src/paygentic_sdk/models/entitlementtemplate.py:
     id: 2e1bb3c957e3
-    last_write_checksum: sha1:9447a115fb6bdf18ce6c013f58e469bcd47a3739
-    pristine_git_object: fca518e8b7ada421a7da8061e980668b069a1319
+    last_write_checksum: sha1:6120edec3ad43e6a9885fca751b76c6670fb5265
+    pristine_git_object: f95722d9db466eb54701885d848c9a203574e373
   src/paygentic_sdk/models/eventresponse.py:
     id: 1723c2675f5e
     last_write_checksum: sha1:e99d99bc378185fccebb045794afd58e22787914
@@ -2125,8 +2125,8 @@ trackedFiles:
     pristine_git_object: 75cebde1c214d86e8432b709741bda6c4aeb6bed
   src/paygentic_sdk/models/grant.py:
     id: 98d14506808e
-    last_write_checksum: sha1:c9eb94fc7fb5ee9ca1eb46aa75845096b7521751
-    pristine_git_object: eaac1a65124ed016ad37072ca6553e699c243b4e
+    last_write_checksum: sha1:bfb70f0ba20d72860038c5f9a06b54cb0f3151c1
+    pristine_git_object: e70ab562e2d6ec4cfb6c5517ed5e26d3ea6a1a2a
   src/paygentic_sdk/models/groupinvoicesummary.py:
     id: 4e91d55571c5
     last_write_checksum: sha1:42700bfb8f4b7dfb247962f88e19152d7d0d2d87
@@ -2337,8 +2337,8 @@ trackedFiles:
     pristine_git_object: bd6d0b2ecf250ab3caf551b9f2202c403e4e085d
   src/paygentic_sdk/models/purchasegrantrequest.py:
     id: 9f7a009b43a2
-    last_write_checksum: sha1:3ba8ee741ae92b99cde5d03f3bd2c1612cfeef8d
-    pristine_git_object: d6c78967ef2fff0194f3b1b091882d87bb018541
+    last_write_checksum: sha1:db2331a59e00209b15670107188682bb73c08253
+    pristine_git_object: 597630376acd606d231075f87561f28ef8edcf3f
   src/paygentic_sdk/models/purchasegrantresponse.py:
     id: 5cb474f1bcfc
     last_write_checksum: sha1:d36f7ffaf08a3ab6d2070919b73cfda1476b2294
@@ -2405,12 +2405,12 @@ trackedFiles:
     pristine_git_object: 33635f377eb04efe2543801349713a9831dcf5ad
   src/paygentic_sdk/models/updatebillablemetricop.py:
     id: 5f9dd80004fd
-    last_write_checksum: sha1:45eca88a87152f187dd7b700411bd29df83e16cf
-    pristine_git_object: 37b67c869f8efa8ccfb9a3ebd78f6d501b3085ac
+    last_write_checksum: sha1:b1e98e1612d10cc7c422f36491c40c8ba891ddec
+    pristine_git_object: f3d9e48ca4b4c36a3a31daa56a0ff0bc5e67b324
   src/paygentic_sdk/models/updatecostop.py:
     id: d46f77e8d1e0
-    last_write_checksum: sha1:6113c71353f9202ea4dcc92532cc85095275a791
-    pristine_git_object: 2f117fd82aace6b89e1fac9512de035d5a2217f2
+    last_write_checksum: sha1:48207c48119bb9ce2055fdc8543fdfdf258b3c57
+    pristine_git_object: 2afa5195189d1b9a1f53c831f95f6939d8e1a8d2
   src/paygentic_sdk/models/updatecustomerop.py:
     id: c6267b5526b2
     last_write_checksum: sha1:dfa59b29489cceba9fea8a9061a88b00a4d5a3b2
@@ -4332,6 +4332,4 @@ generatedTests:
   getProfitability: "2026-05-05T10:48:42Z"
   listCustomerPaymentMethods: "2026-05-08T17:36:55Z"
   createCustomerPaymentMethod: "2026-05-08T17:36:55Z"
-releaseNotes: |
-  ## Python SDK Changes:
-  * `paygentic.entitlements.grants.purchase()`:  `response.grant_amount` **Changed** (Breaking ⚠️)
+releaseNotes: "## Python SDK Changes:\n* `paygentic.entitlements.issue()`: \n  *  `request.template.union(metered).usage_period` **Changed**\n* `paygentic.entitlements.grants.list()`:  `response.data[]` **Changed**\n* `paygentic.entitlements.grants.create()`: \n  *  `request` **Changed**\n  *  `response` **Changed**\n* `paygentic.entitlements.grants.purchase()`:  `request` **Changed**\n* `paygentic.entitlements.grants.get()`:  `response` **Changed**\n* `paygentic.entitlements.grants.void()`:  `response` **Changed**\n"

@@ -26,9 +26,9 @@ class UpdateBillableMetricRequestBodyTypedDict(TypedDict):
     event_type: NotRequired[Nullable[str]]
     r"""CloudEvents type for meter routing."""
     value_property: NotRequired[Nullable[str]]
-    r"""JSONPath to extract numeric value from event data."""
+    r"""JSONPath to extract a numeric value from event data. Must start with `$.` (example: `$.amount` or `$.payload.bytes`)."""
     group_by: NotRequired[Nullable[Dict[str, str]]]
-    r"""Map of dimension name to JSONPath for group-by queries."""
+    r"""Map of dimension name to JSONPath for group-by queries. Each value must start with `$.` (example: `$.region`)."""
     event_from: NotRequired[Nullable[datetime]]
     r"""Only count events after this timestamp."""
 
@@ -51,12 +51,12 @@ class UpdateBillableMetricRequestBody(BaseModel):
     value_property: Annotated[
         OptionalNullable[str], pydantic.Field(alias="valueProperty")
     ] = UNSET
-    r"""JSONPath to extract numeric value from event data."""
+    r"""JSONPath to extract a numeric value from event data. Must start with `$.` (example: `$.amount` or `$.payload.bytes`)."""
 
     group_by: Annotated[
         OptionalNullable[Dict[str, str]], pydantic.Field(alias="groupBy")
     ] = UNSET
-    r"""Map of dimension name to JSONPath for group-by queries."""
+    r"""Map of dimension name to JSONPath for group-by queries. Each value must start with `$.` (example: `$.region`)."""
 
     event_from: Annotated[
         OptionalNullable[datetime], pydantic.Field(alias="eventFrom")

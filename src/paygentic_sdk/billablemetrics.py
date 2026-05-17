@@ -40,8 +40,8 @@ class BillableMetrics(BaseSDK):
         :param product_id: Unique identifier for a product
         :param unit: Measurement unit used when aggregating this metric's values. Common examples: 'tokens', 'GB', 'calls', 'images', 'hours', 'TB', 'queries', 'requests'
         :param event_type: CloudEvents type for meter routing. Links this billable metric to the metering service.
-        :param value_property: JSONPath to extract numeric value from event data. Required for SUM/AVG/MIN/MAX/LATEST aggregations.
-        :param group_by: Map of dimension name to JSONPath for group-by queries.
+        :param value_property: JSONPath to extract a numeric value from event data. Must start with `$.` (example: `$.amount` or `$.payload.bytes`). Required for SUM/AVG/MIN/MAX/LATEST aggregations.
+        :param group_by: Map of dimension name to JSONPath for group-by queries. Each value must start with `$.` (example: `$.region`).
         :param event_from: Only count events after this timestamp. Used for meter versioning.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -168,8 +168,8 @@ class BillableMetrics(BaseSDK):
         :param product_id: Unique identifier for a product
         :param unit: Measurement unit used when aggregating this metric's values. Common examples: 'tokens', 'GB', 'calls', 'images', 'hours', 'TB', 'queries', 'requests'
         :param event_type: CloudEvents type for meter routing. Links this billable metric to the metering service.
-        :param value_property: JSONPath to extract numeric value from event data. Required for SUM/AVG/MIN/MAX/LATEST aggregations.
-        :param group_by: Map of dimension name to JSONPath for group-by queries.
+        :param value_property: JSONPath to extract a numeric value from event data. Must start with `$.` (example: `$.amount` or `$.payload.bytes`). Required for SUM/AVG/MIN/MAX/LATEST aggregations.
+        :param group_by: Map of dimension name to JSONPath for group-by queries. Each value must start with `$.` (example: `$.region`).
         :param event_from: Only count events after this timestamp. Used for meter versioning.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -680,8 +680,8 @@ class BillableMetrics(BaseSDK):
         :param name: Updated label for the metric. Sample values: 'LLM Tokens', 'Database Storage', 'Prediction Requests', 'Content Generations'
         :param unit: Updated measurement unit. Common examples: 'tokens', 'GB', 'requests', 'items', 'hours'
         :param event_type: CloudEvents type for meter routing.
-        :param value_property: JSONPath to extract numeric value from event data.
-        :param group_by: Map of dimension name to JSONPath for group-by queries.
+        :param value_property: JSONPath to extract a numeric value from event data. Must start with `$.` (example: `$.amount` or `$.payload.bytes`).
+        :param group_by: Map of dimension name to JSONPath for group-by queries. Each value must start with `$.` (example: `$.region`).
         :param event_from: Only count events after this timestamp.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -803,8 +803,8 @@ class BillableMetrics(BaseSDK):
         :param name: Updated label for the metric. Sample values: 'LLM Tokens', 'Database Storage', 'Prediction Requests', 'Content Generations'
         :param unit: Updated measurement unit. Common examples: 'tokens', 'GB', 'requests', 'items', 'hours'
         :param event_type: CloudEvents type for meter routing.
-        :param value_property: JSONPath to extract numeric value from event data.
-        :param group_by: Map of dimension name to JSONPath for group-by queries.
+        :param value_property: JSONPath to extract a numeric value from event data. Must start with `$.` (example: `$.amount` or `$.payload.bytes`).
+        :param group_by: Map of dimension name to JSONPath for group-by queries. Each value must start with `$.` (example: `$.region`).
         :param event_from: Only count events after this timestamp.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method

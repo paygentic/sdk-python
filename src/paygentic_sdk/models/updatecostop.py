@@ -41,9 +41,9 @@ class UpdateCostRequestBodyTypedDict(TypedDict):
     event_type: NotRequired[Nullable[str]]
     r"""Updated CloudEvents type (metered costs only)."""
     value_property: NotRequired[Nullable[str]]
-    r"""Updated JSONPath for value extraction (metered costs only)."""
+    r"""Updated JSONPath for value extraction. Must start with `$.` (example: `$.amount` or `$.payload.bytes`). Metered costs only."""
     group_by: NotRequired[Nullable[Dict[str, str]]]
-    r"""Updated group-by dimension map (metered costs only)."""
+    r"""Updated group-by dimension map. Each value must start with `$.` (example: `$.region`). Metered costs only."""
 
 
 class UpdateCostRequestBody(BaseModel):
@@ -70,12 +70,12 @@ class UpdateCostRequestBody(BaseModel):
     value_property: Annotated[
         OptionalNullable[str], pydantic.Field(alias="valueProperty")
     ] = UNSET
-    r"""Updated JSONPath for value extraction (metered costs only)."""
+    r"""Updated JSONPath for value extraction. Must start with `$.` (example: `$.amount` or `$.payload.bytes`). Metered costs only."""
 
     group_by: Annotated[
         OptionalNullable[Dict[str, str]], pydantic.Field(alias="groupBy")
     ] = UNSET
-    r"""Updated group-by dimension map (metered costs only)."""
+    r"""Updated group-by dimension map. Each value must start with `$.` (example: `$.region`). Metered costs only."""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

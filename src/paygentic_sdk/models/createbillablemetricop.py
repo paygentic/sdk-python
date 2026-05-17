@@ -37,9 +37,9 @@ class CreateBillableMetricRequestTypedDict(TypedDict):
     event_type: NotRequired[str]
     r"""CloudEvents type for meter routing. Links this billable metric to the metering service."""
     value_property: NotRequired[str]
-    r"""JSONPath to extract numeric value from event data. Required for SUM/AVG/MIN/MAX/LATEST aggregations."""
+    r"""JSONPath to extract a numeric value from event data. Must start with `$.` (example: `$.amount` or `$.payload.bytes`). Required for SUM/AVG/MIN/MAX/LATEST aggregations."""
     group_by: NotRequired[Dict[str, str]]
-    r"""Map of dimension name to JSONPath for group-by queries."""
+    r"""Map of dimension name to JSONPath for group-by queries. Each value must start with `$.` (example: `$.region`)."""
     event_from: NotRequired[datetime]
     r"""Only count events after this timestamp. Used for meter versioning."""
 
@@ -69,12 +69,12 @@ class CreateBillableMetricRequest(BaseModel):
     value_property: Annotated[Optional[str], pydantic.Field(alias="valueProperty")] = (
         None
     )
-    r"""JSONPath to extract numeric value from event data. Required for SUM/AVG/MIN/MAX/LATEST aggregations."""
+    r"""JSONPath to extract a numeric value from event data. Must start with `$.` (example: `$.amount` or `$.payload.bytes`). Required for SUM/AVG/MIN/MAX/LATEST aggregations."""
 
     group_by: Annotated[Optional[Dict[str, str]], pydantic.Field(alias="groupBy")] = (
         None
     )
-    r"""Map of dimension name to JSONPath for group-by queries."""
+    r"""Map of dimension name to JSONPath for group-by queries. Each value must start with `$.` (example: `$.region`)."""
 
     event_from: Annotated[Optional[datetime], pydantic.Field(alias="eventFrom")] = None
     r"""Only count events after this timestamp. Used for meter versioning."""

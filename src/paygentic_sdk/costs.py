@@ -44,8 +44,8 @@ class Costs(BaseSDK):
         :param aggregation: Aggregation method for the metered event.
         :param event_type: CloudEvents type that identifies the metered event.
         :param unit: Unit label for metered costs (e.g. 'token', 'request'). Only valid for metered costs.
-        :param value_property: JSONPath to extract numeric value from event data. Required for SUM/AVG/MIN/MAX/LATEST aggregations.
-        :param group_by: Map of dimension name to JSONPath for group-by queries. Only valid for metered costs.
+        :param value_property: JSONPath to extract a numeric value from event data. Must start with `$.` (example: `$.amount` or `$.payload.bytes`). Required for SUM/AVG/MIN/MAX/LATEST aggregations.
+        :param group_by: Map of dimension name to JSONPath for group-by queries. Each value must start with `$.` (example: `$.region`). Only valid for metered costs.
         :param merchant_id: Unique identifier for an organization
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -175,8 +175,8 @@ class Costs(BaseSDK):
         :param aggregation: Aggregation method for the metered event.
         :param event_type: CloudEvents type that identifies the metered event.
         :param unit: Unit label for metered costs (e.g. 'token', 'request'). Only valid for metered costs.
-        :param value_property: JSONPath to extract numeric value from event data. Required for SUM/AVG/MIN/MAX/LATEST aggregations.
-        :param group_by: Map of dimension name to JSONPath for group-by queries. Only valid for metered costs.
+        :param value_property: JSONPath to extract a numeric value from event data. Must start with `$.` (example: `$.amount` or `$.payload.bytes`). Required for SUM/AVG/MIN/MAX/LATEST aggregations.
+        :param group_by: Map of dimension name to JSONPath for group-by queries. Each value must start with `$.` (example: `$.region`). Only valid for metered costs.
         :param merchant_id: Unique identifier for an organization
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -677,8 +677,8 @@ class Costs(BaseSDK):
         :param unit: Updated unit label (metered costs only).
         :param aggregation: Updated aggregation method (metered costs only).
         :param event_type: Updated CloudEvents type (metered costs only).
-        :param value_property: Updated JSONPath for value extraction (metered costs only).
-        :param group_by: Updated group-by dimension map (metered costs only).
+        :param value_property: Updated JSONPath for value extraction. Must start with `$.` (example: `$.amount` or `$.payload.bytes`). Metered costs only.
+        :param group_by: Updated group-by dimension map. Each value must start with `$.` (example: `$.region`). Metered costs only.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -802,8 +802,8 @@ class Costs(BaseSDK):
         :param unit: Updated unit label (metered costs only).
         :param aggregation: Updated aggregation method (metered costs only).
         :param event_type: Updated CloudEvents type (metered costs only).
-        :param value_property: Updated JSONPath for value extraction (metered costs only).
-        :param group_by: Updated group-by dimension map (metered costs only).
+        :param value_property: Updated JSONPath for value extraction. Must start with `$.` (example: `$.amount` or `$.payload.bytes`). Metered costs only.
+        :param group_by: Updated group-by dimension map. Each value must start with `$.` (example: `$.region`). Metered costs only.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds

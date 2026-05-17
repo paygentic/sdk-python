@@ -24,6 +24,10 @@ class CreateGrantRequestTypedDict(TypedDict):
     r"""When the grant becomes effective. Defaults to now."""
     expires_at: NotRequired[Nullable[datetime]]
     r"""When the grant expires. If omitted, the grant does not expire."""
+    reset_max_rollover: NotRequired[float]
+    r"""Maximum balance carried over at the entitlement's reset boundary. If omitted, the entire balance rolls over until consumed or expired. Set to 0 to discard any remaining balance at each reset."""
+    reset_min_rollover: NotRequired[float]
+    r"""Minimum balance at the entitlement's reset boundary; balances below this are floored up. Defaults to 0 (no floor)."""
 
 
 class CreateGrantRequest(BaseModel):
@@ -43,9 +47,21 @@ class CreateGrantRequest(BaseModel):
     ] = UNSET
     r"""When the grant expires. If omitted, the grant does not expire."""
 
+    reset_max_rollover: Annotated[
+        Optional[float], pydantic.Field(alias="resetMaxRollover")
+    ] = None
+    r"""Maximum balance carried over at the entitlement's reset boundary. If omitted, the entire balance rolls over until consumed or expired. Set to 0 to discard any remaining balance at each reset."""
+
+    reset_min_rollover: Annotated[
+        Optional[float], pydantic.Field(alias="resetMinRollover")
+    ] = None
+    r"""Minimum balance at the entitlement's reset boundary; balances below this are floored up. Defaults to 0 (no floor)."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["effectiveAt", "expiresAt"])
+        optional_fields = set(
+            ["effectiveAt", "expiresAt", "resetMaxRollover", "resetMinRollover"]
+        )
         nullable_fields = set(["expiresAt"])
         serialized = handler(self)
         m = {}

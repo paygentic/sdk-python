@@ -237,6 +237,8 @@ class Grants(BaseSDK):
         idempotency_key: str,
         effective_at: Optional[datetime] = None,
         expires_at: OptionalNullable[datetime] = UNSET,
+        reset_max_rollover: Optional[float] = None,
+        reset_min_rollover: Optional[float] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -251,6 +253,8 @@ class Grants(BaseSDK):
         :param idempotency_key: Idempotency key to prevent duplicate grants. Must be unique per entitlement.
         :param effective_at: When the grant becomes effective. Defaults to now.
         :param expires_at: When the grant expires. If omitted, the grant does not expire.
+        :param reset_max_rollover: Maximum balance carried over at the entitlement's reset boundary. If omitted, the entire balance rolls over until consumed or expired. Set to 0 to discard any remaining balance at each reset.
+        :param reset_min_rollover: Minimum balance at the entitlement's reset boundary; balances below this are floored up. Defaults to 0 (no floor).
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -273,6 +277,8 @@ class Grants(BaseSDK):
                 effective_at=effective_at,
                 expires_at=expires_at,
                 idempotency_key=idempotency_key,
+                reset_max_rollover=reset_max_rollover,
+                reset_min_rollover=reset_min_rollover,
             ),
         )
 
@@ -356,6 +362,8 @@ class Grants(BaseSDK):
         idempotency_key: str,
         effective_at: Optional[datetime] = None,
         expires_at: OptionalNullable[datetime] = UNSET,
+        reset_max_rollover: Optional[float] = None,
+        reset_min_rollover: Optional[float] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -370,6 +378,8 @@ class Grants(BaseSDK):
         :param idempotency_key: Idempotency key to prevent duplicate grants. Must be unique per entitlement.
         :param effective_at: When the grant becomes effective. Defaults to now.
         :param expires_at: When the grant expires. If omitted, the grant does not expire.
+        :param reset_max_rollover: Maximum balance carried over at the entitlement's reset boundary. If omitted, the entire balance rolls over until consumed or expired. Set to 0 to discard any remaining balance at each reset.
+        :param reset_min_rollover: Minimum balance at the entitlement's reset boundary; balances below this are floored up. Defaults to 0 (no floor).
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -392,6 +402,8 @@ class Grants(BaseSDK):
                 effective_at=effective_at,
                 expires_at=expires_at,
                 idempotency_key=idempotency_key,
+                reset_max_rollover=reset_max_rollover,
+                reset_min_rollover=reset_min_rollover,
             ),
         )
 
@@ -479,6 +491,8 @@ class Grants(BaseSDK):
         success_url: Optional[str] = None,
         cancel_url: Optional[str] = None,
         payment_expires_at: Optional[datetime] = None,
+        reset_max_rollover: Optional[float] = None,
+        reset_min_rollover: Optional[float] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -499,6 +513,8 @@ class Grants(BaseSDK):
         :param success_url: URL to redirect the customer to after successful payment.
         :param cancel_url: URL to redirect the customer to if payment is cancelled.
         :param payment_expires_at: When the payment session expires. If omitted, uses the default expiry.
+        :param reset_max_rollover: Maximum balance carried over at the entitlement's reset boundary. If omitted, the purchased grant balance rolls over until consumed or expired. Set to 0 to discard any remaining balance at each reset.
+        :param reset_min_rollover: Minimum balance at the entitlement's reset boundary; balances below this are floored up. Defaults to 0 (no floor).
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -525,6 +541,8 @@ class Grants(BaseSDK):
                 success_url=success_url,
                 cancel_url=cancel_url,
                 payment_expires_at=payment_expires_at,
+                reset_max_rollover=reset_max_rollover,
+                reset_min_rollover=reset_min_rollover,
             ),
         )
 
@@ -612,6 +630,8 @@ class Grants(BaseSDK):
         success_url: Optional[str] = None,
         cancel_url: Optional[str] = None,
         payment_expires_at: Optional[datetime] = None,
+        reset_max_rollover: Optional[float] = None,
+        reset_min_rollover: Optional[float] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -632,6 +652,8 @@ class Grants(BaseSDK):
         :param success_url: URL to redirect the customer to after successful payment.
         :param cancel_url: URL to redirect the customer to if payment is cancelled.
         :param payment_expires_at: When the payment session expires. If omitted, uses the default expiry.
+        :param reset_max_rollover: Maximum balance carried over at the entitlement's reset boundary. If omitted, the purchased grant balance rolls over until consumed or expired. Set to 0 to discard any remaining balance at each reset.
+        :param reset_min_rollover: Minimum balance at the entitlement's reset boundary; balances below this are floored up. Defaults to 0 (no floor).
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -658,6 +680,8 @@ class Grants(BaseSDK):
                 success_url=success_url,
                 cancel_url=cancel_url,
                 payment_expires_at=payment_expires_at,
+                reset_max_rollover=reset_max_rollover,
+                reset_min_rollover=reset_min_rollover,
             ),
         )
 

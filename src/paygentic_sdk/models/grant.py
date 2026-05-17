@@ -38,6 +38,10 @@ class GrantTypedDict(TypedDict):
     r"""When the grant expires. Null means no expiration."""
     voided_at: NotRequired[Nullable[datetime]]
     r"""When the grant was voided. Null means the grant is active."""
+    reset_max_rollover: NotRequired[float]
+    r"""Maximum balance carried over at the entitlement's reset boundary."""
+    reset_min_rollover: NotRequired[float]
+    r"""Minimum balance at the entitlement's reset boundary."""
 
 
 class Grant(BaseModel):
@@ -76,9 +80,21 @@ class Grant(BaseModel):
     ] = UNSET
     r"""When the grant was voided. Null means the grant is active."""
 
+    reset_max_rollover: Annotated[
+        Optional[float], pydantic.Field(alias="resetMaxRollover")
+    ] = None
+    r"""Maximum balance carried over at the entitlement's reset boundary."""
+
+    reset_min_rollover: Annotated[
+        Optional[float], pydantic.Field(alias="resetMinRollover")
+    ] = None
+    r"""Minimum balance at the entitlement's reset boundary."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["object", "expiresAt", "voidedAt"])
+        optional_fields = set(
+            ["object", "expiresAt", "voidedAt", "resetMaxRollover", "resetMinRollover"]
+        )
         nullable_fields = set(
             ["expiresAt", "voidedAt", "recurrencePeriod", "idempotencyKey"]
         )

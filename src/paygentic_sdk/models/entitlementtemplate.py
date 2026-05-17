@@ -12,6 +12,8 @@ from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
 
 class UsagePeriodTypedDict(TypedDict):
+    r"""Recurrence configuration. Omit for a one-time grant that does not refill."""
+
     interval: str
     r"""ISO 8601 duration for the usage period, e.g. P1D, P1W, P1M, P1Y."""
     anchor: NotRequired[datetime]
@@ -19,6 +21,8 @@ class UsagePeriodTypedDict(TypedDict):
 
 
 class UsagePeriod(BaseModel):
+    r"""Recurrence configuration. Omit for a one-time grant that does not refill."""
+
     interval: str
     r"""ISO 8601 duration for the usage period, e.g. P1D, P1W, P1M, P1Y."""
 
@@ -43,12 +47,13 @@ class UsagePeriod(BaseModel):
 
 
 class EntitlementTemplateMeteredTypedDict(TypedDict):
-    usage_period: UsagePeriodTypedDict
     type: Literal["metered"]
+    usage_period: NotRequired[UsagePeriodTypedDict]
+    r"""Recurrence configuration. Omit for a one-time grant that does not refill."""
     is_soft_limit: NotRequired[bool]
     r"""When false (hard limit), access is blocked when balance is exhausted and overage is not charged on invoices. When true (soft limit), access continues past the grant and overage is charged at the per-unit rate."""
     issue_after_reset: NotRequired[float]
-    r"""Amount of grants to issue after each period reset."""
+    r"""Credits issued at each period reset. Set to 0 for entitlements without included credits; top-ups may be supplied via direct grants or grant purchases."""
     issue_after_reset_priority: NotRequired[int]
     r"""Priority for grants issued after reset."""
     preserve_overage_at_reset: NotRequired[bool]
@@ -60,12 +65,15 @@ class EntitlementTemplateMeteredTypedDict(TypedDict):
 
 
 class EntitlementTemplateMetered(BaseModel):
-    usage_period: Annotated[UsagePeriod, pydantic.Field(alias="usagePeriod")]
-
     type: Annotated[
         Annotated[Literal["metered"], AfterValidator(validate_const("metered"))],
         pydantic.Field(alias="type"),
     ] = "metered"
+
+    usage_period: Annotated[
+        Optional[UsagePeriod], pydantic.Field(alias="usagePeriod")
+    ] = None
+    r"""Recurrence configuration. Omit for a one-time grant that does not refill."""
 
     is_soft_limit: Annotated[Optional[bool], pydantic.Field(alias="isSoftLimit")] = None
     r"""When false (hard limit), access is blocked when balance is exhausted and overage is not charged on invoices. When true (soft limit), access continues past the grant and overage is charged at the per-unit rate."""
@@ -73,7 +81,7 @@ class EntitlementTemplateMetered(BaseModel):
     issue_after_reset: Annotated[
         Optional[float], pydantic.Field(alias="issueAfterReset")
     ] = None
-    r"""Amount of grants to issue after each period reset."""
+    r"""Credits issued at each period reset. Set to 0 for entitlements without included credits; top-ups may be supplied via direct grants or grant purchases."""
 
     issue_after_reset_priority: Annotated[
         Optional[int], pydantic.Field(alias="issueAfterResetPriority")
@@ -99,6 +107,7 @@ class EntitlementTemplateMetered(BaseModel):
     def serialize_model(self, handler):
         optional_fields = set(
             [
+                "usagePeriod",
                 "isSoftLimit",
                 "issueAfterReset",
                 "issueAfterResetPriority",

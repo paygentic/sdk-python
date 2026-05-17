@@ -42,9 +42,9 @@ class CreateCostRequestTypedDict(TypedDict):
     unit: NotRequired[str]
     r"""Unit label for metered costs (e.g. 'token', 'request'). Only valid for metered costs."""
     value_property: NotRequired[str]
-    r"""JSONPath to extract numeric value from event data. Required for SUM/AVG/MIN/MAX/LATEST aggregations."""
+    r"""JSONPath to extract a numeric value from event data. Must start with `$.` (example: `$.amount` or `$.payload.bytes`). Required for SUM/AVG/MIN/MAX/LATEST aggregations."""
     group_by: NotRequired[Dict[str, str]]
-    r"""Map of dimension name to JSONPath for group-by queries. Only valid for metered costs."""
+    r"""Map of dimension name to JSONPath for group-by queries. Each value must start with `$.` (example: `$.region`). Only valid for metered costs."""
     merchant_id: NotRequired[str]
     r"""Unique identifier for an organization"""
 
@@ -77,12 +77,12 @@ class CreateCostRequest(BaseModel):
     value_property: Annotated[Optional[str], pydantic.Field(alias="valueProperty")] = (
         None
     )
-    r"""JSONPath to extract numeric value from event data. Required for SUM/AVG/MIN/MAX/LATEST aggregations."""
+    r"""JSONPath to extract a numeric value from event data. Must start with `$.` (example: `$.amount` or `$.payload.bytes`). Required for SUM/AVG/MIN/MAX/LATEST aggregations."""
 
     group_by: Annotated[Optional[Dict[str, str]], pydantic.Field(alias="groupBy")] = (
         None
     )
-    r"""Map of dimension name to JSONPath for group-by queries. Only valid for metered costs."""
+    r"""Map of dimension name to JSONPath for group-by queries. Each value must start with `$.` (example: `$.region`). Only valid for metered costs."""
 
     merchant_id: Annotated[Optional[str], pydantic.Field(alias="merchantId")] = None
     r"""Unique identifier for an organization"""
