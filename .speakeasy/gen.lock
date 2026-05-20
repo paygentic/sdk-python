@@ -1,19 +1,19 @@
 lockVersion: 2.0.0
 id: d05de326-b60d-4921-81eb-a16eab66dffd
 management:
-  docChecksum: 5dd54decad06d46302f72b92aed26116
+  docChecksum: ac3d6ba0bca06021703e79fc6475fce0
   docVersion: 0.1.0
   speakeasyVersion: 1.761.4
   generationVersion: 2.879.13
-  releaseVersion: 0.2.5
-  configChecksum: 3e3388d8e06a2d759f18869ce3922bdb
+  releaseVersion: 0.2.6
+  configChecksum: eaf64006c50ca36277626a8bd03fc463
   repoURL: https://github.com/paygentic/sdk-python.git
   installationURL: https://github.com/paygentic/sdk-python.git
   published: true
 persistentEdits:
-  generation_id: 629f30dc-0862-4160-9317-9592d08bd3d6
-  pristine_commit_hash: 848e3827f3f24c71cab38df8c3c80a76e213240c
-  pristine_tree_hash: 817f316d528454d8fab69a716671426a9d6bc8b1
+  generation_id: 1626e1b0-6f90-466a-afa3-2ef91bacfb7f
+  pristine_commit_hash: 9c71f9b3608b6ebfdc597ac639e33af5d245c4f5
+  pristine_tree_hash: 42d510302efa240692ffeca1c75f857f5d1b4f0c
 features:
   python:
     additionalDependencies: 1.0.0
@@ -265,8 +265,8 @@ trackedFiles:
     pristine_git_object: c010d7ba6ec82142ce463e3e2a1419e8c17b7c4f
   docs/models/creategrantrequest.md:
     id: 6563a0a72e7e
-    last_write_checksum: sha1:391de7b812cb2c2852a5b7b490bf76c58fae8428
-    pristine_git_object: 6d58402fb55f02057b512ae70cd7405a9c487924
+    last_write_checksum: sha1:cb946113e75e58395ac664d9e1eb10fc073f3765
+    pristine_git_object: 18b779798153a3a6494f9d74d4807518a6372b66
   docs/models/createlineitemrequest.md:
     id: 6a769d1c2024
     last_write_checksum: sha1:34e123b76eb9d2db9432bec5cf4ede029e87be14
@@ -1253,8 +1253,8 @@ trackedFiles:
     pristine_git_object: 26fea20c0db168a1d591c3fd48c53f1360cdfa70
   docs/models/purchasegrantrequest.md:
     id: 61064907aa00
-    last_write_checksum: sha1:7481414e97cc8fb6cdc11c4e5bb77e387da481c2
-    pristine_git_object: 697b492eaf0924fd988eef7d076eb5f8a97522d4
+    last_write_checksum: sha1:3c7a364dbc8eb5075abdab1e7c70b1b710176dba
+    pristine_git_object: f40b98091698c3eb28eb463136eb4e9f3c8a7317
   docs/models/purchasegrantresponse.md:
     id: eef7c8f30621
     last_write_checksum: sha1:308c2a387d2f14b6189277da1008a98b3093867a
@@ -1649,8 +1649,8 @@ trackedFiles:
     pristine_git_object: 6996403f2984f7eab86aa3948fc51ff08ec9eabb
   docs/sdks/grants/README.md:
     id: f4371a3352ee
-    last_write_checksum: sha1:5c7c1be98e1537ca674ffb33bdf81c24f11bebed
-    pristine_git_object: a440efaff459bda2c998b9e9f5d4cfaf7236c2ac
+    last_write_checksum: sha1:007f1f37fff95028b2c53b3d4f614f38d7e79d8d
+    pristine_git_object: a7f98cb858a39d4184fd7965c2278e065482cc01
   docs/sdks/invoicesv2/README.md:
     id: 671851b727bc
     last_write_checksum: sha1:8c44ab5eab3e48f687c99a675575b399a75f9128
@@ -1717,8 +1717,8 @@ trackedFiles:
     pristine_git_object: ba50994ac7aceefe62e1571a6cbff467d9a067da
   pyproject.toml:
     id: 5d07e7d72637
-    last_write_checksum: sha1:e9dbea433686a20f05b75fa46198437b2d4fbdc0
-    pristine_git_object: 43a7409c2a44d85bbf0a2a34cc9630dd51004757
+    last_write_checksum: sha1:ad209a670dfb3e86ea939121ca4a7a6377f2dec8
+    pristine_git_object: 964e4995686acc9dd131d1873219c658b1d1a185
   scripts/prepare_readme.py:
     id: e0c5957a6035
     last_write_checksum: sha1:e2ebd355f72567204499ca62ee72728d9c3dfd95
@@ -1745,8 +1745,8 @@ trackedFiles:
     pristine_git_object: 6dbd4dcba3a5bac1c92beb0f5db31ef3d2944dea
   src/paygentic_sdk/_version.py:
     id: 52c8c5a320dc
-    last_write_checksum: sha1:e3c3f0f7249fd2b486cabbd17940f00c266ecfe9
-    pristine_git_object: e871dcfec530522c872a547189a6bc6581087870
+    last_write_checksum: sha1:b0704b6946dcba8edede8cbe8f4558cf0049f4af
+    pristine_git_object: 2ad87ed87ab2995fea5e3326790d1995ea725cd6
   src/paygentic_sdk/basesdk.py:
     id: a086dd8cd1b3
     last_write_checksum: sha1:275b3ea45e9bf52519d3c7f179816ab1a0e823a2
@@ -1821,8 +1821,8 @@ trackedFiles:
     pristine_git_object: 5a04b0311be060f1e0e94cf49a0d07b2d9465ea7
   src/paygentic_sdk/grants.py:
     id: 6e05182f113f
-    last_write_checksum: sha1:4eb8edf55ed79e4ba9f728fd1c6ec2b78fda7412
-    pristine_git_object: fd0b41791f00fca6d8c9546673f70ff170c91447
+    last_write_checksum: sha1:47555ab23cd069b517bc2e60991c0d3b6eda02d1
+    pristine_git_object: 114ffefa5c87bf9650f32e9ae3a9698f32ff1906
   src/paygentic_sdk/httpclient.py:
     id: 391f57829e9a
     last_write_checksum: sha1:5e55338d6ee9f01ab648cad4380201a8a3da7dd7
@@ -1913,8 +1913,8 @@ trackedFiles:
     pristine_git_object: 0cbe7b2f1171700630f1052d8ab2e89b0f917129
   src/paygentic_sdk/models/creategrantrequest.py:
     id: ab821887dacc
-    last_write_checksum: sha1:c31943838ff5677d915a75b4c13930032a79ccf8
-    pristine_git_object: 50dc9c3cdc0c21456246506d53aa6a660b8b380f
+    last_write_checksum: sha1:8469566921a21eb07cd1d1da59217dfcd28afc67
+    pristine_git_object: 968d597ae0e7aecb0858f5f135deffa1298cf0fb
   src/paygentic_sdk/models/createlineitemop.py:
     id: 46e79609030d
     last_write_checksum: sha1:d45105d8881a813414aadea985d302db0f37d7c0
@@ -2337,8 +2337,8 @@ trackedFiles:
     pristine_git_object: bd6d0b2ecf250ab3caf551b9f2202c403e4e085d
   src/paygentic_sdk/models/purchasegrantrequest.py:
     id: 9f7a009b43a2
-    last_write_checksum: sha1:db2331a59e00209b15670107188682bb73c08253
-    pristine_git_object: 597630376acd606d231075f87561f28ef8edcf3f
+    last_write_checksum: sha1:413f4ce3f6d15d6a4fbfaf675f7706590fcbb7c7
+    pristine_git_object: 4604e42660aa5c6aebd4b72fd47c81f5cabe1ff4
   src/paygentic_sdk/models/purchasegrantresponse.py:
     id: 5cb474f1bcfc
     last_write_checksum: sha1:d36f7ffaf08a3ab6d2070919b73cfda1476b2294
@@ -4332,4 +4332,3 @@ generatedTests:
   getProfitability: "2026-05-05T10:48:42Z"
   listCustomerPaymentMethods: "2026-05-08T17:36:55Z"
   createCustomerPaymentMethod: "2026-05-08T17:36:55Z"
-releaseNotes: "## Python SDK Changes:\n* `paygentic.entitlements.issue()`: \n  *  `request.template.union(metered).usage_period` **Changed**\n* `paygentic.entitlements.grants.list()`:  `response.data[]` **Changed**\n* `paygentic.entitlements.grants.create()`: \n  *  `request` **Changed**\n  *  `response` **Changed**\n* `paygentic.entitlements.grants.purchase()`:  `request` **Changed**\n* `paygentic.entitlements.grants.get()`:  `response` **Changed**\n* `paygentic.entitlements.grants.void()`:  `response` **Changed**\n"

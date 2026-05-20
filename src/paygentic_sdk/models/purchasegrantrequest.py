@@ -33,9 +33,9 @@ class PurchaseGrantRequestTypedDict(TypedDict):
     payment_expires_at: NotRequired[datetime]
     r"""When the payment session expires. If omitted, uses the default expiry."""
     reset_max_rollover: NotRequired[float]
-    r"""Maximum balance carried over at the entitlement's reset boundary. If omitted, the purchased grant balance rolls over until consumed or expired. Set to 0 to discard any remaining balance at each reset."""
+    r"""Maximum balance carried over at the entitlement's reset boundary. If omitted, the purchased grant balance rolls over until consumed or expired. Set to 0 to discard any remaining balance at each reset. Ignored when the target entitlement has no `usagePeriod` (one-time entitlement) — one-time entitlements have no reset boundary, so this field has no effect."""
     reset_min_rollover: NotRequired[float]
-    r"""Minimum balance at the entitlement's reset boundary; balances below this are floored up. Defaults to 0 (no floor)."""
+    r"""Minimum balance at the entitlement's reset boundary; balances below this are floored up. Defaults to 0 (no floor). Ignored when the target entitlement has no `usagePeriod` (one-time entitlement)."""
 
 
 class PurchaseGrantRequest(BaseModel):
@@ -72,12 +72,12 @@ class PurchaseGrantRequest(BaseModel):
     reset_max_rollover: Annotated[
         Optional[float], pydantic.Field(alias="resetMaxRollover")
     ] = None
-    r"""Maximum balance carried over at the entitlement's reset boundary. If omitted, the purchased grant balance rolls over until consumed or expired. Set to 0 to discard any remaining balance at each reset."""
+    r"""Maximum balance carried over at the entitlement's reset boundary. If omitted, the purchased grant balance rolls over until consumed or expired. Set to 0 to discard any remaining balance at each reset. Ignored when the target entitlement has no `usagePeriod` (one-time entitlement) — one-time entitlements have no reset boundary, so this field has no effect."""
 
     reset_min_rollover: Annotated[
         Optional[float], pydantic.Field(alias="resetMinRollover")
     ] = None
-    r"""Minimum balance at the entitlement's reset boundary; balances below this are floored up. Defaults to 0 (no floor)."""
+    r"""Minimum balance at the entitlement's reset boundary; balances below this are floored up. Defaults to 0 (no floor). Ignored when the target entitlement has no `usagePeriod` (one-time entitlement)."""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
