@@ -88,7 +88,7 @@ class LineItemTypedDict(TypedDict):
     payment_term: NotRequired[Nullable[LineItemPaymentTerm]]
     r"""Payment term for fee items. Null for metered/manual lines"""
     subtotal: NotRequired[str]
-    r"""quantity x unitPrice, before discounts and taxes. Defaults to '0.00' when not yet calculated"""
+    r"""quantity × unitPrice, before discounts and taxes. For prorated lines, may differ from `quantity × unitPrice` by display precision; subtotal is the authoritative billed amount. Defaults to '0.00' when not yet calculated."""
     taxes_total: NotRequired[Nullable[str]]
     r"""Total tax amount for this line item in decimal format. Null until invoice calculation is complete"""
     total: NotRequired[str]
@@ -166,7 +166,7 @@ class LineItem(BaseModel):
     r"""Payment term for fee items. Null for metered/manual lines"""
 
     subtotal: Optional[str] = None
-    r"""quantity x unitPrice, before discounts and taxes. Defaults to '0.00' when not yet calculated"""
+    r"""quantity × unitPrice, before discounts and taxes. For prorated lines, may differ from `quantity × unitPrice` by display precision; subtotal is the authoritative billed amount. Defaults to '0.00' when not yet calculated."""
 
     taxes_total: Annotated[
         OptionalNullable[str], pydantic.Field(alias="taxesTotal")

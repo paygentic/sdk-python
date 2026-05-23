@@ -50,6 +50,8 @@ class UpdatePriceRequestBodyTypedDict(TypedDict):
     r"""Feature to associate. Set to null to remove existing feature. Omit to leave unchanged."""
     grant_discount_enabled: NotRequired[bool]
     r"""When true, grants applied to a subscription will discount usage charged by this price. Only supported for standard metered prices."""
+    quantity: NotRequired[int]
+    r"""Quantity for invoice line items. Total per period = quantity × unitPrice. Only supported for fee prices; metered prices derive quantity from usage. Defaults to 1."""
 
 
 class UpdatePriceRequestBody(BaseModel):
@@ -86,6 +88,9 @@ class UpdatePriceRequestBody(BaseModel):
     ] = None
     r"""When true, grants applied to a subscription will discount usage charged by this price. Only supported for standard metered prices."""
 
+    quantity: Optional[int] = None
+    r"""Quantity for invoice line items. Total per period = quantity × unitPrice. Only supported for fee prices; metered prices derive quantity from usage. Defaults to 1."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
@@ -98,6 +103,7 @@ class UpdatePriceRequestBody(BaseModel):
                 "billingCadence",
                 "feature",
                 "grantDiscountEnabled",
+                "quantity",
             ]
         )
         nullable_fields = set(["billingCadence", "feature"])

@@ -24,12 +24,12 @@ r"""When the fee is charged relative to the billing period."""
 
 class PropertiesTypedDict(TypedDict):
     unit_price: str
-    r"""The unit price in dollars (e.g., '10.00')."""
+    r"""The unit price in dollars (e.g., '10.00'). Per unit. Total per period = quantity × unitPrice; see the `quantity` field."""
 
 
 class Properties(BaseModel):
     unit_price: Annotated[str, pydantic.Field(alias="unitPrice")]
-    r"""The unit price in dollars (e.g., '10.00')."""
+    r"""The unit price in dollars (e.g., '10.00'). Per unit. Total per period = quantity × unitPrice; see the `quantity` field."""
 
 
 class FeePriceTypedDict(TypedDict):
@@ -46,6 +46,8 @@ class FeePriceTypedDict(TypedDict):
     invoice_display_name: str
     r"""The name to display on invoices for this fee."""
     properties: PropertiesTypedDict
+    quantity: int
+    r"""Quantity for invoice line items. Total per period = quantity × unitPrice. Only supported for fee prices; metered prices derive quantity from usage. Defaults to 1."""
     tax_rate: NotRequired[float]
     r"""The tax rate as a percentage (e.g., 10 for 10%)."""
 
@@ -69,6 +71,9 @@ class FeePrice(BaseModel):
     r"""The name to display on invoices for this fee."""
 
     properties: Properties
+
+    quantity: int
+    r"""Quantity for invoice line items. Total per period = quantity × unitPrice. Only supported for fee prices; metered prices derive quantity from usage. Defaults to 1."""
 
     tax_rate: Annotated[Optional[float], pydantic.Field(alias="taxRate")] = None
     r"""The tax rate as a percentage (e.g., 10 for 10%)."""

@@ -50,6 +50,8 @@ class SchemasPriceTypedDict(TypedDict):
     payment_term: SchemasPricePaymentTerm
     properties: PricePropertiesUnionTypedDict
     updated_at: datetime
+    quantity: int
+    r"""Quantity for invoice line items. Total per period = quantity × unitPrice. Only supported for fee prices; metered prices derive quantity from usage. Defaults to 1."""
     object: NotRequired[SchemasPriceObject]
     billable_metric_id: NotRequired[str]
     r"""Unique identifier for a billable metric"""
@@ -79,6 +81,9 @@ class SchemasPrice(BaseModel):
     properties: PricePropertiesUnion
 
     updated_at: Annotated[datetime, pydantic.Field(alias="updatedAt")]
+
+    quantity: int
+    r"""Quantity for invoice line items. Total per period = quantity × unitPrice. Only supported for fee prices; metered prices derive quantity from usage. Defaults to 1."""
 
     object: Optional[SchemasPriceObject] = "price"
 

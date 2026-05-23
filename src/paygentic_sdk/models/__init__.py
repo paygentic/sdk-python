@@ -785,6 +785,13 @@ if TYPE_CHECKING:
         UpdateSourceRuleRequest,
         UpdateSourceRuleRequestTypedDict,
     )
+    from .updatesubscriptionop import (
+        UpdateSubscriptionRequest,
+        UpdateSubscriptionRequestBody,
+        UpdateSubscriptionRequestBodyTypedDict,
+        UpdateSubscriptionRequestTypedDict,
+        UpdateSubscriptionStatus,
+    )
     from .updateuserop import (
         UpdateUserRequest,
         UpdateUserRequestBody,
@@ -1442,6 +1449,11 @@ __all__ = [
     "UpdateSourceRequestTypedDict",
     "UpdateSourceRuleRequest",
     "UpdateSourceRuleRequestTypedDict",
+    "UpdateSubscriptionRequest",
+    "UpdateSubscriptionRequestBody",
+    "UpdateSubscriptionRequestBodyTypedDict",
+    "UpdateSubscriptionRequestTypedDict",
+    "UpdateSubscriptionStatus",
     "UpdateUserRequest",
     "UpdateUserRequestBody",
     "UpdateUserRequestBodyTypedDict",
@@ -2097,6 +2109,11 @@ _dynamic_imports: dict[str, str] = {
     "UpdateSourceRequestTypedDict": ".updatesourceop",
     "UpdateSourceRuleRequest": ".updatesourceruleop",
     "UpdateSourceRuleRequestTypedDict": ".updatesourceruleop",
+    "UpdateSubscriptionRequest": ".updatesubscriptionop",
+    "UpdateSubscriptionRequestBody": ".updatesubscriptionop",
+    "UpdateSubscriptionRequestBodyTypedDict": ".updatesubscriptionop",
+    "UpdateSubscriptionRequestTypedDict": ".updatesubscriptionop",
+    "UpdateSubscriptionStatus": ".updatesubscriptionop",
     "UpdateUserRequest": ".updateuserop",
     "UpdateUserRequestBody": ".updateuserop",
     "UpdateUserRequestBodyTypedDict": ".updateuserop",

@@ -28,6 +28,7 @@ class Prices(BaseSDK):
             Union[models.PriceFeatureInput, models.PriceFeatureInputTypedDict]
         ] = None,
         grant_discount_enabled: Optional[bool] = False,
+        quantity: Optional[int] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -44,6 +45,7 @@ class Prices(BaseSDK):
         :param billing_cadence: ISO 8601 duration for recurring charges (e.g., 'P1M' for monthly, 'P1Y' for yearly) or 'P0D' for one-time charges. Required for fees, optional for billable metrics. Sample values: 'P0D' for one-time, 'P1M' for monthly recurring, 'P1Y' for yearly recurring
         :param feature:
         :param grant_discount_enabled: When true, grants applied to a subscription will discount usage charged by this price. Only supported for standard metered prices.
+        :param quantity: Quantity for invoice line items. Total per period = quantity × unitPrice. Only supported for fee prices; metered prices derive quantity from usage. Defaults to 1.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -73,6 +75,7 @@ class Prices(BaseSDK):
                 feature, Optional[models.PriceFeatureInput]
             ),
             grant_discount_enabled=grant_discount_enabled,
+            quantity=quantity,
         )
 
         req = self._build_request(
@@ -159,6 +162,7 @@ class Prices(BaseSDK):
             Union[models.PriceFeatureInput, models.PriceFeatureInputTypedDict]
         ] = None,
         grant_discount_enabled: Optional[bool] = False,
+        quantity: Optional[int] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -175,6 +179,7 @@ class Prices(BaseSDK):
         :param billing_cadence: ISO 8601 duration for recurring charges (e.g., 'P1M' for monthly, 'P1Y' for yearly) or 'P0D' for one-time charges. Required for fees, optional for billable metrics. Sample values: 'P0D' for one-time, 'P1M' for monthly recurring, 'P1Y' for yearly recurring
         :param feature:
         :param grant_discount_enabled: When true, grants applied to a subscription will discount usage charged by this price. Only supported for standard metered prices.
+        :param quantity: Quantity for invoice line items. Total per period = quantity × unitPrice. Only supported for fee prices; metered prices derive quantity from usage. Defaults to 1.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -204,6 +209,7 @@ class Prices(BaseSDK):
                 feature, Optional[models.PriceFeatureInput]
             ),
             grant_discount_enabled=grant_discount_enabled,
+            quantity=quantity,
         )
 
         req = self._build_request_async(
@@ -678,6 +684,7 @@ class Prices(BaseSDK):
             Union[models.PriceFeatureInput, models.PriceFeatureInputTypedDict]
         ] = UNSET,
         grant_discount_enabled: Optional[bool] = None,
+        quantity: Optional[int] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -694,6 +701,7 @@ class Prices(BaseSDK):
         :param billing_cadence: ISO 8601 duration for recurring fees (e.g., 'P1M' for monthly, 'P1Y' for yearly, or 'P0D' for one-time)
         :param feature: Feature to associate. Set to null to remove existing feature. Omit to leave unchanged.
         :param grant_discount_enabled: When true, grants applied to a subscription will discount usage charged by this price. Only supported for standard metered prices.
+        :param quantity: Quantity for invoice line items. Total per period = quantity × unitPrice. Only supported for fee prices; metered prices derive quantity from usage. Defaults to 1.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -724,6 +732,7 @@ class Prices(BaseSDK):
                     feature, OptionalNullable[models.PriceFeatureInput]
                 ),
                 grant_discount_enabled=grant_discount_enabled,
+                quantity=quantity,
             ),
         )
 
@@ -815,6 +824,7 @@ class Prices(BaseSDK):
             Union[models.PriceFeatureInput, models.PriceFeatureInputTypedDict]
         ] = UNSET,
         grant_discount_enabled: Optional[bool] = None,
+        quantity: Optional[int] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -831,6 +841,7 @@ class Prices(BaseSDK):
         :param billing_cadence: ISO 8601 duration for recurring fees (e.g., 'P1M' for monthly, 'P1Y' for yearly, or 'P0D' for one-time)
         :param feature: Feature to associate. Set to null to remove existing feature. Omit to leave unchanged.
         :param grant_discount_enabled: When true, grants applied to a subscription will discount usage charged by this price. Only supported for standard metered prices.
+        :param quantity: Quantity for invoice line items. Total per period = quantity × unitPrice. Only supported for fee prices; metered prices derive quantity from usage. Defaults to 1.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -861,6 +872,7 @@ class Prices(BaseSDK):
                     feature, OptionalNullable[models.PriceFeatureInput]
                 ),
                 grant_discount_enabled=grant_discount_enabled,
+                quantity=quantity,
             ),
         )
 

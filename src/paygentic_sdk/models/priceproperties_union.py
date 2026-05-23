@@ -100,14 +100,14 @@ class PriceProperties1TypedDict(TypedDict):
     r"""Standard pricing model"""
 
     unit_price: str
-    r"""Per-unit cost in decimal format for fixed-rate pricing. Sample values: '0.00002' represents $0.00002 per token, '0.15' represents $0.15 per gigabyte stored, '0.05' represents $0.05 per API call"""
+    r"""Per-unit cost in decimal format for fixed-rate pricing. Sample values: '0.00002' represents $0.00002 per token, '0.15' represents $0.15 per gigabyte stored, '0.05' represents $0.05 per API call. Per unit. Total per period = quantity × unitPrice; see the `quantity` field."""
 
 
 class PriceProperties1(BaseModel):
     r"""Standard pricing model"""
 
     unit_price: Annotated[str, pydantic.Field(alias="unitPrice")]
-    r"""Per-unit cost in decimal format for fixed-rate pricing. Sample values: '0.00002' represents $0.00002 per token, '0.15' represents $0.15 per gigabyte stored, '0.05' represents $0.05 per API call"""
+    r"""Per-unit cost in decimal format for fixed-rate pricing. Sample values: '0.00002' represents $0.00002 per token, '0.15' represents $0.15 per gigabyte stored, '0.05' represents $0.05 per API call. Per unit. Total per period = quantity × unitPrice; see the `quantity` field."""
 
 
 PricePropertiesUnionTypedDict = TypeAliasType(
