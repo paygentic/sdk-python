@@ -7,7 +7,7 @@ from paygentic_sdk._hooks import HookContext
 from paygentic_sdk.types import BaseModel, OptionalNullable, UNSET
 from paygentic_sdk.utils import get_security_from_env
 from paygentic_sdk.utils.unmarshal_json_response import unmarshal_json_response
-from typing import Any, Mapping, Optional, Union, cast
+from typing import Any, Dict, Mapping, Optional, Union, cast
 
 
 class Subscriptions(BaseSDK):
@@ -234,6 +234,12 @@ class Subscriptions(BaseSDK):
         renewal_reminder_enabled: OptionalNullable[bool] = UNSET,
         renewal_reminder_days: OptionalNullable[int] = UNSET,
         session_expiry_minutes: Optional[float] = None,
+        metadata: Optional[
+            Union[
+                Dict[str, models.SubscriptionMetadata],
+                Dict[str, models.SubscriptionMetadataTypedDict],
+            ]
+        ] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -258,6 +264,7 @@ class Subscriptions(BaseSDK):
         :param renewal_reminder_enabled: Override plan setting for renewal reminder emails. When set, this subscription's setting takes precedence over the plan default. Set to true to enable reminders, false to disable, or null/omit to use plan default.
         :param renewal_reminder_days: Override plan setting for number of days before renewal to send the reminder. Only used if renewalReminderEnabled is true (or inherited from plan). Set to null to use plan default.
         :param session_expiry_minutes: Number of minutes until the payment session expires. Defaults to 240 minutes (4 hours) if not provided.
+        :param metadata: Free-form merchant metadata to attach to the subscription. Values must be strings, numbers, or booleans.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -293,6 +300,7 @@ class Subscriptions(BaseSDK):
             renewal_reminder_enabled=renewal_reminder_enabled,
             renewal_reminder_days=renewal_reminder_days,
             session_expiry_minutes=session_expiry_minutes,
+            metadata=metadata,
         )
 
         req = self._build_request(
@@ -388,6 +396,12 @@ class Subscriptions(BaseSDK):
         renewal_reminder_enabled: OptionalNullable[bool] = UNSET,
         renewal_reminder_days: OptionalNullable[int] = UNSET,
         session_expiry_minutes: Optional[float] = None,
+        metadata: Optional[
+            Union[
+                Dict[str, models.SubscriptionMetadata],
+                Dict[str, models.SubscriptionMetadataTypedDict],
+            ]
+        ] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -412,6 +426,7 @@ class Subscriptions(BaseSDK):
         :param renewal_reminder_enabled: Override plan setting for renewal reminder emails. When set, this subscription's setting takes precedence over the plan default. Set to true to enable reminders, false to disable, or null/omit to use plan default.
         :param renewal_reminder_days: Override plan setting for number of days before renewal to send the reminder. Only used if renewalReminderEnabled is true (or inherited from plan). Set to null to use plan default.
         :param session_expiry_minutes: Number of minutes until the payment session expires. Defaults to 240 minutes (4 hours) if not provided.
+        :param metadata: Free-form merchant metadata to attach to the subscription. Values must be strings, numbers, or booleans.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -447,6 +462,7 @@ class Subscriptions(BaseSDK):
             renewal_reminder_enabled=renewal_reminder_enabled,
             renewal_reminder_days=renewal_reminder_days,
             session_expiry_minutes=session_expiry_minutes,
+            metadata=metadata,
         )
 
         req = self._build_request_async(

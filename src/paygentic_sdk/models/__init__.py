@@ -702,6 +702,10 @@ if TYPE_CHECKING:
         SubscriptionTypedDict,
         UnknownPaymentUnion,
     )
+    from .subscriptionmetadata import (
+        SubscriptionMetadata,
+        SubscriptionMetadataTypedDict,
+    )
     from .subscriptionportal import (
         SubscriptionPortal,
         SubscriptionPortalObject,
@@ -1376,6 +1380,8 @@ __all__ = [
     "Subscription",
     "SubscriptionCustomer",
     "SubscriptionCustomerTypedDict",
+    "SubscriptionMetadata",
+    "SubscriptionMetadataTypedDict",
     "SubscriptionObject",
     "SubscriptionPortal",
     "SubscriptionPortalObject",
@@ -2048,6 +2054,8 @@ _dynamic_imports: dict[str, str] = {
     "SubscriptionStatusEnum": ".subscription",
     "SubscriptionTypedDict": ".subscription",
     "UnknownPaymentUnion": ".subscription",
+    "SubscriptionMetadata": ".subscriptionmetadata",
+    "SubscriptionMetadataTypedDict": ".subscriptionmetadata",
     "SubscriptionPortal": ".subscriptionportal",
     "SubscriptionPortalObject": ".subscriptionportal",
     "SubscriptionPortalTypedDict": ".subscriptionportal",

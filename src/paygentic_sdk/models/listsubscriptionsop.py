@@ -25,10 +25,13 @@ r"""Include related resources. When 'customer' is specified, each subscription i
 
 class ListSubscriptionsRequestTypedDict(TypedDict):
     consumer_id: NotRequired[str]
+    r"""Return subscriptions for this consumer organization. May be combined with `merchantId` to scope to a single consumer/merchant pair. Cannot be combined with `customerId`."""
     customer_id: NotRequired[str]
+    r"""Return subscriptions for this customer. Cannot be combined with `consumerId` or `merchantId`."""
     limit: NotRequired[str]
     r"""Number of subscriptions to return"""
     merchant_id: NotRequired[str]
+    r"""Return subscriptions for this merchant organization. May be combined with `consumerId` to scope to a single consumer/merchant pair. Cannot be combined with `customerId`."""
     offset: NotRequired[str]
     r"""Number of subscriptions to skip"""
     status: NotRequired[ListSubscriptionsStatus]
@@ -44,12 +47,14 @@ class ListSubscriptionsRequest(BaseModel):
         pydantic.Field(alias="consumerId"),
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = None
+    r"""Return subscriptions for this consumer organization. May be combined with `merchantId` to scope to a single consumer/merchant pair. Cannot be combined with `customerId`."""
 
     customer_id: Annotated[
         Optional[str],
         pydantic.Field(alias="customerId"),
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = None
+    r"""Return subscriptions for this customer. Cannot be combined with `consumerId` or `merchantId`."""
 
     limit: Annotated[
         Optional[str],
@@ -62,6 +67,7 @@ class ListSubscriptionsRequest(BaseModel):
         pydantic.Field(alias="merchantId"),
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = None
+    r"""Return subscriptions for this merchant organization. May be combined with `consumerId` to scope to a single consumer/merchant pair. Cannot be combined with `customerId`."""
 
     offset: Annotated[
         Optional[str],
