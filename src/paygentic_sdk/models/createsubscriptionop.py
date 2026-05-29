@@ -169,6 +169,8 @@ class CreateSubscriptionRequestTypedDict(TypedDict):
     r"""Override plan setting for renewal reminder emails. When set, this subscription's setting takes precedence over the plan default. Set to true to enable reminders, false to disable, or null/omit to use plan default."""
     renewal_reminder_days: NotRequired[Nullable[int]]
     r"""Override plan setting for number of days before renewal to send the reminder. Only used if renewalReminderEnabled is true (or inherited from plan). Set to null to use plan default."""
+    payment_term_days: NotRequired[int]
+    r"""Payment term in days (\"Net X\") applied to every invoice the subscription generates: invoice dueAt = invoice issue date + paymentTermDays. Defaults to 0 (\"due on issue\"). A non-zero value is only valid alongside bankTransferOnly=true."""
     session_expiry_minutes: NotRequired[float]
     r"""Number of minutes until the payment session expires. Defaults to 240 minutes (4 hours) if not provided."""
     metadata: NotRequired[Dict[str, SubscriptionMetadataTypedDict]]
@@ -228,6 +230,11 @@ class CreateSubscriptionRequest(BaseModel):
     ] = UNSET
     r"""Override plan setting for number of days before renewal to send the reminder. Only used if renewalReminderEnabled is true (or inherited from plan). Set to null to use plan default."""
 
+    payment_term_days: Annotated[
+        Optional[int], pydantic.Field(alias="paymentTermDays")
+    ] = None
+    r"""Payment term in days (\"Net X\") applied to every invoice the subscription generates: invoice dueAt = invoice issue date + paymentTermDays. Defaults to 0 (\"due on issue\"). A non-zero value is only valid alongside bankTransferOnly=true."""
+
     session_expiry_minutes: Annotated[
         Optional[float], pydantic.Field(alias="sessionExpiryMinutes")
     ] = None
@@ -251,6 +258,7 @@ class CreateSubscriptionRequest(BaseModel):
                 "testClockId",
                 "renewalReminderEnabled",
                 "renewalReminderDays",
+                "paymentTermDays",
                 "sessionExpiryMinutes",
                 "metadata",
             ]

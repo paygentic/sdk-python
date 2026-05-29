@@ -284,6 +284,8 @@ class SubscriptionTypedDict(TypedDict):
     started_at: datetime
     status: SubscriptionStatusEnum
     updated_at: datetime
+    payment_term_days: int
+    r"""Payment term in days (\"Net X\") snapshotted onto every invoice the subscription generates (invoice dueAt = invoice issue date + paymentTermDays). Defaults to 0 (\"due on issue\"); a non-zero value is only set on bankTransferOnly subscriptions."""
     auto_charge: NotRequired[bool]
     r"""Whether automatic charging is enabled for this subscription. When true, invoices will be automatically paid using stored payment methods."""
     ending_at: NotRequired[datetime]
@@ -336,6 +338,9 @@ class Subscription(BaseModel):
     status: SubscriptionStatusEnum
 
     updated_at: Annotated[datetime, pydantic.Field(alias="updatedAt")]
+
+    payment_term_days: Annotated[int, pydantic.Field(alias="paymentTermDays")]
+    r"""Payment term in days (\"Net X\") snapshotted onto every invoice the subscription generates (invoice dueAt = invoice issue date + paymentTermDays). Defaults to 0 (\"due on issue\"); a non-zero value is only set on bankTransferOnly subscriptions."""
 
     auto_charge: Annotated[Optional[bool], pydantic.Field(alias="autoCharge")] = False
     r"""Whether automatic charging is enabled for this subscription. When true, invoices will be automatically paid using stored payment methods."""

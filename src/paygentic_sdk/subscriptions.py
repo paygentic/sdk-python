@@ -233,6 +233,7 @@ class Subscriptions(BaseSDK):
         test_clock_id: Optional[str] = None,
         renewal_reminder_enabled: OptionalNullable[bool] = UNSET,
         renewal_reminder_days: OptionalNullable[int] = UNSET,
+        payment_term_days: Optional[int] = None,
         session_expiry_minutes: Optional[float] = None,
         metadata: Optional[
             Union[
@@ -263,6 +264,7 @@ class Subscriptions(BaseSDK):
         :param test_clock_id: Test clock identifier for simulating time-based billing scenarios. Sample values: 'tc_abc123xyz', 'tc_789def456'. Restricted to non-production environments (local, dev, sandbox). Must belong to the same merchant organization.
         :param renewal_reminder_enabled: Override plan setting for renewal reminder emails. When set, this subscription's setting takes precedence over the plan default. Set to true to enable reminders, false to disable, or null/omit to use plan default.
         :param renewal_reminder_days: Override plan setting for number of days before renewal to send the reminder. Only used if renewalReminderEnabled is true (or inherited from plan). Set to null to use plan default.
+        :param payment_term_days: Payment term in days (\"Net X\") applied to every invoice the subscription generates: invoice dueAt = invoice issue date + paymentTermDays. Defaults to 0 (\"due on issue\"). A non-zero value is only valid alongside bankTransferOnly=true.
         :param session_expiry_minutes: Number of minutes until the payment session expires. Defaults to 240 minutes (4 hours) if not provided.
         :param metadata: Free-form merchant metadata to attach to the subscription. Values must be strings, numbers, or booleans.
         :param retries: Override the default retry configuration for this method
@@ -299,6 +301,7 @@ class Subscriptions(BaseSDK):
             test_clock_id=test_clock_id,
             renewal_reminder_enabled=renewal_reminder_enabled,
             renewal_reminder_days=renewal_reminder_days,
+            payment_term_days=payment_term_days,
             session_expiry_minutes=session_expiry_minutes,
             metadata=metadata,
         )
@@ -395,6 +398,7 @@ class Subscriptions(BaseSDK):
         test_clock_id: Optional[str] = None,
         renewal_reminder_enabled: OptionalNullable[bool] = UNSET,
         renewal_reminder_days: OptionalNullable[int] = UNSET,
+        payment_term_days: Optional[int] = None,
         session_expiry_minutes: Optional[float] = None,
         metadata: Optional[
             Union[
@@ -425,6 +429,7 @@ class Subscriptions(BaseSDK):
         :param test_clock_id: Test clock identifier for simulating time-based billing scenarios. Sample values: 'tc_abc123xyz', 'tc_789def456'. Restricted to non-production environments (local, dev, sandbox). Must belong to the same merchant organization.
         :param renewal_reminder_enabled: Override plan setting for renewal reminder emails. When set, this subscription's setting takes precedence over the plan default. Set to true to enable reminders, false to disable, or null/omit to use plan default.
         :param renewal_reminder_days: Override plan setting for number of days before renewal to send the reminder. Only used if renewalReminderEnabled is true (or inherited from plan). Set to null to use plan default.
+        :param payment_term_days: Payment term in days (\"Net X\") applied to every invoice the subscription generates: invoice dueAt = invoice issue date + paymentTermDays. Defaults to 0 (\"due on issue\"). A non-zero value is only valid alongside bankTransferOnly=true.
         :param session_expiry_minutes: Number of minutes until the payment session expires. Defaults to 240 minutes (4 hours) if not provided.
         :param metadata: Free-form merchant metadata to attach to the subscription. Values must be strings, numbers, or booleans.
         :param retries: Override the default retry configuration for this method
@@ -461,6 +466,7 @@ class Subscriptions(BaseSDK):
             test_clock_id=test_clock_id,
             renewal_reminder_enabled=renewal_reminder_enabled,
             renewal_reminder_days=renewal_reminder_days,
+            payment_term_days=payment_term_days,
             session_expiry_minutes=session_expiry_minutes,
             metadata=metadata,
         )
@@ -733,6 +739,7 @@ class Subscriptions(BaseSDK):
         minimum_account_balance: Optional[str] = None,
         renewal_reminder_enabled: OptionalNullable[bool] = UNSET,
         renewal_reminder_days: OptionalNullable[int] = UNSET,
+        payment_term_days: Optional[int] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -751,6 +758,7 @@ class Subscriptions(BaseSDK):
         :param minimum_account_balance: Minimum wallet balance requirement in decimal dollars (e.g., '100.00'). Can be set to '0' to disable. Maximum allowed is $5,000. Contact support for higher limits. Note: If the calculated charge amount at renewal is below payment processor minimums (typically $1.00), it will be automatically adjusted upward to meet the minimum requirement. Changes apply at next renewal.
         :param renewal_reminder_enabled: Override plan setting for renewal reminder emails. Set to true to enable, false to disable, or null to use plan default.
         :param renewal_reminder_days: Override plan setting for number of days before renewal to send the reminder. Set to null to use plan default.
+        :param payment_term_days: Payment term in days (\"Net X\") applied to subsequently generated invoices: invoice dueAt = invoice issue date + paymentTermDays. A non-zero value is only valid alongside bankTransferOnly=true. Set 0 for \"due on issue\". Already-issued invoices keep their snapshotted dueAt.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -779,6 +787,7 @@ class Subscriptions(BaseSDK):
                 minimum_account_balance=minimum_account_balance,
                 renewal_reminder_enabled=renewal_reminder_enabled,
                 renewal_reminder_days=renewal_reminder_days,
+                payment_term_days=payment_term_days,
             ),
         )
 
@@ -868,6 +877,7 @@ class Subscriptions(BaseSDK):
         minimum_account_balance: Optional[str] = None,
         renewal_reminder_enabled: OptionalNullable[bool] = UNSET,
         renewal_reminder_days: OptionalNullable[int] = UNSET,
+        payment_term_days: Optional[int] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -886,6 +896,7 @@ class Subscriptions(BaseSDK):
         :param minimum_account_balance: Minimum wallet balance requirement in decimal dollars (e.g., '100.00'). Can be set to '0' to disable. Maximum allowed is $5,000. Contact support for higher limits. Note: If the calculated charge amount at renewal is below payment processor minimums (typically $1.00), it will be automatically adjusted upward to meet the minimum requirement. Changes apply at next renewal.
         :param renewal_reminder_enabled: Override plan setting for renewal reminder emails. Set to true to enable, false to disable, or null to use plan default.
         :param renewal_reminder_days: Override plan setting for number of days before renewal to send the reminder. Set to null to use plan default.
+        :param payment_term_days: Payment term in days (\"Net X\") applied to subsequently generated invoices: invoice dueAt = invoice issue date + paymentTermDays. A non-zero value is only valid alongside bankTransferOnly=true. Set 0 for \"due on issue\". Already-issued invoices keep their snapshotted dueAt.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -914,6 +925,7 @@ class Subscriptions(BaseSDK):
                 minimum_account_balance=minimum_account_balance,
                 renewal_reminder_enabled=renewal_reminder_enabled,
                 renewal_reminder_days=renewal_reminder_days,
+                payment_term_days=payment_term_days,
             ),
         )
 

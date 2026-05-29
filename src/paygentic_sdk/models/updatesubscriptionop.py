@@ -40,6 +40,8 @@ class UpdateSubscriptionRequestBodyTypedDict(TypedDict):
     r"""Override plan setting for renewal reminder emails. Set to true to enable, false to disable, or null to use plan default."""
     renewal_reminder_days: NotRequired[Nullable[int]]
     r"""Override plan setting for number of days before renewal to send the reminder. Set to null to use plan default."""
+    payment_term_days: NotRequired[int]
+    r"""Payment term in days (\"Net X\") applied to subsequently generated invoices: invoice dueAt = invoice issue date + paymentTermDays. A non-zero value is only valid alongside bankTransferOnly=true. Set 0 for \"due on issue\". Already-issued invoices keep their snapshotted dueAt."""
 
 
 class UpdateSubscriptionRequestBody(BaseModel):
@@ -80,6 +82,11 @@ class UpdateSubscriptionRequestBody(BaseModel):
     ] = UNSET
     r"""Override plan setting for number of days before renewal to send the reminder. Set to null to use plan default."""
 
+    payment_term_days: Annotated[
+        Optional[int], pydantic.Field(alias="paymentTermDays")
+    ] = None
+    r"""Payment term in days (\"Net X\") applied to subsequently generated invoices: invoice dueAt = invoice issue date + paymentTermDays. A non-zero value is only valid alongside bankTransferOnly=true. Set 0 for \"due on issue\". Already-issued invoices keep their snapshotted dueAt."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
@@ -94,6 +101,7 @@ class UpdateSubscriptionRequestBody(BaseModel):
                 "minimumAccountBalance",
                 "renewalReminderEnabled",
                 "renewalReminderDays",
+                "paymentTermDays",
             ]
         )
         nullable_fields = set(["renewalReminderEnabled", "renewalReminderDays"])

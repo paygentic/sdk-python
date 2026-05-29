@@ -2,18 +2,18 @@ speakeasyVersion: 1.761.4
 sources:
     Paygentic API:
         sourceNamespace: paygentic-api
-        sourceRevisionDigest: sha256:10164fe167952c7235435ceac5302aa86ca6f0dc275fc1b5162a4c88724a0435
-        sourceBlobDigest: sha256:8dca424d0d0d8a09dddcb5e420d2c5e7b5a2384bf4fe19e604b84d41daf7f804
+        sourceRevisionDigest: sha256:e126c866929843dbfde90a920c8438be974bb95083541050d35325fae89f1d5e
+        sourceBlobDigest: sha256:63cebc74d61a75e27190fb552b817adf8e11a92fdfababec7ad10862b8b0f44f
         tags:
             - latest
 targets:
     python:
         source: Paygentic API
         sourceNamespace: paygentic-api
-        sourceRevisionDigest: sha256:10164fe167952c7235435ceac5302aa86ca6f0dc275fc1b5162a4c88724a0435
-        sourceBlobDigest: sha256:8dca424d0d0d8a09dddcb5e420d2c5e7b5a2384bf4fe19e604b84d41daf7f804
+        sourceRevisionDigest: sha256:e126c866929843dbfde90a920c8438be974bb95083541050d35325fae89f1d5e
+        sourceBlobDigest: sha256:63cebc74d61a75e27190fb552b817adf8e11a92fdfababec7ad10862b8b0f44f
         codeSamplesNamespace: paygentic-api-python-code-samples
-        codeSamplesRevisionDigest: sha256:e71321a2f05a7492309e69496e31164049208e14bca3790bc77b9e789633e910
+        codeSamplesRevisionDigest: sha256:060f25a8f0c5a0d6b7d68d8a8e67caa9f327402af6e6489170df4bf93b993b63
 workflow:
     workflowVersion: 1.0.0
     speakeasyVersion: 1.761.4
