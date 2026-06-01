@@ -1,19 +1,19 @@
 lockVersion: 2.0.0
 id: d05de326-b60d-4921-81eb-a16eab66dffd
 management:
-  docChecksum: 7bd4782ffdd27c48343f8692938b1b4b
+  docChecksum: 5543dffd1d0b28714079628faa5578b2
   docVersion: 0.1.0
   speakeasyVersion: 1.761.4
   generationVersion: 2.879.13
-  releaseVersion: 0.2.9
-  configChecksum: 334787f351bac0b5065e858d76e7dda8
+  releaseVersion: 0.2.10
+  configChecksum: 927973a8c0b877b6efedd6fc492cf3ab
   repoURL: https://github.com/paygentic/sdk-python.git
   installationURL: https://github.com/paygentic/sdk-python.git
   published: true
 persistentEdits:
-  generation_id: 655c3d54-4ff1-45b0-a2ef-7e4ce6a40787
-  pristine_commit_hash: 2798b42c321bfcf452dc6c1b1418084476fef568
-  pristine_tree_hash: 1be25d56746511800063723f8ec81170e5073bef
+  generation_id: ca40de96-9343-4bfa-bedb-1fb857b16973
+  pristine_commit_hash: e214d4e8bdb8316622d610f6b0ede80d601583dc
+  pristine_tree_hash: 9b3517b4fc68833c0fc50ddd99e8f66ba3bdaf82
 features:
   python:
     additionalDependencies: 1.0.0
@@ -1365,8 +1365,8 @@ trackedFiles:
     pristine_git_object: d0b5203316c0256606ff8c51dbe99bc3cf6c1246
   docs/models/state.md:
     id: e560b4e72643
-    last_write_checksum: sha1:264f6c9555a61a2e383833a88c8220647173554b
-    pristine_git_object: 11e09d761027272465626657531fe3497a668f8a
+    last_write_checksum: sha1:143b4c424090ce79b5722e8537058fffc5420086
+    pristine_git_object: e5bbfa86eb8629226254622774e587995260be5e
   docs/models/staticentitlementdetail.md:
     id: 62c9b083779b
     last_write_checksum: sha1:8a98ece29eb572c0cff3ddfb307afedac92d371f
@@ -1733,8 +1733,8 @@ trackedFiles:
     pristine_git_object: ba50994ac7aceefe62e1571a6cbff467d9a067da
   pyproject.toml:
     id: 5d07e7d72637
-    last_write_checksum: sha1:4c742357b78da452047e0ef1e6771f1ea2e7ae83
-    pristine_git_object: d73da7159bdff64e86bc3d1a81db70d8a9563f57
+    last_write_checksum: sha1:260053e8a7a707385699480f1f540156f4e617fa
+    pristine_git_object: c0f92d1c807e2474ab452357cb66e359c95a32f5
   scripts/prepare_readme.py:
     id: e0c5957a6035
     last_write_checksum: sha1:e2ebd355f72567204499ca62ee72728d9c3dfd95
@@ -1761,8 +1761,8 @@ trackedFiles:
     pristine_git_object: 6dbd4dcba3a5bac1c92beb0f5db31ef3d2944dea
   src/paygentic_sdk/_version.py:
     id: 52c8c5a320dc
-    last_write_checksum: sha1:8f6a13d7e2cdbf8a36ba4f559bf1f803175a1e35
-    pristine_git_object: 352d0862a234dffadfac351991e94b70f9ab83e6
+    last_write_checksum: sha1:8d733b376ef6c58fa93597b9bc43ecc50251db31
+    pristine_git_object: 9b1372a6637c9464f42d034fd46e5cf7a627bdde
   src/paygentic_sdk/basesdk.py:
     id: a086dd8cd1b3
     last_write_checksum: sha1:275b3ea45e9bf52519d3c7f179816ab1a0e823a2
@@ -2481,8 +2481,8 @@ trackedFiles:
     pristine_git_object: 2a7424aff7f9e3fe99bca171283c9653249ec366
   src/paygentic_sdk/models/user.py:
     id: 388d382e7b68
-    last_write_checksum: sha1:5fbb85b58681cf700257cd7dc168991e27fee942
-    pristine_git_object: c844d4f928324fac0db6d1a5ca9360607fe25ff8
+    last_write_checksum: sha1:2050207ead927ef71de4d0bf071a7eca9821f127
+    pristine_git_object: 074fe9baa74bed7ec76277a5a14227036899590a
   src/paygentic_sdk/models/validationerror.py:
     id: a25e5157ff37
     last_write_checksum: sha1:d41fe60cf1a6abaede6d7ec9c686e14f716ed2ec
@@ -4373,4 +4373,7 @@ generatedTests:
   listCustomerPaymentMethods: "2026-05-08T17:36:55Z"
   createCustomerPaymentMethod: "2026-05-08T17:36:55Z"
   updateSubscription: "2026-05-23T07:45:23Z"
-releaseNotes: "## Python SDK Changes:\n* `paygentic.subscriptions.list()`:  `response.data[].payment_term_days` **Added**\n* `paygentic.subscriptions.create()`: \n  *  `request.payment_term_days` **Added**\n  *  `response.payment_term_days` **Added**\n* `paygentic.subscriptions.get()`:  `response.payment_term_days` **Added**\n* `paygentic.subscriptions.update_subscription()`: \n  *  `request.payment_term_days` **Added**\n  *  `response.payment_term_days` **Added**\n* `paygentic.subscriptions.terminate()`:  `response.payment_term_days` **Added**\n* `paygentic.invoices_v2.list()`:  `response.data[].due_at` **Added**\n* `paygentic.invoices_v2.get()`:  `response.due_at` **Added**\n"
+releaseNotes: |
+  ## Python SDK Changes:
+  * `paygentic.users.get()`:  `response.organizations[].state.enum(declined)` **Added**
+  * `paygentic.users.update()`:  `response.organizations[].state.enum(declined)` **Added**

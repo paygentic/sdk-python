@@ -18,6 +18,7 @@ State = Union[
         "invited",
         "active",
         "suspended",
+        "declined",
     ],
     UnrecognizedStr,
 ]
