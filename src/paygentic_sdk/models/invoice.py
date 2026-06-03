@@ -215,6 +215,8 @@ class InvoiceTypedDict(TypedDict):
     r"""Amount accrued as liability (account_type='usage') in decimal dollars"""
     updated_at: datetime
     r"""When the invoice was last updated"""
+    failure_reason: NotRequired[str]
+    r"""Machine-readable reason code for the most recent failure (e.g. CALCULATION_FAILED). Present only when status is FAILED or PAYMENT_FAILED."""
     invoice_number: NotRequired[Nullable[str]]
     r"""The invoice number"""
     line_items: NotRequired[Nullable[LineItemsTypedDict]]
@@ -301,6 +303,11 @@ class Invoice(BaseModel):
     updated_at: Annotated[datetime, pydantic.Field(alias="updatedAt")]
     r"""When the invoice was last updated"""
 
+    failure_reason: Annotated[Optional[str], pydantic.Field(alias="failureReason")] = (
+        None
+    )
+    r"""Machine-readable reason code for the most recent failure (e.g. CALCULATION_FAILED). Present only when status is FAILED or PAYMENT_FAILED."""
+
     invoice_number: Annotated[
         OptionalNullable[str], pydantic.Field(alias="invoiceNumber")
     ] = UNSET
@@ -345,6 +352,7 @@ class Invoice(BaseModel):
     def serialize_model(self, handler):
         optional_fields = set(
             [
+                "failureReason",
                 "invoiceNumber",
                 "lineItems",
                 "metadata",

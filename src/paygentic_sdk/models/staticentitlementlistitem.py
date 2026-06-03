@@ -8,17 +8,14 @@ from paygentic_sdk.utils import validate_const
 import pydantic
 from pydantic import model_serializer
 from pydantic.functional_validators import AfterValidator
-from typing import Any, Dict, Literal, Optional
-from typing_extensions import Annotated, NotRequired, TypedDict
+from typing import Any, Dict, Literal
+from typing_extensions import Annotated, TypedDict
 
 
-BooleanEntitlementDetailObject = Literal["entitlement",]
+class StaticEntitlementListItemTypedDict(TypedDict):
+    r"""Common fields shared by all entitlement list items. List items use `entitlementId` (not `id`) to preserve the original public field name on `/v1/entitlements`. The get-by-id endpoint returns the same object with a top-level `id` and `object: \"entitlement\"` instead."""
 
-
-class BooleanEntitlementDetailTypedDict(TypedDict):
-    r"""Common fields shared by all entitlement types."""
-
-    id: str
+    entitlement_id: str
     r"""Unique identifier for the entitlement."""
     customer_id: str
     r"""Unique identifier for a customer"""
@@ -40,16 +37,15 @@ class BooleanEntitlementDetailTypedDict(TypedDict):
     r"""Whether the customer currently has active access to this entitlement."""
     metadata: Dict[str, str]
     r"""Additional metadata for the entitlement."""
-    config: Nullable[Dict[str, Any]]
-    r"""Always `null` for boolean entitlements. Surfaced on every entitlement so clients can read `config` without first switching on `featureType`."""
-    object: NotRequired[BooleanEntitlementDetailObject]
-    feature_type: Literal["boolean"]
+    config: Dict[str, Any]
+    r"""Configuration values for this entitlement."""
+    feature_type: Literal["static"]
 
 
-class BooleanEntitlementDetail(BaseModel):
-    r"""Common fields shared by all entitlement types."""
+class StaticEntitlementListItem(BaseModel):
+    r"""Common fields shared by all entitlement list items. List items use `entitlementId` (not `id`) to preserve the original public field name on `/v1/entitlements`. The get-by-id endpoint returns the same object with a top-level `id` and `object: \"entitlement\"` instead."""
 
-    id: str
+    entitlement_id: Annotated[str, pydantic.Field(alias="entitlementId")]
     r"""Unique identifier for the entitlement."""
 
     customer_id: Annotated[str, pydantic.Field(alias="customerId")]
@@ -82,43 +78,30 @@ class BooleanEntitlementDetail(BaseModel):
     metadata: Dict[str, str]
     r"""Additional metadata for the entitlement."""
 
-    config: Nullable[Dict[str, Any]]
-    r"""Always `null` for boolean entitlements. Surfaced on every entitlement so clients can read `config` without first switching on `featureType`."""
-
-    object: Optional[BooleanEntitlementDetailObject] = "entitlement"
+    config: Dict[str, Any]
+    r"""Configuration values for this entitlement."""
 
     feature_type: Annotated[
-        Annotated[Literal["boolean"], AfterValidator(validate_const("boolean"))],
+        Annotated[Literal["static"], AfterValidator(validate_const("static"))],
         pydantic.Field(alias="featureType"),
-    ] = "boolean"
+    ] = "static"
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["object"])
-        nullable_fields = set(["subscriptionId", "activeTo", "config"])
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
             k = f.alias or n
             val = serialized.get(k, serialized.get(n))
-            is_nullable_and_explicitly_set = (
-                k in nullable_fields
-                and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
-            )
 
             if val != UNSET_SENTINEL:
-                if (
-                    val is not None
-                    or k not in optional_fields
-                    or is_nullable_and_explicitly_set
-                ):
-                    m[k] = val
+                m[k] = val
 
         return m
 
 
 try:
-    BooleanEntitlementDetail.model_rebuild()
+    StaticEntitlementListItem.model_rebuild()
 except NameError:
     pass

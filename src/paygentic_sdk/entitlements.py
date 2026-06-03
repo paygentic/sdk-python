@@ -44,6 +44,10 @@ class Entitlements(BaseSDK):
 
         Retrieve all entitlements for a customer, optionally filtered by feature or product.
 
+        List items identify the entitlement with `entitlementId` (the original list contract). The get-by-id endpoint (`GET /v1/entitlements/{entitlementId}`) returns the same object but with a top-level `id` and `object: \"entitlement\"` instead — so use `item.entitlementId`, not `item.id`, when chaining a list result into a get-by-id call.
+
+        For metered entitlements, each item carries live balance/usage fields, which the API resolves with one grant-engine balance lookup per metered item (bounded concurrency, up to `limit` items per page).
+
         :param customer_id: The unique identifier of the customer to retrieve entitlements for.
         :param feature_key: Filter results to a specific feature by its key. When specified, `productId` is also required. Use this to check access to a single feature.
         :param product_id: Filter results to entitlements for a specific product. Required when `featureKey` is specified since feature keys are scoped to products.
@@ -160,6 +164,10 @@ class Entitlements(BaseSDK):
 
         Retrieve all entitlements for a customer, optionally filtered by feature or product.
 
+        List items identify the entitlement with `entitlementId` (the original list contract). The get-by-id endpoint (`GET /v1/entitlements/{entitlementId}`) returns the same object but with a top-level `id` and `object: \"entitlement\"` instead — so use `item.entitlementId`, not `item.id`, when chaining a list result into a get-by-id call.
+
+        For metered entitlements, each item carries live balance/usage fields, which the API resolves with one grant-engine balance lookup per metered item (bounded concurrency, up to `limit` items per page).
+
         :param customer_id: The unique identifier of the customer to retrieve entitlements for.
         :param feature_key: Filter results to a specific feature by its key. When specified, `productId` is also required. Use this to check access to a single feature.
         :param product_id: Filter results to entitlements for a specific product. Required when `featureKey` is specified since feature keys are scoped to products.
@@ -273,7 +281,7 @@ class Entitlements(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.Entitlement:
+    ) -> models.EntitlementDetail:
         r"""Issue Entitlement
 
         Issue a new entitlement to a customer, granting them access to a specific feature. The feature must exist and belong to the same merchant as the customer.
@@ -355,7 +363,7 @@ class Entitlements(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "201", "application/json"):
-            return unmarshal_json_response(models.Entitlement, http_res)
+            return unmarshal_json_response(models.EntitlementDetail, http_res)
         if utils.match_response(http_res, "400", "application/json"):
             response_data = unmarshal_json_response(errors.BadRequestUnion, http_res)
             raise errors.BadRequest(response_data, http_res)
@@ -394,7 +402,7 @@ class Entitlements(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.Entitlement:
+    ) -> models.EntitlementDetail:
         r"""Issue Entitlement
 
         Issue a new entitlement to a customer, granting them access to a specific feature. The feature must exist and belong to the same merchant as the customer.
@@ -476,7 +484,7 @@ class Entitlements(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "201", "application/json"):
-            return unmarshal_json_response(models.Entitlement, http_res)
+            return unmarshal_json_response(models.EntitlementDetail, http_res)
         if utils.match_response(http_res, "400", "application/json"):
             response_data = unmarshal_json_response(errors.BadRequestUnion, http_res)
             raise errors.BadRequest(response_data, http_res)

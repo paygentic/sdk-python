@@ -8,17 +8,14 @@ from paygentic_sdk.utils import validate_const
 import pydantic
 from pydantic import model_serializer
 from pydantic.functional_validators import AfterValidator
-from typing import Any, Dict, Literal, Optional
-from typing_extensions import Annotated, NotRequired, TypedDict
+from typing import Any, Dict, Literal
+from typing_extensions import Annotated, TypedDict
 
 
-BooleanEntitlementDetailObject = Literal["entitlement",]
+class BooleanEntitlementListItemTypedDict(TypedDict):
+    r"""Common fields shared by all entitlement list items. List items use `entitlementId` (not `id`) to preserve the original public field name on `/v1/entitlements`. The get-by-id endpoint returns the same object with a top-level `id` and `object: \"entitlement\"` instead."""
 
-
-class BooleanEntitlementDetailTypedDict(TypedDict):
-    r"""Common fields shared by all entitlement types."""
-
-    id: str
+    entitlement_id: str
     r"""Unique identifier for the entitlement."""
     customer_id: str
     r"""Unique identifier for a customer"""
@@ -41,15 +38,14 @@ class BooleanEntitlementDetailTypedDict(TypedDict):
     metadata: Dict[str, str]
     r"""Additional metadata for the entitlement."""
     config: Nullable[Dict[str, Any]]
-    r"""Always `null` for boolean entitlements. Surfaced on every entitlement so clients can read `config` without first switching on `featureType`."""
-    object: NotRequired[BooleanEntitlementDetailObject]
+    r"""Always `null` for boolean entitlements. Surfaced on every list item so clients can read `item.config` without first switching on `featureType`."""
     feature_type: Literal["boolean"]
 
 
-class BooleanEntitlementDetail(BaseModel):
-    r"""Common fields shared by all entitlement types."""
+class BooleanEntitlementListItem(BaseModel):
+    r"""Common fields shared by all entitlement list items. List items use `entitlementId` (not `id`) to preserve the original public field name on `/v1/entitlements`. The get-by-id endpoint returns the same object with a top-level `id` and `object: \"entitlement\"` instead."""
 
-    id: str
+    entitlement_id: Annotated[str, pydantic.Field(alias="entitlementId")]
     r"""Unique identifier for the entitlement."""
 
     customer_id: Annotated[str, pydantic.Field(alias="customerId")]
@@ -83,9 +79,7 @@ class BooleanEntitlementDetail(BaseModel):
     r"""Additional metadata for the entitlement."""
 
     config: Nullable[Dict[str, Any]]
-    r"""Always `null` for boolean entitlements. Surfaced on every entitlement so clients can read `config` without first switching on `featureType`."""
-
-    object: Optional[BooleanEntitlementDetailObject] = "entitlement"
+    r"""Always `null` for boolean entitlements. Surfaced on every list item so clients can read `item.config` without first switching on `featureType`."""
 
     feature_type: Annotated[
         Annotated[Literal["boolean"], AfterValidator(validate_const("boolean"))],
@@ -94,31 +88,20 @@ class BooleanEntitlementDetail(BaseModel):
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["object"])
-        nullable_fields = set(["subscriptionId", "activeTo", "config"])
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
             k = f.alias or n
             val = serialized.get(k, serialized.get(n))
-            is_nullable_and_explicitly_set = (
-                k in nullable_fields
-                and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
-            )
 
             if val != UNSET_SENTINEL:
-                if (
-                    val is not None
-                    or k not in optional_fields
-                    or is_nullable_and_explicitly_set
-                ):
-                    m[k] = val
+                m[k] = val
 
         return m
 
 
 try:
-    BooleanEntitlementDetail.model_rebuild()
+    BooleanEntitlementListItem.model_rebuild()
 except NameError:
     pass

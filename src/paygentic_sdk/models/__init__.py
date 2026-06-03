@@ -29,8 +29,11 @@ if TYPE_CHECKING:
     from .booleanentitlementdetail import (
         BooleanEntitlementDetail,
         BooleanEntitlementDetailObject,
-        BooleanEntitlementDetailStatus,
         BooleanEntitlementDetailTypedDict,
+    )
+    from .booleanentitlementlistitem import (
+        BooleanEntitlementListItem,
+        BooleanEntitlementListItemTypedDict,
     )
     from .bulkapprovesourceeventsop import (
         BulkApproveSourceEventsDetails,
@@ -219,23 +222,17 @@ if TYPE_CHECKING:
         DeleteTestClockRequest,
         DeleteTestClockRequestTypedDict,
     )
-    from .entitlement import (
-        Entitlement,
-        EntitlementObject,
-        EntitlementStatus,
-        EntitlementTypedDict,
-    )
-    from .entitlementaccessresult import (
-        EntitlementAccessResult,
-        EntitlementAccessResultStatus,
-        EntitlementAccessResultTypedDict,
-        FeatureTypeEnum,
-    )
     from .entitlementdetail import (
         EntitlementDetail,
         EntitlementDetailTypedDict,
         UnknownEntitlementDetail,
     )
+    from .entitlementlistitem import (
+        EntitlementListItem,
+        EntitlementListItemTypedDict,
+        UnknownEntitlementListItem,
+    )
+    from .entitlementstatus import EntitlementStatus
     from .entitlementtemplate import (
         EntitlementTemplate,
         EntitlementTemplateBoolean,
@@ -541,8 +538,11 @@ if TYPE_CHECKING:
     from .meteredentitlementdetail import (
         MeteredEntitlementDetail,
         MeteredEntitlementDetailObject,
-        MeteredEntitlementDetailStatus,
         MeteredEntitlementDetailTypedDict,
+    )
+    from .meteredentitlementlistitem import (
+        MeteredEntitlementListItem,
+        MeteredEntitlementListItemTypedDict,
     )
     from .meterevent import MeterEvent, MeterEventObject, MeterEventTypedDict
     from .metereventlist import (
@@ -676,8 +676,11 @@ if TYPE_CHECKING:
     from .staticentitlementdetail import (
         StaticEntitlementDetail,
         StaticEntitlementDetailObject,
-        StaticEntitlementDetailStatus,
         StaticEntitlementDetailTypedDict,
+    )
+    from .staticentitlementlistitem import (
+        StaticEntitlementListItem,
+        StaticEntitlementListItemTypedDict,
     )
     from .subscription import (
         Breakdown,
@@ -845,8 +848,9 @@ __all__ = [
     "BillingVersion",
     "BooleanEntitlementDetail",
     "BooleanEntitlementDetailObject",
-    "BooleanEntitlementDetailStatus",
     "BooleanEntitlementDetailTypedDict",
+    "BooleanEntitlementListItem",
+    "BooleanEntitlementListItemTypedDict",
     "Breakdown",
     "BreakdownTypedDict",
     "BulkApproveSourceEventsDetails",
@@ -976,13 +980,10 @@ __all__ = [
     "DeleteSourceRuleRequestTypedDict",
     "DeleteTestClockRequest",
     "DeleteTestClockRequestTypedDict",
-    "Entitlement",
-    "EntitlementAccessResult",
-    "EntitlementAccessResultStatus",
-    "EntitlementAccessResultTypedDict",
     "EntitlementDetail",
     "EntitlementDetailTypedDict",
-    "EntitlementObject",
+    "EntitlementListItem",
+    "EntitlementListItemTypedDict",
     "EntitlementStatus",
     "EntitlementTemplate",
     "EntitlementTemplateBoolean",
@@ -992,7 +993,6 @@ __all__ = [
     "EntitlementTemplateStatic",
     "EntitlementTemplateStaticTypedDict",
     "EntitlementTemplateTypedDict",
-    "EntitlementTypedDict",
     "EntityType",
     "Error",
     "ErrorEnum",
@@ -1006,7 +1006,6 @@ __all__ = [
     "Feature",
     "FeatureObject",
     "FeatureType",
-    "FeatureTypeEnum",
     "FeatureTypedDict",
     "Fee",
     "FeeObject",
@@ -1247,8 +1246,9 @@ __all__ = [
     "MeterEventTypedDict",
     "MeteredEntitlementDetail",
     "MeteredEntitlementDetailObject",
-    "MeteredEntitlementDetailStatus",
     "MeteredEntitlementDetailTypedDict",
+    "MeteredEntitlementListItem",
+    "MeteredEntitlementListItemTypedDict",
     "Mode",
     "NextActionAt",
     "NotificationSettings",
@@ -1375,8 +1375,9 @@ __all__ = [
     "State",
     "StaticEntitlementDetail",
     "StaticEntitlementDetailObject",
-    "StaticEntitlementDetailStatus",
     "StaticEntitlementDetailTypedDict",
+    "StaticEntitlementListItem",
+    "StaticEntitlementListItemTypedDict",
     "Subscription",
     "SubscriptionCustomer",
     "SubscriptionCustomerTypedDict",
@@ -1404,6 +1405,7 @@ __all__ = [
     "To",
     "ToTypedDict",
     "UnknownEntitlementDetail",
+    "UnknownEntitlementListItem",
     "UnknownPaymentUnion",
     "UpdateBillableMetricRequest",
     "UpdateBillableMetricRequestBody",
@@ -1508,8 +1510,9 @@ _dynamic_imports: dict[str, str] = {
     "BillableMetricTypedDict": ".billablemetric",
     "BooleanEntitlementDetail": ".booleanentitlementdetail",
     "BooleanEntitlementDetailObject": ".booleanentitlementdetail",
-    "BooleanEntitlementDetailStatus": ".booleanentitlementdetail",
     "BooleanEntitlementDetailTypedDict": ".booleanentitlementdetail",
+    "BooleanEntitlementListItem": ".booleanentitlementlistitem",
+    "BooleanEntitlementListItemTypedDict": ".booleanentitlementlistitem",
     "BulkApproveSourceEventsDetails": ".bulkapprovesourceeventsop",
     "BulkApproveSourceEventsDetailsTypedDict": ".bulkapprovesourceeventsop",
     "BulkApproveSourceEventsRequest": ".bulkapprovesourceeventsop",
@@ -1656,17 +1659,13 @@ _dynamic_imports: dict[str, str] = {
     "DeleteSourceRuleRequestTypedDict": ".deletesourceruleop",
     "DeleteTestClockRequest": ".deletetestclockop",
     "DeleteTestClockRequestTypedDict": ".deletetestclockop",
-    "Entitlement": ".entitlement",
-    "EntitlementObject": ".entitlement",
-    "EntitlementStatus": ".entitlement",
-    "EntitlementTypedDict": ".entitlement",
-    "EntitlementAccessResult": ".entitlementaccessresult",
-    "EntitlementAccessResultStatus": ".entitlementaccessresult",
-    "EntitlementAccessResultTypedDict": ".entitlementaccessresult",
-    "FeatureTypeEnum": ".entitlementaccessresult",
     "EntitlementDetail": ".entitlementdetail",
     "EntitlementDetailTypedDict": ".entitlementdetail",
     "UnknownEntitlementDetail": ".entitlementdetail",
+    "EntitlementListItem": ".entitlementlistitem",
+    "EntitlementListItemTypedDict": ".entitlementlistitem",
+    "UnknownEntitlementListItem": ".entitlementlistitem",
+    "EntitlementStatus": ".entitlementstatus",
     "EntitlementTemplate": ".entitlementtemplate",
     "EntitlementTemplateBoolean": ".entitlementtemplate",
     "EntitlementTemplateBooleanTypedDict": ".entitlementtemplate",
@@ -1914,8 +1913,9 @@ _dynamic_imports: dict[str, str] = {
     "ListTestClocksResponseTypedDict": ".listtestclocksop",
     "MeteredEntitlementDetail": ".meteredentitlementdetail",
     "MeteredEntitlementDetailObject": ".meteredentitlementdetail",
-    "MeteredEntitlementDetailStatus": ".meteredentitlementdetail",
     "MeteredEntitlementDetailTypedDict": ".meteredentitlementdetail",
+    "MeteredEntitlementListItem": ".meteredentitlementlistitem",
+    "MeteredEntitlementListItemTypedDict": ".meteredentitlementlistitem",
     "MeterEvent": ".meterevent",
     "MeterEventObject": ".meterevent",
     "MeterEventTypedDict": ".meterevent",
@@ -2031,8 +2031,9 @@ _dynamic_imports: dict[str, str] = {
     "SourceRuleTypedDict": ".sourcerule",
     "StaticEntitlementDetail": ".staticentitlementdetail",
     "StaticEntitlementDetailObject": ".staticentitlementdetail",
-    "StaticEntitlementDetailStatus": ".staticentitlementdetail",
     "StaticEntitlementDetailTypedDict": ".staticentitlementdetail",
+    "StaticEntitlementListItem": ".staticentitlementlistitem",
+    "StaticEntitlementListItemTypedDict": ".staticentitlementlistitem",
     "Breakdown": ".subscription",
     "BreakdownTypedDict": ".subscription",
     "Consumer": ".subscription",

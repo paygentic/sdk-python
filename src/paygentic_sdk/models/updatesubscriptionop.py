@@ -26,6 +26,7 @@ class UpdateSubscriptionRequestBodyTypedDict(TypedDict):
     ending_at: NotRequired[datetime]
     status: NotRequired[UpdateSubscriptionStatus]
     terminated_at: NotRequired[datetime]
+    r"""Effective termination timestamp. Capped at the current effective time (future values are clamped). Must be strictly after the subscription's start date — values at or before startedAt are rejected with 400."""
     terminated_by: NotRequired[str]
     r"""Identifier of entity that cancelled the subscription. Sample values: 'cust_abc123' for customer-initiated cancellation, 'org_xyz789' for merchant-initiated cancellation"""
     termination_reason: NotRequired[str]
@@ -52,6 +53,7 @@ class UpdateSubscriptionRequestBody(BaseModel):
     terminated_at: Annotated[
         Optional[datetime], pydantic.Field(alias="terminatedAt")
     ] = None
+    r"""Effective termination timestamp. Capped at the current effective time (future values are clamped). Must be strictly after the subscription's start date — values at or before startedAt are rejected with 400."""
 
     terminated_by: Annotated[Optional[str], pydantic.Field(alias="terminatedBy")] = None
     r"""Identifier of entity that cancelled the subscription. Sample values: 'cust_abc123' for customer-initiated cancellation, 'org_xyz789' for merchant-initiated cancellation"""

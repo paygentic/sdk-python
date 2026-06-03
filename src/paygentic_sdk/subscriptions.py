@@ -750,7 +750,7 @@ class Subscriptions(BaseSDK):
         :param id:
         :param ending_at:
         :param status:
-        :param terminated_at:
+        :param terminated_at: Effective termination timestamp. Capped at the current effective time (future values are clamped). Must be strictly after the subscription's start date — values at or before startedAt are rejected with 400.
         :param terminated_by: Identifier of entity that cancelled the subscription. Sample values: 'cust_abc123' for customer-initiated cancellation, 'org_xyz789' for merchant-initiated cancellation
         :param termination_reason: Explanation for subscription cancellation. Sample values: 'Customer requested cancellation', 'Payment failure', 'Service migration', 'Contract expiration'
         :param auto_charge: Enable or disable automatic charging of invoices using stored payment methods.
@@ -888,7 +888,7 @@ class Subscriptions(BaseSDK):
         :param id:
         :param ending_at:
         :param status:
-        :param terminated_at:
+        :param terminated_at: Effective termination timestamp. Capped at the current effective time (future values are clamped). Must be strictly after the subscription's start date — values at or before startedAt are rejected with 400.
         :param terminated_by: Identifier of entity that cancelled the subscription. Sample values: 'cust_abc123' for customer-initiated cancellation, 'org_xyz789' for merchant-initiated cancellation
         :param termination_reason: Explanation for subscription cancellation. Sample values: 'Customer requested cancellation', 'Payment failure', 'Service migration', 'Contract expiration'
         :param auto_charge: Enable or disable automatic charging of invoices using stored payment methods.

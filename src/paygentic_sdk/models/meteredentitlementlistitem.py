@@ -8,17 +8,14 @@ from paygentic_sdk.utils import validate_const
 import pydantic
 from pydantic import model_serializer
 from pydantic.functional_validators import AfterValidator
-from typing import Any, Dict, Literal, Optional
-from typing_extensions import Annotated, NotRequired, TypedDict
+from typing import Any, Dict, Literal
+from typing_extensions import Annotated, TypedDict
 
 
-MeteredEntitlementDetailObject = Literal["entitlement",]
+class MeteredEntitlementListItemTypedDict(TypedDict):
+    r"""Common fields shared by all entitlement list items. List items use `entitlementId` (not `id`) to preserve the original public field name on `/v1/entitlements`. The get-by-id endpoint returns the same object with a top-level `id` and `object: \"entitlement\"` instead."""
 
-
-class MeteredEntitlementDetailTypedDict(TypedDict):
-    r"""Common fields shared by all entitlement types."""
-
-    id: str
+    entitlement_id: str
     r"""Unique identifier for the entitlement."""
     customer_id: str
     r"""Unique identifier for a customer"""
@@ -41,7 +38,7 @@ class MeteredEntitlementDetailTypedDict(TypedDict):
     metadata: Dict[str, str]
     r"""Additional metadata for the entitlement."""
     config: Nullable[Dict[str, Any]]
-    r"""Always `null` for metered entitlements. Surfaced on every entitlement so clients can read `config` without first switching on `featureType`."""
+    r"""Always `null` for metered entitlements. Surfaced on every list item so clients can read `item.config` without first switching on `featureType`."""
     is_soft_limit: bool
     r"""When false (hard limit), access is blocked when balance is exhausted and overage is not charged on invoices. When true (soft limit), access continues past the grant and overage is charged at the per-unit rate."""
     balance: float
@@ -54,14 +51,13 @@ class MeteredEntitlementDetailTypedDict(TypedDict):
     r"""Start of the current usage period. Before the entitlement activates (the pre-activation \"dark window\", when the query time is earlier than `activeFrom`) this instead describes the pre-activation `[subscription start, activation)` window and may be `null` when there is no associated subscription."""
     current_period_end: Nullable[datetime]
     r"""End of the current usage period. Before the entitlement activates (the pre-activation \"dark window\", when the query time is earlier than `activeFrom`) this instead holds `activeFrom` — the end of the pre-activation `[subscription start, activation)` window."""
-    object: NotRequired[MeteredEntitlementDetailObject]
     feature_type: Literal["metered"]
 
 
-class MeteredEntitlementDetail(BaseModel):
-    r"""Common fields shared by all entitlement types."""
+class MeteredEntitlementListItem(BaseModel):
+    r"""Common fields shared by all entitlement list items. List items use `entitlementId` (not `id`) to preserve the original public field name on `/v1/entitlements`. The get-by-id endpoint returns the same object with a top-level `id` and `object: \"entitlement\"` instead."""
 
-    id: str
+    entitlement_id: Annotated[str, pydantic.Field(alias="entitlementId")]
     r"""Unique identifier for the entitlement."""
 
     customer_id: Annotated[str, pydantic.Field(alias="customerId")]
@@ -95,7 +91,7 @@ class MeteredEntitlementDetail(BaseModel):
     r"""Additional metadata for the entitlement."""
 
     config: Nullable[Dict[str, Any]]
-    r"""Always `null` for metered entitlements. Surfaced on every entitlement so clients can read `config` without first switching on `featureType`."""
+    r"""Always `null` for metered entitlements. Surfaced on every list item so clients can read `item.config` without first switching on `featureType`."""
 
     is_soft_limit: Annotated[bool, pydantic.Field(alias="isSoftLimit")]
     r"""When false (hard limit), access is blocked when balance is exhausted and overage is not charged on invoices. When true (soft limit), access continues past the grant and overage is charged at the per-unit rate."""
@@ -119,8 +115,6 @@ class MeteredEntitlementDetail(BaseModel):
     ]
     r"""End of the current usage period. Before the entitlement activates (the pre-activation \"dark window\", when the query time is earlier than `activeFrom`) this instead holds `activeFrom` — the end of the pre-activation `[subscription start, activation)` window."""
 
-    object: Optional[MeteredEntitlementDetailObject] = "entitlement"
-
     feature_type: Annotated[
         Annotated[Literal["metered"], AfterValidator(validate_const("metered"))],
         pydantic.Field(alias="featureType"),
@@ -128,39 +122,20 @@ class MeteredEntitlementDetail(BaseModel):
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["object"])
-        nullable_fields = set(
-            [
-                "subscriptionId",
-                "activeTo",
-                "config",
-                "currentPeriodStart",
-                "currentPeriodEnd",
-            ]
-        )
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
             k = f.alias or n
             val = serialized.get(k, serialized.get(n))
-            is_nullable_and_explicitly_set = (
-                k in nullable_fields
-                and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
-            )
 
             if val != UNSET_SENTINEL:
-                if (
-                    val is not None
-                    or k not in optional_fields
-                    or is_nullable_and_explicitly_set
-                ):
-                    m[k] = val
+                m[k] = val
 
         return m
 
 
 try:
-    MeteredEntitlementDetail.model_rebuild()
+    MeteredEntitlementListItem.model_rebuild()
 except NameError:
     pass
