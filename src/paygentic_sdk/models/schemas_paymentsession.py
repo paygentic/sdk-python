@@ -49,8 +49,12 @@ class SchemasPaymentSessionTypedDict(TypedDict):
     r"""Lifecycle status of the session."""
     created_at: datetime
     updated_at: datetime
+    entity_label: NotRequired[Nullable[str]]
+    r"""Display label for the entity — invoice number, payment-link reference, or subscription name. Null when no label is available."""
     merchant_payment_account_id: NotRequired[Nullable[str]]
     r"""Stripe Connect account ID (acct_*) when the session is routed to a connected account."""
+    provider_payment_ref: NotRequired[Nullable[str]]
+    r"""Provider payment intent reference — Stripe PaymentIntent ID (pi_*) or Airwallex intent ID (int_*). Null until the intent is created on first checkout load."""
     completed_at: NotRequired[Nullable[datetime]]
     r"""Timestamp the session reached terminal completion. Null until the session completes."""
 
@@ -80,10 +84,20 @@ class SchemasPaymentSession(BaseModel):
 
     updated_at: Annotated[datetime, pydantic.Field(alias="updatedAt")]
 
+    entity_label: Annotated[
+        OptionalNullable[str], pydantic.Field(alias="entityLabel")
+    ] = UNSET
+    r"""Display label for the entity — invoice number, payment-link reference, or subscription name. Null when no label is available."""
+
     merchant_payment_account_id: Annotated[
         OptionalNullable[str], pydantic.Field(alias="merchantPaymentAccountId")
     ] = UNSET
     r"""Stripe Connect account ID (acct_*) when the session is routed to a connected account."""
+
+    provider_payment_ref: Annotated[
+        OptionalNullable[str], pydantic.Field(alias="providerPaymentRef")
+    ] = UNSET
+    r"""Provider payment intent reference — Stripe PaymentIntent ID (pi_*) or Airwallex intent ID (int_*). Null until the intent is created on first checkout load."""
 
     completed_at: Annotated[
         OptionalNullable[datetime], pydantic.Field(alias="completedAt")
@@ -92,8 +106,22 @@ class SchemasPaymentSession(BaseModel):
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["merchantPaymentAccountId", "completedAt"])
-        nullable_fields = set(["merchantPaymentAccountId", "completedAt"])
+        optional_fields = set(
+            [
+                "entityLabel",
+                "merchantPaymentAccountId",
+                "providerPaymentRef",
+                "completedAt",
+            ]
+        )
+        nullable_fields = set(
+            [
+                "entityLabel",
+                "merchantPaymentAccountId",
+                "providerPaymentRef",
+                "completedAt",
+            ]
+        )
         serialized = handler(self)
         m = {}
 

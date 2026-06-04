@@ -40,7 +40,7 @@ class ListPaymentSessionsRequestTypedDict(TypedDict):
     subscription_id: NotRequired[str]
     r"""Filter to sessions linked to this subscription (its own activation session plus all of its invoices' sessions)."""
     customer_id: NotRequired[str]
-    r"""Filter to sessions linked to a payment for this customer."""
+    r"""Filter to sessions for this customer: payment-link sessions plus the activation and invoice sessions of the customer's subscriptions."""
     status: NotRequired[ListPaymentSessionsStatus]
     r"""Filter by payment session status."""
     entity_type: NotRequired[EntityType]
@@ -71,7 +71,7 @@ class ListPaymentSessionsRequest(BaseModel):
         pydantic.Field(alias="customerId"),
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = None
-    r"""Filter to sessions linked to a payment for this customer."""
+    r"""Filter to sessions for this customer: payment-link sessions plus the activation and invoice sessions of the customer's subscriptions."""
 
     status: Annotated[
         Optional[ListPaymentSessionsStatus],
