@@ -39,9 +39,9 @@ class GrantTypedDict(TypedDict):
     voided_at: NotRequired[Nullable[datetime]]
     r"""When the grant was voided. Null means the grant is active."""
     reset_max_rollover: NotRequired[float]
-    r"""Maximum balance carried over at the entitlement's reset boundary."""
+    r"""Maximum balance carried over at the entitlement's reset boundary. A value of 999999999999 represents effectively unlimited rollover (the default for direct and purchase grants). A value of 0 means any remaining balance is discarded at each reset."""
     reset_min_rollover: NotRequired[float]
-    r"""Minimum balance at the entitlement's reset boundary."""
+    r"""Minimum balance at the entitlement's reset boundary; balances below this are floored up. 0 means no floor."""
 
 
 class Grant(BaseModel):
@@ -83,12 +83,12 @@ class Grant(BaseModel):
     reset_max_rollover: Annotated[
         Optional[float], pydantic.Field(alias="resetMaxRollover")
     ] = None
-    r"""Maximum balance carried over at the entitlement's reset boundary."""
+    r"""Maximum balance carried over at the entitlement's reset boundary. A value of 999999999999 represents effectively unlimited rollover (the default for direct and purchase grants). A value of 0 means any remaining balance is discarded at each reset."""
 
     reset_min_rollover: Annotated[
         Optional[float], pydantic.Field(alias="resetMinRollover")
     ] = None
-    r"""Minimum balance at the entitlement's reset boundary."""
+    r"""Minimum balance at the entitlement's reset boundary; balances below this are floored up. 0 means no floor."""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

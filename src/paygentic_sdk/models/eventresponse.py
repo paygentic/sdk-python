@@ -22,6 +22,8 @@ class EventResponseTypedDict(TypedDict):
     namespace: NotRequired[str]
     timestamp: NotRequired[datetime]
     idempotency_key: NotRequired[str]
+    external_id: NotRequired[str]
+    r"""Optional external identifier for cross-referencing with external systems. Alphanumeric characters, hyphens, and underscores only."""
 
 
 class EventResponse(BaseModel):
@@ -44,6 +46,9 @@ class EventResponse(BaseModel):
         Optional[str], pydantic.Field(alias="idempotencyKey")
     ] = None
 
+    external_id: Annotated[Optional[str], pydantic.Field(alias="externalId")] = None
+    r"""Optional external identifier for cross-referencing with external systems. Alphanumeric characters, hyphens, and underscores only."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
@@ -56,6 +61,7 @@ class EventResponse(BaseModel):
                 "namespace",
                 "timestamp",
                 "idempotencyKey",
+                "externalId",
             ]
         )
         serialized = handler(self)

@@ -24,6 +24,8 @@ class IngestEventRequestTypedDict(TypedDict):
     r"""Event timestamp. Defaults to server time if not provided."""
     idempotency_key: NotRequired[str]
     r"""User-provided deduplication key. If not provided, a unique key is generated."""
+    external_id: NotRequired[str]
+    r"""Optional external identifier for cross-referencing with external systems. Alphanumeric characters, hyphens, and underscores only."""
 
 
 class IngestEventRequest(BaseModel):
@@ -50,9 +52,14 @@ class IngestEventRequest(BaseModel):
     ] = None
     r"""User-provided deduplication key. If not provided, a unique key is generated."""
 
+    external_id: Annotated[Optional[str], pydantic.Field(alias="externalId")] = None
+    r"""Optional external identifier for cross-referencing with external systems. Alphanumeric characters, hyphens, and underscores only."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["namespace", "timestamp", "idempotencyKey"])
+        optional_fields = set(
+            ["namespace", "timestamp", "idempotencyKey", "externalId"]
+        )
         serialized = handler(self)
         m = {}
 

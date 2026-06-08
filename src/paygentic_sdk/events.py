@@ -23,6 +23,7 @@ class Events(BaseSDK):
         namespace: Optional[str] = None,
         timestamp: Optional[datetime] = None,
         idempotency_key: Optional[str] = None,
+        external_id: Optional[str] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -39,6 +40,7 @@ class Events(BaseSDK):
         :param namespace: Organization/merchant ID. Defaults to the authenticated user's organization. Platform users can specify a different organization.
         :param timestamp: Event timestamp. Defaults to server time if not provided.
         :param idempotency_key: User-provided deduplication key. If not provided, a unique key is generated.
+        :param external_id: Optional external identifier for cross-referencing with external systems. Alphanumeric characters, hyphens, and underscores only.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -61,6 +63,7 @@ class Events(BaseSDK):
             namespace=namespace,
             timestamp=timestamp,
             idempotency_key=idempotency_key,
+            external_id=external_id,
             data=data,
         )
 
@@ -142,6 +145,7 @@ class Events(BaseSDK):
         namespace: Optional[str] = None,
         timestamp: Optional[datetime] = None,
         idempotency_key: Optional[str] = None,
+        external_id: Optional[str] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -158,6 +162,7 @@ class Events(BaseSDK):
         :param namespace: Organization/merchant ID. Defaults to the authenticated user's organization. Platform users can specify a different organization.
         :param timestamp: Event timestamp. Defaults to server time if not provided.
         :param idempotency_key: User-provided deduplication key. If not provided, a unique key is generated.
+        :param external_id: Optional external identifier for cross-referencing with external systems. Alphanumeric characters, hyphens, and underscores only.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -180,6 +185,7 @@ class Events(BaseSDK):
             namespace=namespace,
             timestamp=timestamp,
             idempotency_key=idempotency_key,
+            external_id=external_id,
             data=data,
         )
 
