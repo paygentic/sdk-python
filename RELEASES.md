@@ -221,3 +221,13 @@ Based on:
 - [python v0.2.13] .
 ### Releases
 - [PyPI v0.2.13] https://pypi.org/project/paygentic-sdk/0.2.13 - .
+
+## 2026-06-09 16:02:22
+### Changes
+Based on:
+- OpenAPI Doc  
+- Speakeasy CLI 1.761.4 (2.879.13) https://github.com/speakeasy-api/speakeasy
+### Generated
+- [python v0.2.14] .
+### Releases
+- [PyPI v0.2.14] https://pypi.org/project/paygentic-sdk/0.2.14 - .

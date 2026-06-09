@@ -1,19 +1,19 @@
 lockVersion: 2.0.0
 id: d05de326-b60d-4921-81eb-a16eab66dffd
 management:
-  docChecksum: 84d7c2924c2ac5c0308abebeed68fbf1
+  docChecksum: 0269de32a04dc0c8c3b8f380bf88cd2f
   docVersion: 0.1.0
   speakeasyVersion: 1.761.4
   generationVersion: 2.879.13
-  releaseVersion: 0.2.13
-  configChecksum: 32678306696d85e3ea67add8658898f7
+  releaseVersion: 0.2.14
+  configChecksum: e9f7d1b52111ff71fc1a20ba8c605dab
   repoURL: https://github.com/paygentic/sdk-python.git
   installationURL: https://github.com/paygentic/sdk-python.git
   published: true
 persistentEdits:
-  generation_id: 61dd9bf8-116f-42e8-ac0f-98c5e795f946
-  pristine_commit_hash: 47e399b47a88b5855943dfb198b3eec3077ef4de
-  pristine_tree_hash: 1f060ccec8de5a73ec2e379e4b7eb1ef128c3bf3
+  generation_id: ed95bd5a-dbe7-4d5d-a6c1-98d70d548def
+  pristine_commit_hash: 464670d68d99f328a32aeca1df13d5abfd664c9b
+  pristine_tree_hash: f5566f9e60a1bfd7291790f7d03f1ca17d574bdc
 features:
   python:
     additionalDependencies: 1.0.0
@@ -1717,8 +1717,8 @@ trackedFiles:
     pristine_git_object: ba50994ac7aceefe62e1571a6cbff467d9a067da
   pyproject.toml:
     id: 5d07e7d72637
-    last_write_checksum: sha1:a58897e2a7dbc5da025726de7f1ed33f3bdd1cd7
-    pristine_git_object: ff99ee6675baeaf2f349f4a68faf307465660cc1
+    last_write_checksum: sha1:25553c42e03bb20d35abd8da6620137765c1dd90
+    pristine_git_object: bf5c25e7fa28004691b129e95d225546aed3c0f4
   scripts/prepare_readme.py:
     id: e0c5957a6035
     last_write_checksum: sha1:e2ebd355f72567204499ca62ee72728d9c3dfd95
@@ -1745,8 +1745,8 @@ trackedFiles:
     pristine_git_object: 6dbd4dcba3a5bac1c92beb0f5db31ef3d2944dea
   src/paygentic_sdk/_version.py:
     id: 52c8c5a320dc
-    last_write_checksum: sha1:883fd1c8615f887aaaa105bb5a69945bc2c9830c
-    pristine_git_object: 166cbd6215491976a92c8eda44624807e677e532
+    last_write_checksum: sha1:1e79a6b5e16b30d9a8e0598593368ba6c8bc53f5
+    pristine_git_object: 4ead5db6ae4b831c9b29381f9644d6e5b237a181
   src/paygentic_sdk/basesdk.py:
     id: a086dd8cd1b3
     last_write_checksum: sha1:275b3ea45e9bf52519d3c7f179816ab1a0e823a2
@@ -4379,4 +4379,3 @@ generatedTests:
   createCustomerPaymentMethod: "2026-05-08T17:36:55Z"
   updateSubscription: "2026-05-23T07:45:23Z"
   listEntitlements-meteredEntitlement: "2026-06-03T20:54:47Z"
-releaseNotes: "## Python SDK Changes:\n* `paygentic.events.ingest()`: \n  *  `request.external_id` **Added**\n  *  `response.external_id` **Added**\n"
