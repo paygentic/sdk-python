@@ -1,0 +1,11 @@
+# ListMerchantIntegrationsRequest
+
+
+## Fields
+
+| Field                                                                                    | Type                                                                                     | Required                                                                                 | Description                                                                              |
+| ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| `merchant_id`                                                                            | *Optional[str]*                                                                          | :heavy_minus_sign:                                                                       | Restrict results to a specific merchant. All active filters AND together.                |
+| `provider`                                                                               | [Optional[models.MerchantIntegrationProvider]](../models/merchantintegrationprovider.md) | :heavy_minus_sign:                                                                       | Filter by provider (e.g. `salesforce`).                                                  |
+| `limit`                                                                                  | *Optional[int]*                                                                          | :heavy_minus_sign:                                                                       | N/A                                                                                      |
+| `offset`                                                                                 | *Optional[int]*                                                                          | :heavy_minus_sign:                                                                       | N/A                                                                                      |

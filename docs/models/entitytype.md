@@ -1,18 +1,15 @@
 # EntityType
 
-Filter by the kind of entity the session pays for.
+The type of Paygentic entity this external reference points at
 
 ## Example Usage
 
 ```python
 from paygentic_sdk.models import EntityType
-value: EntityType = "invoice"
+value: EntityType = "item"
 ```
 
 
 ## Values
 
-- `"invoice"`
-- `"subscription"`
-- `"payment"`
-- `"topup"`
+- `"item"`

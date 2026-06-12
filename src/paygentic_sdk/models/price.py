@@ -44,6 +44,8 @@ PricePaymentTerm = Union[
 class PriceTypedDict(TypedDict):
     id: str
     r"""Unique identifier for a price"""
+    merchant_id: str
+    r"""Unique identifier for an organization"""
     created_at: datetime
     invoice_display_name: str
     model: PriceModel
@@ -70,6 +72,9 @@ class PriceTypedDict(TypedDict):
 class Price(BaseModel):
     id: str
     r"""Unique identifier for a price"""
+
+    merchant_id: Annotated[str, pydantic.Field(alias="merchantId")]
+    r"""Unique identifier for an organization"""
 
     created_at: Annotated[datetime, pydantic.Field(alias="createdAt")]
 

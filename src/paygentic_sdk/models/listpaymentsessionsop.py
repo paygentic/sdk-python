@@ -25,7 +25,7 @@ ListPaymentSessionsStatus = Literal[
 r"""Filter by payment session status."""
 
 
-EntityType = Literal[
+ListPaymentSessionsEntityType = Literal[
     "invoice",
     "subscription",
     "payment",
@@ -43,7 +43,7 @@ class ListPaymentSessionsRequestTypedDict(TypedDict):
     r"""Filter to sessions for this customer: payment-link sessions plus the activation and invoice sessions of the customer's subscriptions."""
     status: NotRequired[ListPaymentSessionsStatus]
     r"""Filter by payment session status."""
-    entity_type: NotRequired[EntityType]
+    entity_type: NotRequired[ListPaymentSessionsEntityType]
     r"""Filter by the kind of entity the session pays for."""
     limit: NotRequired[int]
     r"""Number of sessions to return."""
@@ -80,7 +80,7 @@ class ListPaymentSessionsRequest(BaseModel):
     r"""Filter by payment session status."""
 
     entity_type: Annotated[
-        Optional[EntityType],
+        Optional[ListPaymentSessionsEntityType],
         pydantic.Field(alias="entityType"),
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = None

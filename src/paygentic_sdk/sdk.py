@@ -20,9 +20,12 @@ if TYPE_CHECKING:
     from paygentic_sdk.customers import Customers
     from paygentic_sdk.entitlements import Entitlements
     from paygentic_sdk.events import Events
+    from paygentic_sdk.externalreferences import ExternalReferences
     from paygentic_sdk.features import Features
     from paygentic_sdk.fees import Fees
     from paygentic_sdk.invoices_v2 import InvoicesV2
+    from paygentic_sdk.items import Items
+    from paygentic_sdk.merchantintegrations import MerchantIntegrations
     from paygentic_sdk.payment_sessions import PaymentSessions
     from paygentic_sdk.payments import Payments
     from paygentic_sdk.plans import Plans
@@ -78,6 +81,12 @@ class Paygentic(BaseSDK):
     r"""Per-customer profitability summaries"""
     test_clocks: "TestClocks"
     r"""Test clocks provide programmable time control to simulate subscription and billing scenarios during testing."""
+    external_references: "ExternalReferences"
+    r"""An `ExternalReference` links a Paygentic entity (e.g. an `Item`) to a record in an external system such as Salesforce or NetSuite. Multiple external records may map to the same Paygentic entity, but each external id is the *primary* reference of at most one entity per merchant."""
+    items: "Items"
+    r"""An `Item` is the canonical \"thing you sell\" that external-system mappings point at. It is fully decoupled from the billing `Product` and holds no pricing/plan/metering, and it is CRM/ERP agnostic — which providers map to it lives entirely in its `ExternalReference` rows."""
+    merchant_integrations: "MerchantIntegrations"
+    r"""A `MerchantIntegration` records a merchant's connection to an external provider. One connection per `(merchant, provider)` — re-connecting upserts in place."""
     _sub_sdk_map = {
         "billable_metrics": ("paygentic_sdk.billablemetrics", "BillableMetrics"),
         "customers": ("paygentic_sdk.customers", "Customers"),
@@ -98,6 +107,15 @@ class Paygentic(BaseSDK):
         "revenue": ("paygentic_sdk.revenue", "Revenue"),
         "profitability": ("paygentic_sdk.profitability", "Profitability"),
         "test_clocks": ("paygentic_sdk.test_clocks", "TestClocks"),
+        "external_references": (
+            "paygentic_sdk.externalreferences",
+            "ExternalReferences",
+        ),
+        "items": ("paygentic_sdk.items", "Items"),
+        "merchant_integrations": (
+            "paygentic_sdk.merchantintegrations",
+            "MerchantIntegrations",
+        ),
     }
 
     def __init__(

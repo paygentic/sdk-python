@@ -277,6 +277,8 @@ class SubscriptionCustomer(BaseModel):
 class SubscriptionTypedDict(TypedDict):
     id: str
     object: SubscriptionObject
+    merchant_id: str
+    r"""Unique identifier for an organization"""
     created_at: datetime
     customer_id: str
     name: str
@@ -324,6 +326,9 @@ class Subscription(BaseModel):
     id: str
 
     object: SubscriptionObject
+
+    merchant_id: Annotated[str, pydantic.Field(alias="merchantId")]
+    r"""Unique identifier for an organization"""
 
     created_at: Annotated[datetime, pydantic.Field(alias="createdAt")]
 

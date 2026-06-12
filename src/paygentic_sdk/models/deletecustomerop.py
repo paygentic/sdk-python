@@ -34,12 +34,12 @@ DeleteCustomerType = Union[
 ]
 
 
-class ItemTypedDict(TypedDict):
+class DeleteCustomerItemTypedDict(TypedDict):
     id: NotRequired[str]
     status: NotRequired[str]
 
 
-class Item(BaseModel):
+class DeleteCustomerItem(BaseModel):
     id: Optional[str] = None
 
     status: Optional[str] = None
@@ -64,7 +64,7 @@ class Item(BaseModel):
 class DeleteCustomerBlockerTypedDict(TypedDict):
     type: DeleteCustomerType
     count: int
-    items: List[ItemTypedDict]
+    items: List[DeleteCustomerItemTypedDict]
 
 
 class DeleteCustomerBlocker(BaseModel):
@@ -72,7 +72,7 @@ class DeleteCustomerBlocker(BaseModel):
 
     count: int
 
-    items: List[Item]
+    items: List[DeleteCustomerItem]
 
 
 class DeleteCustomerDetailsTypedDict(TypedDict):

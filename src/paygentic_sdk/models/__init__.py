@@ -118,6 +118,10 @@ if TYPE_CHECKING:
         CreateEntitlementGrantRequest,
         CreateEntitlementGrantRequestTypedDict,
     )
+    from .createexternalreferenceop import (
+        CreateExternalReferenceRequest,
+        CreateExternalReferenceRequestTypedDict,
+    )
     from .createfeatureop import (
         CreateFeatureRequest,
         CreateFeatureRequestTypedDict,
@@ -125,6 +129,7 @@ if TYPE_CHECKING:
     )
     from .createfeeop import CreateFeeRequest, CreateFeeRequestTypedDict
     from .creategrantrequest import CreateGrantRequest, CreateGrantRequestTypedDict
+    from .createitemop import CreateItemRequest, CreateItemRequestTypedDict
     from .createlineitemop import CreateLineItemRequest, CreateLineItemRequestTypedDict
     from .createmanuallineitemrequest import (
         CreateManualLineItemRequest,
@@ -198,11 +203,15 @@ if TYPE_CHECKING:
         DeleteCustomerDetails,
         DeleteCustomerDetailsTypedDict,
         DeleteCustomerError,
+        DeleteCustomerItem,
+        DeleteCustomerItemTypedDict,
         DeleteCustomerRequest,
         DeleteCustomerRequestTypedDict,
         DeleteCustomerType,
-        Item,
-        ItemTypedDict,
+    )
+    from .deleteexternalreferenceop import (
+        DeleteExternalReferenceRequest,
+        DeleteExternalReferenceRequestTypedDict,
     )
     from .deletefeatureop import DeleteFeatureRequest, DeleteFeatureRequestTypedDict
     from .deletefeeop import (
@@ -213,6 +222,7 @@ if TYPE_CHECKING:
         DeleteFeeRequest,
         DeleteFeeRequestTypedDict,
     )
+    from .deleteitemop import DeleteItemRequest, DeleteItemRequestTypedDict
     from .deletepriceop import DeletePriceRequest, DeletePriceRequestTypedDict
     from .deletesourceruleop import (
         DeleteSourceRuleRequest,
@@ -221,6 +231,10 @@ if TYPE_CHECKING:
     from .deletetestclockop import (
         DeleteTestClockRequest,
         DeleteTestClockRequestTypedDict,
+    )
+    from .disconnectmerchantintegrationop import (
+        DisconnectMerchantIntegrationRequest,
+        DisconnectMerchantIntegrationRequestTypedDict,
     )
     from .entitlementdetail import (
         EntitlementDetail,
@@ -245,10 +259,16 @@ if TYPE_CHECKING:
         UsagePeriod,
         UsagePeriodTypedDict,
     )
+    from .entitytype import EntityType
     from .eventresponse import (
         EventResponse,
         EventResponseObject,
         EventResponseTypedDict,
+    )
+    from .externalreference import (
+        ExternalReference,
+        ExternalReferenceObject,
+        ExternalReferenceTypedDict,
     )
     from .feature import Feature, FeatureObject, FeatureType, FeatureTypedDict
     from .fee import Fee, FeeObject, FeeTypedDict
@@ -294,6 +314,10 @@ if TYPE_CHECKING:
         GetEntitlementGrantRequestTypedDict,
     )
     from .getentitlementop import GetEntitlementRequest, GetEntitlementRequestTypedDict
+    from .getexternalreferenceop import (
+        GetExternalReferenceRequest,
+        GetExternalReferenceRequestTypedDict,
+    )
     from .getfeatureop import GetFeatureRequest, GetFeatureRequestTypedDict
     from .getfeeop import GetFeeRequest, GetFeeRequestTypedDict
     from .getfeepriceop import GetFeePriceRequest, GetFeePriceRequestTypedDict
@@ -302,6 +326,11 @@ if TYPE_CHECKING:
         GetInvoiceLineItemsRequestTypedDict,
     )
     from .getinvoiceop import GetInvoiceRequest, GetInvoiceRequestTypedDict
+    from .getitemop import GetItemRequest, GetItemRequestTypedDict
+    from .getmerchantintegrationop import (
+        GetMerchantIntegrationRequest,
+        GetMerchantIntegrationRequestTypedDict,
+    )
     from .getpaymentop import GetPaymentRequest, GetPaymentRequestTypedDict
     from .getplanop import GetPlanRequest, GetPlanRequestTypedDict
     from .getpriceop import GetPriceRequest, GetPriceRequestTypedDict
@@ -358,6 +387,7 @@ if TYPE_CHECKING:
         IssueEntitlementRequest,
         IssueEntitlementRequestTypedDict,
     )
+    from .item import Item, ItemObject, ItemTypedDict
     from .lineitem import (
         LineItem,
         LineItemPaymentTerm,
@@ -429,6 +459,12 @@ if TYPE_CHECKING:
         ListEntitlementsResponse,
         ListEntitlementsResponseTypedDict,
     )
+    from .listexternalreferencesop import (
+        ListExternalReferencesRequest,
+        ListExternalReferencesRequestTypedDict,
+        ListExternalReferencesResponse,
+        ListExternalReferencesResponseTypedDict,
+    )
     from .listfeaturesop import (
         ListFeaturesObject,
         ListFeaturesPagination,
@@ -456,13 +492,25 @@ if TYPE_CHECKING:
         ListInvoicesStatus,
         NextActionAt,
     )
+    from .listitemsop import (
+        ListItemsRequest,
+        ListItemsRequestTypedDict,
+        ListItemsResponse,
+        ListItemsResponseTypedDict,
+    )
     from .listlineitemsop import (
         ListLineItemsRequest,
         ListLineItemsRequestTypedDict,
         ListLineItemsStatus,
     )
+    from .listmerchantintegrationsop import (
+        ListMerchantIntegrationsRequest,
+        ListMerchantIntegrationsRequestTypedDict,
+        ListMerchantIntegrationsResponse,
+        ListMerchantIntegrationsResponseTypedDict,
+    )
     from .listpaymentsessionsop import (
-        EntityType,
+        ListPaymentSessionsEntityType,
         ListPaymentSessionsObject,
         ListPaymentSessionsRequest,
         ListPaymentSessionsRequestTypedDict,
@@ -535,6 +583,13 @@ if TYPE_CHECKING:
         ListTestClocksResponse,
         ListTestClocksResponseTypedDict,
     )
+    from .merchantintegration import (
+        MerchantIntegration,
+        MerchantIntegrationObject,
+        MerchantIntegrationTypedDict,
+    )
+    from .merchantintegrationprovider import MerchantIntegrationProvider
+    from .merchantintegrationstatus import MerchantIntegrationStatus
     from .meteredentitlementdetail import (
         MeteredEntitlementDetail,
         MeteredEntitlementDetailObject,
@@ -744,6 +799,12 @@ if TYPE_CHECKING:
         UpdateCustomerRequestBodyTypedDict,
         UpdateCustomerRequestTypedDict,
     )
+    from .updateexternalreferenceop import (
+        UpdateExternalReferenceRequest,
+        UpdateExternalReferenceRequestBody,
+        UpdateExternalReferenceRequestBodyTypedDict,
+        UpdateExternalReferenceRequestTypedDict,
+    )
     from .updatefeatureop import (
         UpdateFeatureRequest,
         UpdateFeatureRequestBody,
@@ -756,6 +817,12 @@ if TYPE_CHECKING:
         UpdateFeeRequestBody,
         UpdateFeeRequestBodyTypedDict,
         UpdateFeeRequestTypedDict,
+    )
+    from .updateitemop import (
+        UpdateItemRequest,
+        UpdateItemRequestBody,
+        UpdateItemRequestBodyTypedDict,
+        UpdateItemRequestTypedDict,
     )
     from .updateplanop import (
         UpdatePlanBillingCadence,
@@ -805,6 +872,10 @@ if TYPE_CHECKING:
         UpdateUserRequestBodyTypedDict,
         UpdateUserRequestTypedDict,
         UpdateUserType,
+    )
+    from .upsertmerchantintegrationop import (
+        UpsertMerchantIntegrationRequest,
+        UpsertMerchantIntegrationRequestTypedDict,
     )
     from .usageresponse import (
         GroupedValue,
@@ -908,6 +979,8 @@ __all__ = [
     "CreateCustomerResponseTypedDict",
     "CreateEntitlementGrantRequest",
     "CreateEntitlementGrantRequestTypedDict",
+    "CreateExternalReferenceRequest",
+    "CreateExternalReferenceRequestTypedDict",
     "CreateFeatureRequest",
     "CreateFeatureRequestTypedDict",
     "CreateFeatureType",
@@ -915,6 +988,8 @@ __all__ = [
     "CreateFeeRequestTypedDict",
     "CreateGrantRequest",
     "CreateGrantRequestTypedDict",
+    "CreateItemRequest",
+    "CreateItemRequestTypedDict",
     "CreateLineItemRequest",
     "CreateLineItemRequestTypedDict",
     "CreateManualLineItemRequest",
@@ -963,9 +1038,13 @@ __all__ = [
     "DeleteCustomerDetails",
     "DeleteCustomerDetailsTypedDict",
     "DeleteCustomerError",
+    "DeleteCustomerItem",
+    "DeleteCustomerItemTypedDict",
     "DeleteCustomerRequest",
     "DeleteCustomerRequestTypedDict",
     "DeleteCustomerType",
+    "DeleteExternalReferenceRequest",
+    "DeleteExternalReferenceRequestTypedDict",
     "DeleteFeatureRequest",
     "DeleteFeatureRequestTypedDict",
     "DeleteFeeBlocker",
@@ -974,12 +1053,16 @@ __all__ = [
     "DeleteFeeDetailsTypedDict",
     "DeleteFeeRequest",
     "DeleteFeeRequestTypedDict",
+    "DeleteItemRequest",
+    "DeleteItemRequestTypedDict",
     "DeletePriceRequest",
     "DeletePriceRequestTypedDict",
     "DeleteSourceRuleRequest",
     "DeleteSourceRuleRequestTypedDict",
     "DeleteTestClockRequest",
     "DeleteTestClockRequestTypedDict",
+    "DisconnectMerchantIntegrationRequest",
+    "DisconnectMerchantIntegrationRequestTypedDict",
     "EntitlementDetail",
     "EntitlementDetailTypedDict",
     "EntitlementListItem",
@@ -1001,6 +1084,9 @@ __all__ = [
     "EventResponseObject",
     "EventResponseTypedDict",
     "EventType",
+    "ExternalReference",
+    "ExternalReferenceObject",
+    "ExternalReferenceTypedDict",
     "Failed",
     "FailedTypedDict",
     "Feature",
@@ -1039,6 +1125,8 @@ __all__ = [
     "GetEntitlementGrantRequestTypedDict",
     "GetEntitlementRequest",
     "GetEntitlementRequestTypedDict",
+    "GetExternalReferenceRequest",
+    "GetExternalReferenceRequestTypedDict",
     "GetFeatureRequest",
     "GetFeatureRequestTypedDict",
     "GetFeePriceRequest",
@@ -1049,6 +1137,10 @@ __all__ = [
     "GetInvoiceLineItemsRequestTypedDict",
     "GetInvoiceRequest",
     "GetInvoiceRequestTypedDict",
+    "GetItemRequest",
+    "GetItemRequestTypedDict",
+    "GetMerchantIntegrationRequest",
+    "GetMerchantIntegrationRequestTypedDict",
     "GetPaymentRequest",
     "GetPaymentRequestTypedDict",
     "GetPlanRequest",
@@ -1104,6 +1196,7 @@ __all__ = [
     "IssueEntitlementRequest",
     "IssueEntitlementRequestTypedDict",
     "Item",
+    "ItemObject",
     "ItemTypedDict",
     "LineItem",
     "LineItemPaymentTerm",
@@ -1159,6 +1252,10 @@ __all__ = [
     "ListEntitlementsRequestTypedDict",
     "ListEntitlementsResponse",
     "ListEntitlementsResponseTypedDict",
+    "ListExternalReferencesRequest",
+    "ListExternalReferencesRequestTypedDict",
+    "ListExternalReferencesResponse",
+    "ListExternalReferencesResponseTypedDict",
     "ListFeaturesObject",
     "ListFeaturesPagination",
     "ListFeaturesPaginationTypedDict",
@@ -1179,9 +1276,18 @@ __all__ = [
     "ListInvoicesResponse",
     "ListInvoicesResponseTypedDict",
     "ListInvoicesStatus",
+    "ListItemsRequest",
+    "ListItemsRequestTypedDict",
+    "ListItemsResponse",
+    "ListItemsResponseTypedDict",
     "ListLineItemsRequest",
     "ListLineItemsRequestTypedDict",
     "ListLineItemsStatus",
+    "ListMerchantIntegrationsRequest",
+    "ListMerchantIntegrationsRequestTypedDict",
+    "ListMerchantIntegrationsResponse",
+    "ListMerchantIntegrationsResponseTypedDict",
+    "ListPaymentSessionsEntityType",
     "ListPaymentSessionsObject",
     "ListPaymentSessionsRequest",
     "ListPaymentSessionsRequestTypedDict",
@@ -1235,6 +1341,11 @@ __all__ = [
     "ListTestClocksResponse",
     "ListTestClocksResponseTypedDict",
     "Merchant",
+    "MerchantIntegration",
+    "MerchantIntegrationObject",
+    "MerchantIntegrationProvider",
+    "MerchantIntegrationStatus",
+    "MerchantIntegrationTypedDict",
     "MerchantTypedDict",
     "Metadata",
     "MetadataTypedDict",
@@ -1422,6 +1533,10 @@ __all__ = [
     "UpdateCustomerRequestBody",
     "UpdateCustomerRequestBodyTypedDict",
     "UpdateCustomerRequestTypedDict",
+    "UpdateExternalReferenceRequest",
+    "UpdateExternalReferenceRequestBody",
+    "UpdateExternalReferenceRequestBodyTypedDict",
+    "UpdateExternalReferenceRequestTypedDict",
     "UpdateFeatureRequest",
     "UpdateFeatureRequestBody",
     "UpdateFeatureRequestBodyTypedDict",
@@ -1431,6 +1546,10 @@ __all__ = [
     "UpdateFeeRequestBody",
     "UpdateFeeRequestBodyTypedDict",
     "UpdateFeeRequestTypedDict",
+    "UpdateItemRequest",
+    "UpdateItemRequestBody",
+    "UpdateItemRequestBodyTypedDict",
+    "UpdateItemRequestTypedDict",
     "UpdatePlanBillingCadence",
     "UpdatePlanBillingInterval",
     "UpdatePlanRequest",
@@ -1467,6 +1586,8 @@ __all__ = [
     "UpdateUserRequestBodyTypedDict",
     "UpdateUserRequestTypedDict",
     "UpdateUserType",
+    "UpsertMerchantIntegrationRequest",
+    "UpsertMerchantIntegrationRequestTypedDict",
     "UsagePeriod",
     "UsagePeriodTypedDict",
     "UsageResponse",
@@ -1578,6 +1699,8 @@ _dynamic_imports: dict[str, str] = {
     "CreateCustomerPaymentMethodRequestTypedDict": ".createcustomerpaymentmethodop",
     "CreateEntitlementGrantRequest": ".createentitlementgrantop",
     "CreateEntitlementGrantRequestTypedDict": ".createentitlementgrantop",
+    "CreateExternalReferenceRequest": ".createexternalreferenceop",
+    "CreateExternalReferenceRequestTypedDict": ".createexternalreferenceop",
     "CreateFeatureRequest": ".createfeatureop",
     "CreateFeatureRequestTypedDict": ".createfeatureop",
     "CreateFeatureType": ".createfeatureop",
@@ -1585,6 +1708,8 @@ _dynamic_imports: dict[str, str] = {
     "CreateFeeRequestTypedDict": ".createfeeop",
     "CreateGrantRequest": ".creategrantrequest",
     "CreateGrantRequestTypedDict": ".creategrantrequest",
+    "CreateItemRequest": ".createitemop",
+    "CreateItemRequestTypedDict": ".createitemop",
     "CreateLineItemRequest": ".createlineitemop",
     "CreateLineItemRequestTypedDict": ".createlineitemop",
     "CreateManualLineItemRequest": ".createmanuallineitemrequest",
@@ -1640,11 +1765,13 @@ _dynamic_imports: dict[str, str] = {
     "DeleteCustomerDetails": ".deletecustomerop",
     "DeleteCustomerDetailsTypedDict": ".deletecustomerop",
     "DeleteCustomerError": ".deletecustomerop",
+    "DeleteCustomerItem": ".deletecustomerop",
+    "DeleteCustomerItemTypedDict": ".deletecustomerop",
     "DeleteCustomerRequest": ".deletecustomerop",
     "DeleteCustomerRequestTypedDict": ".deletecustomerop",
     "DeleteCustomerType": ".deletecustomerop",
-    "Item": ".deletecustomerop",
-    "ItemTypedDict": ".deletecustomerop",
+    "DeleteExternalReferenceRequest": ".deleteexternalreferenceop",
+    "DeleteExternalReferenceRequestTypedDict": ".deleteexternalreferenceop",
     "DeleteFeatureRequest": ".deletefeatureop",
     "DeleteFeatureRequestTypedDict": ".deletefeatureop",
     "DeleteFeeBlocker": ".deletefeeop",
@@ -1653,12 +1780,16 @@ _dynamic_imports: dict[str, str] = {
     "DeleteFeeDetailsTypedDict": ".deletefeeop",
     "DeleteFeeRequest": ".deletefeeop",
     "DeleteFeeRequestTypedDict": ".deletefeeop",
+    "DeleteItemRequest": ".deleteitemop",
+    "DeleteItemRequestTypedDict": ".deleteitemop",
     "DeletePriceRequest": ".deletepriceop",
     "DeletePriceRequestTypedDict": ".deletepriceop",
     "DeleteSourceRuleRequest": ".deletesourceruleop",
     "DeleteSourceRuleRequestTypedDict": ".deletesourceruleop",
     "DeleteTestClockRequest": ".deletetestclockop",
     "DeleteTestClockRequestTypedDict": ".deletetestclockop",
+    "DisconnectMerchantIntegrationRequest": ".disconnectmerchantintegrationop",
+    "DisconnectMerchantIntegrationRequestTypedDict": ".disconnectmerchantintegrationop",
     "EntitlementDetail": ".entitlementdetail",
     "EntitlementDetailTypedDict": ".entitlementdetail",
     "UnknownEntitlementDetail": ".entitlementdetail",
@@ -1676,9 +1807,13 @@ _dynamic_imports: dict[str, str] = {
     "EntitlementTemplateTypedDict": ".entitlementtemplate",
     "UsagePeriod": ".entitlementtemplate",
     "UsagePeriodTypedDict": ".entitlementtemplate",
+    "EntityType": ".entitytype",
     "EventResponse": ".eventresponse",
     "EventResponseObject": ".eventresponse",
     "EventResponseTypedDict": ".eventresponse",
+    "ExternalReference": ".externalreference",
+    "ExternalReferenceObject": ".externalreference",
+    "ExternalReferenceTypedDict": ".externalreference",
     "Feature": ".feature",
     "FeatureObject": ".feature",
     "FeatureType": ".feature",
@@ -1717,6 +1852,8 @@ _dynamic_imports: dict[str, str] = {
     "GetEntitlementGrantRequestTypedDict": ".getentitlementgrantop",
     "GetEntitlementRequest": ".getentitlementop",
     "GetEntitlementRequestTypedDict": ".getentitlementop",
+    "GetExternalReferenceRequest": ".getexternalreferenceop",
+    "GetExternalReferenceRequestTypedDict": ".getexternalreferenceop",
     "GetFeatureRequest": ".getfeatureop",
     "GetFeatureRequestTypedDict": ".getfeatureop",
     "GetFeeRequest": ".getfeeop",
@@ -1727,6 +1864,10 @@ _dynamic_imports: dict[str, str] = {
     "GetInvoiceLineItemsRequestTypedDict": ".getinvoicelineitemsop",
     "GetInvoiceRequest": ".getinvoiceop",
     "GetInvoiceRequestTypedDict": ".getinvoiceop",
+    "GetItemRequest": ".getitemop",
+    "GetItemRequestTypedDict": ".getitemop",
+    "GetMerchantIntegrationRequest": ".getmerchantintegrationop",
+    "GetMerchantIntegrationRequestTypedDict": ".getmerchantintegrationop",
     "GetPaymentRequest": ".getpaymentop",
     "GetPaymentRequestTypedDict": ".getpaymentop",
     "GetPlanRequest": ".getplanop",
@@ -1781,6 +1922,9 @@ _dynamic_imports: dict[str, str] = {
     "InvoiceSummaryTypedDict": ".invoicesummary",
     "IssueEntitlementRequest": ".issueentitlementrequest",
     "IssueEntitlementRequestTypedDict": ".issueentitlementrequest",
+    "Item": ".item",
+    "ItemObject": ".item",
+    "ItemTypedDict": ".item",
     "LineItem": ".lineitem",
     "LineItemPaymentTerm": ".lineitem",
     "LineItemStatus": ".lineitem",
@@ -1833,6 +1977,10 @@ _dynamic_imports: dict[str, str] = {
     "ListEntitlementsRequestTypedDict": ".listentitlementsop",
     "ListEntitlementsResponse": ".listentitlementsop",
     "ListEntitlementsResponseTypedDict": ".listentitlementsop",
+    "ListExternalReferencesRequest": ".listexternalreferencesop",
+    "ListExternalReferencesRequestTypedDict": ".listexternalreferencesop",
+    "ListExternalReferencesResponse": ".listexternalreferencesop",
+    "ListExternalReferencesResponseTypedDict": ".listexternalreferencesop",
     "ListFeaturesObject": ".listfeaturesop",
     "ListFeaturesPagination": ".listfeaturesop",
     "ListFeaturesPaginationTypedDict": ".listfeaturesop",
@@ -1854,10 +2002,18 @@ _dynamic_imports: dict[str, str] = {
     "ListInvoicesResponseTypedDict": ".listinvoicesop",
     "ListInvoicesStatus": ".listinvoicesop",
     "NextActionAt": ".listinvoicesop",
+    "ListItemsRequest": ".listitemsop",
+    "ListItemsRequestTypedDict": ".listitemsop",
+    "ListItemsResponse": ".listitemsop",
+    "ListItemsResponseTypedDict": ".listitemsop",
     "ListLineItemsRequest": ".listlineitemsop",
     "ListLineItemsRequestTypedDict": ".listlineitemsop",
     "ListLineItemsStatus": ".listlineitemsop",
-    "EntityType": ".listpaymentsessionsop",
+    "ListMerchantIntegrationsRequest": ".listmerchantintegrationsop",
+    "ListMerchantIntegrationsRequestTypedDict": ".listmerchantintegrationsop",
+    "ListMerchantIntegrationsResponse": ".listmerchantintegrationsop",
+    "ListMerchantIntegrationsResponseTypedDict": ".listmerchantintegrationsop",
+    "ListPaymentSessionsEntityType": ".listpaymentsessionsop",
     "ListPaymentSessionsObject": ".listpaymentsessionsop",
     "ListPaymentSessionsRequest": ".listpaymentsessionsop",
     "ListPaymentSessionsRequestTypedDict": ".listpaymentsessionsop",
@@ -1911,6 +2067,11 @@ _dynamic_imports: dict[str, str] = {
     "ListTestClocksRequestTypedDict": ".listtestclocksop",
     "ListTestClocksResponse": ".listtestclocksop",
     "ListTestClocksResponseTypedDict": ".listtestclocksop",
+    "MerchantIntegration": ".merchantintegration",
+    "MerchantIntegrationObject": ".merchantintegration",
+    "MerchantIntegrationTypedDict": ".merchantintegration",
+    "MerchantIntegrationProvider": ".merchantintegrationprovider",
+    "MerchantIntegrationStatus": ".merchantintegrationstatus",
     "MeteredEntitlementDetail": ".meteredentitlementdetail",
     "MeteredEntitlementDetailObject": ".meteredentitlementdetail",
     "MeteredEntitlementDetailTypedDict": ".meteredentitlementdetail",
@@ -2083,6 +2244,10 @@ _dynamic_imports: dict[str, str] = {
     "UpdateCustomerRequestBody": ".updatecustomerop",
     "UpdateCustomerRequestBodyTypedDict": ".updatecustomerop",
     "UpdateCustomerRequestTypedDict": ".updatecustomerop",
+    "UpdateExternalReferenceRequest": ".updateexternalreferenceop",
+    "UpdateExternalReferenceRequestBody": ".updateexternalreferenceop",
+    "UpdateExternalReferenceRequestBodyTypedDict": ".updateexternalreferenceop",
+    "UpdateExternalReferenceRequestTypedDict": ".updateexternalreferenceop",
     "UpdateFeatureRequest": ".updatefeatureop",
     "UpdateFeatureRequestBody": ".updatefeatureop",
     "UpdateFeatureRequestBodyTypedDict": ".updatefeatureop",
@@ -2092,6 +2257,10 @@ _dynamic_imports: dict[str, str] = {
     "UpdateFeeRequestBody": ".updatefeeop",
     "UpdateFeeRequestBodyTypedDict": ".updatefeeop",
     "UpdateFeeRequestTypedDict": ".updatefeeop",
+    "UpdateItemRequest": ".updateitemop",
+    "UpdateItemRequestBody": ".updateitemop",
+    "UpdateItemRequestBodyTypedDict": ".updateitemop",
+    "UpdateItemRequestTypedDict": ".updateitemop",
     "UpdatePlanBillingCadence": ".updateplanop",
     "UpdatePlanBillingInterval": ".updateplanop",
     "UpdatePlanRequest": ".updateplanop",
@@ -2128,6 +2297,8 @@ _dynamic_imports: dict[str, str] = {
     "UpdateUserRequestBodyTypedDict": ".updateuserop",
     "UpdateUserRequestTypedDict": ".updateuserop",
     "UpdateUserType": ".updateuserop",
+    "UpsertMerchantIntegrationRequest": ".upsertmerchantintegrationop",
+    "UpsertMerchantIntegrationRequestTypedDict": ".upsertmerchantintegrationop",
     "GroupedValue": ".usageresponse",
     "GroupedValueTypedDict": ".usageresponse",
     "UsageResponse": ".usageresponse",
