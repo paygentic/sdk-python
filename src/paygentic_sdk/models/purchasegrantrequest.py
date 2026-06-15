@@ -19,7 +19,7 @@ class PurchaseGrantRequestTypedDict(TypedDict):
     amount: float
     r"""The number of credits to grant upon payment completion."""
     price: str
-    r"""The price in decimal format (e.g., '5.00' for $5.00 USD). Must be at least $0.50."""
+    r"""The price in decimal format (e.g., '5.00' for $5.00 USD). A non-negative decimal with at most 9 fractional digits (nanodollar precision). Must be at least $0.50 and must not exceed 4503599.62 (the maximum supported grant purchase amount)."""
     idempotency_key: str
     r"""Caller-provided deduplication key. Retrying with the same key returns the existing invoice."""
     effective_at: NotRequired[datetime]
@@ -43,7 +43,7 @@ class PurchaseGrantRequest(BaseModel):
     r"""The number of credits to grant upon payment completion."""
 
     price: str
-    r"""The price in decimal format (e.g., '5.00' for $5.00 USD). Must be at least $0.50."""
+    r"""The price in decimal format (e.g., '5.00' for $5.00 USD). A non-negative decimal with at most 9 fractional digits (nanodollar precision). Must be at least $0.50 and must not exceed 4503599.62 (the maximum supported grant purchase amount)."""
 
     idempotency_key: Annotated[str, pydantic.Field(alias="idempotencyKey")]
     r"""Caller-provided deduplication key. Retrying with the same key returns the existing invoice."""

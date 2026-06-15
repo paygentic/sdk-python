@@ -33,6 +33,7 @@ if TYPE_CHECKING:
     from paygentic_sdk.products import Products
     from paygentic_sdk.profitability import Profitability
     from paygentic_sdk.revenue import Revenue
+    from paygentic_sdk.salesforce import Salesforce
     from paygentic_sdk.sources import Sources
     from paygentic_sdk.subscriptions import Subscriptions
     from paygentic_sdk.test_clocks import TestClocks
@@ -85,6 +86,7 @@ class Paygentic(BaseSDK):
     r"""An `ExternalReference` links a Paygentic entity (e.g. an `Item`) to a record in an external system such as Salesforce or NetSuite. Multiple external records may map to the same Paygentic entity, but each external id is the *primary* reference of at most one entity per merchant."""
     items: "Items"
     r"""An `Item` is the canonical \"thing you sell\" that external-system mappings point at. It is fully decoupled from the billing `Product` and holds no pricing/plan/metering, and it is CRM/ERP agnostic — which providers map to it lives entirely in its `ExternalReference` rows."""
+    salesforce: "Salesforce"
     merchant_integrations: "MerchantIntegrations"
     r"""A `MerchantIntegration` records a merchant's connection to an external provider. One connection per `(merchant, provider)` — re-connecting upserts in place."""
     _sub_sdk_map = {
@@ -112,6 +114,7 @@ class Paygentic(BaseSDK):
             "ExternalReferences",
         ),
         "items": ("paygentic_sdk.items", "Items"),
+        "salesforce": ("paygentic_sdk.salesforce", "Salesforce"),
         "merchant_integrations": (
             "paygentic_sdk.merchantintegrations",
             "MerchantIntegrations",

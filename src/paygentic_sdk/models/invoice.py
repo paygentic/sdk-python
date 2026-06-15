@@ -207,6 +207,8 @@ class InvoiceTypedDict(TypedDict):
     r"""The current status of the invoice"""
     subscription_id: str
     r"""The subscription ID this invoice belongs to"""
+    customer_id: str
+    r"""The customer ID that owns this invoice"""
     subtotal: str
     r"""Subtotal in decimal dollars (real-time for ACTIVE/CLOSING/CLOSED, cached otherwise)"""
     total_tax: str
@@ -290,6 +292,9 @@ class Invoice(BaseModel):
 
     subscription_id: Annotated[str, pydantic.Field(alias="subscriptionId")]
     r"""The subscription ID this invoice belongs to"""
+
+    customer_id: Annotated[str, pydantic.Field(alias="customerId")]
+    r"""The customer ID that owns this invoice"""
 
     subtotal: str
     r"""Subtotal in decimal dollars (real-time for ACTIVE/CLOSING/CLOSED, cached otherwise)"""

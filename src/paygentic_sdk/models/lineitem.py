@@ -53,6 +53,8 @@ class LineItemTypedDict(TypedDict):
     r"""The line item ID"""
     subscription_id: str
     r"""The subscription this line item belongs to"""
+    customer_id: str
+    r"""The customer ID that owns this line item"""
     type: LineItemType
     r"""The type of line item. 'discount' line items represent grant discounts with negative subtotal/total amounts."""
     status: LineItemStatus
@@ -105,6 +107,9 @@ class LineItem(BaseModel):
 
     subscription_id: Annotated[str, pydantic.Field(alias="subscriptionId")]
     r"""The subscription this line item belongs to"""
+
+    customer_id: Annotated[str, pydantic.Field(alias="customerId")]
+    r"""The customer ID that owns this line item"""
 
     type: LineItemType
     r"""The type of line item. 'discount' line items represent grant discounts with negative subtotal/total amounts."""

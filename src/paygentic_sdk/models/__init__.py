@@ -548,6 +548,12 @@ if TYPE_CHECKING:
         ListProductsResponse,
         ListProductsResponseTypedDict,
     )
+    from .listsalesforceaccountsop import (
+        ListSalesforceAccountsRequest,
+        ListSalesforceAccountsRequestTypedDict,
+        ListSalesforceAccountsResponse,
+        ListSalesforceAccountsResponseTypedDict,
+    )
     from .listsourceeventsop import (
         ListSourceEventsRequest,
         ListSourceEventsRequestTypedDict,
@@ -1316,6 +1322,10 @@ __all__ = [
     "ListProductsRequestTypedDict",
     "ListProductsResponse",
     "ListProductsResponseTypedDict",
+    "ListSalesforceAccountsRequest",
+    "ListSalesforceAccountsRequestTypedDict",
+    "ListSalesforceAccountsResponse",
+    "ListSalesforceAccountsResponseTypedDict",
     "ListSourceEventsRequest",
     "ListSourceEventsRequestTypedDict",
     "ListSourceEventsResponse",
@@ -2042,6 +2052,10 @@ _dynamic_imports: dict[str, str] = {
     "ListProductsRequestTypedDict": ".listproductsop",
     "ListProductsResponse": ".listproductsop",
     "ListProductsResponseTypedDict": ".listproductsop",
+    "ListSalesforceAccountsRequest": ".listsalesforceaccountsop",
+    "ListSalesforceAccountsRequestTypedDict": ".listsalesforceaccountsop",
+    "ListSalesforceAccountsResponse": ".listsalesforceaccountsop",
+    "ListSalesforceAccountsResponseTypedDict": ".listsalesforceaccountsop",
     "ListSourceEventsRequest": ".listsourceeventsop",
     "ListSourceEventsRequestTypedDict": ".listsourceeventsop",
     "ListSourceEventsResponse": ".listsourceeventsop",

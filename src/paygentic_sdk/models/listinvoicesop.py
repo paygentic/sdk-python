@@ -42,6 +42,8 @@ class ListInvoicesRequestTypedDict(TypedDict):
     r"""Filter invoices by status"""
     subscription_id: NotRequired[str]
     r"""Filter invoices by subscription ID"""
+    customer_id: NotRequired[str]
+    r"""Filter invoices by customer ID. Authorizes against the customer's merchant; takes precedence as the merchant source when combined with other filters."""
     merchant_id: NotRequired[str]
     r"""Filter invoices by merchant ID"""
 
@@ -79,6 +81,13 @@ class ListInvoicesRequest(BaseModel):
     ] = None
     r"""Filter invoices by subscription ID"""
 
+    customer_id: Annotated[
+        Optional[str],
+        pydantic.Field(alias="customerId"),
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Filter invoices by customer ID. Authorizes against the customer's merchant; takes precedence as the merchant source when combined with other filters."""
+
     merchant_id: Annotated[
         Optional[str],
         pydantic.Field(alias="merchantId"),
@@ -95,6 +104,7 @@ class ListInvoicesRequest(BaseModel):
                 "nextActionAt",
                 "status",
                 "subscriptionId",
+                "customerId",
                 "merchantId",
             ]
         )
