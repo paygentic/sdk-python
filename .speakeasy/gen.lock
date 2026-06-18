@@ -1,19 +1,19 @@
 lockVersion: 2.0.0
 id: d05de326-b60d-4921-81eb-a16eab66dffd
 management:
-  docChecksum: 6008bb11c139545b253312e2e964fddb
+  docChecksum: e45a61dca958530627f827a20a925751
   docVersion: 0.1.0
   speakeasyVersion: 1.761.4
   generationVersion: 2.879.13
-  releaseVersion: 0.2.16
-  configChecksum: b0e6f45e10db0dea3b92f26d103ef6d4
+  releaseVersion: 0.2.17
+  configChecksum: 115d99d30dc61bbf1f6a2408ac31ffac
   repoURL: https://github.com/paygentic/sdk-python.git
   installationURL: https://github.com/paygentic/sdk-python.git
   published: true
 persistentEdits:
-  generation_id: c08b2a2e-edb9-4c1d-9023-21f2b792c94e
-  pristine_commit_hash: 09ebc533c52c04b8c13f5b7465433bc1d436939e
-  pristine_tree_hash: 4d7c0baf3672c78588c11852d62edc27a82d11be
+  generation_id: 192733f0-a7f4-4cc3-966e-6a2d741cf6ef
+  pristine_commit_hash: 1fa9522f8145269d4215fb03e849e0f83211bae2
+  pristine_tree_hash: d539e0a728d3016c93d6e2a859e24521bbf6cabf
 features:
   python:
     additionalDependencies: 1.0.0
@@ -717,8 +717,8 @@ trackedFiles:
     pristine_git_object: 1a8aee44393c9184b1c7f9054cafa98301a3d640
   docs/models/invoice.md:
     id: 18e2034f11ad
-    last_write_checksum: sha1:288c0e4b3c5b2be4092e9d45a632310b60da7ca0
-    pristine_git_object: cf0db18867ae74f29a0023a3b3459359e03059e6
+    last_write_checksum: sha1:ada6716ab8398c79cedae25d4b4b5107e76aaac7
+    pristine_git_object: 05be7af3b722bd3b9962c54ddd60aede10906308
   docs/models/invoicecategorysummary.md:
     id: 028b6380d691
     last_write_checksum: sha1:a5922c327a530dad003d9f056c5b4e1a336693d8
@@ -1853,8 +1853,8 @@ trackedFiles:
     pristine_git_object: 9e61ec8e7b151c969a51d28d3ba98b3ceb5d18df
   pyproject.toml:
     id: 5d07e7d72637
-    last_write_checksum: sha1:f92423f4ac1aafd2d14922889b7b2742700cd11e
-    pristine_git_object: 3caf0ad33d1f0fd82899e15f8e36abb37acca738
+    last_write_checksum: sha1:8194d31d83d9600900989a7631c99311358c4f2f
+    pristine_git_object: b496bdce9a2adf7a74bc7212b2e641d76627846d
   scripts/prepare_readme.py:
     id: e0c5957a6035
     last_write_checksum: sha1:e2ebd355f72567204499ca62ee72728d9c3dfd95
@@ -1881,8 +1881,8 @@ trackedFiles:
     pristine_git_object: 6dbd4dcba3a5bac1c92beb0f5db31ef3d2944dea
   src/paygentic_sdk/_version.py:
     id: 52c8c5a320dc
-    last_write_checksum: sha1:28f775511da818ae31fffbf53bb2b2c4645a2ec8
-    pristine_git_object: 426c9bf38187f0f4b669ed11110f552b06d21b94
+    last_write_checksum: sha1:897cc317142073f5eb4d2e98ce3198a36bf51caa
+    pristine_git_object: 0505eeca823231a1f66425f54567bc7e9f4f4d86
   src/paygentic_sdk/basesdk.py:
     id: a086dd8cd1b3
     last_write_checksum: sha1:275b3ea45e9bf52519d3c7f179816ab1a0e823a2
@@ -2333,8 +2333,8 @@ trackedFiles:
     pristine_git_object: 5cfbefba6c78dae23830cda44dffea802804a7fd
   src/paygentic_sdk/models/invoice.py:
     id: cf50fbcc1ed7
-    last_write_checksum: sha1:237dfb1a087ce9aee8d4932775e05beb2f1e8782
-    pristine_git_object: decf802d0a218a12927609831940681026f49537
+    last_write_checksum: sha1:9724be64ffae7d083abece341fe40090dddb6ab0
+    pristine_git_object: 6784fcde52c7cd376d35e6bdf21613f181f5e116
   src/paygentic_sdk/models/invoicecategorysummary.py:
     id: d8a3d10b59b7
     last_write_checksum: sha1:7bd77117de59babb7ae520a540e65978e101fcd1
@@ -4828,4 +4828,7 @@ generatedTests:
   getMerchantIntegration: "2026-06-12T09:40:29Z"
   disconnectMerchantIntegration: "2026-06-12T09:40:29Z"
   listSalesforceAccounts: "2026-06-15T10:37:08Z"
-releaseNotes: "## Python SDK Changes:\n* `paygentic.items.create_item()`:  `response.external_references[].entity_type.enum(customer)` **Added** (Breaking ⚠️)\n* `paygentic.external_references.create_external_reference()`: \n  *  `request.entity_type.enum(customer)` **Added**\n  *  `response.entity_type.enum(customer)` **Added** (Breaking ⚠️)\n* `paygentic.external_references.list_external_references()`: \n  *  `request.entity_type` **Changed**\n  *  `response.data[].entity_type.enum(customer)` **Added** (Breaking ⚠️)\n* `paygentic.external_references.get_external_reference()`:  `response.entity_type.enum(customer)` **Added** (Breaking ⚠️)\n* `paygentic.external_references.update_external_reference()`:  `response.entity_type.enum(customer)` **Added** (Breaking ⚠️)\n* `paygentic.items.list_items()`:  `response.data[].external_references[].entity_type.enum(customer)` **Added** (Breaking ⚠️)\n* `paygentic.items.get_item()`:  `response.external_references[].entity_type.enum(customer)` **Added** (Breaking ⚠️)\n* `paygentic.items.update_item()`:  `response.external_references[].entity_type.enum(customer)` **Added** (Breaking ⚠️)\n* `paygentic.invoices_v2.list()`: \n  *  `request.customer_id` **Added**\n  *  `response.data[].customer_id` **Added**\n* `paygentic.invoices_v2.list_line_items()`:  `response.data[].customer_id` **Added**\n* `paygentic.invoices_v2.create_line_item()`:  `response.customer_id` **Added**\n* `paygentic.invoices_v2.get()`:  `response.customer_id` **Added**\n* `paygentic.salesforce.list_salesforce_accounts()`: **Added**\n"
+releaseNotes: |
+  ## Python SDK Changes:
+  * `paygentic.invoices_v2.list()`:  `response.data[].payment_in_flight` **Added**
+  * `paygentic.invoices_v2.get()`:  `response.payment_in_flight` **Added**

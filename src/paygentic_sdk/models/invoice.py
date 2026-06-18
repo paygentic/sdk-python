@@ -219,6 +219,8 @@ class InvoiceTypedDict(TypedDict):
     r"""When the invoice was last updated"""
     failure_reason: NotRequired[str]
     r"""Machine-readable reason code for the most recent failure (e.g. CALCULATION_FAILED). Present only when status is FAILED or PAYMENT_FAILED."""
+    payment_in_flight: NotRequired[bool]
+    r"""Whether a payment for this invoice is currently being processed (the payment session is in the 'processing' state). Clients should not offer manual 'mark as paid' while true. Only populated by GET /invoices/{id}."""
     invoice_number: NotRequired[Nullable[str]]
     r"""The invoice number"""
     line_items: NotRequired[Nullable[LineItemsTypedDict]]
@@ -313,6 +315,11 @@ class Invoice(BaseModel):
     )
     r"""Machine-readable reason code for the most recent failure (e.g. CALCULATION_FAILED). Present only when status is FAILED or PAYMENT_FAILED."""
 
+    payment_in_flight: Annotated[
+        Optional[bool], pydantic.Field(alias="paymentInFlight")
+    ] = None
+    r"""Whether a payment for this invoice is currently being processed (the payment session is in the 'processing' state). Clients should not offer manual 'mark as paid' while true. Only populated by GET /invoices/{id}."""
+
     invoice_number: Annotated[
         OptionalNullable[str], pydantic.Field(alias="invoiceNumber")
     ] = UNSET
@@ -358,6 +365,7 @@ class Invoice(BaseModel):
         optional_fields = set(
             [
                 "failureReason",
+                "paymentInFlight",
                 "invoiceNumber",
                 "lineItems",
                 "metadata",
