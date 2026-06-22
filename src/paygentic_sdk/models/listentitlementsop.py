@@ -13,8 +13,12 @@ from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class ListEntitlementsRequestTypedDict(TypedDict):
-    customer_id: str
-    r"""The unique identifier of the customer to retrieve entitlements for."""
+    customer_id: NotRequired[str]
+    r"""The Paygentic customer id to retrieve entitlements for. Supply exactly one of `customerId` or `externalCustomerId`. When combined with `merchantId`, the customer must belong to that merchant or the request resolves to not found."""
+    external_customer_id: NotRequired[str]
+    r"""The merchant's own external customer reference (`Customer.externalId`, exact match), used to retrieve entitlements without first resolving it to a `cus_` id. Matches the `externalId` filter on `GET /v1/customers` (plain string, exact match — no pattern constraint, so any stored `externalId` is addressable). Supply exactly one of `customerId` or `externalCustomerId`. `externalId` is unique only within a merchant, so an effective merchant scope is required: either pass `merchantId`, or authenticate with a single-merchant API key. With no resolvable merchant scope the request is rejected."""
+    merchant_id: NotRequired[str]
+    r"""Optional merchant scope. With `externalCustomerId` it selects the merchant the external id is resolved within (required for the platform key, which has no single merchant). With `customerId` it acts as a tenant guard — the resolved customer must belong to this merchant, otherwise the request resolves to not found. A passed `merchantId` is only a filter and never grants access the caller does not already hold; authorization is always evaluated against the resolved customer's merchant."""
     feature_key: NotRequired[str]
     r"""Filter results to a specific feature by its key. When specified, `productId` is also required. Use this to check access to a single feature."""
     product_id: NotRequired[str]
@@ -31,11 +35,25 @@ class ListEntitlementsRequestTypedDict(TypedDict):
 
 class ListEntitlementsRequest(BaseModel):
     customer_id: Annotated[
-        str,
+        Optional[str],
         pydantic.Field(alias="customerId"),
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
-    ]
-    r"""The unique identifier of the customer to retrieve entitlements for."""
+    ] = None
+    r"""The Paygentic customer id to retrieve entitlements for. Supply exactly one of `customerId` or `externalCustomerId`. When combined with `merchantId`, the customer must belong to that merchant or the request resolves to not found."""
+
+    external_customer_id: Annotated[
+        Optional[str],
+        pydantic.Field(alias="externalCustomerId"),
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""The merchant's own external customer reference (`Customer.externalId`, exact match), used to retrieve entitlements without first resolving it to a `cus_` id. Matches the `externalId` filter on `GET /v1/customers` (plain string, exact match — no pattern constraint, so any stored `externalId` is addressable). Supply exactly one of `customerId` or `externalCustomerId`. `externalId` is unique only within a merchant, so an effective merchant scope is required: either pass `merchantId`, or authenticate with a single-merchant API key. With no resolvable merchant scope the request is rejected."""
+
+    merchant_id: Annotated[
+        Optional[str],
+        pydantic.Field(alias="merchantId"),
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Optional merchant scope. With `externalCustomerId` it selects the merchant the external id is resolved within (required for the platform key, which has no single merchant). With `customerId` it acts as a tenant guard — the resolved customer must belong to this merchant, otherwise the request resolves to not found. A passed `merchantId` is only a filter and never grants access the caller does not already hold; authorization is always evaluated against the resolved customer's merchant."""
 
     feature_key: Annotated[
         Optional[str],
@@ -79,7 +97,17 @@ class ListEntitlementsRequest(BaseModel):
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
-            ["featureKey", "productId", "subscriptionId", "limit", "offset", "at"]
+            [
+                "customerId",
+                "externalCustomerId",
+                "merchantId",
+                "featureKey",
+                "productId",
+                "subscriptionId",
+                "limit",
+                "offset",
+                "at",
+            ]
         )
         serialized = handler(self)
         m = {}

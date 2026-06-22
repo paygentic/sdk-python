@@ -1,19 +1,19 @@
 lockVersion: 2.0.0
 id: d05de326-b60d-4921-81eb-a16eab66dffd
 management:
-  docChecksum: e45a61dca958530627f827a20a925751
+  docChecksum: bb3f4556a655e91547a4f63b00c08f98
   docVersion: 0.1.0
   speakeasyVersion: 1.761.4
   generationVersion: 2.879.13
-  releaseVersion: 0.2.17
-  configChecksum: 115d99d30dc61bbf1f6a2408ac31ffac
+  releaseVersion: 0.2.18
+  configChecksum: 1f9511af6b7ece0622a0546f45ea4958
   repoURL: https://github.com/paygentic/sdk-python.git
   installationURL: https://github.com/paygentic/sdk-python.git
   published: true
 persistentEdits:
-  generation_id: 192733f0-a7f4-4cc3-966e-6a2d741cf6ef
-  pristine_commit_hash: 1fa9522f8145269d4215fb03e849e0f83211bae2
-  pristine_tree_hash: d539e0a728d3016c93d6e2a859e24521bbf6cabf
+  generation_id: 7aeae58a-c3ca-4cc2-a8f5-9349ba0db71e
+  pristine_commit_hash: b26fa51c7328d4dd5978bcdf553dfb131378ab3a
+  pristine_tree_hash: c8abc005f560f9f49e007af89f8ab2c85132ca78
 features:
   python:
     additionalDependencies: 1.0.0
@@ -229,8 +229,8 @@ trackedFiles:
     pristine_git_object: 921ac39d03c87f06e26fd45b6ec1f7f42cca28f1
   docs/models/createcustomerpaymentmethodrequestbody.md:
     id: 90c45b1f089a
-    last_write_checksum: sha1:9645833ded6215997be2f606911a85ddc3986139
-    pristine_git_object: f3278ab877e890e4af187e6848b14babd6a6e670
+    last_write_checksum: sha1:0822d9f36435a91b331908adc78c3cd5495b6ff1
+    pristine_git_object: 9b2fccd7cd71ba500ff0f78349529c5b22967d40
   docs/models/createcustomerrequest.md:
     id: 0f9966c2a6ac
     last_write_checksum: sha1:d048cf1e8772a4cd88cb3122deade88a3e6eb80a
@@ -881,8 +881,8 @@ trackedFiles:
     pristine_git_object: 76347e36e8de6a42260591e18d8df67cb80aa7f8
   docs/models/listentitlementsrequest.md:
     id: df995c0ba818
-    last_write_checksum: sha1:8cd932562e33c8088f3a5ad27b7d773033c6e045
-    pristine_git_object: 666a04f46245496b5c314b389bdf0442007184fc
+    last_write_checksum: sha1:c19dbda95480b5aa144dfe2c65602a5d0ec1cfd2
+    pristine_git_object: b513783f0d0bc49cf3e656c4e8f182316f36b7b2
   docs/models/listentitlementsresponse.md:
     id: 5a67a90850f7
     last_write_checksum: sha1:01e58b4c814b3617e1118053fc376be6d9433dff
@@ -1749,12 +1749,12 @@ trackedFiles:
     pristine_git_object: cf3d1cb0157b71a01562e81d351c57abc295813f
   docs/sdks/customers/README.md:
     id: 9332759cffc2
-    last_write_checksum: sha1:775687eb239ce07fa6d4c9bf2feebd2744a74660
-    pristine_git_object: 8f3f68950c341ab103d55627270ebe9730da7c45
+    last_write_checksum: sha1:ca28d4dd457e5952ba35c0a97d5d9da0185febb8
+    pristine_git_object: 9624ea5b8890e7721ae9149b0afd66614f43f529
   docs/sdks/entitlements/README.md:
     id: 3dfed54d4d65
-    last_write_checksum: sha1:7c826dd7155e5c0dbc482c71b9d6b63f38570226
-    pristine_git_object: a03a4e60cdcd15245af290250ce4c86cb14b53b9
+    last_write_checksum: sha1:948395af6ee15972f22908884c6b5cf5802acd1b
+    pristine_git_object: 74fc8ff461cc1be56b0fba33b2707d6726e501f2
   docs/sdks/events/README.md:
     id: cf45a4390b9b
     last_write_checksum: sha1:984176db735da8c04d478946623ae774b8ff663a
@@ -1853,8 +1853,8 @@ trackedFiles:
     pristine_git_object: 9e61ec8e7b151c969a51d28d3ba98b3ceb5d18df
   pyproject.toml:
     id: 5d07e7d72637
-    last_write_checksum: sha1:8194d31d83d9600900989a7631c99311358c4f2f
-    pristine_git_object: b496bdce9a2adf7a74bc7212b2e641d76627846d
+    last_write_checksum: sha1:28d32e04ab9f7b2bdbe40cb3df0829149b7f8235
+    pristine_git_object: c0d93b3d55fb1a53f018ad1b5a3979a796ccd32a
   scripts/prepare_readme.py:
     id: e0c5957a6035
     last_write_checksum: sha1:e2ebd355f72567204499ca62ee72728d9c3dfd95
@@ -1881,8 +1881,8 @@ trackedFiles:
     pristine_git_object: 6dbd4dcba3a5bac1c92beb0f5db31ef3d2944dea
   src/paygentic_sdk/_version.py:
     id: 52c8c5a320dc
-    last_write_checksum: sha1:897cc317142073f5eb4d2e98ce3198a36bf51caa
-    pristine_git_object: 0505eeca823231a1f66425f54567bc7e9f4f4d86
+    last_write_checksum: sha1:2d10aa6ad755779600f040ba1d4e8a974595eb30
+    pristine_git_object: cfa9dba7bf3d3ecd4daa494d319ba5457832431c
   src/paygentic_sdk/basesdk.py:
     id: a086dd8cd1b3
     last_write_checksum: sha1:275b3ea45e9bf52519d3c7f179816ab1a0e823a2
@@ -1897,12 +1897,12 @@ trackedFiles:
     pristine_git_object: f89c9e38f8e1b52c0dec650ffb41b0deeef1db4f
   src/paygentic_sdk/customers.py:
     id: 25b8fbe344a7
-    last_write_checksum: sha1:1fdd3ba5285926dd12a51689ac42aa6eb90e6fd7
-    pristine_git_object: 21a60af7884992181a56919645d90a4c957ff786
+    last_write_checksum: sha1:94e944ff41349848583f22e7857dc5353b460f75
+    pristine_git_object: 26e3712a32c3eb8874d429756a21a44df5fb6bf9
   src/paygentic_sdk/entitlements.py:
     id: c8dfa1e20f06
-    last_write_checksum: sha1:1906c234e44bd71a4375e323332b00fab7997419
-    pristine_git_object: 6b449f5566007e6cec30fb68a57c93fa021bedf2
+    last_write_checksum: sha1:7be3c2b6878e145e41e0218b7d268a514ae46b93
+    pristine_git_object: 91e3673b2203b5063bc938dd69cae28d3ab5b1e6
   src/paygentic_sdk/errors/__init__.py:
     id: 5d8b9944a5ac
     last_write_checksum: sha1:061a7734cb4037c3f3d04207e0bb6b5756d16760
@@ -2049,8 +2049,8 @@ trackedFiles:
     pristine_git_object: 6f4b2c418cbaa9d3b2bbb3ea2f4cef15c3186441
   src/paygentic_sdk/models/createcustomerpaymentmethodop.py:
     id: 472205b08702
-    last_write_checksum: sha1:e91450e018af3a2d87b9b694dc9c5632f523363a
-    pristine_git_object: 1f63d31205da7da3fdf5ec944cfc0abd5d7ae31c
+    last_write_checksum: sha1:3b3a146ff2f6d4b109bc20a6a03e9f4c96f227e0
+    pristine_git_object: c4a74040b23c1001c1268ddcdf4467e6ba7bd168
   src/paygentic_sdk/models/createentitlementgrantop.py:
     id: 6eb958499f67
     last_write_checksum: sha1:6cb9238ce64dde051be116dfa1c6e7229b55218b
@@ -2401,8 +2401,8 @@ trackedFiles:
     pristine_git_object: 3778604e0ff0e1b85360e307d546132e46a2118f
   src/paygentic_sdk/models/listentitlementsop.py:
     id: d5df7fce3dc7
-    last_write_checksum: sha1:2b73a39f6272ea81eb615bce5c812dbc7497729a
-    pristine_git_object: b077daf14489ed3b0d74353214945f308337f7ab
+    last_write_checksum: sha1:20b40d6f0b897648425879fac573c51db6cd66cf
+    pristine_git_object: 7916b52fce9f7aeba561847e3acfa73ae8a4eb18
   src/paygentic_sdk/models/listexternalreferencesop.py:
     id: b61c4a6bf6f1
     last_write_checksum: sha1:5fda74031addb9602bc103523c26a98207e6e4dc
@@ -3098,6 +3098,8 @@ examples:
           customerId: "cus_q3r4s5t6u7v8w9x0"
           limit: 10
           offset: 0
+          externalCustomerId: "ext-customer-123"
+          merchantId: "org_a1b2c3d4e5f6g7h8"
       responses:
         "200":
           application/json: {"object": "list", "data": [], "pagination": {"limit": 109839, "offset": 186518, "total": 410309}}
@@ -3113,6 +3115,8 @@ examples:
           customerId: "cus_q3r4s5t6u7v8w9x0"
           limit: 10
           offset: 0
+          externalCustomerId: "ext-customer-123"
+          merchantId: "org_a1b2c3d4e5f6g7h8"
       responses:
         "200":
           application/json: {"object": "list", "data": [{"entitlementId": "ent_a7b8c9d0e1f2g3h4", "customerId": "cus_q3r4s5t6u7v8w9x0", "featureId": "feat_max_users", "featureKey": "max_users", "featureType": "static", "productId": "prod_m5n6o7p8q9r0s1t2", "subscriptionId": "sub_pro_plan", "status": "active", "activeFrom": "2024-01-01T00:00:00Z", "activeTo": "2025-01-01T00:00:00Z", "hasAccess": true, "metadata": {}, "config": {"limit": 25}}, {"entitlementId": "ent_b8c9d0e1f2g3h4i5", "customerId": "cus_q3r4s5t6u7v8w9x0", "featureId": "feat_sso_enabled", "featureKey": "sso_enabled", "featureType": "boolean", "productId": "prod_m5n6o7p8q9r0s1t2", "subscriptionId": "sub_pro_plan", "status": "active", "activeFrom": "2024-01-01T00:00:00Z", "activeTo": null, "hasAccess": true, "metadata": {}, "config": null}], "pagination": {"limit": 10, "offset": 0, "total": 2}}
@@ -3122,6 +3126,8 @@ examples:
           customerId: "cus_q3r4s5t6u7v8w9x0"
           limit: 10
           offset: 0
+          externalCustomerId: "ext-customer-123"
+          merchantId: "org_a1b2c3d4e5f6g7h8"
       responses:
         "200":
           application/json: {"object": "list", "data": [{"entitlementId": "ent_d0e1f2g3h4i5j6k7", "customerId": "cus_q3r4s5t6u7v8w9x0", "featureId": "feat_storage_quota", "featureKey": "storage_quota", "featureType": "static", "productId": "prod_storage123456", "subscriptionId": "sub_storage_plan", "status": "active", "activeFrom": "2024-03-15T00:00:00Z", "activeTo": null, "hasAccess": true, "metadata": {}, "config": {"limitGB": 500, "allowedFileTypes": ["pdf", "doc", "xlsx", "png", "jpg"]}}], "pagination": {"limit": 10, "offset": 0, "total": 1}}
@@ -3131,6 +3137,8 @@ examples:
           customerId: "cus_q3r4s5t6u7v8w9x0"
           limit: 10
           offset: 0
+          externalCustomerId: "ext-customer-123"
+          merchantId: "org_a1b2c3d4e5f6g7h8"
       responses:
         "200":
           application/json: {"object": "list", "data": [{"entitlementId": "ent_e1f2g3h4i5j6k7l8", "customerId": "cus_q3r4s5t6u7v8w9x0", "featureId": "feat_premium_support", "featureKey": "premium_support", "featureType": "boolean", "productId": "prod_support789012", "subscriptionId": null, "status": "expired", "activeFrom": "2023-01-01T00:00:00Z", "activeTo": "2024-01-01T00:00:00Z", "hasAccess": false, "metadata": {}, "config": null}], "pagination": {"limit": 10, "offset": 0, "total": 1}}
@@ -3140,6 +3148,8 @@ examples:
           customerId: "cus_q3r4s5t6u7v8w9x0"
           limit: 10
           offset: 0
+          externalCustomerId: "ext-customer-123"
+          merchantId: "org_a1b2c3d4e5f6g7h8"
       responses:
         "200":
           application/json: {"object": "list", "data": [], "pagination": {"limit": 10, "offset": 0, "total": 0}}
@@ -3149,6 +3159,8 @@ examples:
           customerId: "cus_q3r4s5t6u7v8w9x0"
           limit: 10
           offset: 0
+          externalCustomerId: "ext-customer-123"
+          merchantId: "org_a1b2c3d4e5f6g7h8"
       responses:
         "200":
           application/json: {"object": "list", "data": [{"entitlementId": "ent_c9d0e1f2g3h4i5j6", "customerId": "cus_q3r4s5t6u7v8w9x0", "featureId": "feat_api_calls", "featureKey": "api_calls", "featureType": "metered", "productId": "prod_m5n6o7p8q9r0s1t2", "subscriptionId": "sub_pro_plan", "status": "active", "activeFrom": "2024-03-01T00:00:00Z", "activeTo": null, "hasAccess": true, "metadata": {}, "config": null, "isSoftLimit": false, "balance": 8340, "usageInPeriod": 1660, "overage": 0, "currentPeriodStart": "2024-03-01T00:00:00Z", "currentPeriodEnd": "2024-04-01T00:00:00Z"}], "pagination": {"limit": 10, "offset": 0, "total": 1}}
@@ -4830,5 +4842,5 @@ generatedTests:
   listSalesforceAccounts: "2026-06-15T10:37:08Z"
 releaseNotes: |
   ## Python SDK Changes:
-  * `paygentic.invoices_v2.list()`:  `response.data[].payment_in_flight` **Added**
-  * `paygentic.invoices_v2.get()`:  `response.payment_in_flight` **Added**
+  * `paygentic.entitlements.list()`:  `request` **Changed** (Breaking ⚠️)
+  * `paygentic.customers.create_customer_payment_method()`:  `request.expires_at` **Added**

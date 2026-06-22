@@ -6,10 +6,10 @@ from datetime import datetime
 from paygentic_sdk import errors, models, utils
 from paygentic_sdk._hooks import HookContext
 from paygentic_sdk.grants import Grants
-from paygentic_sdk.types import OptionalNullable, UNSET
+from paygentic_sdk.types import BaseModel, OptionalNullable, UNSET
 from paygentic_sdk.utils import get_security_from_env
 from paygentic_sdk.utils.unmarshal_json_response import unmarshal_json_response
-from typing import Any, Dict, Mapping, Optional, Union
+from typing import Any, Dict, Mapping, Optional, Union, cast
 
 
 class Entitlements(BaseSDK):
@@ -28,13 +28,9 @@ class Entitlements(BaseSDK):
     def list(
         self,
         *,
-        customer_id: str,
-        feature_key: Optional[str] = None,
-        product_id: Optional[str] = None,
-        subscription_id: Optional[str] = None,
-        limit: Optional[int] = 10,
-        offset: Optional[int] = 0,
-        at: Optional[datetime] = None,
+        request: Union[
+            models.ListEntitlementsRequest, models.ListEntitlementsRequestTypedDict
+        ] = models.ListEntitlementsRequest(),
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -48,13 +44,7 @@ class Entitlements(BaseSDK):
 
         For metered entitlements, each item carries live balance/usage fields, which the API resolves with one grant-engine balance lookup per metered item (bounded concurrency, up to `limit` items per page).
 
-        :param customer_id: The unique identifier of the customer to retrieve entitlements for.
-        :param feature_key: Filter results to a specific feature by its key. When specified, `productId` is also required. Use this to check access to a single feature.
-        :param product_id: Filter results to entitlements for a specific product. Required when `featureKey` is specified since feature keys are scoped to products.
-        :param subscription_id: Filter results to entitlements for a specific subscription.
-        :param limit: Maximum number of entitlements to return per page. Use with `offset` for pagination.
-        :param offset: Number of entitlements to skip. Use with `limit` for pagination through large result sets.
-        :param at: Evaluate balance and access at this point in time (RFC 3339 datetime with any UTC offset, e.g. 2024-01-15T10:30:00Z or 2024-01-15T15:30:00+05:30). Defaults to current time.
+        :param request: The request object to send.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -70,15 +60,9 @@ class Entitlements(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.ListEntitlementsRequest(
-            customer_id=customer_id,
-            feature_key=feature_key,
-            product_id=product_id,
-            subscription_id=subscription_id,
-            limit=limit,
-            offset=offset,
-            at=at,
-        )
+        if not isinstance(request, BaseModel):
+            request = utils.unmarshal(request, models.ListEntitlementsRequest)
+        request = cast(models.ListEntitlementsRequest, request)
 
         req = self._build_request(
             method="GET",
@@ -148,13 +132,9 @@ class Entitlements(BaseSDK):
     async def list_async(
         self,
         *,
-        customer_id: str,
-        feature_key: Optional[str] = None,
-        product_id: Optional[str] = None,
-        subscription_id: Optional[str] = None,
-        limit: Optional[int] = 10,
-        offset: Optional[int] = 0,
-        at: Optional[datetime] = None,
+        request: Union[
+            models.ListEntitlementsRequest, models.ListEntitlementsRequestTypedDict
+        ] = models.ListEntitlementsRequest(),
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -168,13 +148,7 @@ class Entitlements(BaseSDK):
 
         For metered entitlements, each item carries live balance/usage fields, which the API resolves with one grant-engine balance lookup per metered item (bounded concurrency, up to `limit` items per page).
 
-        :param customer_id: The unique identifier of the customer to retrieve entitlements for.
-        :param feature_key: Filter results to a specific feature by its key. When specified, `productId` is also required. Use this to check access to a single feature.
-        :param product_id: Filter results to entitlements for a specific product. Required when `featureKey` is specified since feature keys are scoped to products.
-        :param subscription_id: Filter results to entitlements for a specific subscription.
-        :param limit: Maximum number of entitlements to return per page. Use with `offset` for pagination.
-        :param offset: Number of entitlements to skip. Use with `limit` for pagination through large result sets.
-        :param at: Evaluate balance and access at this point in time (RFC 3339 datetime with any UTC offset, e.g. 2024-01-15T10:30:00Z or 2024-01-15T15:30:00+05:30). Defaults to current time.
+        :param request: The request object to send.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -190,15 +164,9 @@ class Entitlements(BaseSDK):
         else:
             base_url = self._get_url(base_url, url_variables)
 
-        request = models.ListEntitlementsRequest(
-            customer_id=customer_id,
-            feature_key=feature_key,
-            product_id=product_id,
-            subscription_id=subscription_id,
-            limit=limit,
-            offset=offset,
-            at=at,
-        )
+        if not isinstance(request, BaseModel):
+            request = utils.unmarshal(request, models.ListEntitlementsRequest)
+        request = cast(models.ListEntitlementsRequest, request)
 
         req = self._build_request_async(
             method="GET",

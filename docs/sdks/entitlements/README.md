@@ -28,7 +28,11 @@ with Paygentic(
     bearer_auth=os.getenv("PAYGENTIC_BEARER_AUTH", ""),
 ) as paygentic:
 
-    res = paygentic.entitlements.list(customer_id="cus_q3r4s5t6u7v8w9x0", limit=10, offset=0)
+    res = paygentic.entitlements.list(request={
+        "customer_id": "cus_q3r4s5t6u7v8w9x0",
+        "external_customer_id": "ext-customer-123",
+        "merchant_id": "org_a1b2c3d4e5f6g7h8",
+    })
 
     # Handle response
     print(res)
@@ -46,7 +50,11 @@ with Paygentic(
     bearer_auth=os.getenv("PAYGENTIC_BEARER_AUTH", ""),
 ) as paygentic:
 
-    res = paygentic.entitlements.list(customer_id="cus_q3r4s5t6u7v8w9x0", limit=10, offset=0)
+    res = paygentic.entitlements.list(request={
+        "customer_id": "cus_q3r4s5t6u7v8w9x0",
+        "external_customer_id": "ext-customer-123",
+        "merchant_id": "org_a1b2c3d4e5f6g7h8",
+    })
 
     # Handle response
     print(res)
@@ -64,7 +72,11 @@ with Paygentic(
     bearer_auth=os.getenv("PAYGENTIC_BEARER_AUTH", ""),
 ) as paygentic:
 
-    res = paygentic.entitlements.list(customer_id="cus_q3r4s5t6u7v8w9x0", limit=10, offset=0)
+    res = paygentic.entitlements.list(request={
+        "customer_id": "cus_q3r4s5t6u7v8w9x0",
+        "external_customer_id": "ext-customer-123",
+        "merchant_id": "org_a1b2c3d4e5f6g7h8",
+    })
 
     # Handle response
     print(res)
@@ -82,7 +94,11 @@ with Paygentic(
     bearer_auth=os.getenv("PAYGENTIC_BEARER_AUTH", ""),
 ) as paygentic:
 
-    res = paygentic.entitlements.list(customer_id="cus_q3r4s5t6u7v8w9x0", limit=10, offset=0)
+    res = paygentic.entitlements.list(request={
+        "customer_id": "cus_q3r4s5t6u7v8w9x0",
+        "external_customer_id": "ext-customer-123",
+        "merchant_id": "org_a1b2c3d4e5f6g7h8",
+    })
 
     # Handle response
     print(res)
@@ -100,7 +116,11 @@ with Paygentic(
     bearer_auth=os.getenv("PAYGENTIC_BEARER_AUTH", ""),
 ) as paygentic:
 
-    res = paygentic.entitlements.list(customer_id="cus_q3r4s5t6u7v8w9x0", limit=10, offset=0)
+    res = paygentic.entitlements.list(request={
+        "customer_id": "cus_q3r4s5t6u7v8w9x0",
+        "external_customer_id": "ext-customer-123",
+        "merchant_id": "org_a1b2c3d4e5f6g7h8",
+    })
 
     # Handle response
     print(res)
@@ -109,16 +129,10 @@ with Paygentic(
 
 ### Parameters
 
-| Parameter                                                                                                                                                                    | Type                                                                                                                                                                         | Required                                                                                                                                                                     | Description                                                                                                                                                                  | Example                                                                                                                                                                      |
-| ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `customer_id`                                                                                                                                                                | *str*                                                                                                                                                                        | :heavy_check_mark:                                                                                                                                                           | The unique identifier of the customer to retrieve entitlements for.                                                                                                          | cus_q3r4s5t6u7v8w9x0                                                                                                                                                         |
-| `feature_key`                                                                                                                                                                | *Optional[str]*                                                                                                                                                              | :heavy_minus_sign:                                                                                                                                                           | Filter results to a specific feature by its key. When specified, `productId` is also required. Use this to check access to a single feature.                                 |                                                                                                                                                                              |
-| `product_id`                                                                                                                                                                 | *Optional[str]*                                                                                                                                                              | :heavy_minus_sign:                                                                                                                                                           | Filter results to entitlements for a specific product. Required when `featureKey` is specified since feature keys are scoped to products.                                    |                                                                                                                                                                              |
-| `subscription_id`                                                                                                                                                            | *Optional[str]*                                                                                                                                                              | :heavy_minus_sign:                                                                                                                                                           | Filter results to entitlements for a specific subscription.                                                                                                                  |                                                                                                                                                                              |
-| `limit`                                                                                                                                                                      | *Optional[int]*                                                                                                                                                              | :heavy_minus_sign:                                                                                                                                                           | Maximum number of entitlements to return per page. Use with `offset` for pagination.                                                                                         |                                                                                                                                                                              |
-| `offset`                                                                                                                                                                     | *Optional[int]*                                                                                                                                                              | :heavy_minus_sign:                                                                                                                                                           | Number of entitlements to skip. Use with `limit` for pagination through large result sets.                                                                                   |                                                                                                                                                                              |
-| `at`                                                                                                                                                                         | [date](https://docs.python.org/3/library/datetime.html#date-objects)                                                                                                         | :heavy_minus_sign:                                                                                                                                                           | Evaluate balance and access at this point in time (RFC 3339 datetime with any UTC offset, e.g. 2024-01-15T10:30:00Z or 2024-01-15T15:30:00+05:30). Defaults to current time. |                                                                                                                                                                              |
-| `retries`                                                                                                                                                                    | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                                                                             | :heavy_minus_sign:                                                                                                                                                           | Configuration to override the default retry behavior of the client.                                                                                                          |                                                                                                                                                                              |
+| Parameter                                                                 | Type                                                                      | Required                                                                  | Description                                                               |
+| ------------------------------------------------------------------------- | ------------------------------------------------------------------------- | ------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
+| `request`                                                                 | [models.ListEntitlementsRequest](../../models/listentitlementsrequest.md) | :heavy_check_mark:                                                        | The request object to use for the request.                                |
+| `retries`                                                                 | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)          | :heavy_minus_sign:                                                        | Configuration to override the default retry behavior of the client.       |
 
 ### Response
 
