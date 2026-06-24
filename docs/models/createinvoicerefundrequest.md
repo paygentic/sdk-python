@@ -1,0 +1,9 @@
+# CreateInvoiceRefundRequest
+
+
+## Fields
+
+| Field                                                                                          | Type                                                                                           | Required                                                                                       | Description                                                                                    |
+| ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| `id`                                                                                           | *str*                                                                                          | :heavy_check_mark:                                                                             | The invoice ID                                                                                 |
+| `request_body`                                                                                 | [Optional[models.CreateInvoiceRefundRequestBody]](../models/createinvoicerefundrequestbody.md) | :heavy_minus_sign:                                                                             | N/A                                                                                            |

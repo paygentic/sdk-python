@@ -403,6 +403,9 @@ with Paygentic(
 * [create_line_item](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/invoicesv2/README.md#create_line_item) - Create Manual Line Item
 * [get](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/invoicesv2/README.md#get) - Get
 * [get_line_items](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/invoicesv2/README.md#get_line_items) - Get Line Items
+* [create_invoice_refund](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/invoicesv2/README.md#create_invoice_refund) - Refund Invoice
+* [list_invoice_refunds](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/invoicesv2/README.md#list_invoice_refunds) - List Invoice Refunds
+* [void_invoice_refund](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/invoicesv2/README.md#void_invoice_refund) - Void Invoice Refund
 
 ### [Items](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/items/README.md)
 
@@ -620,9 +623,9 @@ with Paygentic(
 
 
 **Inherit from [`PaygenticError`](https://github.com/paygentic/sdk-python/blob/master/./src/paygentic_sdk/errors/paygenticerror.py)**:
-* [`ValidationError`](https://github.com/paygentic/sdk-python/blob/master/./src/paygentic_sdk/errors/validationerror.py): Bad Request - The request could not be understood or was missing required parameters. Status code `400`. Applicable to 65 of 107 methods.*
-* [`DeleteCustomerConflictError`](https://github.com/paygentic/sdk-python/blob/master/./src/paygentic_sdk/errors/deletecustomerconflicterror.py): Customer cannot be deleted due to active dependencies. Status code `409`. Applicable to 1 of 107 methods.*
-* [`DeleteFeeConflictError`](https://github.com/paygentic/sdk-python/blob/master/./src/paygentic_sdk/errors/deletefeeconflicterror.py): Fee cannot be deleted because it has associated prices. Status code `409`. Applicable to 1 of 107 methods.*
+* [`ValidationError`](https://github.com/paygentic/sdk-python/blob/master/./src/paygentic_sdk/errors/validationerror.py): Bad Request - The request could not be understood or was missing required parameters. Status code `400`. Applicable to 67 of 110 methods.*
+* [`DeleteCustomerConflictError`](https://github.com/paygentic/sdk-python/blob/master/./src/paygentic_sdk/errors/deletecustomerconflicterror.py): Customer cannot be deleted due to active dependencies. Status code `409`. Applicable to 1 of 110 methods.*
+* [`DeleteFeeConflictError`](https://github.com/paygentic/sdk-python/blob/master/./src/paygentic_sdk/errors/deletefeeconflicterror.py): Fee cannot be deleted because it has associated prices. Status code `409`. Applicable to 1 of 110 methods.*
 * [`ResponseValidationError`](https://github.com/paygentic/sdk-python/blob/master/./src/paygentic_sdk/errors/responsevalidationerror.py): Type mismatch between the response data and the expected Pydantic model. Provides access to the Pydantic validation error via the `cause` attribute.
 
 </details>

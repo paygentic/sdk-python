@@ -22,7 +22,11 @@ class RevenueSummaryResponseTypedDict(TypedDict):
     object: Literal["revenue_summary"]
     r"""Object type identifier"""
     net_revenue: NotRequired[str]
-    r"""Net collected revenue in dollars (paid invoices + completed payments). Omitted when groupBy=currency is active."""
+    r"""Net collected revenue in dollars (paid invoices + completed payments), already net of non-voided refunds. Omitted when groupBy=currency is active."""
+    total_refunds: NotRequired[str]
+    r"""Gross total of non-voided refunds (credit notes) issued in the period, in dollars. Already subtracted from netRevenue and invoice totals. Omitted when groupBy=currency is active."""
+    refund_count: NotRequired[float]
+    r"""Number of non-voided refunds (credit notes) issued in the period. Omitted when groupBy=currency is active."""
     invoices: NotRequired[InvoiceSummaryTypedDict]
     payments: NotRequired[PaymentSummaryTypedDict]
     trend: NotRequired[List[RevenueTrendBucketTypedDict]]
@@ -44,7 +48,13 @@ class RevenueSummaryResponse(BaseModel):
     r"""Object type identifier"""
 
     net_revenue: Annotated[Optional[str], pydantic.Field(alias="netRevenue")] = None
-    r"""Net collected revenue in dollars (paid invoices + completed payments). Omitted when groupBy=currency is active."""
+    r"""Net collected revenue in dollars (paid invoices + completed payments), already net of non-voided refunds. Omitted when groupBy=currency is active."""
+
+    total_refunds: Annotated[Optional[str], pydantic.Field(alias="totalRefunds")] = None
+    r"""Gross total of non-voided refunds (credit notes) issued in the period, in dollars. Already subtracted from netRevenue and invoice totals. Omitted when groupBy=currency is active."""
+
+    refund_count: Annotated[Optional[float], pydantic.Field(alias="refundCount")] = None
+    r"""Number of non-voided refunds (credit notes) issued in the period. Omitted when groupBy=currency is active."""
 
     invoices: Optional[InvoiceSummary] = None
 
@@ -69,6 +79,8 @@ class RevenueSummaryResponse(BaseModel):
         optional_fields = set(
             [
                 "netRevenue",
+                "totalRefunds",
+                "refundCount",
                 "invoices",
                 "payments",
                 "trend",

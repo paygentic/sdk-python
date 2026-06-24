@@ -1,0 +1,10 @@
+# VoidInvoiceRefundRequest
+
+
+## Fields
+
+| Field                                                                                      | Type                                                                                       | Required                                                                                   | Description                                                                                |
+| ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ |
+| `id`                                                                                       | *str*                                                                                      | :heavy_check_mark:                                                                         | The invoice ID                                                                             |
+| `refund_id`                                                                                | *str*                                                                                      | :heavy_check_mark:                                                                         | The refund (credit note) ID                                                                |
+| `request_body`                                                                             | [Optional[models.VoidInvoiceRefundRequestBody]](../models/voidinvoicerefundrequestbody.md) | :heavy_minus_sign:                                                                         | N/A                                                                                        |

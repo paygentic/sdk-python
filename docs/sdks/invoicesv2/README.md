@@ -11,6 +11,9 @@ Invoice V2 operations supporting billing cycles organized by time periods. Warni
 * [create_line_item](#create_line_item) - Create Manual Line Item
 * [get](#get) - Get
 * [get_line_items](#get_line_items) - Get Line Items
+* [create_invoice_refund](#create_invoice_refund) - Refund Invoice
+* [list_invoice_refunds](#list_invoice_refunds) - List Invoice Refunds
+* [void_invoice_refund](#void_invoice_refund) - Void Invoice Refund
 
 ## list
 
@@ -238,6 +241,139 @@ with Paygentic(
 
 | Error Type                   | Status Code                  | Content Type                 |
 | ---------------------------- | ---------------------------- | ---------------------------- |
+| errors.Error                 | 403, 404                     | application/json             |
+| errors.Error                 | 500                          | application/json             |
+| errors.PaygenticDefaultError | 4XX, 5XX                     | \*/\*                        |
+
+## create_invoice_refund
+
+Issue a full refund against a paid invoice by creating a credit note. The invoice stays PAID; the refund is recorded as a child credit note. Accessible to the owning merchant or platform operators. Only works for invoices in PAID status that have not already been refunded. Full refund only — the entire invoice (subtotal + tax) is credited.
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="createInvoiceRefund" method="post" path="/v2/invoices/{id}/refunds" -->
+```python
+import os
+from paygentic_sdk import Paygentic
+
+
+with Paygentic(
+    bearer_auth=os.getenv("PAYGENTIC_BEARER_AUTH", ""),
+) as paygentic:
+
+    res = paygentic.invoices_v2.create_invoice_refund(id="<id>")
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `id`                                                                | *str*                                                               | :heavy_check_mark:                                                  | The invoice ID                                                      |
+| `reason`                                                            | *Optional[str]*                                                     | :heavy_minus_sign:                                                  | Optional reason for the refund (recorded on the credit note)        |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+
+### Response
+
+**[models.InvoiceRefund](../../models/invoicerefund.md)**
+
+### Errors
+
+| Error Type                   | Status Code                  | Content Type                 |
+| ---------------------------- | ---------------------------- | ---------------------------- |
+| errors.Error                 | 400                          | application/json             |
+| errors.ValidationError       | 400                          | application/json             |
+| errors.Error                 | 403, 404                     | application/json             |
+| errors.Error                 | 500                          | application/json             |
+| errors.PaygenticDefaultError | 4XX, 5XX                     | \*/\*                        |
+
+## list_invoice_refunds
+
+List the credit notes (refunds) recorded against an invoice. Accessible to the owning merchant or platform operators.
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="listInvoiceRefunds" method="get" path="/v2/invoices/{id}/refunds" -->
+```python
+import os
+from paygentic_sdk import Paygentic
+
+
+with Paygentic(
+    bearer_auth=os.getenv("PAYGENTIC_BEARER_AUTH", ""),
+) as paygentic:
+
+    res = paygentic.invoices_v2.list_invoice_refunds(id="<id>")
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `id`                                                                | *str*                                                               | :heavy_check_mark:                                                  | The invoice ID                                                      |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+
+### Response
+
+**[models.InvoiceRefundList](../../models/invoicerefundlist.md)**
+
+### Errors
+
+| Error Type                   | Status Code                  | Content Type                 |
+| ---------------------------- | ---------------------------- | ---------------------------- |
+| errors.Error                 | 403, 404                     | application/json             |
+| errors.Error                 | 500                          | application/json             |
+| errors.PaygenticDefaultError | 4XX, 5XX                     | \*/\*                        |
+
+## void_invoice_refund
+
+Void a previously-issued refund (credit note). Reverses the credit note in the tax provider and excludes it from revenue. Accessible to the owning merchant or platform operators.
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="voidInvoiceRefund" method="post" path="/v2/invoices/{id}/refunds/{refundId}/void" -->
+```python
+import os
+from paygentic_sdk import Paygentic
+
+
+with Paygentic(
+    bearer_auth=os.getenv("PAYGENTIC_BEARER_AUTH", ""),
+) as paygentic:
+
+    res = paygentic.invoices_v2.void_invoice_refund(id="<id>", refund_id="<id>")
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                            | Type                                                                 | Required                                                             | Description                                                          |
+| -------------------------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------- |
+| `id`                                                                 | *str*                                                                | :heavy_check_mark:                                                   | The invoice ID                                                       |
+| `refund_id`                                                          | *str*                                                                | :heavy_check_mark:                                                   | The refund (credit note) ID                                          |
+| `reason`                                                             | *Optional[str]*                                                      | :heavy_minus_sign:                                                   | Optional reason for voiding the refund (recorded on the credit note) |
+| `retries`                                                            | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)     | :heavy_minus_sign:                                                   | Configuration to override the default retry behavior of the client.  |
+
+### Response
+
+**[models.InvoiceRefund](../../models/invoicerefund.md)**
+
+### Errors
+
+| Error Type                   | Status Code                  | Content Type                 |
+| ---------------------------- | ---------------------------- | ---------------------------- |
+| errors.Error                 | 400                          | application/json             |
+| errors.ValidationError       | 400                          | application/json             |
 | errors.Error                 | 403, 404                     | application/json             |
 | errors.Error                 | 500                          | application/json             |
 | errors.PaygenticDefaultError | 4XX, 5XX                     | \*/\*                        |

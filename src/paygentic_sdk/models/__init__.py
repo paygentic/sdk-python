@@ -129,6 +129,12 @@ if TYPE_CHECKING:
     )
     from .createfeeop import CreateFeeRequest, CreateFeeRequestTypedDict
     from .creategrantrequest import CreateGrantRequest, CreateGrantRequestTypedDict
+    from .createinvoicerefundop import (
+        CreateInvoiceRefundRequest,
+        CreateInvoiceRefundRequestBody,
+        CreateInvoiceRefundRequestBodyTypedDict,
+        CreateInvoiceRefundRequestTypedDict,
+    )
     from .createitemop import CreateItemRequest, CreateItemRequestTypedDict
     from .createlineitemop import CreateLineItemRequest, CreateLineItemRequestTypedDict
     from .createmanuallineitemrequest import (
@@ -382,6 +388,17 @@ if TYPE_CHECKING:
         InvoiceLineItemsResponse,
         InvoiceLineItemsResponseTypedDict,
     )
+    from .invoicerefund import (
+        InvoiceRefund,
+        InvoiceRefundObject,
+        InvoiceRefundStatus,
+        InvoiceRefundTypedDict,
+    )
+    from .invoicerefundlist import (
+        InvoiceRefundList,
+        InvoiceRefundListObject,
+        InvoiceRefundListTypedDict,
+    )
     from .invoicesummary import InvoiceSummary, InvoiceSummaryTypedDict
     from .issueentitlementrequest import (
         IssueEntitlementRequest,
@@ -482,6 +499,10 @@ if TYPE_CHECKING:
         ListFeesRequestTypedDict,
         ListFeesResponse,
         ListFeesResponseTypedDict,
+    )
+    from .listinvoicerefundsop import (
+        ListInvoiceRefundsRequest,
+        ListInvoiceRefundsRequestTypedDict,
     )
     from .listinvoicesop import (
         ListInvoicesObject,
@@ -907,6 +928,12 @@ if TYPE_CHECKING:
         VoidEntitlementGrantRequest,
         VoidEntitlementGrantRequestTypedDict,
     )
+    from .voidinvoicerefundop import (
+        VoidInvoiceRefundRequest,
+        VoidInvoiceRefundRequestBody,
+        VoidInvoiceRefundRequestBodyTypedDict,
+        VoidInvoiceRefundRequestTypedDict,
+    )
 
 __all__ = [
     "Address",
@@ -994,6 +1021,10 @@ __all__ = [
     "CreateFeeRequestTypedDict",
     "CreateGrantRequest",
     "CreateGrantRequestTypedDict",
+    "CreateInvoiceRefundRequest",
+    "CreateInvoiceRefundRequestBody",
+    "CreateInvoiceRefundRequestBodyTypedDict",
+    "CreateInvoiceRefundRequestTypedDict",
     "CreateItemRequest",
     "CreateItemRequestTypedDict",
     "CreateLineItemRequest",
@@ -1195,6 +1226,13 @@ __all__ = [
     "InvoiceLineItemsResponse",
     "InvoiceLineItemsResponseTypedDict",
     "InvoiceObject",
+    "InvoiceRefund",
+    "InvoiceRefundList",
+    "InvoiceRefundListObject",
+    "InvoiceRefundListTypedDict",
+    "InvoiceRefundObject",
+    "InvoiceRefundStatus",
+    "InvoiceRefundTypedDict",
     "InvoiceStatus",
     "InvoiceSummary",
     "InvoiceSummaryTypedDict",
@@ -1276,6 +1314,8 @@ __all__ = [
     "ListFeesRequestTypedDict",
     "ListFeesResponse",
     "ListFeesResponseTypedDict",
+    "ListInvoiceRefundsRequest",
+    "ListInvoiceRefundsRequestTypedDict",
     "ListInvoicesObject",
     "ListInvoicesRequest",
     "ListInvoicesRequestTypedDict",
@@ -1617,6 +1657,10 @@ __all__ = [
     "ValueUnionTypedDict",
     "VoidEntitlementGrantRequest",
     "VoidEntitlementGrantRequestTypedDict",
+    "VoidInvoiceRefundRequest",
+    "VoidInvoiceRefundRequestBody",
+    "VoidInvoiceRefundRequestBodyTypedDict",
+    "VoidInvoiceRefundRequestTypedDict",
     "Window",
     "WindowedValue",
     "WindowedValueTypedDict",
@@ -1718,6 +1762,10 @@ _dynamic_imports: dict[str, str] = {
     "CreateFeeRequestTypedDict": ".createfeeop",
     "CreateGrantRequest": ".creategrantrequest",
     "CreateGrantRequestTypedDict": ".creategrantrequest",
+    "CreateInvoiceRefundRequest": ".createinvoicerefundop",
+    "CreateInvoiceRefundRequestBody": ".createinvoicerefundop",
+    "CreateInvoiceRefundRequestBodyTypedDict": ".createinvoicerefundop",
+    "CreateInvoiceRefundRequestTypedDict": ".createinvoicerefundop",
     "CreateItemRequest": ".createitemop",
     "CreateItemRequestTypedDict": ".createitemop",
     "CreateLineItemRequest": ".createlineitemop",
@@ -1928,6 +1976,13 @@ _dynamic_imports: dict[str, str] = {
     "InvoiceLineItemTypedDict": ".invoicelineitem",
     "InvoiceLineItemsResponse": ".invoicelineitemsresponse",
     "InvoiceLineItemsResponseTypedDict": ".invoicelineitemsresponse",
+    "InvoiceRefund": ".invoicerefund",
+    "InvoiceRefundObject": ".invoicerefund",
+    "InvoiceRefundStatus": ".invoicerefund",
+    "InvoiceRefundTypedDict": ".invoicerefund",
+    "InvoiceRefundList": ".invoicerefundlist",
+    "InvoiceRefundListObject": ".invoicerefundlist",
+    "InvoiceRefundListTypedDict": ".invoicerefundlist",
     "InvoiceSummary": ".invoicesummary",
     "InvoiceSummaryTypedDict": ".invoicesummary",
     "IssueEntitlementRequest": ".issueentitlementrequest",
@@ -2005,6 +2060,8 @@ _dynamic_imports: dict[str, str] = {
     "ListFeesRequestTypedDict": ".listfeesop",
     "ListFeesResponse": ".listfeesop",
     "ListFeesResponseTypedDict": ".listfeesop",
+    "ListInvoiceRefundsRequest": ".listinvoicerefundsop",
+    "ListInvoiceRefundsRequestTypedDict": ".listinvoicerefundsop",
     "ListInvoicesObject": ".listinvoicesop",
     "ListInvoicesRequest": ".listinvoicesop",
     "ListInvoicesRequestTypedDict": ".listinvoicesop",
@@ -2334,6 +2391,10 @@ _dynamic_imports: dict[str, str] = {
     "ValidTaxAddressTypedDict": ".validtaxaddress",
     "VoidEntitlementGrantRequest": ".voidentitlementgrantop",
     "VoidEntitlementGrantRequestTypedDict": ".voidentitlementgrantop",
+    "VoidInvoiceRefundRequest": ".voidinvoicerefundop",
+    "VoidInvoiceRefundRequestBody": ".voidinvoicerefundop",
+    "VoidInvoiceRefundRequestBodyTypedDict": ".voidinvoicerefundop",
+    "VoidInvoiceRefundRequestTypedDict": ".voidinvoicerefundop",
 }
 
 
