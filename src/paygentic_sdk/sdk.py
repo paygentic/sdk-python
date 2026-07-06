@@ -15,7 +15,9 @@ from typing import Any, Callable, Dict, Optional, TYPE_CHECKING, Union, cast
 import weakref
 
 if TYPE_CHECKING:
+    from paygentic_sdk.approvals import Approvals
     from paygentic_sdk.billablemetrics import BillableMetrics
+    from paygentic_sdk.billing_schedules import BillingSchedules
     from paygentic_sdk.costs import Costs
     from paygentic_sdk.customers import Customers
     from paygentic_sdk.entitlements import Entitlements
@@ -26,6 +28,7 @@ if TYPE_CHECKING:
     from paygentic_sdk.invoices_v2 import InvoicesV2
     from paygentic_sdk.items import Items
     from paygentic_sdk.merchantintegrations import MerchantIntegrations
+    from paygentic_sdk.orders import Orders
     from paygentic_sdk.payment_sessions import PaymentSessions
     from paygentic_sdk.payments import Payments
     from paygentic_sdk.plans import Plans
@@ -86,9 +89,15 @@ class Paygentic(BaseSDK):
     r"""An `ExternalReference` links a Paygentic entity (e.g. an `Item`) to a record in an external system such as Salesforce or NetSuite. Multiple external records may map to the same Paygentic entity, but each external id is the *primary* reference of at most one entity per merchant."""
     items: "Items"
     r"""An `Item` is the canonical \"thing you sell\" that external-system mappings point at. It is fully decoupled from the billing `Product` and holds no pricing/plan/metering, and it is CRM/ERP agnostic — which providers map to it lives entirely in its `ExternalReference` rows."""
+    orders: "Orders"
+    r"""Manage Orders, their line items, and billing schedules."""
+    billing_schedules: "BillingSchedules"
+    r"""Owner-polymorphic billing schedules with intervals and staged invoice projections. A BillingSchedule belongs to exactly one Order or one Subscription (XOR). Cadence lives on ScheduleIntervals (cadence-on-the-line)."""
     salesforce: "Salesforce"
     merchant_integrations: "MerchantIntegrations"
     r"""A `MerchantIntegration` records a merchant's connection to an external provider. One connection per `(merchant, provider)` — re-connecting upserts in place."""
+    approvals: "Approvals"
+    r"""Submit, decide, cancel, and read maker-checker approvals."""
     _sub_sdk_map = {
         "billable_metrics": ("paygentic_sdk.billablemetrics", "BillableMetrics"),
         "customers": ("paygentic_sdk.customers", "Customers"),
@@ -114,11 +123,14 @@ class Paygentic(BaseSDK):
             "ExternalReferences",
         ),
         "items": ("paygentic_sdk.items", "Items"),
+        "orders": ("paygentic_sdk.orders", "Orders"),
+        "billing_schedules": ("paygentic_sdk.billing_schedules", "BillingSchedules"),
         "salesforce": ("paygentic_sdk.salesforce", "Salesforce"),
         "merchant_integrations": (
             "paygentic_sdk.merchantintegrations",
             "MerchantIntegrations",
         ),
+        "approvals": ("paygentic_sdk.approvals", "Approvals"),
     }
 
     def __init__(

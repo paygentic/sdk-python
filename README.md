@@ -324,6 +324,13 @@ with Paygentic(
 <details open>
 <summary>Available methods</summary>
 
+### [Approvals](docs/sdks/approvals/README.md)
+
+* [create_approval](docs/sdks/approvals/README.md#create_approval) - Submit a resource for approval
+* [list_approvals](docs/sdks/approvals/README.md#list_approvals) - List approvals
+* [get_approval](docs/sdks/approvals/README.md#get_approval) - Get an approval
+* [update_approval](docs/sdks/approvals/README.md#update_approval) - Update an approval (approve, reject, or cancel)
+
 ### [BillableMetrics](docs/sdks/billablemetrics/README.md)
 
 * [create](docs/sdks/billablemetrics/README.md#create) - Create
@@ -332,6 +339,18 @@ with Paygentic(
 * [update](docs/sdks/billablemetrics/README.md#update) - Update
 * [meter](docs/sdks/billablemetrics/README.md#meter) - Query Meter Usage
 * [list_events](docs/sdks/billablemetrics/README.md#list_events) - List Meter Events
+
+### [BillingSchedules](docs/sdks/billingschedules/README.md)
+
+* [list_billing_schedules](docs/sdks/billingschedules/README.md#list_billing_schedules) - List billing schedules
+* [create_billing_schedule](docs/sdks/billingschedules/README.md#create_billing_schedule) - Create a billing schedule
+* [get_billing_schedule](docs/sdks/billingschedules/README.md#get_billing_schedule) - Get a billing schedule
+* [update_billing_schedule](docs/sdks/billingschedules/README.md#update_billing_schedule) - Update a billing schedule
+* [delete_billing_schedule](docs/sdks/billingschedules/README.md#delete_billing_schedule) - Delete a billing schedule
+* [list_schedule_intervals](docs/sdks/billingschedules/README.md#list_schedule_intervals) - List schedule intervals
+* [replace_schedule_intervals](docs/sdks/billingschedules/README.md#replace_schedule_intervals) - Replace schedule intervals
+* [list_schedule_invoices](docs/sdks/billingschedules/README.md#list_schedule_invoices) - List staged invoices
+* [generate_schedule_invoices](docs/sdks/billingschedules/README.md#generate_schedule_invoices) - Generate staged invoices
 
 ### [Costs](docs/sdks/costs/README.md)
 
@@ -421,6 +440,18 @@ with Paygentic(
 * [upsert_merchant_integration](docs/sdks/merchantintegrations/README.md#upsert_merchant_integration) - Upsert
 * [get_merchant_integration](docs/sdks/merchantintegrations/README.md#get_merchant_integration) - Get
 * [disconnect_merchant_integration](docs/sdks/merchantintegrations/README.md#disconnect_merchant_integration) - Disconnect
+
+### [Orders](docs/sdks/orders/README.md)
+
+* [create_order](docs/sdks/orders/README.md#create_order) - Create an order
+* [list_orders](docs/sdks/orders/README.md#list_orders) - List orders
+* [get_order](docs/sdks/orders/README.md#get_order) - Get an order
+* [update_order](docs/sdks/orders/README.md#update_order) - Update an order
+* [delete_order](docs/sdks/orders/README.md#delete_order) - Delete an order
+* [create_order_line_item](docs/sdks/orders/README.md#create_order_line_item) - Add a line item
+* [update_order_line_item](docs/sdks/orders/README.md#update_order_line_item) - Update a line item
+* [delete_order_line_item](docs/sdks/orders/README.md#delete_order_line_item) - Delete a line item
+* [create_order_approval](docs/sdks/orders/README.md#create_order_approval) - Create an approval for the order
 
 ### [PaymentSessions](docs/sdks/paymentsessions/README.md)
 
@@ -610,7 +641,7 @@ with Paygentic(
 ### Error Classes
 **Primary errors:**
 * [`PaygenticError`](./src/paygentic_sdk/errors/paygenticerror.py): The base class for HTTP error responses.
-  * [`Error`](./src/paygentic_sdk/errors/error.py): Generic error.
+  * [`Error`](./src/paygentic_sdk/errors/error.py): *
 
 <details><summary>Less common errors (8)</summary>
 
@@ -623,9 +654,9 @@ with Paygentic(
 
 
 **Inherit from [`PaygenticError`](./src/paygentic_sdk/errors/paygenticerror.py)**:
-* [`ValidationError`](./src/paygentic_sdk/errors/validationerror.py): Bad Request - The request could not be understood or was missing required parameters. Status code `400`. Applicable to 67 of 110 methods.*
-* [`DeleteCustomerConflictError`](./src/paygentic_sdk/errors/deletecustomerconflicterror.py): Customer cannot be deleted due to active dependencies. Status code `409`. Applicable to 1 of 110 methods.*
-* [`DeleteFeeConflictError`](./src/paygentic_sdk/errors/deletefeeconflicterror.py): Fee cannot be deleted because it has associated prices. Status code `409`. Applicable to 1 of 110 methods.*
+* [`ValidationError`](./src/paygentic_sdk/errors/validationerror.py): Bad Request - The request could not be understood or was missing required parameters. Status code `400`. Applicable to 80 of 132 methods.*
+* [`DeleteCustomerConflictError`](./src/paygentic_sdk/errors/deletecustomerconflicterror.py): Customer cannot be deleted due to active dependencies. Status code `409`. Applicable to 1 of 132 methods.*
+* [`DeleteFeeConflictError`](./src/paygentic_sdk/errors/deletefeeconflicterror.py): Fee cannot be deleted because it has associated prices. Status code `409`. Applicable to 1 of 132 methods.*
 * [`ResponseValidationError`](./src/paygentic_sdk/errors/responsevalidationerror.py): Type mismatch between the response data and the expected Pydantic model. Provides access to the Pydantic validation error via the `cause` attribute.
 
 </details>

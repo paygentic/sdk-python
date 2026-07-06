@@ -1,0 +1,17 @@
+# CreateOrderLineItemRequest
+
+
+## Fields
+
+| Field                                                                | Type                                                                 | Required                                                             | Description                                                          |
+| -------------------------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------- |
+| `item_id`                                                            | *OptionalNullable[str]*                                              | :heavy_minus_sign:                                                   | N/A                                                                  |
+| `description`                                                        | *OptionalNullable[str]*                                              | :heavy_minus_sign:                                                   | N/A                                                                  |
+| `quantity`                                                           | *str*                                                                | :heavy_check_mark:                                                   | N/A                                                                  |
+| `list_unit_price`                                                    | *str*                                                                | :heavy_check_mark:                                                   | N/A                                                                  |
+| `discount_unit_amount`                                               | *Optional[str]*                                                      | :heavy_minus_sign:                                                   | N/A                                                                  |
+| `unit_price`                                                         | *str*                                                                | :heavy_check_mark:                                                   | N/A                                                                  |
+| `total_price`                                                        | *str*                                                                | :heavy_check_mark:                                                   | N/A                                                                  |
+| `metadata`                                                           | Dict[str, *Any*]                                                     | :heavy_minus_sign:                                                   | N/A                                                                  |
+| `term_start_date`                                                    | [date](https://docs.python.org/3/library/datetime.html#date-objects) | :heavy_minus_sign:                                                   | N/A                                                                  |
+| `term_end_date`                                                      | [date](https://docs.python.org/3/library/datetime.html#date-objects) | :heavy_minus_sign:                                                   | N/A                                                                  |

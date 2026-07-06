@@ -42,6 +42,8 @@ class GrantTypedDict(TypedDict):
     r"""Maximum balance carried over at the entitlement's reset boundary. A value of 999999999999 represents effectively unlimited rollover (the default for direct and purchase grants). A value of 0 means any remaining balance is discarded at each reset."""
     reset_min_rollover: NotRequired[float]
     r"""Minimum balance at the entitlement's reset boundary; balances below this are floored up. 0 means no floor."""
+    priority: NotRequired[int]
+    r"""Burn-down priority. Grants with a lower priority are consumed before grants with a higher priority; ties break on earliest expiration, then creation order. Defaults to 0."""
 
 
 class Grant(BaseModel):
@@ -90,10 +92,20 @@ class Grant(BaseModel):
     ] = None
     r"""Minimum balance at the entitlement's reset boundary; balances below this are floored up. 0 means no floor."""
 
+    priority: Optional[int] = None
+    r"""Burn-down priority. Grants with a lower priority are consumed before grants with a higher priority; ties break on earliest expiration, then creation order. Defaults to 0."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
-            ["object", "expiresAt", "voidedAt", "resetMaxRollover", "resetMinRollover"]
+            [
+                "object",
+                "expiresAt",
+                "voidedAt",
+                "resetMaxRollover",
+                "resetMinRollover",
+                "priority",
+            ]
         )
         nullable_fields = set(
             ["expiresAt", "voidedAt", "recurrencePeriod", "idempotencyKey"]

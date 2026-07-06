@@ -28,6 +28,8 @@ class CreateGrantRequestTypedDict(TypedDict):
     r"""Maximum balance carried over at the entitlement's reset boundary. If omitted, the entire balance rolls over until consumed or expired. Set to 0 to discard any remaining balance at each reset. Ignored when the target entitlement has no `usagePeriod` (one-time entitlement) — one-time entitlements have no reset boundary, so this field has no effect."""
     reset_min_rollover: NotRequired[float]
     r"""Minimum balance at the entitlement's reset boundary; balances below this are floored up. Defaults to 0 (no floor). Ignored when the target entitlement has no `usagePeriod` (one-time entitlement)."""
+    priority: NotRequired[int]
+    r"""Burn-down priority. Grants with a lower priority are consumed before grants with a higher priority; ties break on earliest expiration, then creation order. Negative values are allowed and can be used to make a grant burn ahead of existing priority-0 grants (e.g. a correction grant absorbing erroneous usage before a recurring allowance). Defaults to 0."""
 
 
 class CreateGrantRequest(BaseModel):
@@ -57,10 +59,19 @@ class CreateGrantRequest(BaseModel):
     ] = None
     r"""Minimum balance at the entitlement's reset boundary; balances below this are floored up. Defaults to 0 (no floor). Ignored when the target entitlement has no `usagePeriod` (one-time entitlement)."""
 
+    priority: Optional[int] = None
+    r"""Burn-down priority. Grants with a lower priority are consumed before grants with a higher priority; ties break on earliest expiration, then creation order. Negative values are allowed and can be used to make a grant burn ahead of existing priority-0 grants (e.g. a correction grant absorbing erroneous usage before a recurring allowance). Defaults to 0."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
-            ["effectiveAt", "expiresAt", "resetMaxRollover", "resetMinRollover"]
+            [
+                "effectiveAt",
+                "expiresAt",
+                "resetMaxRollover",
+                "resetMinRollover",
+                "priority",
+            ]
         )
         nullable_fields = set(["expiresAt"])
         serialized = handler(self)

@@ -239,6 +239,7 @@ class Grants(BaseSDK):
         expires_at: OptionalNullable[datetime] = UNSET,
         reset_max_rollover: Optional[float] = None,
         reset_min_rollover: Optional[float] = None,
+        priority: Optional[int] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -255,6 +256,7 @@ class Grants(BaseSDK):
         :param expires_at: When the grant expires. If omitted, the grant does not expire.
         :param reset_max_rollover: Maximum balance carried over at the entitlement's reset boundary. If omitted, the entire balance rolls over until consumed or expired. Set to 0 to discard any remaining balance at each reset. Ignored when the target entitlement has no `usagePeriod` (one-time entitlement) — one-time entitlements have no reset boundary, so this field has no effect.
         :param reset_min_rollover: Minimum balance at the entitlement's reset boundary; balances below this are floored up. Defaults to 0 (no floor). Ignored when the target entitlement has no `usagePeriod` (one-time entitlement).
+        :param priority: Burn-down priority. Grants with a lower priority are consumed before grants with a higher priority; ties break on earliest expiration, then creation order. Negative values are allowed and can be used to make a grant burn ahead of existing priority-0 grants (e.g. a correction grant absorbing erroneous usage before a recurring allowance). Defaults to 0.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -279,6 +281,7 @@ class Grants(BaseSDK):
                 idempotency_key=idempotency_key,
                 reset_max_rollover=reset_max_rollover,
                 reset_min_rollover=reset_min_rollover,
+                priority=priority,
             ),
         )
 
@@ -364,6 +367,7 @@ class Grants(BaseSDK):
         expires_at: OptionalNullable[datetime] = UNSET,
         reset_max_rollover: Optional[float] = None,
         reset_min_rollover: Optional[float] = None,
+        priority: Optional[int] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -380,6 +384,7 @@ class Grants(BaseSDK):
         :param expires_at: When the grant expires. If omitted, the grant does not expire.
         :param reset_max_rollover: Maximum balance carried over at the entitlement's reset boundary. If omitted, the entire balance rolls over until consumed or expired. Set to 0 to discard any remaining balance at each reset. Ignored when the target entitlement has no `usagePeriod` (one-time entitlement) — one-time entitlements have no reset boundary, so this field has no effect.
         :param reset_min_rollover: Minimum balance at the entitlement's reset boundary; balances below this are floored up. Defaults to 0 (no floor). Ignored when the target entitlement has no `usagePeriod` (one-time entitlement).
+        :param priority: Burn-down priority. Grants with a lower priority are consumed before grants with a higher priority; ties break on earliest expiration, then creation order. Negative values are allowed and can be used to make a grant burn ahead of existing priority-0 grants (e.g. a correction grant absorbing erroneous usage before a recurring allowance). Defaults to 0.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -404,6 +409,7 @@ class Grants(BaseSDK):
                 idempotency_key=idempotency_key,
                 reset_max_rollover=reset_max_rollover,
                 reset_min_rollover=reset_min_rollover,
+                priority=priority,
             ),
         )
 
