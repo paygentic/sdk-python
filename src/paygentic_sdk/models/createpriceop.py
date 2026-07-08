@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 from .pricefeatureinput import PriceFeatureInput, PriceFeatureInputTypedDict
+from .pricemodelinput import PriceModelInput
 from .priceproperties_union import PricePropertiesUnion, PricePropertiesUnionTypedDict
 from paygentic_sdk.types import (
     BaseModel,
@@ -14,15 +15,6 @@ import pydantic
 from pydantic import model_serializer
 from typing import Literal, Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
-
-
-CreatePriceModel = Literal[
-    "standard",
-    "dynamic",
-    "volume",
-    "percentage",
-]
-r"""Pricing calculation model. Required for billable metrics, optional for fees (defaults to 'standard')."""
 
 
 CreatePricePaymentTerm = Literal[
@@ -43,8 +35,10 @@ class CreatePriceRequestTypedDict(TypedDict):
     r"""Unique identifier for a billable metric"""
     fee_id: NotRequired[str]
     r"""The unique identifier for the fee referred to by this price. Either billableMetricId or feeId must be provided."""
-    model: NotRequired[CreatePriceModel]
-    r"""Pricing calculation model. Required for billable metrics, optional for fees (defaults to 'standard')."""
+    pricing_unit_id: NotRequired[str]
+    r"""Unique identifier for a pricing unit"""
+    model: NotRequired[PriceModelInput]
+    r"""Pricing calculation model. Required for billable metrics, optional for fees (defaults to 'standard'). Only 'standard' is accepted; for percentage/revenue-share use 'standard' with a unit-price multiplier. Legacy prices using 'dynamic'/'volume'/'percentage' stay readable and billable but cannot be created."""
     billing_cadence: NotRequired[Nullable[str]]
     r"""ISO 8601 duration for recurring charges (e.g., 'P1M' for monthly, 'P1Y' for yearly) or 'P0D' for one-time charges. Required for fees, optional for billable metrics. Sample values: 'P0D' for one-time, 'P1M' for monthly recurring, 'P1Y' for yearly recurring"""
     feature: NotRequired[PriceFeatureInputTypedDict]
@@ -71,8 +65,13 @@ class CreatePriceRequest(BaseModel):
     fee_id: Annotated[Optional[str], pydantic.Field(alias="feeId")] = None
     r"""The unique identifier for the fee referred to by this price. Either billableMetricId or feeId must be provided."""
 
-    model: Optional[CreatePriceModel] = None
-    r"""Pricing calculation model. Required for billable metrics, optional for fees (defaults to 'standard')."""
+    pricing_unit_id: Annotated[Optional[str], pydantic.Field(alias="pricingUnitId")] = (
+        None
+    )
+    r"""Unique identifier for a pricing unit"""
+
+    model: Optional[PriceModelInput] = None
+    r"""Pricing calculation model. Required for billable metrics, optional for fees (defaults to 'standard'). Only 'standard' is accepted; for percentage/revenue-share use 'standard' with a unit-price multiplier. Legacy prices using 'dynamic'/'volume'/'percentage' stay readable and billable but cannot be created."""
 
     billing_cadence: Annotated[
         OptionalNullable[str], pydantic.Field(alias="billingCadence")
@@ -95,6 +94,7 @@ class CreatePriceRequest(BaseModel):
             [
                 "billableMetricId",
                 "feeId",
+                "pricingUnitId",
                 "model",
                 "billingCadence",
                 "feature",

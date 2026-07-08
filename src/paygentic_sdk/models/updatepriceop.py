@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 from .pricefeatureinput import PriceFeatureInput, PriceFeatureInputTypedDict
+from .pricemodelinput import PriceModelInput
 from .priceproperties_union import PricePropertiesUnion, PricePropertiesUnionTypedDict
 from paygentic_sdk.types import (
     BaseModel,
@@ -17,15 +18,6 @@ from typing import Literal, Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
 
 
-UpdatePriceModel = Literal[
-    "standard",
-    "dynamic",
-    "volume",
-    "percentage",
-]
-r"""The pricing model to be used, which can be standard, dynamic, volume-based, or percentage-based."""
-
-
 UpdatePricePaymentTerm = Literal[
     "instant",
     "in_arrears",
@@ -37,10 +29,12 @@ r"""Billing timing preference. For billable metrics: 'instant' (charges immediat
 class UpdatePriceRequestBodyTypedDict(TypedDict):
     billable_metric_id: NotRequired[str]
     r"""Unique identifier for a billable metric"""
+    pricing_unit_id: NotRequired[Nullable[str]]
+    r"""Denominate this metered price in a pricing unit (credits). Set to a pricing unit ID to draw down a credit pool, null to revert to real currency, or omit to leave unchanged."""
     invoice_display_name: NotRequired[str]
     r"""Updated invoice line item label. Sample values: 'LLM Token Usage', 'Storage Charges', 'API Call Fees'"""
-    model: NotRequired[UpdatePriceModel]
-    r"""The pricing model to be used, which can be standard, dynamic, volume-based, or percentage-based."""
+    model: NotRequired[PriceModelInput]
+    r"""The pricing model to set. Only 'standard' is accepted. Legacy 'dynamic'/'volume'/'percentage' prices can still be edited (other fields) but cannot be switched to those models. Percentage/revenue-share is expressed via 'standard' with a unit-price multiplier."""
     properties: NotRequired[PricePropertiesUnionTypedDict]
     payment_term: NotRequired[UpdatePricePaymentTerm]
     r"""Billing timing preference. For billable metrics: 'instant' (charges immediately) or 'in_arrears' (charges at period end). For fees: 'in_advance' (charges upfront) or 'in_arrears' (charges at period end)."""
@@ -60,13 +54,18 @@ class UpdatePriceRequestBody(BaseModel):
     ] = None
     r"""Unique identifier for a billable metric"""
 
+    pricing_unit_id: Annotated[
+        OptionalNullable[str], pydantic.Field(alias="pricingUnitId")
+    ] = UNSET
+    r"""Denominate this metered price in a pricing unit (credits). Set to a pricing unit ID to draw down a credit pool, null to revert to real currency, or omit to leave unchanged."""
+
     invoice_display_name: Annotated[
         Optional[str], pydantic.Field(alias="invoiceDisplayName")
     ] = None
     r"""Updated invoice line item label. Sample values: 'LLM Token Usage', 'Storage Charges', 'API Call Fees'"""
 
-    model: Optional[UpdatePriceModel] = None
-    r"""The pricing model to be used, which can be standard, dynamic, volume-based, or percentage-based."""
+    model: Optional[PriceModelInput] = None
+    r"""The pricing model to set. Only 'standard' is accepted. Legacy 'dynamic'/'volume'/'percentage' prices can still be edited (other fields) but cannot be switched to those models. Percentage/revenue-share is expressed via 'standard' with a unit-price multiplier."""
 
     properties: Optional[PricePropertiesUnion] = None
 
@@ -96,6 +95,7 @@ class UpdatePriceRequestBody(BaseModel):
         optional_fields = set(
             [
                 "billableMetricId",
+                "pricingUnitId",
                 "invoiceDisplayName",
                 "model",
                 "properties",
@@ -106,7 +106,7 @@ class UpdatePriceRequestBody(BaseModel):
                 "quantity",
             ]
         )
-        nullable_fields = set(["billingCadence", "feature"])
+        nullable_fields = set(["pricingUnitId", "billingCadence", "feature"])
         serialized = handler(self)
         m = {}
 

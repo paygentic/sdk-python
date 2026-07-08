@@ -42,15 +42,17 @@ class MeteredEntitlementListItemTypedDict(TypedDict):
     is_soft_limit: bool
     r"""When false (hard limit), access is blocked when balance is exhausted and overage is not charged on invoices. When true (soft limit), access continues past the grant and overage is charged at the per-unit rate."""
     balance: float
-    r"""Remaining grant balance for the current period."""
+    r"""Remaining balance for the current period. When `pricingUnitId` is set, this is expressed in that pricing unit's credits (a balance shared across every feature drawing the same unit); otherwise it is in the feature's native metered units."""
     usage_in_period: float
-    r"""Total usage consumed in the current billing period."""
+    r"""Total usage consumed in the current billing period, in the same unit as `balance` (credits when `pricingUnitId` is set, otherwise native metered units). When `pricingUnitId` is set, this is the shared-pool aggregate across every feature drawing the same unit, not usage specific to this feature."""
     overage: float
-    r"""Amount of usage exceeding the granted balance."""
+    r"""Amount of usage exceeding the balance, in the same unit as `balance` (credits when `pricingUnitId` is set, otherwise native metered units)."""
+    pricing_unit_id: Nullable[str]
+    r"""The pricing unit this feature is denominated in when it draws a credit pool. When set, `balance`/`usageInPeriod`/`overage` are in that unit's credits and reflect a balance shared across all features on the same unit. `null` for currency-denominated features (native metered units)."""
     current_period_start: Nullable[datetime]
-    r"""Start of the current usage period. Before the entitlement activates (the pre-activation \"dark window\", when the query time is earlier than `activeFrom`) this instead describes the pre-activation `[subscription start, activation)` window and may be `null` when there is no associated subscription."""
+    r"""Start of the current usage period. These bounds describe this entitlement's own usage window (not the shared pool's), even for a pool-backed feature (`pricingUnitId` set) whose `balance` and `usageInPeriod` are shared-pool aggregates. Before the entitlement activates (the pre-activation \"dark window\", when the query time is earlier than `activeFrom`) this instead describes the pre-activation `[subscription start, activation)` window and may be `null` when there is no associated subscription."""
     current_period_end: Nullable[datetime]
-    r"""End of the current usage period. Before the entitlement activates (the pre-activation \"dark window\", when the query time is earlier than `activeFrom`) this instead holds `activeFrom` — the end of the pre-activation `[subscription start, activation)` window."""
+    r"""End of the current usage period. These bounds describe this entitlement's own usage window (not the shared pool's), even for a pool-backed feature (`pricingUnitId` set) whose `balance` and `usageInPeriod` are shared-pool aggregates. Before the entitlement activates (the pre-activation \"dark window\", when the query time is earlier than `activeFrom`) this instead holds `activeFrom` — the end of the pre-activation `[subscription start, activation)` window."""
     feature_type: Literal["metered"]
 
 
@@ -97,23 +99,26 @@ class MeteredEntitlementListItem(BaseModel):
     r"""When false (hard limit), access is blocked when balance is exhausted and overage is not charged on invoices. When true (soft limit), access continues past the grant and overage is charged at the per-unit rate."""
 
     balance: float
-    r"""Remaining grant balance for the current period."""
+    r"""Remaining balance for the current period. When `pricingUnitId` is set, this is expressed in that pricing unit's credits (a balance shared across every feature drawing the same unit); otherwise it is in the feature's native metered units."""
 
     usage_in_period: Annotated[float, pydantic.Field(alias="usageInPeriod")]
-    r"""Total usage consumed in the current billing period."""
+    r"""Total usage consumed in the current billing period, in the same unit as `balance` (credits when `pricingUnitId` is set, otherwise native metered units). When `pricingUnitId` is set, this is the shared-pool aggregate across every feature drawing the same unit, not usage specific to this feature."""
 
     overage: float
-    r"""Amount of usage exceeding the granted balance."""
+    r"""Amount of usage exceeding the balance, in the same unit as `balance` (credits when `pricingUnitId` is set, otherwise native metered units)."""
+
+    pricing_unit_id: Annotated[Nullable[str], pydantic.Field(alias="pricingUnitId")]
+    r"""The pricing unit this feature is denominated in when it draws a credit pool. When set, `balance`/`usageInPeriod`/`overage` are in that unit's credits and reflect a balance shared across all features on the same unit. `null` for currency-denominated features (native metered units)."""
 
     current_period_start: Annotated[
         Nullable[datetime], pydantic.Field(alias="currentPeriodStart")
     ]
-    r"""Start of the current usage period. Before the entitlement activates (the pre-activation \"dark window\", when the query time is earlier than `activeFrom`) this instead describes the pre-activation `[subscription start, activation)` window and may be `null` when there is no associated subscription."""
+    r"""Start of the current usage period. These bounds describe this entitlement's own usage window (not the shared pool's), even for a pool-backed feature (`pricingUnitId` set) whose `balance` and `usageInPeriod` are shared-pool aggregates. Before the entitlement activates (the pre-activation \"dark window\", when the query time is earlier than `activeFrom`) this instead describes the pre-activation `[subscription start, activation)` window and may be `null` when there is no associated subscription."""
 
     current_period_end: Annotated[
         Nullable[datetime], pydantic.Field(alias="currentPeriodEnd")
     ]
-    r"""End of the current usage period. Before the entitlement activates (the pre-activation \"dark window\", when the query time is earlier than `activeFrom`) this instead holds `activeFrom` — the end of the pre-activation `[subscription start, activation)` window."""
+    r"""End of the current usage period. These bounds describe this entitlement's own usage window (not the shared pool's), even for a pool-backed feature (`pricingUnitId` set) whose `balance` and `usageInPeriod` are shared-pool aggregates. Before the entitlement activates (the pre-activation \"dark window\", when the query time is earlier than `activeFrom`) this instead holds `activeFrom` — the end of the pre-activation `[subscription start, activation)` window."""
 
     feature_type: Annotated[
         Annotated[Literal["metered"], AfterValidator(validate_const("metered"))],

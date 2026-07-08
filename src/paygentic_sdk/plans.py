@@ -30,7 +30,7 @@ class Plans(BaseSDK):
         tax_behavior: Optional[models.CreatePlanTaxBehavior] = "exclusive",
         renewal_reminder_enabled: Optional[bool] = True,
         renewal_reminder_days: Optional[int] = 3,
-        billing_version: Optional[models.BillingVersion] = 0,
+        billing_version: Optional[models.BillingVersion] = 1,
         billing_anchor: OptionalNullable[datetime] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -53,7 +53,7 @@ class Plans(BaseSDK):
         :param tax_behavior: Whether tax is added on top of the price (exclusive) or included in the price (inclusive)
         :param renewal_reminder_enabled: Whether to send renewal reminder emails to customers before their subscription renews
         :param renewal_reminder_days: Number of days before renewal to send the reminder email
-        :param billing_version: Billing engine version. 0 = legacy fee-schedule billing (Legacy), 1 = line-item billing with metered usage support (Standard).
+        :param billing_version: Billing engine version. Only 1 (Standard, line-item billing with metered usage support) is accepted for new plans; omitting the field defaults to 1. 0 (Legacy, fee-schedule billing) is rejected — it exists only on plans created before this restriction.
         :param billing_anchor: ISO 8601 datetime reference point for billing period alignment. Must be in the past or present. When set, subscriptions created under this plan align their first billing period to the next recurrence of this anchor.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -174,7 +174,7 @@ class Plans(BaseSDK):
         tax_behavior: Optional[models.CreatePlanTaxBehavior] = "exclusive",
         renewal_reminder_enabled: Optional[bool] = True,
         renewal_reminder_days: Optional[int] = 3,
-        billing_version: Optional[models.BillingVersion] = 0,
+        billing_version: Optional[models.BillingVersion] = 1,
         billing_anchor: OptionalNullable[datetime] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -197,7 +197,7 @@ class Plans(BaseSDK):
         :param tax_behavior: Whether tax is added on top of the price (exclusive) or included in the price (inclusive)
         :param renewal_reminder_enabled: Whether to send renewal reminder emails to customers before their subscription renews
         :param renewal_reminder_days: Number of days before renewal to send the reminder email
-        :param billing_version: Billing engine version. 0 = legacy fee-schedule billing (Legacy), 1 = line-item billing with metered usage support (Standard).
+        :param billing_version: Billing engine version. Only 1 (Standard, line-item billing with metered usage support) is accepted for new plans; omitting the field defaults to 1. 0 (Legacy, fee-schedule billing) is rejected — it exists only on plans created before this restriction.
         :param billing_anchor: ISO 8601 datetime reference point for billing period alignment. Must be in the past or present. When set, subscriptions created under this plan align their first billing period to the next recurrence of this anchor.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method

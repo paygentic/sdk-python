@@ -1,12 +1,12 @@
-# SchemasPriceModel
+# PriceModel1
 
 ## Example Usage
 
 ```python
-from paygentic_sdk.models import SchemasPriceModel
+from paygentic_sdk.models import PriceModel1
 
 # Open enum: unrecognized values are captured as UnrecognizedStr
-value: SchemasPriceModel = "standard"
+value: PriceModel1 = "standard"
 ```
 
 

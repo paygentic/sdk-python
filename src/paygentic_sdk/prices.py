@@ -22,7 +22,8 @@ class Prices(BaseSDK):
         ],
         billable_metric_id: Optional[str] = None,
         fee_id: Optional[str] = None,
-        model: Optional[models.CreatePriceModel] = None,
+        pricing_unit_id: Optional[str] = None,
+        model: Optional[models.PriceModelInput] = None,
         billing_cadence: OptionalNullable[str] = UNSET,
         feature: Optional[
             Union[models.PriceFeatureInput, models.PriceFeatureInputTypedDict]
@@ -41,7 +42,8 @@ class Prices(BaseSDK):
         :param properties:
         :param billable_metric_id: Unique identifier for a billable metric
         :param fee_id: The unique identifier for the fee referred to by this price. Either billableMetricId or feeId must be provided.
-        :param model: Pricing calculation model. Required for billable metrics, optional for fees (defaults to 'standard').
+        :param pricing_unit_id: Unique identifier for a pricing unit
+        :param model: Pricing calculation model. Required for billable metrics, optional for fees (defaults to 'standard'). Only 'standard' is accepted; for percentage/revenue-share use 'standard' with a unit-price multiplier. Legacy prices using 'dynamic'/'volume'/'percentage' stay readable and billable but cannot be created.
         :param billing_cadence: ISO 8601 duration for recurring charges (e.g., 'P1M' for monthly, 'P1Y' for yearly) or 'P0D' for one-time charges. Required for fees, optional for billable metrics. Sample values: 'P0D' for one-time, 'P1M' for monthly recurring, 'P1Y' for yearly recurring
         :param feature:
         :param grant_discount_enabled: When true, grants applied to a subscription will discount usage charged by this price. Only supported for standard metered prices.
@@ -64,6 +66,7 @@ class Prices(BaseSDK):
         request = models.CreatePriceRequest(
             billable_metric_id=billable_metric_id,
             fee_id=fee_id,
+            pricing_unit_id=pricing_unit_id,
             model=model,
             invoice_display_name=invoice_display_name,
             payment_term=payment_term,
@@ -117,7 +120,7 @@ class Prices(BaseSDK):
                 ),
             ),
             request=req,
-            error_status_codes=["400", "401", "403", "4XX", "500", "5XX"],
+            error_status_codes=["400", "401", "403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -127,7 +130,7 @@ class Prices(BaseSDK):
         if utils.match_response(http_res, "400", "application/json"):
             response_data = unmarshal_json_response(errors.BadRequestUnion, http_res)
             raise errors.BadRequest(response_data, http_res)
-        if utils.match_response(http_res, ["401", "403"], "application/json"):
+        if utils.match_response(http_res, ["401", "403", "404"], "application/json"):
             response_data = unmarshal_json_response(errors.ErrorData, http_res)
             raise errors.Error(response_data, http_res)
         if utils.match_response(http_res, "500", "application/json"):
@@ -156,7 +159,8 @@ class Prices(BaseSDK):
         ],
         billable_metric_id: Optional[str] = None,
         fee_id: Optional[str] = None,
-        model: Optional[models.CreatePriceModel] = None,
+        pricing_unit_id: Optional[str] = None,
+        model: Optional[models.PriceModelInput] = None,
         billing_cadence: OptionalNullable[str] = UNSET,
         feature: Optional[
             Union[models.PriceFeatureInput, models.PriceFeatureInputTypedDict]
@@ -175,7 +179,8 @@ class Prices(BaseSDK):
         :param properties:
         :param billable_metric_id: Unique identifier for a billable metric
         :param fee_id: The unique identifier for the fee referred to by this price. Either billableMetricId or feeId must be provided.
-        :param model: Pricing calculation model. Required for billable metrics, optional for fees (defaults to 'standard').
+        :param pricing_unit_id: Unique identifier for a pricing unit
+        :param model: Pricing calculation model. Required for billable metrics, optional for fees (defaults to 'standard'). Only 'standard' is accepted; for percentage/revenue-share use 'standard' with a unit-price multiplier. Legacy prices using 'dynamic'/'volume'/'percentage' stay readable and billable but cannot be created.
         :param billing_cadence: ISO 8601 duration for recurring charges (e.g., 'P1M' for monthly, 'P1Y' for yearly) or 'P0D' for one-time charges. Required for fees, optional for billable metrics. Sample values: 'P0D' for one-time, 'P1M' for monthly recurring, 'P1Y' for yearly recurring
         :param feature:
         :param grant_discount_enabled: When true, grants applied to a subscription will discount usage charged by this price. Only supported for standard metered prices.
@@ -198,6 +203,7 @@ class Prices(BaseSDK):
         request = models.CreatePriceRequest(
             billable_metric_id=billable_metric_id,
             fee_id=fee_id,
+            pricing_unit_id=pricing_unit_id,
             model=model,
             invoice_display_name=invoice_display_name,
             payment_term=payment_term,
@@ -251,7 +257,7 @@ class Prices(BaseSDK):
                 ),
             ),
             request=req,
-            error_status_codes=["400", "401", "403", "4XX", "500", "5XX"],
+            error_status_codes=["400", "401", "403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -261,7 +267,7 @@ class Prices(BaseSDK):
         if utils.match_response(http_res, "400", "application/json"):
             response_data = unmarshal_json_response(errors.BadRequestUnion, http_res)
             raise errors.BadRequest(response_data, http_res)
-        if utils.match_response(http_res, ["401", "403"], "application/json"):
+        if utils.match_response(http_res, ["401", "403", "404"], "application/json"):
             response_data = unmarshal_json_response(errors.ErrorData, http_res)
             raise errors.Error(response_data, http_res)
         if utils.match_response(http_res, "500", "application/json"):
@@ -673,8 +679,9 @@ class Prices(BaseSDK):
         *,
         id: str,
         billable_metric_id: Optional[str] = None,
+        pricing_unit_id: OptionalNullable[str] = UNSET,
         invoice_display_name: Optional[str] = None,
-        model: Optional[models.UpdatePriceModel] = None,
+        model: Optional[models.PriceModelInput] = None,
         properties: Optional[
             Union[models.PricePropertiesUnion, models.PricePropertiesUnionTypedDict]
         ] = None,
@@ -694,8 +701,9 @@ class Prices(BaseSDK):
 
         :param id: The unique identifier of the price
         :param billable_metric_id: Unique identifier for a billable metric
+        :param pricing_unit_id: Denominate this metered price in a pricing unit (credits). Set to a pricing unit ID to draw down a credit pool, null to revert to real currency, or omit to leave unchanged.
         :param invoice_display_name: Updated invoice line item label. Sample values: 'LLM Token Usage', 'Storage Charges', 'API Call Fees'
-        :param model: The pricing model to be used, which can be standard, dynamic, volume-based, or percentage-based.
+        :param model: The pricing model to set. Only 'standard' is accepted. Legacy 'dynamic'/'volume'/'percentage' prices can still be edited (other fields) but cannot be switched to those models. Percentage/revenue-share is expressed via 'standard' with a unit-price multiplier.
         :param properties:
         :param payment_term: Billing timing preference. For billable metrics: 'instant' (charges immediately) or 'in_arrears' (charges at period end). For fees: 'in_advance' (charges upfront) or 'in_arrears' (charges at period end).
         :param billing_cadence: ISO 8601 duration for recurring fees (e.g., 'P1M' for monthly, 'P1Y' for yearly, or 'P0D' for one-time)
@@ -721,6 +729,7 @@ class Prices(BaseSDK):
             id=id,
             request_body=models.UpdatePriceRequestBody(
                 billable_metric_id=billable_metric_id,
+                pricing_unit_id=pricing_unit_id,
                 invoice_display_name=invoice_display_name,
                 model=model,
                 properties=utils.get_pydantic_model(
@@ -813,8 +822,9 @@ class Prices(BaseSDK):
         *,
         id: str,
         billable_metric_id: Optional[str] = None,
+        pricing_unit_id: OptionalNullable[str] = UNSET,
         invoice_display_name: Optional[str] = None,
-        model: Optional[models.UpdatePriceModel] = None,
+        model: Optional[models.PriceModelInput] = None,
         properties: Optional[
             Union[models.PricePropertiesUnion, models.PricePropertiesUnionTypedDict]
         ] = None,
@@ -834,8 +844,9 @@ class Prices(BaseSDK):
 
         :param id: The unique identifier of the price
         :param billable_metric_id: Unique identifier for a billable metric
+        :param pricing_unit_id: Denominate this metered price in a pricing unit (credits). Set to a pricing unit ID to draw down a credit pool, null to revert to real currency, or omit to leave unchanged.
         :param invoice_display_name: Updated invoice line item label. Sample values: 'LLM Token Usage', 'Storage Charges', 'API Call Fees'
-        :param model: The pricing model to be used, which can be standard, dynamic, volume-based, or percentage-based.
+        :param model: The pricing model to set. Only 'standard' is accepted. Legacy 'dynamic'/'volume'/'percentage' prices can still be edited (other fields) but cannot be switched to those models. Percentage/revenue-share is expressed via 'standard' with a unit-price multiplier.
         :param properties:
         :param payment_term: Billing timing preference. For billable metrics: 'instant' (charges immediately) or 'in_arrears' (charges at period end). For fees: 'in_advance' (charges upfront) or 'in_arrears' (charges at period end).
         :param billing_cadence: ISO 8601 duration for recurring fees (e.g., 'P1M' for monthly, 'P1Y' for yearly, or 'P0D' for one-time)
@@ -861,6 +872,7 @@ class Prices(BaseSDK):
             id=id,
             request_body=models.UpdatePriceRequestBody(
                 billable_metric_id=billable_metric_id,
+                pricing_unit_id=pricing_unit_id,
                 invoice_display_name=invoice_display_name,
                 model=model,
                 properties=utils.get_pydantic_model(

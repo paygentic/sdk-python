@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 from .pricefeature import PriceFeature, PriceFeatureTypedDict
+from .pricemodel import PriceModel
 from .priceproperties_union import PricePropertiesUnion, PricePropertiesUnionTypedDict
 from datetime import datetime
 from paygentic_sdk.types import (
@@ -19,17 +20,6 @@ from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 SchemasPriceObject = Literal["price",]
-
-
-SchemasPriceModel = Union[
-    Literal[
-        "standard",
-        "dynamic",
-        "volume",
-        "percentage",
-    ],
-    UnrecognizedStr,
-]
 
 
 SchemasPricePaymentTerm = Union[
@@ -59,9 +49,12 @@ class SchemasPriceTypedDict(TypedDict):
     r"""Unique identifier for a billable metric"""
     fee_id: NotRequired[str]
     r"""The unique identifier for the fee referred to by this price. Present when price is linked to a fee."""
+    pricing_unit_id: NotRequired[str]
+    r"""Unique identifier for a pricing unit"""
     billing_cadence: NotRequired[Nullable[str]]
     r"""ISO 8601 duration. 'P0D' for one-time, 'P1M' for monthly, 'P1Y' for yearly. Required for fees, optional for billable metrics. Defaults to plan's billingCadence if not specified."""
-    model: NotRequired[SchemasPriceModel]
+    model: NotRequired[PriceModel]
+    r"""Pricing model of a price as returned by the API. Includes legacy models ('dynamic', 'volume', 'percentage') retained for existing prices; only 'standard' can be created (see PriceModelInput)."""
     features: NotRequired[List[PriceFeatureTypedDict]]
     r"""Features associated with this price"""
     grant_discount_enabled: NotRequired[bool]
@@ -100,12 +93,18 @@ class SchemasPrice(BaseModel):
     fee_id: Annotated[Optional[str], pydantic.Field(alias="feeId")] = None
     r"""The unique identifier for the fee referred to by this price. Present when price is linked to a fee."""
 
+    pricing_unit_id: Annotated[Optional[str], pydantic.Field(alias="pricingUnitId")] = (
+        None
+    )
+    r"""Unique identifier for a pricing unit"""
+
     billing_cadence: Annotated[
         OptionalNullable[str], pydantic.Field(alias="billingCadence")
     ] = UNSET
     r"""ISO 8601 duration. 'P0D' for one-time, 'P1M' for monthly, 'P1Y' for yearly. Required for fees, optional for billable metrics. Defaults to plan's billingCadence if not specified."""
 
-    model: Optional[SchemasPriceModel] = None
+    model: Optional[PriceModel] = None
+    r"""Pricing model of a price as returned by the API. Includes legacy models ('dynamic', 'volume', 'percentage') retained for existing prices; only 'standard' can be created (see PriceModelInput)."""
 
     features: Optional[List[PriceFeature]] = None
     r"""Features associated with this price"""
@@ -122,6 +121,7 @@ class SchemasPrice(BaseModel):
                 "object",
                 "billableMetricId",
                 "feeId",
+                "pricingUnitId",
                 "billingCadence",
                 "model",
                 "features",

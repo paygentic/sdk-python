@@ -43,7 +43,7 @@ BillingVersion = Literal[
     0,
     1,
 ]
-r"""Billing engine version. 0 = legacy fee-schedule billing (Legacy), 1 = line-item billing with metered usage support (Standard)."""
+r"""Billing engine version. Only 1 (Standard, line-item billing with metered usage support) is accepted for new plans; omitting the field defaults to 1. 0 (Legacy, fee-schedule billing) is rejected — it exists only on plans created before this restriction."""
 
 
 class CreatePlanRequestTypedDict(TypedDict):
@@ -76,7 +76,7 @@ class CreatePlanRequestTypedDict(TypedDict):
     renewal_reminder_days: NotRequired[int]
     r"""Number of days before renewal to send the reminder email"""
     billing_version: NotRequired[BillingVersion]
-    r"""Billing engine version. 0 = legacy fee-schedule billing (Legacy), 1 = line-item billing with metered usage support (Standard)."""
+    r"""Billing engine version. Only 1 (Standard, line-item billing with metered usage support) is accepted for new plans; omitting the field defaults to 1. 0 (Legacy, fee-schedule billing) is rejected — it exists only on plans created before this restriction."""
     billing_anchor: NotRequired[Nullable[datetime]]
     r"""ISO 8601 datetime reference point for billing period alignment. Must be in the past or present. When set, subscriptions created under this plan align their first billing period to the next recurrence of this anchor."""
 
@@ -142,8 +142,8 @@ class CreatePlanRequest(BaseModel):
 
     billing_version: Annotated[
         Optional[BillingVersion], pydantic.Field(alias="billingVersion")
-    ] = 0
-    r"""Billing engine version. 0 = legacy fee-schedule billing (Legacy), 1 = line-item billing with metered usage support (Standard)."""
+    ] = 1
+    r"""Billing engine version. Only 1 (Standard, line-item billing with metered usage support) is accepted for new plans; omitting the field defaults to 1. 0 (Legacy, fee-schedule billing) is rejected — it exists only on plans created before this restriction."""
 
     billing_anchor: Annotated[
         OptionalNullable[datetime], pydantic.Field(alias="billingAnchor")

@@ -202,7 +202,6 @@ if TYPE_CHECKING:
         CreatePlanTaxBehavior,
     )
     from .createpriceop import (
-        CreatePriceModel,
         CreatePricePaymentTerm,
         CreatePriceRequest,
         CreatePriceRequestTypedDict,
@@ -771,7 +770,7 @@ if TYPE_CHECKING:
         PlanTypedDict,
         TaxBehavior,
     )
-    from .price import Price, PriceModel, PriceObject, PricePaymentTerm, PriceTypedDict
+    from .price import Price, PriceModel1, PriceObject, PricePaymentTerm, PriceTypedDict
     from .pricefeature import (
         PriceFeature,
         PriceFeatureFeature,
@@ -780,6 +779,8 @@ if TYPE_CHECKING:
         PriceFeatureTypedDict,
     )
     from .pricefeatureinput import PriceFeatureInput, PriceFeatureInputTypedDict
+    from .pricemodel import PriceModel
+    from .pricemodelinput import PriceModelInput
     from .priceproperties_union import (
         Function,
         Parameters,
@@ -897,7 +898,6 @@ if TYPE_CHECKING:
     )
     from .schemas_price import (
         SchemasPrice,
-        SchemasPriceModel,
         SchemasPriceObject,
         SchemasPricePaymentTerm,
         SchemasPriceTypedDict,
@@ -1056,7 +1056,6 @@ if TYPE_CHECKING:
         UpdatePlanTaxBehavior,
     )
     from .updatepriceop import (
-        UpdatePriceModel,
         UpdatePricePaymentTerm,
         UpdatePriceRequest,
         UpdatePriceRequestBody,
@@ -1270,7 +1269,6 @@ __all__ = [
     "CreatePlanRequest",
     "CreatePlanRequestTypedDict",
     "CreatePlanTaxBehavior",
-    "CreatePriceModel",
     "CreatePricePaymentTerm",
     "CreatePriceRequest",
     "CreatePriceRequestTypedDict",
@@ -1743,6 +1741,8 @@ __all__ = [
     "PriceFeatureType",
     "PriceFeatureTypedDict",
     "PriceModel",
+    "PriceModel1",
+    "PriceModelInput",
     "PriceObject",
     "PricePaymentTerm",
     "PriceProperties1",
@@ -1834,7 +1834,6 @@ __all__ = [
     "SchemasPaymentSessionStatus",
     "SchemasPaymentSessionTypedDict",
     "SchemasPrice",
-    "SchemasPriceModel",
     "SchemasPriceObject",
     "SchemasPricePaymentTerm",
     "SchemasPriceTypedDict",
@@ -1947,7 +1946,6 @@ __all__ = [
     "UpdatePlanRequestBodyTypedDict",
     "UpdatePlanRequestTypedDict",
     "UpdatePlanTaxBehavior",
-    "UpdatePriceModel",
     "UpdatePricePaymentTerm",
     "UpdatePriceRequest",
     "UpdatePriceRequestBody",
@@ -2157,7 +2155,6 @@ _dynamic_imports: dict[str, str] = {
     "CreatePlanRequest": ".createplanop",
     "CreatePlanRequestTypedDict": ".createplanop",
     "CreatePlanTaxBehavior": ".createplanop",
-    "CreatePriceModel": ".createpriceop",
     "CreatePricePaymentTerm": ".createpriceop",
     "CreatePriceRequest": ".createpriceop",
     "CreatePriceRequestTypedDict": ".createpriceop",
@@ -2606,7 +2603,7 @@ _dynamic_imports: dict[str, str] = {
     "PlanTypedDict": ".plan",
     "TaxBehavior": ".plan",
     "Price": ".price",
-    "PriceModel": ".price",
+    "PriceModel1": ".price",
     "PriceObject": ".price",
     "PricePaymentTerm": ".price",
     "PriceTypedDict": ".price",
@@ -2617,6 +2614,8 @@ _dynamic_imports: dict[str, str] = {
     "PriceFeatureTypedDict": ".pricefeature",
     "PriceFeatureInput": ".pricefeatureinput",
     "PriceFeatureInputTypedDict": ".pricefeatureinput",
+    "PriceModel": ".pricemodel",
+    "PriceModelInput": ".pricemodelinput",
     "Function": ".priceproperties_union",
     "Parameters": ".priceproperties_union",
     "ParametersTypedDict": ".priceproperties_union",
@@ -2708,7 +2707,6 @@ _dynamic_imports: dict[str, str] = {
     "SchemasPaymentSessionStatus": ".schemas_paymentsession",
     "SchemasPaymentSessionTypedDict": ".schemas_paymentsession",
     "SchemasPrice": ".schemas_price",
-    "SchemasPriceModel": ".schemas_price",
     "SchemasPriceObject": ".schemas_price",
     "SchemasPricePaymentTerm": ".schemas_price",
     "SchemasPriceTypedDict": ".schemas_price",
@@ -2824,7 +2822,6 @@ _dynamic_imports: dict[str, str] = {
     "UpdatePlanRequestBodyTypedDict": ".updateplanop",
     "UpdatePlanRequestTypedDict": ".updateplanop",
     "UpdatePlanTaxBehavior": ".updateplanop",
-    "UpdatePriceModel": ".updatepriceop",
     "UpdatePricePaymentTerm": ".updatepriceop",
     "UpdatePriceRequest": ".updatepriceop",
     "UpdatePriceRequestBody": ".updatepriceop",
