@@ -1,0 +1,9 @@
+# ReconcileSubscriptionFeaturesRequest
+
+
+## Fields
+
+| Field                                                                                                              | Type                                                                                                               | Required                                                                                                           | Description                                                                                                        |
+| ------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------ |
+| `id`                                                                                                               | *str*                                                                                                              | :heavy_check_mark:                                                                                                 | The subscription ID                                                                                                |
+| `request_body`                                                                                                     | [Optional[models.ReconcileSubscriptionFeaturesRequestBody]](../models/reconcilesubscriptionfeaturesrequestbody.md) | :heavy_minus_sign:                                                                                                 | N/A                                                                                                                |

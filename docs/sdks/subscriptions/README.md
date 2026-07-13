@@ -12,6 +12,7 @@ A `Subscription` is a customer's commitment to purchase a `Product` following th
 * [update_subscription](#update_subscription) - Update
 * [generate_portal_link](#generate_portal_link) - Generate Portal Link
 * [terminate](#terminate) - Terminate
+* [reconcile_subscription_features](#reconcile_subscription_features) - Reconcile Features
 
 ## list
 
@@ -300,5 +301,50 @@ with Paygentic(
 | errors.Error                 | 400                          | application/json             |
 | errors.ValidationError       | 400                          | application/json             |
 | errors.Error                 | 401, 403, 404, 409           | application/json             |
+| errors.Error                 | 500                          | application/json             |
+| errors.PaygenticDefaultError | 4XX, 5XX                     | \*/\*                        |
+
+## reconcile_subscription_features
+
+Creates a reconciliation that converges a subscription's feature entitlements to its current plan. Provisions a missing entitlement (and, for metered features, its initial grant) for every plan feature the subscription does not already have; cancels the entitlement and voids the grants of any feature no longer on the plan; then synchronizes the corresponding prices' billing. An already-present feature is left unchanged. Restricted to active subscriptions billed on their plan's line-item schedule.
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="reconcileSubscriptionFeatures" method="post" path="/v0/subscriptions/{id}/reconciliations" -->
+```python
+import os
+from paygentic_sdk import Paygentic
+
+
+with Paygentic(
+    bearer_auth=os.getenv("PAYGENTIC_BEARER_AUTH", ""),
+) as paygentic:
+
+    res = paygentic.subscriptions.reconcile_subscription_features(id="<id>", dry_run=False)
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                                  | Type                                                                       | Required                                                                   | Description                                                                |
+| -------------------------------------------------------------------------- | -------------------------------------------------------------------------- | -------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
+| `id`                                                                       | *str*                                                                      | :heavy_check_mark:                                                         | The subscription ID                                                        |
+| `dry_run`                                                                  | *Optional[bool]*                                                           | :heavy_minus_sign:                                                         | Preview the outcome without creating any entitlement, grant, or line item. |
+| `retries`                                                                  | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)           | :heavy_minus_sign:                                                         | Configuration to override the default retry behavior of the client.        |
+
+### Response
+
+**[models.SubscriptionReconciliation](../../models/subscriptionreconciliation.md)**
+
+### Errors
+
+| Error Type                   | Status Code                  | Content Type                 |
+| ---------------------------- | ---------------------------- | ---------------------------- |
+| errors.Error                 | 400                          | application/json             |
+| errors.ValidationError       | 400                          | application/json             |
+| errors.Error                 | 401, 403, 404                | application/json             |
 | errors.Error                 | 500                          | application/json             |
 | errors.PaygenticDefaultError | 4XX, 5XX                     | \*/\*                        |

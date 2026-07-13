@@ -19,6 +19,7 @@ class Plans(BaseSDK):
         currency: str,
         merchant_id: str,
         name: str,
+        product_id: str,
         billing_cadence: Optional[models.CreatePlanBillingCadence] = None,
         billing_interval: Optional[models.CreatePlanBillingInterval] = None,
         default_tax_code: Optional[str] = "eservice",
@@ -26,12 +27,17 @@ class Plans(BaseSDK):
         description: Optional[str] = None,
         invoice_display_name: Optional[str] = None,
         prices: Optional[List[str]] = None,
-        product_id: Optional[str] = None,
         tax_behavior: Optional[models.CreatePlanTaxBehavior] = "exclusive",
         renewal_reminder_enabled: Optional[bool] = True,
         renewal_reminder_days: Optional[int] = 3,
         billing_version: Optional[models.BillingVersion] = 1,
         billing_anchor: OptionalNullable[datetime] = UNSET,
+        credit_allocations: Optional[
+            Union[
+                List[models.PlanCreditAllocation],
+                List[models.PlanCreditAllocationTypedDict],
+            ]
+        ] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -42,6 +48,7 @@ class Plans(BaseSDK):
         :param currency: Three-letter ISO 4217 currency code for plan pricing. Must be one of the merchant's supported currencies. Sample values: 'USD' for US dollars, 'EUR' for euros, 'GBP' for British pounds
         :param merchant_id: Unique identifier for an organization
         :param name: Plan identifier visible to customers. Sample values: 'Basic Tier', 'Business Package', 'Enterprise Solution', 'Metered Billing', 'Free Tier', 'Premium Access'
+        :param product_id: Unique identifier for a product
         :param billing_cadence: ISO 8601 duration for the billing period. Takes precedence over billingInterval when both are provided.
         :param billing_interval: Recurring billing period frequency. Sample values: 'monthly' for monthly billing, 'quarterly' for quarterly billing, 'yearly' for annual billing
         :param default_tax_code: Default tax code for plan line items. Common values: 'eservice' (electronically supplied services), 'saas' (software as a service), 'consulting', 'ebook', 'standard', 'reduced', 'exempt'. Full list available via GET /tax/codes endpoint.
@@ -49,12 +56,12 @@ class Plans(BaseSDK):
         :param description: Plan details explaining included features and limits. Sample values: 'Claude API access with 500K tokens monthly allowance', 'Unlimited cloud storage plus real-time analytics tools', 'Complete machine learning infrastructure with GPU access', 'Flexible usage-based pricing with no monthly commitment'
         :param invoice_display_name: Plan name shown on billing statements. Sample values: 'LLM API Basic Plan', 'Data Warehouse Business', 'ML Platform Enterprise', 'Pay-Per-Use Model'
         :param prices: Array of price IDs to associate with this plan
-        :param product_id: Unique identifier for a product
         :param tax_behavior: Whether tax is added on top of the price (exclusive) or included in the price (inclusive)
         :param renewal_reminder_enabled: Whether to send renewal reminder emails to customers before their subscription renews
         :param renewal_reminder_days: Number of days before renewal to send the reminder email
         :param billing_version: Billing engine version. Only 1 (Standard, line-item billing with metered usage support) is accepted for new plans; omitting the field defaults to 1. 0 (Legacy, fee-schedule billing) is rejected — it exists only on plans created before this restriction.
         :param billing_anchor: ISO 8601 datetime reference point for billing period alignment. Must be in the past or present. When set, subscriptions created under this plan align their first billing period to the next recurrence of this anchor.
+        :param credit_allocations: Credit-pool funding declarations for this plan. Each entry funds a distinct pricing unit's credit pool when a subscription to this plan activates: the allocated amount is minted as a credit grant on the customer's pool for that pricing unit, once at activation, or on a recurring basis only when that allocation explicitly sets recurrencePeriod. A plan may declare zero or more allocations; no two allocations on the same plan may target the same pricingUnitId.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -87,6 +94,9 @@ class Plans(BaseSDK):
             renewal_reminder_days=renewal_reminder_days,
             billing_version=billing_version,
             billing_anchor=billing_anchor,
+            credit_allocations=utils.get_pydantic_model(
+                credit_allocations, Optional[List[models.PlanCreditAllocation]]
+            ),
         )
 
         req = self._build_request(
@@ -163,6 +173,7 @@ class Plans(BaseSDK):
         currency: str,
         merchant_id: str,
         name: str,
+        product_id: str,
         billing_cadence: Optional[models.CreatePlanBillingCadence] = None,
         billing_interval: Optional[models.CreatePlanBillingInterval] = None,
         default_tax_code: Optional[str] = "eservice",
@@ -170,12 +181,17 @@ class Plans(BaseSDK):
         description: Optional[str] = None,
         invoice_display_name: Optional[str] = None,
         prices: Optional[List[str]] = None,
-        product_id: Optional[str] = None,
         tax_behavior: Optional[models.CreatePlanTaxBehavior] = "exclusive",
         renewal_reminder_enabled: Optional[bool] = True,
         renewal_reminder_days: Optional[int] = 3,
         billing_version: Optional[models.BillingVersion] = 1,
         billing_anchor: OptionalNullable[datetime] = UNSET,
+        credit_allocations: Optional[
+            Union[
+                List[models.PlanCreditAllocation],
+                List[models.PlanCreditAllocationTypedDict],
+            ]
+        ] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -186,6 +202,7 @@ class Plans(BaseSDK):
         :param currency: Three-letter ISO 4217 currency code for plan pricing. Must be one of the merchant's supported currencies. Sample values: 'USD' for US dollars, 'EUR' for euros, 'GBP' for British pounds
         :param merchant_id: Unique identifier for an organization
         :param name: Plan identifier visible to customers. Sample values: 'Basic Tier', 'Business Package', 'Enterprise Solution', 'Metered Billing', 'Free Tier', 'Premium Access'
+        :param product_id: Unique identifier for a product
         :param billing_cadence: ISO 8601 duration for the billing period. Takes precedence over billingInterval when both are provided.
         :param billing_interval: Recurring billing period frequency. Sample values: 'monthly' for monthly billing, 'quarterly' for quarterly billing, 'yearly' for annual billing
         :param default_tax_code: Default tax code for plan line items. Common values: 'eservice' (electronically supplied services), 'saas' (software as a service), 'consulting', 'ebook', 'standard', 'reduced', 'exempt'. Full list available via GET /tax/codes endpoint.
@@ -193,12 +210,12 @@ class Plans(BaseSDK):
         :param description: Plan details explaining included features and limits. Sample values: 'Claude API access with 500K tokens monthly allowance', 'Unlimited cloud storage plus real-time analytics tools', 'Complete machine learning infrastructure with GPU access', 'Flexible usage-based pricing with no monthly commitment'
         :param invoice_display_name: Plan name shown on billing statements. Sample values: 'LLM API Basic Plan', 'Data Warehouse Business', 'ML Platform Enterprise', 'Pay-Per-Use Model'
         :param prices: Array of price IDs to associate with this plan
-        :param product_id: Unique identifier for a product
         :param tax_behavior: Whether tax is added on top of the price (exclusive) or included in the price (inclusive)
         :param renewal_reminder_enabled: Whether to send renewal reminder emails to customers before their subscription renews
         :param renewal_reminder_days: Number of days before renewal to send the reminder email
         :param billing_version: Billing engine version. Only 1 (Standard, line-item billing with metered usage support) is accepted for new plans; omitting the field defaults to 1. 0 (Legacy, fee-schedule billing) is rejected — it exists only on plans created before this restriction.
         :param billing_anchor: ISO 8601 datetime reference point for billing period alignment. Must be in the past or present. When set, subscriptions created under this plan align their first billing period to the next recurrence of this anchor.
+        :param credit_allocations: Credit-pool funding declarations for this plan. Each entry funds a distinct pricing unit's credit pool when a subscription to this plan activates: the allocated amount is minted as a credit grant on the customer's pool for that pricing unit, once at activation, or on a recurring basis only when that allocation explicitly sets recurrencePeriod. A plan may declare zero or more allocations; no two allocations on the same plan may target the same pricingUnitId.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -231,6 +248,9 @@ class Plans(BaseSDK):
             renewal_reminder_days=renewal_reminder_days,
             billing_version=billing_version,
             billing_anchor=billing_anchor,
+            credit_allocations=utils.get_pydantic_model(
+                credit_allocations, Optional[List[models.PlanCreditAllocation]]
+            ),
         )
 
         req = self._build_request_async(
@@ -925,6 +945,12 @@ class Plans(BaseSDK):
         renewal_reminder_enabled: Optional[bool] = None,
         renewal_reminder_days: Optional[int] = None,
         billing_anchor: OptionalNullable[datetime] = UNSET,
+        credit_allocations: Optional[
+            Union[
+                List[models.PlanCreditAllocation],
+                List[models.PlanCreditAllocationTypedDict],
+            ]
+        ] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -945,6 +971,7 @@ class Plans(BaseSDK):
         :param renewal_reminder_enabled: Whether to send renewal reminder emails to customers before their subscription renews
         :param renewal_reminder_days: Number of days before renewal to send the reminder email
         :param billing_anchor: ISO 8601 datetime reference point for billing period alignment. Must be in the past or present. Set to null to clear the anchor and revert to start-time-based anchoring.
+        :param credit_allocations: Credit-pool funding declarations for this plan. Each entry funds a distinct pricing unit's credit pool when a subscription to this plan activates: the allocated amount is minted as a credit grant on the customer's pool for that pricing unit, once at activation, or on a recurring basis only when that allocation explicitly sets recurrencePeriod. A plan may declare zero or more allocations; no two allocations on the same plan may target the same pricingUnitId.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -975,6 +1002,9 @@ class Plans(BaseSDK):
                 renewal_reminder_enabled=renewal_reminder_enabled,
                 renewal_reminder_days=renewal_reminder_days,
                 billing_anchor=billing_anchor,
+                credit_allocations=utils.get_pydantic_model(
+                    credit_allocations, Optional[List[models.PlanCreditAllocation]]
+                ),
             ),
         )
 
@@ -1062,6 +1092,12 @@ class Plans(BaseSDK):
         renewal_reminder_enabled: Optional[bool] = None,
         renewal_reminder_days: Optional[int] = None,
         billing_anchor: OptionalNullable[datetime] = UNSET,
+        credit_allocations: Optional[
+            Union[
+                List[models.PlanCreditAllocation],
+                List[models.PlanCreditAllocationTypedDict],
+            ]
+        ] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -1082,6 +1118,7 @@ class Plans(BaseSDK):
         :param renewal_reminder_enabled: Whether to send renewal reminder emails to customers before their subscription renews
         :param renewal_reminder_days: Number of days before renewal to send the reminder email
         :param billing_anchor: ISO 8601 datetime reference point for billing period alignment. Must be in the past or present. Set to null to clear the anchor and revert to start-time-based anchoring.
+        :param credit_allocations: Credit-pool funding declarations for this plan. Each entry funds a distinct pricing unit's credit pool when a subscription to this plan activates: the allocated amount is minted as a credit grant on the customer's pool for that pricing unit, once at activation, or on a recurring basis only when that allocation explicitly sets recurrencePeriod. A plan may declare zero or more allocations; no two allocations on the same plan may target the same pricingUnitId.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1112,6 +1149,9 @@ class Plans(BaseSDK):
                 renewal_reminder_enabled=renewal_reminder_enabled,
                 renewal_reminder_days=renewal_reminder_days,
                 billing_anchor=billing_anchor,
+                credit_allocations=utils.get_pydantic_model(
+                    credit_allocations, Optional[List[models.PlanCreditAllocation]]
+                ),
             ),
         )
 

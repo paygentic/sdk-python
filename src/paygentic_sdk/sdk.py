@@ -23,7 +23,7 @@ if TYPE_CHECKING:
     from paygentic_sdk.entitlements import Entitlements
     from paygentic_sdk.events import Events
     from paygentic_sdk.externalreferences import ExternalReferences
-    from paygentic_sdk.features import Features
+    from paygentic_sdk.features_sdk import FeaturesSDK
     from paygentic_sdk.fees import Fees
     from paygentic_sdk.invoices_v2 import InvoicesV2
     from paygentic_sdk.items import Items
@@ -53,7 +53,7 @@ class Paygentic(BaseSDK):
     customers: "Customers"
     r"""A `Customer` is an entity connected to a `Merchant` via a `Subscription`. This represents the merchant-facing perspective of `Consumers` who purchase their `Products`."""
     entitlements: "Entitlements"
-    features: "Features"
+    features: "FeaturesSDK"
     r"""A `Feature` represents a specific capability or functionality provided by a `Product`. Features can be metered (usage-based), static (fixed allocation), or boolean (enabled/disabled)."""
     fees: "Fees"
     r"""A `Fee` defines a recurring or one-time charge tied to a `Product`. Fees are linked to prices, and cadence is defined on the Price."""
@@ -102,7 +102,7 @@ class Paygentic(BaseSDK):
         "billable_metrics": ("paygentic_sdk.billablemetrics", "BillableMetrics"),
         "customers": ("paygentic_sdk.customers", "Customers"),
         "entitlements": ("paygentic_sdk.entitlements", "Entitlements"),
-        "features": ("paygentic_sdk.features", "Features"),
+        "features": ("paygentic_sdk.features_sdk", "FeaturesSDK"),
         "fees": ("paygentic_sdk.fees", "Fees"),
         "plans": ("paygentic_sdk.plans", "Plans"),
         "prices": ("paygentic_sdk.prices", "Prices"),

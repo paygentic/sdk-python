@@ -1,4 +1,4 @@
-# LineItems
+# InvoiceLineItems
 
 Line items (only present if expand=lineItems query parameter is provided)
 

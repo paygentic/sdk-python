@@ -574,7 +574,7 @@ workflows:
             condition: |
               {"object":"list","data":[{"id":"<id>","object":"feature","key":"<key>","name":"<value>","type":"boolean","merchantId":"<id>","productId":"<id>","metadata":{},"createdAt":"2024-11-22T08:40:39.781Z","updatedAt":"2026-04-15T11:55:08.679Z"}],"pagination":{"limit":879226,"offset":276368,"total":805834}}
             type: simple
-    x-speakeasy-test-group: Features
+    x-speakeasy-test-group: Features_SDK
     x-speakeasy-test-rebuild: true
   - workflowId: createFeature
     steps:
@@ -595,7 +595,7 @@ workflows:
             condition: |
               {"id":"<id>","object":"feature","key":"<key>","name":"<value>","type":"static","merchantId":"<id>","productId":"<id>","metadata":{},"createdAt":"2025-02-01T14:53:46.515Z","updatedAt":"2024-05-24T21:32:18.637Z"}
             type: simple
-    x-speakeasy-test-group: Features
+    x-speakeasy-test-group: Features_SDK
     x-speakeasy-test-rebuild: true
   - workflowId: getFeature
     steps:
@@ -612,7 +612,7 @@ workflows:
             condition: |
               {"id":"<id>","object":"feature","key":"<key>","name":"<value>","type":"static","merchantId":"<id>","productId":"<id>","metadata":{},"createdAt":"2026-12-15T01:22:19.086Z","updatedAt":"2024-10-19T12:05:55.611Z"}
             type: simple
-    x-speakeasy-test-group: Features
+    x-speakeasy-test-group: Features_SDK
     x-speakeasy-test-rebuild: true
   - workflowId: updateFeature
     steps:
@@ -632,7 +632,7 @@ workflows:
             condition: |
               {"id":"<id>","object":"feature","key":"<key>","name":"<value>","type":"boolean","merchantId":"<id>","productId":"<id>","metadata":{},"createdAt":"2025-11-08T21:31:59.197Z","updatedAt":"2024-02-18T13:34:22.297Z"}
             type: simple
-    x-speakeasy-test-group: Features
+    x-speakeasy-test-group: Features_SDK
     x-speakeasy-test-rebuild: true
   - workflowId: createFee
     steps:
@@ -747,6 +747,7 @@ workflows:
             defaultTaxRate: 0
             merchantId: <id>
             name: <value>
+            productId: <id>
             renewalReminderDays: 3
             renewalReminderEnabled: true
             taxBehavior: exclusive
@@ -3127,4 +3128,21 @@ workflows:
               {"id":"<id>","object":"approval","merchantId":"<id>","resourceType":"invoice","resourceId":"<id>","kind":"push","decision":"pending","requester":"<value>","dataSnapshotHash":"<value>","createdAt":"2025-12-21T04:52:09.215Z"}
             type: simple
     x-speakeasy-test-group: Approvals
+    x-speakeasy-test-rebuild: true
+  - workflowId: reconcileSubscriptionFeatures
+    steps:
+      - stepId: test
+        operationId: reconcileSubscriptionFeatures
+        parameters:
+          - name: id
+            in: path
+            value: <id>
+        successCriteria:
+          - condition: $statusCode == 200
+          - condition: $response.header.Content-Type == application/json
+          - context: $response.body
+            condition: |
+              {"object":"subscriptionReconciliation","dryRun":true,"features":{"added":[],"skipped":[],"removed":[],"failed":[]},"lineItems":{"created":965800,"removed":718117}}
+            type: simple
+    x-speakeasy-test-group: Subscriptions
     x-speakeasy-test-rebuild: true

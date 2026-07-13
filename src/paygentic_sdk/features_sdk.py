@@ -9,7 +9,7 @@ from paygentic_sdk.utils.unmarshal_json_response import unmarshal_json_response
 from typing import Any, Dict, Mapping, Optional
 
 
-class Features(BaseSDK):
+class FeaturesSDK(BaseSDK):
     r"""A `Feature` represents a specific capability or functionality provided by a `Product`. Features can be metered (usage-based), static (fixed allocation), or boolean (enabled/disabled)."""
 
     def list(

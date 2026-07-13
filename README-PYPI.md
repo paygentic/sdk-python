@@ -398,13 +398,13 @@ with Paygentic(
 * [update_external_reference](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/externalreferences/README.md#update_external_reference) - Update
 * [delete_external_reference](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/externalreferences/README.md#delete_external_reference) - Delete
 
-### [Features](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/features/README.md)
+### [Features](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/featuressdk/README.md)
 
-* [list](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/features/README.md#list) - List
-* [create](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/features/README.md#create) - Create
-* [get](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/features/README.md#get) - Get
-* [update](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/features/README.md#update) - Update
-* [delete](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/features/README.md#delete) - Delete
+* [list](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/featuressdk/README.md#list) - List
+* [create](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/featuressdk/README.md#create) - Create
+* [get](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/featuressdk/README.md#get) - Get
+* [update](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/featuressdk/README.md#update) - Update
+* [delete](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/featuressdk/README.md#delete) - Delete
 
 ### [Fees](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/fees/README.md)
 
@@ -529,6 +529,7 @@ with Paygentic(
 * [update_subscription](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/subscriptions/README.md#update_subscription) - Update
 * [generate_portal_link](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/subscriptions/README.md#generate_portal_link) - Generate Portal Link
 * [terminate](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/subscriptions/README.md#terminate) - Terminate
+* [reconcile_subscription_features](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/subscriptions/README.md#reconcile_subscription_features) - Reconcile Features
 
 ### [TestClocks](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/testclocks/README.md)
 
@@ -654,9 +655,9 @@ with Paygentic(
 
 
 **Inherit from [`PaygenticError`](https://github.com/paygentic/sdk-python/blob/master/./src/paygentic_sdk/errors/paygenticerror.py)**:
-* [`ValidationError`](https://github.com/paygentic/sdk-python/blob/master/./src/paygentic_sdk/errors/validationerror.py): Bad Request - The request could not be understood or was missing required parameters. Status code `400`. Applicable to 80 of 132 methods.*
-* [`DeleteCustomerConflictError`](https://github.com/paygentic/sdk-python/blob/master/./src/paygentic_sdk/errors/deletecustomerconflicterror.py): Customer cannot be deleted due to active dependencies. Status code `409`. Applicable to 1 of 132 methods.*
-* [`DeleteFeeConflictError`](https://github.com/paygentic/sdk-python/blob/master/./src/paygentic_sdk/errors/deletefeeconflicterror.py): Fee cannot be deleted because it has associated prices. Status code `409`. Applicable to 1 of 132 methods.*
+* [`ValidationError`](https://github.com/paygentic/sdk-python/blob/master/./src/paygentic_sdk/errors/validationerror.py): Bad Request - The request could not be understood or was missing required parameters. Status code `400`. Applicable to 81 of 133 methods.*
+* [`DeleteCustomerConflictError`](https://github.com/paygentic/sdk-python/blob/master/./src/paygentic_sdk/errors/deletecustomerconflicterror.py): Customer cannot be deleted due to active dependencies. Status code `409`. Applicable to 1 of 133 methods.*
+* [`DeleteFeeConflictError`](https://github.com/paygentic/sdk-python/blob/master/./src/paygentic_sdk/errors/deletefeeconflicterror.py): Fee cannot be deleted because it has associated prices. Status code `409`. Applicable to 1 of 133 methods.*
 * [`ResponseValidationError`](https://github.com/paygentic/sdk-python/blob/master/./src/paygentic_sdk/errors/responsevalidationerror.py): Type mismatch between the response data and the expected Pydantic model. Provides access to the Pydantic validation error via the `cause` attribute.
 
 </details>

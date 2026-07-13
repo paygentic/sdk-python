@@ -21,7 +21,7 @@ InvoiceObject = Literal["invoice",]
 r"""The object type"""
 
 
-class LineItemsTypedDict(TypedDict):
+class InvoiceLineItemsTypedDict(TypedDict):
     r"""Line items (only present if expand=lineItems query parameter is provided)"""
 
     invoice_id: str
@@ -34,7 +34,7 @@ class LineItemsTypedDict(TypedDict):
     r"""Token for fetching the next page, null if no more pages"""
 
 
-class LineItems(BaseModel):
+class InvoiceLineItems(BaseModel):
     r"""Line items (only present if expand=lineItems query parameter is provided)"""
 
     invoice_id: Annotated[str, pydantic.Field(alias="invoiceId")]
@@ -223,7 +223,7 @@ class InvoiceTypedDict(TypedDict):
     r"""Whether a payment for this invoice is currently being processed (the payment session is in the 'processing' state). Clients should not offer manual 'mark as paid' while true. Only populated by GET /invoices/{id}."""
     invoice_number: NotRequired[Nullable[str]]
     r"""The invoice number"""
-    line_items: NotRequired[Nullable[LineItemsTypedDict]]
+    line_items: NotRequired[Nullable[InvoiceLineItemsTypedDict]]
     r"""Line items (only present if expand=lineItems query parameter is provided)"""
     metadata: NotRequired[Dict[str, Any]]
     r"""Additional metadata including transition history"""
@@ -326,7 +326,7 @@ class Invoice(BaseModel):
     r"""The invoice number"""
 
     line_items: Annotated[
-        OptionalNullable[LineItems], pydantic.Field(alias="lineItems")
+        OptionalNullable[InvoiceLineItems], pydantic.Field(alias="lineItems")
     ] = UNSET
     r"""Line items (only present if expand=lineItems query parameter is provided)"""
 
@@ -414,7 +414,7 @@ class Invoice(BaseModel):
 
 
 try:
-    LineItems.model_rebuild()
+    InvoiceLineItems.model_rebuild()
 except NameError:
     pass
 try:
