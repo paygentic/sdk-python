@@ -913,6 +913,8 @@ class BillableMetrics(BaseSDK):
         window_size: Optional[models.GetBillableMetricMeterWindowSize] = None,
         filter_group_by: Optional[str] = None,
         group_by: Optional[str] = None,
+        group_limit: Optional[int] = None,
+        group_offset: Optional[int] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -928,7 +930,9 @@ class BillableMetrics(BaseSDK):
         :param subject: Filter by customer/user ID
         :param window_size: Time bucket granularity
         :param filter_group_by: JSON-encoded dimension filter (e.g. {\"key\":\"value\"})
-        :param group_by: Comma-separated dimension keys
+        :param group_by: Comma-separated dimension keys. Configure keys for the grouping on the metric. Only the \"subject\" grouping is supported by default.
+        :param group_limit: Cap groupedValues to the top-N by value (descending). With windowSize, restricts the windowed series to those top-N groups. Bounds the payload for high-cardinality groupings; groupCount reports the untruncated distinct-group count.
+        :param group_offset: Offset into the value-descending group ordering; requires groupLimit to page through grouped results. With windowSize set, pages the windowed series through the ranked groups (offset 0 yields the top-N).
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -952,6 +956,8 @@ class BillableMetrics(BaseSDK):
             window_size=window_size,
             filter_group_by=filter_group_by,
             group_by=group_by,
+            group_limit=group_limit,
+            group_offset=group_offset,
         )
 
         req = self._build_request(
@@ -1029,6 +1035,8 @@ class BillableMetrics(BaseSDK):
         window_size: Optional[models.GetBillableMetricMeterWindowSize] = None,
         filter_group_by: Optional[str] = None,
         group_by: Optional[str] = None,
+        group_limit: Optional[int] = None,
+        group_offset: Optional[int] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -1044,7 +1052,9 @@ class BillableMetrics(BaseSDK):
         :param subject: Filter by customer/user ID
         :param window_size: Time bucket granularity
         :param filter_group_by: JSON-encoded dimension filter (e.g. {\"key\":\"value\"})
-        :param group_by: Comma-separated dimension keys
+        :param group_by: Comma-separated dimension keys. Configure keys for the grouping on the metric. Only the \"subject\" grouping is supported by default.
+        :param group_limit: Cap groupedValues to the top-N by value (descending). With windowSize, restricts the windowed series to those top-N groups. Bounds the payload for high-cardinality groupings; groupCount reports the untruncated distinct-group count.
+        :param group_offset: Offset into the value-descending group ordering; requires groupLimit to page through grouped results. With windowSize set, pages the windowed series through the ranked groups (offset 0 yields the top-N).
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1068,6 +1078,8 @@ class BillableMetrics(BaseSDK):
             window_size=window_size,
             filter_group_by=filter_group_by,
             group_by=group_by,
+            group_limit=group_limit,
+            group_offset=group_offset,
         )
 
         req = self._build_request_async(
@@ -1145,6 +1157,7 @@ class BillableMetrics(BaseSDK):
         limit: Optional[int] = 20,
         offset: Optional[int] = 0,
         external_id: Optional[str] = None,
+        external_subject: Optional[str] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -1161,6 +1174,7 @@ class BillableMetrics(BaseSDK):
         :param limit: Maximum number of events to return
         :param offset: Number of events to skip
         :param external_id: Filter by external identifier. Alphanumeric characters, hyphens, and underscores only.
+        :param external_subject: Filter by the merchant's own customer identifier the event was reported with.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1184,6 +1198,7 @@ class BillableMetrics(BaseSDK):
             limit=limit,
             offset=offset,
             external_id=external_id,
+            external_subject=external_subject,
         )
 
         req = self._build_request(
@@ -1261,6 +1276,7 @@ class BillableMetrics(BaseSDK):
         limit: Optional[int] = 20,
         offset: Optional[int] = 0,
         external_id: Optional[str] = None,
+        external_subject: Optional[str] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -1277,6 +1293,7 @@ class BillableMetrics(BaseSDK):
         :param limit: Maximum number of events to return
         :param offset: Number of events to skip
         :param external_id: Filter by external identifier. Alphanumeric characters, hyphens, and underscores only.
+        :param external_subject: Filter by the merchant's own customer identifier the event was reported with.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1300,6 +1317,7 @@ class BillableMetrics(BaseSDK):
             limit=limit,
             offset=offset,
             external_id=external_id,
+            external_subject=external_subject,
         )
 
         req = self._build_request_async(

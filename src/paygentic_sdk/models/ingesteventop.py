@@ -5,19 +5,21 @@ from datetime import datetime
 from paygentic_sdk.types import BaseModel, UNSET_SENTINEL
 import pydantic
 from pydantic import model_serializer
-from typing import Any, Dict, Optional
-from typing_extensions import Annotated, NotRequired, TypedDict
+from typing import Any, Dict, Optional, Union
+from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
 
-class IngestEventRequestTypedDict(TypedDict):
+class IngestEventRequestBody2TypedDict(TypedDict):
     type: str
     r"""CloudEvents type. Must match an eventType configured on a BillableMetric."""
     source: str
     r"""Event source URI identifying the application."""
-    subject: str
-    r"""Customer or entity ID this event relates to."""
+    external_subject: str
+    r"""Your own customer identifier, matched against the customer's externalId. Fallback for when the Paygentic customer ID is not known — prefer subject when it is. Events reported before the customer exists are linked retroactively once a customer with this externalId is created. Resolution is eventually consistent: after an externalId is removed or reassigned, events may resolve to the previous customer for up to one hour. If subject is also provided, subject takes precedence and externalSubject is recorded but not used for resolution."""
     data: Dict[str, Any]
     r"""Event payload containing the metering data."""
+    subject: NotRequired[str]
+    r"""Customer or entity ID this event relates to. Required unless externalSubject is provided."""
     namespace: NotRequired[str]
     r"""Organization/merchant ID. Defaults to the authenticated user's organization. Platform users can specify a different organization."""
     timestamp: NotRequired[datetime]
@@ -28,18 +30,21 @@ class IngestEventRequestTypedDict(TypedDict):
     r"""Optional external identifier for cross-referencing with external systems. Alphanumeric characters, hyphens, and underscores only."""
 
 
-class IngestEventRequest(BaseModel):
+class IngestEventRequestBody2(BaseModel):
     type: str
     r"""CloudEvents type. Must match an eventType configured on a BillableMetric."""
 
     source: str
     r"""Event source URI identifying the application."""
 
-    subject: str
-    r"""Customer or entity ID this event relates to."""
+    external_subject: Annotated[str, pydantic.Field(alias="externalSubject")]
+    r"""Your own customer identifier, matched against the customer's externalId. Fallback for when the Paygentic customer ID is not known — prefer subject when it is. Events reported before the customer exists are linked retroactively once a customer with this externalId is created. Resolution is eventually consistent: after an externalId is removed or reassigned, events may resolve to the previous customer for up to one hour. If subject is also provided, subject takes precedence and externalSubject is recorded but not used for resolution."""
 
     data: Dict[str, Any]
     r"""Event payload containing the metering data."""
+
+    subject: Optional[str] = None
+    r"""Customer or entity ID this event relates to. Required unless externalSubject is provided."""
 
     namespace: Optional[str] = None
     r"""Organization/merchant ID. Defaults to the authenticated user's organization. Platform users can specify a different organization."""
@@ -58,7 +63,7 @@ class IngestEventRequest(BaseModel):
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
-            ["namespace", "timestamp", "idempotencyKey", "externalId"]
+            ["subject", "namespace", "timestamp", "idempotencyKey", "externalId"]
         )
         serialized = handler(self)
         m = {}
@@ -74,7 +79,100 @@ class IngestEventRequest(BaseModel):
         return m
 
 
+class IngestEventRequestBody1TypedDict(TypedDict):
+    type: str
+    r"""CloudEvents type. Must match an eventType configured on a BillableMetric."""
+    source: str
+    r"""Event source URI identifying the application."""
+    subject: str
+    r"""Customer or entity ID this event relates to. Required unless externalSubject is provided."""
+    data: Dict[str, Any]
+    r"""Event payload containing the metering data."""
+    external_subject: NotRequired[str]
+    r"""Your own customer identifier, matched against the customer's externalId. Fallback for when the Paygentic customer ID is not known — prefer subject when it is. Events reported before the customer exists are linked retroactively once a customer with this externalId is created. Resolution is eventually consistent: after an externalId is removed or reassigned, events may resolve to the previous customer for up to one hour. If subject is also provided, subject takes precedence and externalSubject is recorded but not used for resolution."""
+    namespace: NotRequired[str]
+    r"""Organization/merchant ID. Defaults to the authenticated user's organization. Platform users can specify a different organization."""
+    timestamp: NotRequired[datetime]
+    r"""Event timestamp. Defaults to server time if not provided."""
+    idempotency_key: NotRequired[str]
+    r"""User-provided deduplication key. If not provided, a unique key is generated."""
+    external_id: NotRequired[str]
+    r"""Optional external identifier for cross-referencing with external systems. Alphanumeric characters, hyphens, and underscores only."""
+
+
+class IngestEventRequestBody1(BaseModel):
+    type: str
+    r"""CloudEvents type. Must match an eventType configured on a BillableMetric."""
+
+    source: str
+    r"""Event source URI identifying the application."""
+
+    subject: str
+    r"""Customer or entity ID this event relates to. Required unless externalSubject is provided."""
+
+    data: Dict[str, Any]
+    r"""Event payload containing the metering data."""
+
+    external_subject: Annotated[
+        Optional[str], pydantic.Field(alias="externalSubject")
+    ] = None
+    r"""Your own customer identifier, matched against the customer's externalId. Fallback for when the Paygentic customer ID is not known — prefer subject when it is. Events reported before the customer exists are linked retroactively once a customer with this externalId is created. Resolution is eventually consistent: after an externalId is removed or reassigned, events may resolve to the previous customer for up to one hour. If subject is also provided, subject takes precedence and externalSubject is recorded but not used for resolution."""
+
+    namespace: Optional[str] = None
+    r"""Organization/merchant ID. Defaults to the authenticated user's organization. Platform users can specify a different organization."""
+
+    timestamp: Optional[datetime] = None
+    r"""Event timestamp. Defaults to server time if not provided."""
+
+    idempotency_key: Annotated[
+        Optional[str], pydantic.Field(alias="idempotencyKey")
+    ] = None
+    r"""User-provided deduplication key. If not provided, a unique key is generated."""
+
+    external_id: Annotated[Optional[str], pydantic.Field(alias="externalId")] = None
+    r"""Optional external identifier for cross-referencing with external systems. Alphanumeric characters, hyphens, and underscores only."""
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(
+            [
+                "externalSubject",
+                "namespace",
+                "timestamp",
+                "idempotencyKey",
+                "externalId",
+            ]
+        )
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k, serialized.get(n))
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m
+
+
+IngestEventRequestTypedDict = TypeAliasType(
+    "IngestEventRequestTypedDict",
+    Union[IngestEventRequestBody1TypedDict, IngestEventRequestBody2TypedDict],
+)
+
+
+IngestEventRequest = TypeAliasType(
+    "IngestEventRequest", Union[IngestEventRequestBody1, IngestEventRequestBody2]
+)
+
+
 try:
-    IngestEventRequest.model_rebuild()
+    IngestEventRequestBody2.model_rebuild()
+except NameError:
+    pass
+try:
+    IngestEventRequestBody1.model_rebuild()
 except NameError:
     pass

@@ -3,15 +3,15 @@
 
 ## Supported Types
 
-### `models.RequestBody1`
+### `models.AdvanceTestClockRequestBody1`
 
 ```python
-value: models.RequestBody1 = /* values here */
+value: models.AdvanceTestClockRequestBody1 = /* values here */
 ```
 
-### `models.RequestBody2`
+### `models.AdvanceTestClockRequestBody2`
 
 ```python
-value: models.RequestBody2 = /* values here */
+value: models.AdvanceTestClockRequestBody2 = /* values here */
 ```
 

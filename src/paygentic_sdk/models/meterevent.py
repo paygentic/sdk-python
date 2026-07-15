@@ -30,6 +30,8 @@ class MeterEventTypedDict(TypedDict):
     object: NotRequired[MeterEventObject]
     external_id: NotRequired[str]
     r"""Optional external identifier for cross-referencing with external systems. Alphanumeric characters, hyphens, and underscores only."""
+    external_subject: NotRequired[str]
+    r"""The merchant's own customer identifier the event was reported with. Empty subject with an externalSubject means the event is not linked to a customer yet."""
 
 
 class MeterEvent(BaseModel):
@@ -59,9 +61,14 @@ class MeterEvent(BaseModel):
     external_id: Annotated[Optional[str], pydantic.Field(alias="externalId")] = None
     r"""Optional external identifier for cross-referencing with external systems. Alphanumeric characters, hyphens, and underscores only."""
 
+    external_subject: Annotated[
+        Optional[str], pydantic.Field(alias="externalSubject")
+    ] = None
+    r"""The merchant's own customer identifier the event was reported with. Empty subject with an externalSubject means the event is not linked to a customer yet."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["object", "externalId"])
+        optional_fields = set(["object", "externalId", "externalSubject"])
         serialized = handler(self)
         m = {}
 

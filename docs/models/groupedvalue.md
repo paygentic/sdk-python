@@ -3,7 +3,8 @@
 
 ## Fields
 
-| Field              | Type               | Required           | Description        |
-| ------------------ | ------------------ | ------------------ | ------------------ |
-| `group_by`         | Dict[str, *str*]   | :heavy_check_mark: | N/A                |
-| `value`            | *float*            | :heavy_check_mark: | N/A                |
+| Field                              | Type                               | Required                           | Description                        |
+| ---------------------------------- | ---------------------------------- | ---------------------------------- | ---------------------------------- |
+| `group_by`                         | Dict[str, *str*]                   | :heavy_check_mark:                 | N/A                                |
+| `value`                            | *float*                            | :heavy_check_mark:                 | N/A                                |
+| `event_count`                      | *Optional[int]*                    | :heavy_minus_sign:                 | Number of raw events in this group |

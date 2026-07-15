@@ -32,7 +32,11 @@ class GetBillableMetricMeterRequestTypedDict(TypedDict):
     filter_group_by: NotRequired[str]
     r"""JSON-encoded dimension filter (e.g. {\"key\":\"value\"})"""
     group_by: NotRequired[str]
-    r"""Comma-separated dimension keys"""
+    r"""Comma-separated dimension keys. Configure keys for the grouping on the metric. Only the \"subject\" grouping is supported by default."""
+    group_limit: NotRequired[int]
+    r"""Cap groupedValues to the top-N by value (descending). With windowSize, restricts the windowed series to those top-N groups. Bounds the payload for high-cardinality groupings; groupCount reports the untruncated distinct-group count."""
+    group_offset: NotRequired[int]
+    r"""Offset into the value-descending group ordering; requires groupLimit to page through grouped results. With windowSize set, pages the windowed series through the ranked groups (offset 0 yields the top-N)."""
 
 
 class GetBillableMetricMeterRequest(BaseModel):
@@ -77,11 +81,34 @@ class GetBillableMetricMeterRequest(BaseModel):
         pydantic.Field(alias="groupBy"),
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = None
-    r"""Comma-separated dimension keys"""
+    r"""Comma-separated dimension keys. Configure keys for the grouping on the metric. Only the \"subject\" grouping is supported by default."""
+
+    group_limit: Annotated[
+        Optional[int],
+        pydantic.Field(alias="groupLimit"),
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Cap groupedValues to the top-N by value (descending). With windowSize, restricts the windowed series to those top-N groups. Bounds the payload for high-cardinality groupings; groupCount reports the untruncated distinct-group count."""
+
+    group_offset: Annotated[
+        Optional[int],
+        pydantic.Field(alias="groupOffset"),
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Offset into the value-descending group ordering; requires groupLimit to page through grouped results. With windowSize set, pages the windowed series through the ranked groups (offset 0 yields the top-N)."""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["subject", "windowSize", "filterGroupBy", "groupBy"])
+        optional_fields = set(
+            [
+                "subject",
+                "windowSize",
+                "filterGroupBy",
+                "groupBy",
+                "groupLimit",
+                "groupOffset",
+            ]
+        )
         serialized = handler(self)
         m = {}
 

@@ -119,9 +119,14 @@ with Paygentic(
     bearer_auth=os.getenv("PAYGENTIC_BEARER_AUTH", ""),
 ) as paygentic:
 
-    res = paygentic.events.ingest(type_="ai.inference", source="https://api.myapp.com", subject="cus_abc123", data={
-        "tokens": 1500,
-        "model": "gpt-4o",
+    res = paygentic.events.ingest(request={
+        "type": "ai.inference",
+        "source": "https://api.myapp.com",
+        "subject": "cus_abc123",
+        "data": {
+            "tokens": 1500,
+            "model": "gpt-4o",
+        },
     })
 
     # Handle response
@@ -144,9 +149,14 @@ async def main():
         bearer_auth=os.getenv("PAYGENTIC_BEARER_AUTH", ""),
     ) as paygentic:
 
-        res = await paygentic.events.ingest_async(type_="ai.inference", source="https://api.myapp.com", subject="cus_abc123", data={
-            "tokens": 1500,
-            "model": "gpt-4o",
+        res = await paygentic.events.ingest_async(request={
+            "type": "ai.inference",
+            "source": "https://api.myapp.com",
+            "subject": "cus_abc123",
+            "data": {
+                "tokens": 1500,
+                "model": "gpt-4o",
+            },
         })
 
         # Handle response

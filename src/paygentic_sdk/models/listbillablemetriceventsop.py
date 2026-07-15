@@ -24,6 +24,8 @@ class ListBillableMetricEventsRequestTypedDict(TypedDict):
     r"""Number of events to skip"""
     external_id: NotRequired[str]
     r"""Filter by external identifier. Alphanumeric characters, hyphens, and underscores only."""
+    external_subject: NotRequired[str]
+    r"""Filter by the merchant's own customer identifier the event was reported with."""
 
 
 class ListBillableMetricEventsRequest(BaseModel):
@@ -68,9 +70,18 @@ class ListBillableMetricEventsRequest(BaseModel):
     ] = None
     r"""Filter by external identifier. Alphanumeric characters, hyphens, and underscores only."""
 
+    external_subject: Annotated[
+        Optional[str],
+        pydantic.Field(alias="externalSubject"),
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Filter by the merchant's own customer identifier the event was reported with."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["subject", "limit", "offset", "externalId"])
+        optional_fields = set(
+            ["subject", "limit", "offset", "externalId", "externalSubject"]
+        )
         serialized = handler(self)
         m = {}
 

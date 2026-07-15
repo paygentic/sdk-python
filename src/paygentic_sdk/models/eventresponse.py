@@ -19,6 +19,9 @@ class EventResponseTypedDict(TypedDict):
     type: NotRequired[str]
     source: NotRequired[str]
     subject: NotRequired[str]
+    r"""Resolved customer ID. Absent when the event was reported with an externalSubject that does not match a customer yet."""
+    external_subject: NotRequired[str]
+    r"""The merchant's own customer identifier the event was reported with."""
     namespace: NotRequired[str]
     timestamp: NotRequired[datetime]
     idempotency_key: NotRequired[str]
@@ -37,6 +40,12 @@ class EventResponse(BaseModel):
     source: Optional[str] = None
 
     subject: Optional[str] = None
+    r"""Resolved customer ID. Absent when the event was reported with an externalSubject that does not match a customer yet."""
+
+    external_subject: Annotated[
+        Optional[str], pydantic.Field(alias="externalSubject")
+    ] = None
+    r"""The merchant's own customer identifier the event was reported with."""
 
     namespace: Optional[str] = None
 
@@ -58,6 +67,7 @@ class EventResponse(BaseModel):
                 "type",
                 "source",
                 "subject",
+                "externalSubject",
                 "namespace",
                 "timestamp",
                 "idempotencyKey",

@@ -29,12 +29,33 @@ class WindowedValue(BaseModel):
 class GroupedValueTypedDict(TypedDict):
     group_by: Dict[str, str]
     value: float
+    event_count: NotRequired[int]
+    r"""Number of raw events in this group"""
 
 
 class GroupedValue(BaseModel):
     group_by: Annotated[Dict[str, str], pydantic.Field(alias="groupBy")]
 
     value: float
+
+    event_count: Annotated[Optional[int], pydantic.Field(alias="eventCount")] = None
+    r"""Number of raw events in this group"""
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(["eventCount"])
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k, serialized.get(n))
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m
 
 
 class UsageResponseTypedDict(TypedDict):
@@ -44,9 +65,11 @@ class UsageResponseTypedDict(TypedDict):
     r"""Total aggregated value across the query window"""
     object: NotRequired[UsageResponseObject]
     windowed_values: NotRequired[List[WindowedValueTypedDict]]
-    r"""Time-bucketed values. Only present when windowSize is specified."""
+    r"""Time-bucketed values. Only present when windowSize is specified. When both windowSize and groupBy are set, windowedValues[i] is index-aligned with groupedValues[i] (same window and group)."""
     grouped_values: NotRequired[List[GroupedValueTypedDict]]
-    r"""Dimension-grouped values. Only present when groupBy is specified."""
+    r"""Dimension-grouped values. Only present when groupBy is specified. When both windowSize and groupBy are set, groupedValues[i] is index-aligned with windowedValues[i] (same window and group)."""
+    group_count: NotRequired[int]
+    r"""Total distinct groups before groupLimit/groupOffset truncation. Only present when groupLimit is specified; use it to drive pagination totals."""
 
 
 class UsageResponse(BaseModel):
@@ -61,16 +84,21 @@ class UsageResponse(BaseModel):
     windowed_values: Annotated[
         Optional[List[WindowedValue]], pydantic.Field(alias="windowedValues")
     ] = None
-    r"""Time-bucketed values. Only present when windowSize is specified."""
+    r"""Time-bucketed values. Only present when windowSize is specified. When both windowSize and groupBy are set, windowedValues[i] is index-aligned with groupedValues[i] (same window and group)."""
 
     grouped_values: Annotated[
         Optional[List[GroupedValue]], pydantic.Field(alias="groupedValues")
     ] = None
-    r"""Dimension-grouped values. Only present when groupBy is specified."""
+    r"""Dimension-grouped values. Only present when groupBy is specified. When both windowSize and groupBy are set, groupedValues[i] is index-aligned with windowedValues[i] (same window and group)."""
+
+    group_count: Annotated[Optional[int], pydantic.Field(alias="groupCount")] = None
+    r"""Total distinct groups before groupLimit/groupOffset truncation. Only present when groupLimit is specified; use it to drive pagination totals."""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["object", "windowedValues", "groupedValues"])
+        optional_fields = set(
+            ["object", "windowedValues", "groupedValues", "groupCount"]
+        )
         serialized = handler(self)
         m = {}
 

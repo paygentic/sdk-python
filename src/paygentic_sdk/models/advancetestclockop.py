@@ -9,34 +9,35 @@ from typing import Union
 from typing_extensions import Annotated, TypeAliasType, TypedDict
 
 
-class RequestBody2TypedDict(TypedDict):
+class AdvanceTestClockRequestBody2TypedDict(TypedDict):
     advance_by: str
     r"""ISO 8601 duration format indicating clock advancement distance. Sample values: 'P1M' moves forward one month, 'P7D' moves forward seven days, 'PT2H' moves forward two hours, 'P1Y2M3DT4H5M6S' moves forward one year, two months, three days, four hours, five minutes, and six seconds"""
 
 
-class RequestBody2(BaseModel):
+class AdvanceTestClockRequestBody2(BaseModel):
     advance_by: Annotated[str, pydantic.Field(alias="advanceBy")]
     r"""ISO 8601 duration format indicating clock advancement distance. Sample values: 'P1M' moves forward one month, 'P7D' moves forward seven days, 'PT2H' moves forward two hours, 'P1Y2M3DT4H5M6S' moves forward one year, two months, three days, four hours, five minutes, and six seconds"""
 
 
-class RequestBody1TypedDict(TypedDict):
+class AdvanceTestClockRequestBody1TypedDict(TypedDict):
     current_time: datetime
     r"""New absolute time for the test clock (must be forward in time)"""
 
 
-class RequestBody1(BaseModel):
+class AdvanceTestClockRequestBody1(BaseModel):
     current_time: Annotated[datetime, pydantic.Field(alias="currentTime")]
     r"""New absolute time for the test clock (must be forward in time)"""
 
 
 AdvanceTestClockRequestBodyTypedDict = TypeAliasType(
     "AdvanceTestClockRequestBodyTypedDict",
-    Union[RequestBody1TypedDict, RequestBody2TypedDict],
+    Union[AdvanceTestClockRequestBody1TypedDict, AdvanceTestClockRequestBody2TypedDict],
 )
 
 
 AdvanceTestClockRequestBody = TypeAliasType(
-    "AdvanceTestClockRequestBody", Union[RequestBody1, RequestBody2]
+    "AdvanceTestClockRequestBody",
+    Union[AdvanceTestClockRequestBody1, AdvanceTestClockRequestBody2],
 )
 
 
@@ -59,10 +60,10 @@ class AdvanceTestClockRequest(BaseModel):
 
 
 try:
-    RequestBody2.model_rebuild()
+    AdvanceTestClockRequestBody2.model_rebuild()
 except NameError:
     pass
 try:
-    RequestBody1.model_rebuild()
+    AdvanceTestClockRequestBody1.model_rebuild()
 except NameError:
     pass
