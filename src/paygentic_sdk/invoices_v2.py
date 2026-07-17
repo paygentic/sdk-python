@@ -932,7 +932,7 @@ class InvoicesV2(BaseSDK):
     ) -> models.InvoiceLineItemsResponse:
         r"""Get Line Items
 
-        Get paginated line items for an invoice from the analytics service
+        Get paginated line items for an invoice
 
         :param id: The invoice ID
         :param limit: Maximum number of line items to return
@@ -1033,7 +1033,7 @@ class InvoicesV2(BaseSDK):
     ) -> models.InvoiceLineItemsResponse:
         r"""Get Line Items
 
-        Get paginated line items for an invoice from the analytics service
+        Get paginated line items for an invoice
 
         :param id: The invoice ID
         :param limit: Maximum number of line items to return
