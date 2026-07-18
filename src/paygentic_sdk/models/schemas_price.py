@@ -24,7 +24,6 @@ SchemasPriceObject = Literal["price",]
 
 SchemasPricePaymentTerm = Union[
     Literal[
-        "instant",
         "in_arrears",
         "in_advance",
     ],

@@ -19,11 +19,10 @@ from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 UpdatePricePaymentTerm = Literal[
-    "instant",
     "in_arrears",
     "in_advance",
 ]
-r"""Billing timing preference. For billable metrics: 'instant' (charges immediately) or 'in_arrears' (charges at period end). For fees: 'in_advance' (charges upfront) or 'in_arrears' (charges at period end)."""
+r"""Billing timing preference: 'in_advance' (prepaid — charged upfront or drawn from a prepaid commitment) or 'in_arrears' (charged at period end)."""
 
 
 class UpdatePriceRequestBodyTypedDict(TypedDict):
@@ -37,7 +36,7 @@ class UpdatePriceRequestBodyTypedDict(TypedDict):
     r"""The pricing model to set. Only 'standard' is accepted. Legacy 'dynamic'/'volume'/'percentage' prices can still be edited (other fields) but cannot be switched to those models. Percentage/revenue-share is expressed via 'standard' with a unit-price multiplier."""
     properties: NotRequired[PricePropertiesUnionTypedDict]
     payment_term: NotRequired[UpdatePricePaymentTerm]
-    r"""Billing timing preference. For billable metrics: 'instant' (charges immediately) or 'in_arrears' (charges at period end). For fees: 'in_advance' (charges upfront) or 'in_arrears' (charges at period end)."""
+    r"""Billing timing preference: 'in_advance' (prepaid — charged upfront or drawn from a prepaid commitment) or 'in_arrears' (charged at period end)."""
     billing_cadence: NotRequired[Nullable[str]]
     r"""ISO 8601 duration for recurring fees (e.g., 'P1M' for monthly, 'P1Y' for yearly, or 'P0D' for one-time)"""
     feature: NotRequired[Nullable[PriceFeatureInputTypedDict]]
@@ -72,7 +71,7 @@ class UpdatePriceRequestBody(BaseModel):
     payment_term: Annotated[
         Optional[UpdatePricePaymentTerm], pydantic.Field(alias="paymentTerm")
     ] = None
-    r"""Billing timing preference. For billable metrics: 'instant' (charges immediately) or 'in_arrears' (charges at period end). For fees: 'in_advance' (charges upfront) or 'in_arrears' (charges at period end)."""
+    r"""Billing timing preference: 'in_advance' (prepaid — charged upfront or drawn from a prepaid commitment) or 'in_arrears' (charged at period end)."""
 
     billing_cadence: Annotated[
         OptionalNullable[str], pydantic.Field(alias="billingCadence")

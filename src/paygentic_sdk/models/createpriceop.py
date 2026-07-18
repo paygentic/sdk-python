@@ -18,18 +18,17 @@ from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 CreatePricePaymentTerm = Literal[
-    "instant",
     "in_arrears",
     "in_advance",
 ]
-r"""Billing timing preference. For billable metrics: 'instant' (charges immediately) or 'in_arrears' (charges at period end). For fees: 'in_advance' (charges upfront) or 'in_arrears' (charges at period end)."""
+r"""Billing timing preference: 'in_advance' (prepaid — charged upfront or drawn from a prepaid commitment) or 'in_arrears' (charged at period end)."""
 
 
 class CreatePriceRequestTypedDict(TypedDict):
     invoice_display_name: str
     r"""Line item label shown on customer invoices. Sample values: 'Claude Token Consumption', 'Storage Usage (GB)', 'Inference API Calls', 'Image Generation Count', 'Training Compute Hours', 'Data Transfer (TB)'"""
     payment_term: CreatePricePaymentTerm
-    r"""Billing timing preference. For billable metrics: 'instant' (charges immediately) or 'in_arrears' (charges at period end). For fees: 'in_advance' (charges upfront) or 'in_arrears' (charges at period end)."""
+    r"""Billing timing preference: 'in_advance' (prepaid — charged upfront or drawn from a prepaid commitment) or 'in_arrears' (charged at period end)."""
     properties: PricePropertiesUnionTypedDict
     billable_metric_id: NotRequired[str]
     r"""Unique identifier for a billable metric"""
@@ -53,7 +52,7 @@ class CreatePriceRequest(BaseModel):
     r"""Line item label shown on customer invoices. Sample values: 'Claude Token Consumption', 'Storage Usage (GB)', 'Inference API Calls', 'Image Generation Count', 'Training Compute Hours', 'Data Transfer (TB)'"""
 
     payment_term: Annotated[CreatePricePaymentTerm, pydantic.Field(alias="paymentTerm")]
-    r"""Billing timing preference. For billable metrics: 'instant' (charges immediately) or 'in_arrears' (charges at period end). For fees: 'in_advance' (charges upfront) or 'in_arrears' (charges at period end)."""
+    r"""Billing timing preference: 'in_advance' (prepaid — charged upfront or drawn from a prepaid commitment) or 'in_arrears' (charged at period end)."""
 
     properties: PricePropertiesUnion
 

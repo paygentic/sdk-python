@@ -11,7 +11,6 @@ A `Fee` defines a recurring or one-time charge tied to a `Product`. Fees are lin
 * [get](#get) - Get
 * [update](#update) - Update
 * [delete](#delete) - Delete
-* [get_price](#get_price) - Get Fee Price
 
 ## create
 
@@ -228,46 +227,3 @@ with Paygentic(
 | errors.DeleteFeeConflictError | 409                           | application/json              |
 | errors.Error                  | 500                           | application/json              |
 | errors.PaygenticDefaultError  | 4XX, 5XX                      | \*/\*                         |
-
-## get_price
-
-Get the price for a fee in the context of a subscription. This returns the price configured for the fee in the subscription's plan, including the tax rate.
-
-### Example Usage
-
-<!-- UsageSnippet language="python" operationID="getFeePrice" method="get" path="/v0/fees/{id}/price/{subscriptionId}" -->
-```python
-import os
-from paygentic_sdk import Paygentic
-
-
-with Paygentic(
-    bearer_auth=os.getenv("PAYGENTIC_BEARER_AUTH", ""),
-) as paygentic:
-
-    res = paygentic.fees.get_price(id="<id>", subscription_id="<id>")
-
-    # Handle response
-    print(res)
-
-```
-
-### Parameters
-
-| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
-| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| `id`                                                                | *str*                                                               | :heavy_check_mark:                                                  | The unique identifier of the fee.                                   |
-| `subscription_id`                                                   | *str*                                                               | :heavy_check_mark:                                                  | The unique identifier of the subscription.                          |
-| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
-
-### Response
-
-**[models.FeePrice](../../models/feeprice.md)**
-
-### Errors
-
-| Error Type                   | Status Code                  | Content Type                 |
-| ---------------------------- | ---------------------------- | ---------------------------- |
-| errors.Error                 | 401, 404                     | application/json             |
-| errors.Error                 | 500                          | application/json             |
-| errors.PaygenticDefaultError | 4XX, 5XX                     | \*/\*                        |

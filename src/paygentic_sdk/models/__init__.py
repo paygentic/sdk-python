@@ -331,14 +331,6 @@ if TYPE_CHECKING:
     )
     from .feature import Feature, FeatureObject, FeatureType, FeatureTypedDict
     from .fee import Fee, FeeObject, FeeTypedDict
-    from .feeprice import (
-        FeePrice,
-        FeePriceModel,
-        FeePricePaymentTerm,
-        FeePriceTypedDict,
-        Properties,
-        PropertiesTypedDict,
-    )
     from .generateportallinkop import (
         GeneratePortalLinkRequest,
         GeneratePortalLinkRequestBody,
@@ -391,7 +383,6 @@ if TYPE_CHECKING:
     )
     from .getfeatureop import GetFeatureRequest, GetFeatureRequestTypedDict
     from .getfeeop import GetFeeRequest, GetFeeRequestTypedDict
-    from .getfeepriceop import GetFeePriceRequest, GetFeePriceRequestTypedDict
     from .getinvoicelineitemsop import (
         GetInvoiceLineItemsRequest,
         GetInvoiceLineItemsRequestTypedDict,
@@ -781,7 +772,7 @@ if TYPE_CHECKING:
         PlanCreditAllocation,
         PlanCreditAllocationTypedDict,
     )
-    from .price import Price, PriceModel1, PriceObject, PricePaymentTerm, PriceTypedDict
+    from .price import Model, Price, PriceObject, PricePaymentTerm, PriceTypedDict
     from .pricefeature import (
         PriceFeature,
         PriceFeatureFeature,
@@ -1415,10 +1406,6 @@ __all__ = [
     "FeaturesTypedDict",
     "Fee",
     "FeeObject",
-    "FeePrice",
-    "FeePriceModel",
-    "FeePricePaymentTerm",
-    "FeePriceTypedDict",
     "FeeTypedDict",
     "From",
     "FromTypedDict",
@@ -1458,8 +1445,6 @@ __all__ = [
     "GetExternalReferenceRequestTypedDict",
     "GetFeatureRequest",
     "GetFeatureRequestTypedDict",
-    "GetFeePriceRequest",
-    "GetFeePriceRequestTypedDict",
     "GetFeeRequest",
     "GetFeeRequestTypedDict",
     "GetInvoiceLineItemsRequest",
@@ -1735,6 +1720,7 @@ __all__ = [
     "MeteredEntitlementListItem",
     "MeteredEntitlementListItemTypedDict",
     "Mode",
+    "Model",
     "NextActionAt",
     "NotificationSettings",
     "NotificationSettingsTypedDict",
@@ -1796,7 +1782,6 @@ __all__ = [
     "PriceFeatureType",
     "PriceFeatureTypedDict",
     "PriceModel",
-    "PriceModel1",
     "PriceModelInput",
     "PriceObject",
     "PricePaymentTerm",
@@ -1823,8 +1808,6 @@ __all__ = [
     "ProfitabilitySummaryResponseTypedDict",
     "ProfitabilityTrend",
     "ProfitabilityTrendTypedDict",
-    "Properties",
-    "PropertiesTypedDict",
     "PurchaseEntitlementGrantRequest",
     "PurchaseEntitlementGrantRequestTypedDict",
     "PurchaseGrantRequest",
@@ -2325,12 +2308,6 @@ _dynamic_imports: dict[str, str] = {
     "Fee": ".fee",
     "FeeObject": ".fee",
     "FeeTypedDict": ".fee",
-    "FeePrice": ".feeprice",
-    "FeePriceModel": ".feeprice",
-    "FeePricePaymentTerm": ".feeprice",
-    "FeePriceTypedDict": ".feeprice",
-    "Properties": ".feeprice",
-    "PropertiesTypedDict": ".feeprice",
     "GeneratePortalLinkRequest": ".generateportallinkop",
     "GeneratePortalLinkRequestBody": ".generateportallinkop",
     "GeneratePortalLinkRequestBodyTypedDict": ".generateportallinkop",
@@ -2371,8 +2348,6 @@ _dynamic_imports: dict[str, str] = {
     "GetFeatureRequestTypedDict": ".getfeatureop",
     "GetFeeRequest": ".getfeeop",
     "GetFeeRequestTypedDict": ".getfeeop",
-    "GetFeePriceRequest": ".getfeepriceop",
-    "GetFeePriceRequestTypedDict": ".getfeepriceop",
     "GetInvoiceLineItemsRequest": ".getinvoicelineitemsop",
     "GetInvoiceLineItemsRequestTypedDict": ".getinvoicelineitemsop",
     "GetInvoiceRequest": ".getinvoiceop",
@@ -2677,8 +2652,8 @@ _dynamic_imports: dict[str, str] = {
     "TaxBehavior": ".plan",
     "PlanCreditAllocation": ".plancreditallocation",
     "PlanCreditAllocationTypedDict": ".plancreditallocation",
+    "Model": ".price",
     "Price": ".price",
-    "PriceModel1": ".price",
     "PriceObject": ".price",
     "PricePaymentTerm": ".price",
     "PriceTypedDict": ".price",

@@ -31,7 +31,7 @@ generation:
     generateNewTests: true
     skipResponseBodyAssertions: false
 python:
-  version: 0.3.3
+  version: 0.4.0
   additionalDependencies:
     dev:
       pytest: ^8.2.2
@@ -46,13 +46,19 @@ python:
   authors:
     - Speakeasy
   baseErrorName: PaygenticError
+  bodyVariantOverloads: false
   clientServerStatusCodesAsErrors: true
   constFieldCasing: normal
   defaultErrorName: PaygenticDefaultError
   description: Official Python SDK for the Paygentic API. Build billing, subscriptions, and usage-based monetization into your product.
+  durationFormat: false
   enableCustomCodeRegions: false
   enumFormat: union
   envVarPrefix: PAYGENTIC
+  errorSchemaValidation: true
+  eventStreamClassNames:
+    async: EventStreamAsync
+    sync: EventStream
   fixFlags:
     asyncPaginationSep2025: true
     conflictResistantModelImportsFeb2026: true
@@ -72,11 +78,15 @@ python:
       webhooks: ""
   inferUnionDiscriminators: true
   inputModelSuffix: input
+  inputTypedDictSuffix: TypedDict
   license: Apache-2.0
   maxMethodParams: 0
   methodArguments: infer-optional-args
+  methodTimeoutArgument: timeout-ms
+  methodTimeoutUnits: milliseconds
   moduleName: ""
   multipartArrayFormat: standard
+  optionalDependencies: {}
   outputModelSuffix: output
   packageManager: uv
   packageName: paygentic-sdk
@@ -85,7 +95,10 @@ python:
     Repository: https://github.com/paygentic/sdk-python.git
   pytestFilterWarnings: []
   pytestTimeout: 0
+  rawResponseHelpers: false
   responseFormat: flat
+  responseSchemaValidation: true
   sseFlatResponse: false
   templateVersion: v2
   useAsyncHooks: false
+  uuidFormat: false

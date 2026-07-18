@@ -7,7 +7,7 @@ from paygentic_sdk._hooks import HookContext
 from paygentic_sdk.types import BaseModel, OptionalNullable, UNSET
 from paygentic_sdk.utils import get_security_from_env
 from paygentic_sdk.utils.unmarshal_json_response import unmarshal_json_response
-from typing import Any, Dict, List, Mapping, Optional, Union, cast
+from typing import Any, Dict, Iterable, List, Mapping, Optional, Union, cast
 
 
 class BillingSchedules(BaseSDK):
@@ -81,9 +81,11 @@ class BillingSchedules(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["Billing Schedules"],
+                extensions=None,
             ),
             request=req,
-            error_status_codes=["400", "401", "403", "404", "4XX", "500", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -182,9 +184,11 @@ class BillingSchedules(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["Billing Schedules"],
+                extensions=None,
             ),
             request=req,
-            error_status_codes=["400", "401", "403", "404", "4XX", "500", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -231,8 +235,8 @@ class BillingSchedules(BaseSDK):
         ] = None,
         payment_term_days: OptionalNullable[int] = UNSET,
         period_preset: Optional[models.CreateBillingScheduleRequestPeriodPreset] = None,
-        custom_period_windows: Optional[List[Any]] = None,
-        metadata: Optional[Dict[str, Any]] = None,
+        custom_period_windows: Optional[Iterable[Any]] = None,
+        metadata: Optional[Mapping[str, Any]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -276,8 +280,10 @@ class BillingSchedules(BaseSDK):
             proration_policy=proration_policy,
             payment_term_days=payment_term_days,
             period_preset=period_preset,
-            custom_period_windows=custom_period_windows,
-            metadata=metadata,
+            custom_period_windows=utils.unmarshal(
+                custom_period_windows, Optional[List[Any]]
+            ),
+            metadata=utils.unmarshal(metadata, Optional[Dict[str, Any]]),
         )
 
         req = self._build_request(
@@ -317,9 +323,11 @@ class BillingSchedules(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["Billing Schedules"],
+                extensions=None,
             ),
             request=req,
-            error_status_codes=["400", "401", "403", "404", "409", "4XX", "500", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -366,8 +374,8 @@ class BillingSchedules(BaseSDK):
         ] = None,
         payment_term_days: OptionalNullable[int] = UNSET,
         period_preset: Optional[models.CreateBillingScheduleRequestPeriodPreset] = None,
-        custom_period_windows: Optional[List[Any]] = None,
-        metadata: Optional[Dict[str, Any]] = None,
+        custom_period_windows: Optional[Iterable[Any]] = None,
+        metadata: Optional[Mapping[str, Any]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -411,8 +419,10 @@ class BillingSchedules(BaseSDK):
             proration_policy=proration_policy,
             payment_term_days=payment_term_days,
             period_preset=period_preset,
-            custom_period_windows=custom_period_windows,
-            metadata=metadata,
+            custom_period_windows=utils.unmarshal(
+                custom_period_windows, Optional[List[Any]]
+            ),
+            metadata=utils.unmarshal(metadata, Optional[Dict[str, Any]]),
         )
 
         req = self._build_request_async(
@@ -452,9 +462,11 @@ class BillingSchedules(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["Billing Schedules"],
+                extensions=None,
             ),
             request=req,
-            error_status_codes=["400", "401", "403", "404", "409", "4XX", "500", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -550,9 +562,11 @@ class BillingSchedules(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["Billing Schedules"],
+                extensions=None,
             ),
             request=req,
-            error_status_codes=["401", "403", "404", "4XX", "500", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -643,9 +657,11 @@ class BillingSchedules(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["Billing Schedules"],
+                extensions=None,
             ),
             request=req,
-            error_status_codes=["401", "403", "404", "4XX", "500", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -687,8 +703,8 @@ class BillingSchedules(BaseSDK):
         ] = None,
         payment_term_days: OptionalNullable[int] = UNSET,
         period_preset: Optional[models.UpdateBillingScheduleRequestPeriodPreset] = None,
-        custom_period_windows: Optional[List[Any]] = None,
-        metadata: Optional[Dict[str, Any]] = None,
+        custom_period_windows: Optional[Iterable[Any]] = None,
+        metadata: Optional[Mapping[str, Any]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -733,8 +749,10 @@ class BillingSchedules(BaseSDK):
                 proration_policy=proration_policy,
                 payment_term_days=payment_term_days,
                 period_preset=period_preset,
-                custom_period_windows=custom_period_windows,
-                metadata=metadata,
+                custom_period_windows=utils.unmarshal(
+                    custom_period_windows, Optional[List[Any]]
+                ),
+                metadata=utils.unmarshal(metadata, Optional[Dict[str, Any]]),
             ),
         )
 
@@ -779,9 +797,11 @@ class BillingSchedules(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["Billing Schedules"],
+                extensions=None,
             ),
             request=req,
-            error_status_codes=["400", "401", "403", "404", "409", "4XX", "500", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -828,8 +848,8 @@ class BillingSchedules(BaseSDK):
         ] = None,
         payment_term_days: OptionalNullable[int] = UNSET,
         period_preset: Optional[models.UpdateBillingScheduleRequestPeriodPreset] = None,
-        custom_period_windows: Optional[List[Any]] = None,
-        metadata: Optional[Dict[str, Any]] = None,
+        custom_period_windows: Optional[Iterable[Any]] = None,
+        metadata: Optional[Mapping[str, Any]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -874,8 +894,10 @@ class BillingSchedules(BaseSDK):
                 proration_policy=proration_policy,
                 payment_term_days=payment_term_days,
                 period_preset=period_preset,
-                custom_period_windows=custom_period_windows,
-                metadata=metadata,
+                custom_period_windows=utils.unmarshal(
+                    custom_period_windows, Optional[List[Any]]
+                ),
+                metadata=utils.unmarshal(metadata, Optional[Dict[str, Any]]),
             ),
         )
 
@@ -920,9 +942,11 @@ class BillingSchedules(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["Billing Schedules"],
+                extensions=None,
             ),
             request=req,
-            error_status_codes=["400", "401", "403", "404", "409", "4XX", "500", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -1018,9 +1042,11 @@ class BillingSchedules(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["Billing Schedules"],
+                extensions=None,
             ),
             request=req,
-            error_status_codes=["401", "403", "404", "4XX", "500", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -1111,9 +1137,11 @@ class BillingSchedules(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["Billing Schedules"],
+                extensions=None,
             ),
             request=req,
-            error_status_codes=["401", "403", "404", "4XX", "500", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -1204,9 +1232,11 @@ class BillingSchedules(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["Billing Schedules"],
+                extensions=None,
             ),
             request=req,
-            error_status_codes=["401", "403", "404", "4XX", "500", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -1299,9 +1329,11 @@ class BillingSchedules(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["Billing Schedules"],
+                extensions=None,
             ),
             request=req,
-            error_status_codes=["401", "403", "404", "4XX", "500", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -1333,7 +1365,7 @@ class BillingSchedules(BaseSDK):
         self,
         *,
         id: str,
-        intervals: Union[List[models.Interval], List[models.IntervalTypedDict]],
+        intervals: Union[Iterable[models.Interval], Iterable[models.IntervalTypedDict]],
         order_line_item_id: Optional[str] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -1411,9 +1443,11 @@ class BillingSchedules(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["Billing Schedules"],
+                extensions=None,
             ),
             request=req,
-            error_status_codes=["400", "401", "403", "404", "409", "4XX", "500", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -1450,7 +1484,7 @@ class BillingSchedules(BaseSDK):
         self,
         *,
         id: str,
-        intervals: Union[List[models.Interval], List[models.IntervalTypedDict]],
+        intervals: Union[Iterable[models.Interval], Iterable[models.IntervalTypedDict]],
         order_line_item_id: Optional[str] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -1528,9 +1562,11 @@ class BillingSchedules(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["Billing Schedules"],
+                extensions=None,
             ),
             request=req,
-            error_status_codes=["400", "401", "403", "404", "409", "4XX", "500", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -1630,9 +1666,11 @@ class BillingSchedules(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["Billing Schedules"],
+                extensions=None,
             ),
             request=req,
-            error_status_codes=["401", "403", "404", "4XX", "500", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -1727,9 +1765,11 @@ class BillingSchedules(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["Billing Schedules"],
+                extensions=None,
             ),
             request=req,
-            error_status_codes=["401", "403", "404", "4XX", "500", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -1824,9 +1864,11 @@ class BillingSchedules(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["Billing Schedules"],
+                extensions=None,
             ),
             request=req,
-            error_status_codes=["400", "401", "403", "404", "409", "4XX", "500", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -1926,9 +1968,11 @@ class BillingSchedules(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["Billing Schedules"],
+                extensions=None,
             ),
             request=req,
-            error_status_codes=["400", "401", "403", "404", "409", "4XX", "500", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 

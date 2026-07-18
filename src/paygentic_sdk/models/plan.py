@@ -34,17 +34,17 @@ r"""ISO 8601 duration for the billing period."""
 
 class PlanPaymentTermTypedDict(TypedDict):
     in_arrears: NotRequired[bool]
-    instant: NotRequired[bool]
+    in_advance: NotRequired[bool]
 
 
 class PlanPaymentTerm(BaseModel):
     in_arrears: Optional[bool] = None
 
-    instant: Optional[bool] = None
+    in_advance: Optional[bool] = None
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["in_arrears", "instant"])
+        optional_fields = set(["in_arrears", "in_advance"])
         serialized = handler(self)
         m = {}
 

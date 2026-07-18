@@ -7,7 +7,7 @@ from paygentic_sdk._hooks import HookContext
 from paygentic_sdk.types import OptionalNullable, UNSET
 from paygentic_sdk.utils import get_security_from_env
 from paygentic_sdk.utils.unmarshal_json_response import unmarshal_json_response
-from typing import Any, List, Mapping, Optional
+from typing import Any, Iterable, List, Mapping, Optional
 
 
 class Revenue(BaseSDK):
@@ -21,7 +21,7 @@ class Revenue(BaseSDK):
         bucket_width: Optional[models.GetRevenueBucketWidth] = "day",
         merchant_id: Optional[str] = None,
         customer_id: Optional[str] = None,
-        subscription_ids: Optional[List[str]] = None,
+        subscription_ids: Optional[Iterable[str]] = None,
         currency: Optional[str] = None,
         group_by: Optional[models.GroupBy] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -62,7 +62,7 @@ class Revenue(BaseSDK):
             bucket_width=bucket_width,
             merchant_id=merchant_id,
             customer_id=customer_id,
-            subscription_ids=subscription_ids,
+            subscription_ids=utils.unmarshal(subscription_ids, Optional[List[str]]),
             currency=currency,
             group_by=group_by,
         )
@@ -101,9 +101,19 @@ class Revenue(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["Revenue"],
+                extensions={
+                    "x-query-validation": {
+                        "anyOf": [
+                            {"required": ["merchantId"]},
+                            {"required": ["customerId"]},
+                            {"required": ["subscriptionIds"]},
+                        ]
+                    }
+                },
             ),
             request=req,
-            error_status_codes=["400", "401", "403", "4XX", "500", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -140,7 +150,7 @@ class Revenue(BaseSDK):
         bucket_width: Optional[models.GetRevenueBucketWidth] = "day",
         merchant_id: Optional[str] = None,
         customer_id: Optional[str] = None,
-        subscription_ids: Optional[List[str]] = None,
+        subscription_ids: Optional[Iterable[str]] = None,
         currency: Optional[str] = None,
         group_by: Optional[models.GroupBy] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -181,7 +191,7 @@ class Revenue(BaseSDK):
             bucket_width=bucket_width,
             merchant_id=merchant_id,
             customer_id=customer_id,
-            subscription_ids=subscription_ids,
+            subscription_ids=utils.unmarshal(subscription_ids, Optional[List[str]]),
             currency=currency,
             group_by=group_by,
         )
@@ -220,9 +230,19 @@ class Revenue(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["Revenue"],
+                extensions={
+                    "x-query-validation": {
+                        "anyOf": [
+                            {"required": ["merchantId"]},
+                            {"required": ["customerId"]},
+                            {"required": ["subscriptionIds"]},
+                        ]
+                    }
+                },
             ),
             request=req,
-            error_status_codes=["400", "401", "403", "4XX", "500", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 

@@ -20,7 +20,7 @@ from typing_extensions import Annotated, NotRequired, TypedDict
 PriceObject = Literal["price",]
 
 
-PriceModel1 = Union[
+Model = Union[
     Literal[
         "standard",
         "dynamic",
@@ -33,7 +33,6 @@ PriceModel1 = Union[
 
 PricePaymentTerm = Union[
     Literal[
-        "instant",
         "in_arrears",
         "in_advance",
     ],
@@ -48,7 +47,7 @@ class PriceTypedDict(TypedDict):
     r"""Unique identifier for an organization"""
     created_at: datetime
     invoice_display_name: str
-    model: PriceModel1
+    model: Model
     payment_term: PricePaymentTerm
     properties: Dict[str, Any]
     updated_at: datetime
@@ -80,7 +79,7 @@ class Price(BaseModel):
 
     invoice_display_name: Annotated[str, pydantic.Field(alias="invoiceDisplayName")]
 
-    model: PriceModel1
+    model: Model
 
     payment_term: Annotated[PricePaymentTerm, pydantic.Field(alias="paymentTerm")]
 

@@ -6,7 +6,7 @@ from paygentic_sdk._hooks import HookContext
 from paygentic_sdk.types import BaseModel, OptionalNullable, UNSET
 from paygentic_sdk.utils import get_security_from_env
 from paygentic_sdk.utils.unmarshal_json_response import unmarshal_json_response
-from typing import Any, Dict, List, Mapping, Optional, Union, cast
+from typing import Any, Dict, Iterable, List, Mapping, Optional, Union, cast
 
 
 class Payments(BaseSDK):
@@ -81,9 +81,11 @@ class Payments(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["Payments"],
+                extensions=None,
             ),
             request=req,
-            error_status_codes=["401", "403", "4XX", "500", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -178,9 +180,11 @@ class Payments(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["Payments"],
+                extensions=None,
             ),
             request=req,
-            error_status_codes=["401", "403", "4XX", "500", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -215,11 +219,11 @@ class Payments(BaseSDK):
         customer_id: Optional[str] = None,
         idempotency_key: Optional[str] = None,
         reference: Optional[str] = None,
-        metadata: Optional[Dict[str, str]] = None,
+        metadata: Optional[Mapping[str, str]] = None,
         line_items: Optional[
             Union[
-                List[models.CreatePaymentLineItem],
-                List[models.CreatePaymentLineItemTypedDict],
+                Iterable[models.CreatePaymentLineItem],
+                Iterable[models.CreatePaymentLineItemTypedDict],
             ]
         ] = None,
         success_redirect_url: Optional[str] = None,
@@ -269,7 +273,7 @@ class Payments(BaseSDK):
             customer_id=customer_id,
             idempotency_key=idempotency_key,
             reference=reference,
-            metadata=metadata,
+            metadata=utils.unmarshal(metadata, Optional[Dict[str, str]]),
             line_items=utils.get_pydantic_model(
                 line_items, Optional[List[models.CreatePaymentLineItem]]
             ),
@@ -316,9 +320,11 @@ class Payments(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["Payments"],
+                extensions=None,
             ),
             request=req,
-            error_status_codes=["400", "401", "403", "4XX", "500", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -356,11 +362,11 @@ class Payments(BaseSDK):
         customer_id: Optional[str] = None,
         idempotency_key: Optional[str] = None,
         reference: Optional[str] = None,
-        metadata: Optional[Dict[str, str]] = None,
+        metadata: Optional[Mapping[str, str]] = None,
         line_items: Optional[
             Union[
-                List[models.CreatePaymentLineItem],
-                List[models.CreatePaymentLineItemTypedDict],
+                Iterable[models.CreatePaymentLineItem],
+                Iterable[models.CreatePaymentLineItemTypedDict],
             ]
         ] = None,
         success_redirect_url: Optional[str] = None,
@@ -410,7 +416,7 @@ class Payments(BaseSDK):
             customer_id=customer_id,
             idempotency_key=idempotency_key,
             reference=reference,
-            metadata=metadata,
+            metadata=utils.unmarshal(metadata, Optional[Dict[str, str]]),
             line_items=utils.get_pydantic_model(
                 line_items, Optional[List[models.CreatePaymentLineItem]]
             ),
@@ -457,9 +463,11 @@ class Payments(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["Payments"],
+                extensions=None,
             ),
             request=req,
-            error_status_codes=["400", "401", "403", "4XX", "500", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -555,9 +563,11 @@ class Payments(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["Payments"],
+                extensions=None,
             ),
             request=req,
-            error_status_codes=["401", "403", "404", "4XX", "500", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -650,9 +660,11 @@ class Payments(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["Payments"],
+                extensions=None,
             ),
             request=req,
-            error_status_codes=["401", "403", "404", "4XX", "500", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 

@@ -80,9 +80,11 @@ class MerchantIntegrations(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["MerchantIntegrations"],
+                extensions=None,
             ),
             request=req,
-            error_status_codes=["400", "401", "403", "4XX", "500", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -181,9 +183,11 @@ class MerchantIntegrations(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["MerchantIntegrations"],
+                extensions=None,
             ),
             request=req,
-            error_status_codes=["400", "401", "403", "4XX", "500", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -221,8 +225,8 @@ class MerchantIntegrations(BaseSDK):
         provider: models.MerchantIntegrationProvider,
         external_id: Optional[str] = None,
         status: Optional[models.MerchantIntegrationStatus] = None,
-        config: Optional[Dict[str, Any]] = None,
-        metadata: Optional[Dict[str, Any]] = None,
+        config: Optional[Mapping[str, Any]] = None,
+        metadata: Optional[Mapping[str, Any]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -258,8 +262,8 @@ class MerchantIntegrations(BaseSDK):
             provider=provider,
             external_id=external_id,
             status=status,
-            config=config,
-            metadata=metadata,
+            config=utils.unmarshal(config, Optional[Dict[str, Any]]),
+            metadata=utils.unmarshal(metadata, Optional[Dict[str, Any]]),
         )
 
         req = self._build_request(
@@ -299,9 +303,11 @@ class MerchantIntegrations(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["MerchantIntegrations"],
+                extensions=None,
             ),
             request=req,
-            error_status_codes=["400", "401", "403", "4XX", "500", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -337,8 +343,8 @@ class MerchantIntegrations(BaseSDK):
         provider: models.MerchantIntegrationProvider,
         external_id: Optional[str] = None,
         status: Optional[models.MerchantIntegrationStatus] = None,
-        config: Optional[Dict[str, Any]] = None,
-        metadata: Optional[Dict[str, Any]] = None,
+        config: Optional[Mapping[str, Any]] = None,
+        metadata: Optional[Mapping[str, Any]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -374,8 +380,8 @@ class MerchantIntegrations(BaseSDK):
             provider=provider,
             external_id=external_id,
             status=status,
-            config=config,
-            metadata=metadata,
+            config=utils.unmarshal(config, Optional[Dict[str, Any]]),
+            metadata=utils.unmarshal(metadata, Optional[Dict[str, Any]]),
         )
 
         req = self._build_request_async(
@@ -415,9 +421,11 @@ class MerchantIntegrations(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["MerchantIntegrations"],
+                extensions=None,
             ),
             request=req,
-            error_status_codes=["400", "401", "403", "4XX", "500", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -511,9 +519,11 @@ class MerchantIntegrations(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["MerchantIntegrations"],
+                extensions=None,
             ),
             request=req,
-            error_status_codes=["401", "403", "404", "4XX", "500", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -604,9 +614,11 @@ class MerchantIntegrations(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["MerchantIntegrations"],
+                extensions=None,
             ),
             request=req,
-            error_status_codes=["401", "403", "404", "4XX", "500", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -699,9 +711,11 @@ class MerchantIntegrations(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["MerchantIntegrations"],
+                extensions=None,
             ),
             request=req,
-            error_status_codes=["401", "403", "404", "4XX", "500", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -794,9 +808,11 @@ class MerchantIntegrations(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["MerchantIntegrations"],
+                extensions=None,
             ),
             request=req,
-            error_status_codes=["401", "403", "404", "4XX", "500", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 

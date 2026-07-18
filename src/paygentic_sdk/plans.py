@@ -7,7 +7,7 @@ from paygentic_sdk._hooks import HookContext
 from paygentic_sdk.types import BaseModel, OptionalNullable, UNSET
 from paygentic_sdk.utils import get_security_from_env
 from paygentic_sdk.utils.unmarshal_json_response import unmarshal_json_response
-from typing import Any, List, Mapping, Optional, Union, cast
+from typing import Any, Iterable, List, Mapping, Optional, Union, cast
 
 
 class Plans(BaseSDK):
@@ -26,7 +26,7 @@ class Plans(BaseSDK):
         default_tax_rate: Optional[float] = 0,
         description: Optional[str] = None,
         invoice_display_name: Optional[str] = None,
-        prices: Optional[List[str]] = None,
+        prices: Optional[Iterable[str]] = None,
         tax_behavior: Optional[models.CreatePlanTaxBehavior] = "exclusive",
         renewal_reminder_enabled: Optional[bool] = True,
         renewal_reminder_days: Optional[int] = 3,
@@ -34,8 +34,8 @@ class Plans(BaseSDK):
         billing_anchor: OptionalNullable[datetime] = UNSET,
         credit_allocations: Optional[
             Union[
-                List[models.PlanCreditAllocation],
-                List[models.PlanCreditAllocationTypedDict],
+                Iterable[models.PlanCreditAllocation],
+                Iterable[models.PlanCreditAllocationTypedDict],
             ]
         ] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -87,7 +87,7 @@ class Plans(BaseSDK):
             invoice_display_name=invoice_display_name,
             merchant_id=merchant_id,
             name=name,
-            prices=prices,
+            prices=utils.unmarshal(prices, Optional[List[str]]),
             product_id=product_id,
             tax_behavior=tax_behavior,
             renewal_reminder_enabled=renewal_reminder_enabled,
@@ -136,9 +136,11 @@ class Plans(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["Plans"],
+                extensions=None,
             ),
             request=req,
-            error_status_codes=["400", "401", "403", "4XX", "500", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -180,7 +182,7 @@ class Plans(BaseSDK):
         default_tax_rate: Optional[float] = 0,
         description: Optional[str] = None,
         invoice_display_name: Optional[str] = None,
-        prices: Optional[List[str]] = None,
+        prices: Optional[Iterable[str]] = None,
         tax_behavior: Optional[models.CreatePlanTaxBehavior] = "exclusive",
         renewal_reminder_enabled: Optional[bool] = True,
         renewal_reminder_days: Optional[int] = 3,
@@ -188,8 +190,8 @@ class Plans(BaseSDK):
         billing_anchor: OptionalNullable[datetime] = UNSET,
         credit_allocations: Optional[
             Union[
-                List[models.PlanCreditAllocation],
-                List[models.PlanCreditAllocationTypedDict],
+                Iterable[models.PlanCreditAllocation],
+                Iterable[models.PlanCreditAllocationTypedDict],
             ]
         ] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -241,7 +243,7 @@ class Plans(BaseSDK):
             invoice_display_name=invoice_display_name,
             merchant_id=merchant_id,
             name=name,
-            prices=prices,
+            prices=utils.unmarshal(prices, Optional[List[str]]),
             product_id=product_id,
             tax_behavior=tax_behavior,
             renewal_reminder_enabled=renewal_reminder_enabled,
@@ -290,9 +292,11 @@ class Plans(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["Plans"],
+                extensions=None,
             ),
             request=req,
-            error_status_codes=["400", "401", "403", "4XX", "500", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -388,9 +392,11 @@ class Plans(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["Plans"],
+                extensions=None,
             ),
             request=req,
-            error_status_codes=["400", "401", "403", "4XX", "500", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -486,9 +492,11 @@ class Plans(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["Plans"],
+                extensions=None,
             ),
             request=req,
-            error_status_codes=["400", "401", "403", "4XX", "500", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -596,9 +604,11 @@ class Plans(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["Plans"],
+                extensions=None,
             ),
             request=req,
-            error_status_codes=["400", "401", "403", "404", "4XX", "500", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -706,9 +716,11 @@ class Plans(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["Plans"],
+                extensions=None,
             ),
             request=req,
-            error_status_codes=["400", "401", "403", "404", "4XX", "500", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -802,9 +814,11 @@ class Plans(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["Plans"],
+                extensions=None,
             ),
             request=req,
-            error_status_codes=["400", "401", "403", "404", "4XX", "500", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -898,9 +912,11 @@ class Plans(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["Plans"],
+                extensions=None,
             ),
             request=req,
-            error_status_codes=["400", "401", "403", "404", "4XX", "500", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -940,15 +956,15 @@ class Plans(BaseSDK):
         description: Optional[str] = None,
         invoice_display_name: Optional[str] = None,
         name: Optional[str] = None,
-        prices: Optional[List[str]] = None,
+        prices: Optional[Iterable[str]] = None,
         tax_behavior: Optional[models.UpdatePlanTaxBehavior] = None,
         renewal_reminder_enabled: Optional[bool] = None,
         renewal_reminder_days: Optional[int] = None,
         billing_anchor: OptionalNullable[datetime] = UNSET,
         credit_allocations: Optional[
             Union[
-                List[models.PlanCreditAllocation],
-                List[models.PlanCreditAllocationTypedDict],
+                Iterable[models.PlanCreditAllocation],
+                Iterable[models.PlanCreditAllocationTypedDict],
             ]
         ] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -997,7 +1013,7 @@ class Plans(BaseSDK):
                 description=description,
                 invoice_display_name=invoice_display_name,
                 name=name,
-                prices=prices,
+                prices=utils.unmarshal(prices, Optional[List[str]]),
                 tax_behavior=tax_behavior,
                 renewal_reminder_enabled=renewal_reminder_enabled,
                 renewal_reminder_days=renewal_reminder_days,
@@ -1045,9 +1061,11 @@ class Plans(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["Plans"],
+                extensions=None,
             ),
             request=req,
-            error_status_codes=["400", "401", "403", "404", "4XX", "500", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -1087,15 +1105,15 @@ class Plans(BaseSDK):
         description: Optional[str] = None,
         invoice_display_name: Optional[str] = None,
         name: Optional[str] = None,
-        prices: Optional[List[str]] = None,
+        prices: Optional[Iterable[str]] = None,
         tax_behavior: Optional[models.UpdatePlanTaxBehavior] = None,
         renewal_reminder_enabled: Optional[bool] = None,
         renewal_reminder_days: Optional[int] = None,
         billing_anchor: OptionalNullable[datetime] = UNSET,
         credit_allocations: Optional[
             Union[
-                List[models.PlanCreditAllocation],
-                List[models.PlanCreditAllocationTypedDict],
+                Iterable[models.PlanCreditAllocation],
+                Iterable[models.PlanCreditAllocationTypedDict],
             ]
         ] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -1144,7 +1162,7 @@ class Plans(BaseSDK):
                 description=description,
                 invoice_display_name=invoice_display_name,
                 name=name,
-                prices=prices,
+                prices=utils.unmarshal(prices, Optional[List[str]]),
                 tax_behavior=tax_behavior,
                 renewal_reminder_enabled=renewal_reminder_enabled,
                 renewal_reminder_days=renewal_reminder_days,
@@ -1192,9 +1210,11 @@ class Plans(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["Plans"],
+                extensions=None,
             ),
             request=req,
-            error_status_codes=["400", "401", "403", "404", "4XX", "500", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 

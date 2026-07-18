@@ -7,7 +7,7 @@ from paygentic_sdk._hooks import HookContext
 from paygentic_sdk.types import BaseModel, OptionalNullable, UNSET
 from paygentic_sdk.utils import get_security_from_env
 from paygentic_sdk.utils.unmarshal_json_response import unmarshal_json_response
-from typing import Any, Dict, List, Mapping, Optional, Union, cast
+from typing import Any, Dict, Iterable, List, Mapping, Optional, Union, cast
 
 
 class Costs(BaseSDK):
@@ -25,7 +25,7 @@ class Costs(BaseSDK):
         event_type: str,
         unit: Optional[str] = None,
         value_property: Optional[str] = None,
-        group_by: Optional[Dict[str, str]] = None,
+        group_by: Optional[Mapping[str, str]] = None,
         merchant_id: Optional[str] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -72,7 +72,7 @@ class Costs(BaseSDK):
             aggregation=aggregation,
             event_type=event_type,
             value_property=value_property,
-            group_by=group_by,
+            group_by=utils.unmarshal(group_by, Optional[Dict[str, str]]),
             merchant_id=merchant_id,
         )
 
@@ -113,9 +113,11 @@ class Costs(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["Costs"],
+                extensions=None,
             ),
             request=req,
-            error_status_codes=["400", "401", "403", "4XX", "500", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -156,7 +158,7 @@ class Costs(BaseSDK):
         event_type: str,
         unit: Optional[str] = None,
         value_property: Optional[str] = None,
-        group_by: Optional[Dict[str, str]] = None,
+        group_by: Optional[Mapping[str, str]] = None,
         merchant_id: Optional[str] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -203,7 +205,7 @@ class Costs(BaseSDK):
             aggregation=aggregation,
             event_type=event_type,
             value_property=value_property,
-            group_by=group_by,
+            group_by=utils.unmarshal(group_by, Optional[Dict[str, str]]),
             merchant_id=merchant_id,
         )
 
@@ -244,9 +246,11 @@ class Costs(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["Costs"],
+                extensions=None,
             ),
             request=req,
-            error_status_codes=["400", "401", "403", "4XX", "500", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -342,9 +346,11 @@ class Costs(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["Costs"],
+                extensions=None,
             ),
             request=req,
-            error_status_codes=["401", "403", "4XX", "500", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -437,9 +443,11 @@ class Costs(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["Costs"],
+                extensions=None,
             ),
             request=req,
-            error_status_codes=["401", "403", "4XX", "500", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -530,9 +538,11 @@ class Costs(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["Costs"],
+                extensions=None,
             ),
             request=req,
-            error_status_codes=["403", "404", "4XX", "500", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -623,9 +633,11 @@ class Costs(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["Costs"],
+                extensions=None,
             ),
             request=req,
-            error_status_codes=["403", "404", "4XX", "500", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -662,7 +674,7 @@ class Costs(BaseSDK):
         aggregation: OptionalNullable[models.UpdateCostAggregation] = UNSET,
         event_type: OptionalNullable[str] = UNSET,
         value_property: OptionalNullable[str] = UNSET,
-        group_by: OptionalNullable[Dict[str, str]] = UNSET,
+        group_by: OptionalNullable[Mapping[str, str]] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -704,7 +716,7 @@ class Costs(BaseSDK):
                 aggregation=aggregation,
                 event_type=event_type,
                 value_property=value_property,
-                group_by=group_by,
+                group_by=utils.unmarshal(group_by, OptionalNullable[Dict[str, str]]),
             ),
         )
 
@@ -745,9 +757,11 @@ class Costs(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["Costs"],
+                extensions=None,
             ),
             request=req,
-            error_status_codes=["400", "403", "404", "4XX", "500", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -787,7 +801,7 @@ class Costs(BaseSDK):
         aggregation: OptionalNullable[models.UpdateCostAggregation] = UNSET,
         event_type: OptionalNullable[str] = UNSET,
         value_property: OptionalNullable[str] = UNSET,
-        group_by: OptionalNullable[Dict[str, str]] = UNSET,
+        group_by: OptionalNullable[Mapping[str, str]] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -829,7 +843,7 @@ class Costs(BaseSDK):
                 aggregation=aggregation,
                 event_type=event_type,
                 value_property=value_property,
-                group_by=group_by,
+                group_by=utils.unmarshal(group_by, OptionalNullable[Dict[str, str]]),
             ),
         )
 
@@ -870,9 +884,11 @@ class Costs(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["Costs"],
+                extensions=None,
             ),
             request=req,
-            error_status_codes=["400", "403", "404", "4XX", "500", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -966,9 +982,11 @@ class Costs(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["Costs"],
+                extensions=None,
             ),
             request=req,
-            error_status_codes=["403", "404", "4XX", "500", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -1059,9 +1077,11 @@ class Costs(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["Costs"],
+                extensions=None,
             ),
             request=req,
-            error_status_codes=["403", "404", "4XX", "500", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -1172,9 +1192,11 @@ class Costs(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["Costs"],
+                extensions=None,
             ),
             request=req,
-            error_status_codes=["400", "403", "404", "4XX", "500", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -1288,9 +1310,11 @@ class Costs(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["Costs"],
+                extensions=None,
             ),
             request=req,
-            error_status_codes=["400", "403", "404", "4XX", "500", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -1326,7 +1350,7 @@ class Costs(BaseSDK):
         to: datetime,
         group_by: str,
         merchant_id: Optional[str] = None,
-        cost_id: Optional[List[str]] = None,
+        cost_id: Optional[Iterable[str]] = None,
         subject: Optional[str] = None,
         filter_group_by: Optional[str] = None,
         top_n: Optional[int] = 9,
@@ -1381,7 +1405,7 @@ class Costs(BaseSDK):
             from_=from_,
             to=to,
             group_by=group_by,
-            cost_id=cost_id,
+            cost_id=utils.unmarshal(cost_id, Optional[List[str]]),
             subject=subject,
             filter_group_by=filter_group_by,
             top_n=top_n,
@@ -1428,9 +1452,17 @@ class Costs(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["Costs"],
+                extensions={
+                    "x-rate-limit": {
+                        "errorMessage": "Too many cost report requests. Please wait before trying again.",
+                        "max": 600,
+                        "timeWindow": "1 minute",
+                    }
+                },
             ),
             request=req,
-            error_status_codes=["400", "401", "403", "4XX", "500", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -1466,7 +1498,7 @@ class Costs(BaseSDK):
         to: datetime,
         group_by: str,
         merchant_id: Optional[str] = None,
-        cost_id: Optional[List[str]] = None,
+        cost_id: Optional[Iterable[str]] = None,
         subject: Optional[str] = None,
         filter_group_by: Optional[str] = None,
         top_n: Optional[int] = 9,
@@ -1521,7 +1553,7 @@ class Costs(BaseSDK):
             from_=from_,
             to=to,
             group_by=group_by,
-            cost_id=cost_id,
+            cost_id=utils.unmarshal(cost_id, Optional[List[str]]),
             subject=subject,
             filter_group_by=filter_group_by,
             top_n=top_n,
@@ -1568,9 +1600,17 @@ class Costs(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["Costs"],
+                extensions={
+                    "x-rate-limit": {
+                        "errorMessage": "Too many cost report requests. Please wait before trying again.",
+                        "max": 600,
+                        "timeWindow": "1 minute",
+                    }
+                },
             ),
             request=req,
-            error_status_codes=["400", "401", "403", "4XX", "500", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 

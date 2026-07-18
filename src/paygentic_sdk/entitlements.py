@@ -98,9 +98,11 @@ class Entitlements(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["Entitlements"],
+                extensions=None,
             ),
             request=req,
-            error_status_codes=["400", "403", "4XX", "500", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -202,9 +204,11 @@ class Entitlements(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["Entitlements"],
+                extensions=None,
             ),
             request=req,
-            error_status_codes=["400", "403", "4XX", "500", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -244,7 +248,7 @@ class Entitlements(BaseSDK):
         active_from: Optional[datetime] = None,
         active_to: OptionalNullable[datetime] = UNSET,
         subscription_id: OptionalNullable[str] = UNSET,
-        metadata: Optional[Dict[str, str]] = None,
+        metadata: Optional[Mapping[str, str]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -283,7 +287,7 @@ class Entitlements(BaseSDK):
             active_from=active_from,
             active_to=active_to,
             subscription_id=subscription_id,
-            metadata=metadata,
+            metadata=utils.unmarshal(metadata, Optional[Dict[str, str]]),
         )
 
         req = self._build_request(
@@ -323,9 +327,11 @@ class Entitlements(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["Entitlements"],
+                extensions=None,
             ),
             request=req,
-            error_status_codes=["400", "403", "404", "409", "4XX", "500", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -365,7 +371,7 @@ class Entitlements(BaseSDK):
         active_from: Optional[datetime] = None,
         active_to: OptionalNullable[datetime] = UNSET,
         subscription_id: OptionalNullable[str] = UNSET,
-        metadata: Optional[Dict[str, str]] = None,
+        metadata: Optional[Mapping[str, str]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -404,7 +410,7 @@ class Entitlements(BaseSDK):
             active_from=active_from,
             active_to=active_to,
             subscription_id=subscription_id,
-            metadata=metadata,
+            metadata=utils.unmarshal(metadata, Optional[Dict[str, str]]),
         )
 
         req = self._build_request_async(
@@ -444,9 +450,11 @@ class Entitlements(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["Entitlements"],
+                extensions=None,
             ),
             request=req,
-            error_status_codes=["400", "403", "404", "409", "4XX", "500", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -545,9 +553,11 @@ class Entitlements(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["Entitlements"],
+                extensions=None,
             ),
             request=req,
-            error_status_codes=["400", "403", "404", "4XX", "500", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
@@ -646,9 +656,11 @@ class Entitlements(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
+                tags=["Entitlements"],
+                extensions=None,
             ),
             request=req,
-            error_status_codes=["400", "403", "404", "4XX", "500", "5XX"],
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             retry_config=retry_config,
         )
 
