@@ -7,7 +7,7 @@ from paygentic_sdk._hooks import HookContext
 from paygentic_sdk.types import BaseModel, OptionalNullable, UNSET
 from paygentic_sdk.utils import get_security_from_env
 from paygentic_sdk.utils.unmarshal_json_response import unmarshal_json_response
-from typing import Any, Dict, Iterable, List, Mapping, Optional, Union, cast
+from typing import Any, Dict, List, Mapping, Optional, Union, cast
 
 
 class Orders(BaseSDK):
@@ -24,11 +24,11 @@ class Orders(BaseSDK):
         type_: OptionalNullable[models.CreateOrderRequestType] = UNSET,
         close_date: OptionalNullable[datetime] = UNSET,
         default_payment_term_days: Optional[int] = None,
-        metadata: Optional[Mapping[str, Any]] = None,
+        metadata: Optional[Dict[str, Any]] = None,
         line_items: Optional[
             Union[
-                Iterable[models.CreateOrderLineItemRequest],
-                Iterable[models.CreateOrderLineItemRequestTypedDict],
+                List[models.CreateOrderLineItemRequest],
+                List[models.CreateOrderLineItemRequestTypedDict],
             ]
         ] = None,
         reseller_id: Optional[str] = None,
@@ -78,7 +78,7 @@ class Orders(BaseSDK):
             close_date=close_date,
             total_amount=total_amount,
             default_payment_term_days=default_payment_term_days,
-            metadata=utils.unmarshal(metadata, Optional[Dict[str, Any]]),
+            metadata=metadata,
             line_items=utils.get_pydantic_model(
                 line_items, Optional[List[models.CreateOrderLineItemRequest]]
             ),
@@ -124,11 +124,9 @@ class Orders(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Orders"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "401", "403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -168,11 +166,11 @@ class Orders(BaseSDK):
         type_: OptionalNullable[models.CreateOrderRequestType] = UNSET,
         close_date: OptionalNullable[datetime] = UNSET,
         default_payment_term_days: Optional[int] = None,
-        metadata: Optional[Mapping[str, Any]] = None,
+        metadata: Optional[Dict[str, Any]] = None,
         line_items: Optional[
             Union[
-                Iterable[models.CreateOrderLineItemRequest],
-                Iterable[models.CreateOrderLineItemRequestTypedDict],
+                List[models.CreateOrderLineItemRequest],
+                List[models.CreateOrderLineItemRequestTypedDict],
             ]
         ] = None,
         reseller_id: Optional[str] = None,
@@ -222,7 +220,7 @@ class Orders(BaseSDK):
             close_date=close_date,
             total_amount=total_amount,
             default_payment_term_days=default_payment_term_days,
-            metadata=utils.unmarshal(metadata, Optional[Dict[str, Any]]),
+            metadata=metadata,
             line_items=utils.get_pydantic_model(
                 line_items, Optional[List[models.CreateOrderLineItemRequest]]
             ),
@@ -268,11 +266,9 @@ class Orders(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Orders"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "401", "403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -368,11 +364,9 @@ class Orders(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Orders"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "401", "403", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -468,11 +462,9 @@ class Orders(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Orders"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "401", "403", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -566,11 +558,9 @@ class Orders(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Orders"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["401", "403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -661,11 +651,9 @@ class Orders(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Orders"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["401", "403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -701,7 +689,7 @@ class Orders(BaseSDK):
         close_date: OptionalNullable[datetime] = UNSET,
         total_amount: Optional[str] = None,
         default_payment_term_days: Optional[int] = None,
-        metadata: Optional[Mapping[str, Any]] = None,
+        metadata: Optional[Dict[str, Any]] = None,
         cancelled_at: OptionalNullable[datetime] = UNSET,
         reseller_id: OptionalNullable[str] = UNSET,
         tax_exempt: Optional[bool] = None,
@@ -749,7 +737,7 @@ class Orders(BaseSDK):
                 close_date=close_date,
                 total_amount=total_amount,
                 default_payment_term_days=default_payment_term_days,
-                metadata=utils.unmarshal(metadata, Optional[Dict[str, Any]]),
+                metadata=metadata,
                 cancelled_at=cancelled_at,
                 reseller_id=reseller_id,
                 tax_exempt=tax_exempt,
@@ -798,11 +786,9 @@ class Orders(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Orders"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "401", "403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -841,7 +827,7 @@ class Orders(BaseSDK):
         close_date: OptionalNullable[datetime] = UNSET,
         total_amount: Optional[str] = None,
         default_payment_term_days: Optional[int] = None,
-        metadata: Optional[Mapping[str, Any]] = None,
+        metadata: Optional[Dict[str, Any]] = None,
         cancelled_at: OptionalNullable[datetime] = UNSET,
         reseller_id: OptionalNullable[str] = UNSET,
         tax_exempt: Optional[bool] = None,
@@ -889,7 +875,7 @@ class Orders(BaseSDK):
                 close_date=close_date,
                 total_amount=total_amount,
                 default_payment_term_days=default_payment_term_days,
-                metadata=utils.unmarshal(metadata, Optional[Dict[str, Any]]),
+                metadata=metadata,
                 cancelled_at=cancelled_at,
                 reseller_id=reseller_id,
                 tax_exempt=tax_exempt,
@@ -938,11 +924,9 @@ class Orders(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Orders"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "401", "403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1036,11 +1020,9 @@ class Orders(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Orders"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["401", "403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1131,11 +1113,9 @@ class Orders(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Orders"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["401", "403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1172,7 +1152,7 @@ class Orders(BaseSDK):
         item_id: OptionalNullable[str] = UNSET,
         description: OptionalNullable[str] = UNSET,
         discount_unit_amount: Optional[str] = None,
-        metadata: Optional[Mapping[str, Any]] = None,
+        metadata: Optional[Dict[str, Any]] = None,
         term_start_date: Optional[datetime] = None,
         term_end_date: Optional[datetime] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -1218,7 +1198,7 @@ class Orders(BaseSDK):
                 discount_unit_amount=discount_unit_amount,
                 unit_price=unit_price,
                 total_price=total_price,
-                metadata=utils.unmarshal(metadata, Optional[Dict[str, Any]]),
+                metadata=metadata,
                 term_start_date=term_start_date,
                 term_end_date=term_end_date,
             ),
@@ -1265,11 +1245,9 @@ class Orders(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Orders"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "401", "403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1309,7 +1287,7 @@ class Orders(BaseSDK):
         item_id: OptionalNullable[str] = UNSET,
         description: OptionalNullable[str] = UNSET,
         discount_unit_amount: Optional[str] = None,
-        metadata: Optional[Mapping[str, Any]] = None,
+        metadata: Optional[Dict[str, Any]] = None,
         term_start_date: Optional[datetime] = None,
         term_end_date: Optional[datetime] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -1355,7 +1333,7 @@ class Orders(BaseSDK):
                 discount_unit_amount=discount_unit_amount,
                 unit_price=unit_price,
                 total_price=total_price,
-                metadata=utils.unmarshal(metadata, Optional[Dict[str, Any]]),
+                metadata=metadata,
                 term_start_date=term_start_date,
                 term_end_date=term_end_date,
             ),
@@ -1402,11 +1380,9 @@ class Orders(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Orders"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "401", "403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1447,7 +1423,7 @@ class Orders(BaseSDK):
         discount_unit_amount: Optional[str] = None,
         unit_price: Optional[str] = None,
         total_price: Optional[str] = None,
-        metadata: Optional[Mapping[str, Any]] = None,
+        metadata: Optional[Dict[str, Any]] = None,
         term_start_date: Optional[datetime] = None,
         term_end_date: Optional[datetime] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -1495,7 +1471,7 @@ class Orders(BaseSDK):
                 discount_unit_amount=discount_unit_amount,
                 unit_price=unit_price,
                 total_price=total_price,
-                metadata=utils.unmarshal(metadata, Optional[Dict[str, Any]]),
+                metadata=metadata,
                 term_start_date=term_start_date,
                 term_end_date=term_end_date,
             ),
@@ -1542,11 +1518,9 @@ class Orders(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Orders"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "401", "403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1587,7 +1561,7 @@ class Orders(BaseSDK):
         discount_unit_amount: Optional[str] = None,
         unit_price: Optional[str] = None,
         total_price: Optional[str] = None,
-        metadata: Optional[Mapping[str, Any]] = None,
+        metadata: Optional[Dict[str, Any]] = None,
         term_start_date: Optional[datetime] = None,
         term_end_date: Optional[datetime] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -1635,7 +1609,7 @@ class Orders(BaseSDK):
                 discount_unit_amount=discount_unit_amount,
                 unit_price=unit_price,
                 total_price=total_price,
-                metadata=utils.unmarshal(metadata, Optional[Dict[str, Any]]),
+                metadata=metadata,
                 term_start_date=term_start_date,
                 term_end_date=term_end_date,
             ),
@@ -1682,11 +1656,9 @@ class Orders(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Orders"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "401", "403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1783,11 +1755,9 @@ class Orders(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Orders"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["401", "403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1881,11 +1851,9 @@ class Orders(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Orders"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["401", "403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1993,11 +1961,9 @@ class Orders(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Orders"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["404", "409", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -2098,11 +2064,9 @@ class Orders(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Orders"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["404", "409", "4XX", "5XX"],
             retry_config=retry_config,
         )
 

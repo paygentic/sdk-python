@@ -6,7 +6,7 @@ from paygentic_sdk._hooks import HookContext
 from paygentic_sdk.types import OptionalNullable, UNSET
 from paygentic_sdk.utils import get_security_from_env
 from paygentic_sdk.utils.unmarshal_json_response import unmarshal_json_response
-from typing import Any, Iterable, List, Mapping, Optional, Union
+from typing import Any, List, Mapping, Optional, Union
 
 
 class Rules(BaseSDK):
@@ -77,11 +77,9 @@ class Rules(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Sources"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -177,11 +175,9 @@ class Rules(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Sources"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -214,7 +210,7 @@ class Rules(BaseSDK):
         self,
         *,
         conditions: Union[
-            Iterable[models.RuleCondition], Iterable[models.RuleConditionTypedDict]
+            List[models.RuleCondition], List[models.RuleConditionTypedDict]
         ],
         name: str,
         source_id: str,
@@ -297,11 +293,9 @@ class Rules(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Sources"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -334,7 +328,7 @@ class Rules(BaseSDK):
         self,
         *,
         conditions: Union[
-            Iterable[models.RuleCondition], Iterable[models.RuleConditionTypedDict]
+            List[models.RuleCondition], List[models.RuleConditionTypedDict]
         ],
         name: str,
         source_id: str,
@@ -417,11 +411,9 @@ class Rules(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Sources"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -515,11 +507,9 @@ class Rules(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Sources"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -613,11 +603,9 @@ class Rules(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Sources"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -651,9 +639,7 @@ class Rules(BaseSDK):
         *,
         rule_id: str,
         conditions: Optional[
-            Union[
-                Iterable[models.RuleCondition], Iterable[models.RuleConditionTypedDict]
-            ]
+            Union[List[models.RuleCondition], List[models.RuleConditionTypedDict]]
         ] = None,
         description: Optional[str] = None,
         enabled: Optional[bool] = None,
@@ -741,11 +727,9 @@ class Rules(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Sources"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -779,9 +763,7 @@ class Rules(BaseSDK):
         *,
         rule_id: str,
         conditions: Optional[
-            Union[
-                Iterable[models.RuleCondition], Iterable[models.RuleConditionTypedDict]
-            ]
+            Union[List[models.RuleCondition], List[models.RuleConditionTypedDict]]
         ] = None,
         description: Optional[str] = None,
         enabled: Optional[bool] = None,
@@ -869,11 +851,9 @@ class Rules(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Sources"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -967,11 +947,9 @@ class Rules(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Sources"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1065,11 +1043,9 @@ class Rules(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Sources"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 

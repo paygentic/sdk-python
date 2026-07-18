@@ -80,11 +80,9 @@ class Subscriptions(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Subscriptions"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "401", "403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -180,11 +178,9 @@ class Subscriptions(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Subscriptions"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "401", "403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -241,8 +237,8 @@ class Subscriptions(BaseSDK):
         session_expiry_minutes: Optional[float] = None,
         metadata: Optional[
             Union[
-                Mapping[str, models.SubscriptionMetadata],
-                Mapping[str, models.SubscriptionMetadataTypedDict],
+                Dict[str, models.SubscriptionMetadata],
+                Dict[str, models.SubscriptionMetadataTypedDict],
             ]
         ] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -307,9 +303,7 @@ class Subscriptions(BaseSDK):
             renewal_reminder_days=renewal_reminder_days,
             payment_term_days=payment_term_days,
             session_expiry_minutes=session_expiry_minutes,
-            metadata=utils.unmarshal(
-                metadata, Optional[Dict[str, models.SubscriptionMetadata]]
-            ),
+            metadata=metadata,
         )
 
         req = self._build_request(
@@ -349,11 +343,9 @@ class Subscriptions(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Subscriptions"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "401", "403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -410,8 +402,8 @@ class Subscriptions(BaseSDK):
         session_expiry_minutes: Optional[float] = None,
         metadata: Optional[
             Union[
-                Mapping[str, models.SubscriptionMetadata],
-                Mapping[str, models.SubscriptionMetadataTypedDict],
+                Dict[str, models.SubscriptionMetadata],
+                Dict[str, models.SubscriptionMetadataTypedDict],
             ]
         ] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -476,9 +468,7 @@ class Subscriptions(BaseSDK):
             renewal_reminder_days=renewal_reminder_days,
             payment_term_days=payment_term_days,
             session_expiry_minutes=session_expiry_minutes,
-            metadata=utils.unmarshal(
-                metadata, Optional[Dict[str, models.SubscriptionMetadata]]
-            ),
+            metadata=metadata,
         )
 
         req = self._build_request_async(
@@ -518,11 +508,9 @@ class Subscriptions(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Subscriptions"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "401", "403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -616,11 +604,9 @@ class Subscriptions(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Subscriptions"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["401", "403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -711,11 +697,9 @@ class Subscriptions(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Subscriptions"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["401", "403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -848,11 +832,9 @@ class Subscriptions(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Subscriptions"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "401", "403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -988,11 +970,9 @@ class Subscriptions(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Subscriptions"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "401", "403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1100,18 +1080,9 @@ class Subscriptions(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Subscriptions"],
-                extensions={
-                    "x-rate-limit": {
-                        "errorMessage": "Too many portal link generation requests. Please wait before trying again.",
-                        "max": 1,
-                        "platformMax": 100,
-                        "timeWindow": "1 second",
-                    }
-                },
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["401", "403", "404", "429", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1218,18 +1189,9 @@ class Subscriptions(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Subscriptions"],
-                extensions={
-                    "x-rate-limit": {
-                        "errorMessage": "Too many portal link generation requests. Please wait before trying again.",
-                        "max": 1,
-                        "platformMax": 100,
-                        "timeWindow": "1 second",
-                    }
-                },
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["401", "403", "404", "429", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1336,11 +1298,9 @@ class Subscriptions(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Subscriptions"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "401", "403", "404", "409", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1450,11 +1410,9 @@ class Subscriptions(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Subscriptions"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "401", "403", "404", "409", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1564,18 +1522,9 @@ class Subscriptions(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Subscriptions"],
-                extensions={
-                    "x-rate-limit": {
-                        "errorMessage": "Too many reconciliation requests. Please wait before trying again.",
-                        "max": 2,
-                        "platformMax": 100,
-                        "timeWindow": "1 second",
-                    }
-                },
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "401", "403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1683,18 +1632,9 @@ class Subscriptions(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Subscriptions"],
-                extensions={
-                    "x-rate-limit": {
-                        "errorMessage": "Too many reconciliation requests. Please wait before trying again.",
-                        "max": 2,
-                        "platformMax": 100,
-                        "timeWindow": "1 second",
-                    }
-                },
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "401", "403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 

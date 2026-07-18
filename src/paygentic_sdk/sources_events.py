@@ -6,7 +6,7 @@ from paygentic_sdk._hooks import HookContext
 from paygentic_sdk.types import OptionalNullable, UNSET
 from paygentic_sdk.utils import get_security_from_env
 from paygentic_sdk.utils.unmarshal_json_response import unmarshal_json_response
-from typing import Any, Iterable, List, Mapping, Optional
+from typing import Any, List, Mapping, Optional
 
 
 class SourcesEvents(BaseSDK):
@@ -92,11 +92,9 @@ class SourcesEvents(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Sources"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -204,11 +202,9 @@ class SourcesEvents(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Sources"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -304,11 +300,9 @@ class SourcesEvents(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Sources"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -407,11 +401,9 @@ class SourcesEvents(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Sources"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -510,11 +502,9 @@ class SourcesEvents(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Sources"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -613,11 +603,9 @@ class SourcesEvents(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Sources"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -650,7 +638,7 @@ class SourcesEvents(BaseSDK):
         self,
         *,
         id: str,
-        event_ids: Iterable[str],
+        event_ids: List[str],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -680,7 +668,7 @@ class SourcesEvents(BaseSDK):
         request = models.BulkApproveSourceEventsRequest(
             id=id,
             request_body=models.BulkApproveSourceEventsRequestBody(
-                event_ids=utils.unmarshal(event_ids, List[str]),
+                event_ids=event_ids,
             ),
         )
 
@@ -725,11 +713,9 @@ class SourcesEvents(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Sources"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -764,7 +750,7 @@ class SourcesEvents(BaseSDK):
         self,
         *,
         id: str,
-        event_ids: Iterable[str],
+        event_ids: List[str],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -794,7 +780,7 @@ class SourcesEvents(BaseSDK):
         request = models.BulkApproveSourceEventsRequest(
             id=id,
             request_body=models.BulkApproveSourceEventsRequestBody(
-                event_ids=utils.unmarshal(event_ids, List[str]),
+                event_ids=event_ids,
             ),
         )
 
@@ -839,11 +825,9 @@ class SourcesEvents(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Sources"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -878,7 +862,7 @@ class SourcesEvents(BaseSDK):
         self,
         *,
         id: str,
-        event_ids: Iterable[str],
+        event_ids: List[str],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -908,7 +892,7 @@ class SourcesEvents(BaseSDK):
         request = models.BulkRejectSourceEventsRequest(
             id=id,
             request_body=models.BulkRejectSourceEventsRequestBody(
-                event_ids=utils.unmarshal(event_ids, List[str]),
+                event_ids=event_ids,
             ),
         )
 
@@ -953,11 +937,9 @@ class SourcesEvents(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Sources"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -992,7 +974,7 @@ class SourcesEvents(BaseSDK):
         self,
         *,
         id: str,
-        event_ids: Iterable[str],
+        event_ids: List[str],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -1022,7 +1004,7 @@ class SourcesEvents(BaseSDK):
         request = models.BulkRejectSourceEventsRequest(
             id=id,
             request_body=models.BulkRejectSourceEventsRequestBody(
-                event_ids=utils.unmarshal(event_ids, List[str]),
+                event_ids=event_ids,
             ),
         )
 
@@ -1067,11 +1049,9 @@ class SourcesEvents(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Sources"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 

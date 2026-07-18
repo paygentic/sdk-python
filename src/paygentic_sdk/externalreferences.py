@@ -21,7 +21,7 @@ class ExternalReferences(BaseSDK):
         provider: str,
         external_id: str,
         external_label: Optional[str] = None,
-        metadata: Optional[Mapping[str, Any]] = None,
+        metadata: Optional[Dict[str, Any]] = None,
         is_primary: Optional[bool] = True,
         is_default: Optional[bool] = False,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -62,7 +62,7 @@ class ExternalReferences(BaseSDK):
             provider=provider,
             external_id=external_id,
             external_label=external_label,
-            metadata=utils.unmarshal(metadata, Optional[Dict[str, Any]]),
+            metadata=metadata,
             is_primary=is_primary,
             is_default=is_default,
         )
@@ -104,11 +104,9 @@ class ExternalReferences(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["ExternalReferences"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "401", "403", "404", "409", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -148,7 +146,7 @@ class ExternalReferences(BaseSDK):
         provider: str,
         external_id: str,
         external_label: Optional[str] = None,
-        metadata: Optional[Mapping[str, Any]] = None,
+        metadata: Optional[Dict[str, Any]] = None,
         is_primary: Optional[bool] = True,
         is_default: Optional[bool] = False,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -189,7 +187,7 @@ class ExternalReferences(BaseSDK):
             provider=provider,
             external_id=external_id,
             external_label=external_label,
-            metadata=utils.unmarshal(metadata, Optional[Dict[str, Any]]),
+            metadata=metadata,
             is_primary=is_primary,
             is_default=is_default,
         )
@@ -231,11 +229,9 @@ class ExternalReferences(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["ExternalReferences"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "401", "403", "404", "409", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -334,11 +330,9 @@ class ExternalReferences(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["ExternalReferences"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "401", "403", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -437,11 +431,9 @@ class ExternalReferences(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["ExternalReferences"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "401", "403", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -537,11 +529,9 @@ class ExternalReferences(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["ExternalReferences"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["401", "403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -632,11 +622,9 @@ class ExternalReferences(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["ExternalReferences"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["401", "403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -667,7 +655,7 @@ class ExternalReferences(BaseSDK):
         *,
         id: str,
         external_label: OptionalNullable[str] = UNSET,
-        metadata: Optional[Mapping[str, Any]] = None,
+        metadata: Optional[Dict[str, Any]] = None,
         is_primary: Optional[bool] = None,
         is_default: Optional[bool] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -701,7 +689,7 @@ class ExternalReferences(BaseSDK):
             id=id,
             request_body=models.UpdateExternalReferenceRequestBody(
                 external_label=external_label,
-                metadata=utils.unmarshal(metadata, Optional[Dict[str, Any]]),
+                metadata=metadata,
                 is_primary=is_primary,
                 is_default=is_default,
             ),
@@ -748,11 +736,9 @@ class ExternalReferences(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["ExternalReferences"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "401", "403", "404", "409", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -788,7 +774,7 @@ class ExternalReferences(BaseSDK):
         *,
         id: str,
         external_label: OptionalNullable[str] = UNSET,
-        metadata: Optional[Mapping[str, Any]] = None,
+        metadata: Optional[Dict[str, Any]] = None,
         is_primary: Optional[bool] = None,
         is_default: Optional[bool] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -822,7 +808,7 @@ class ExternalReferences(BaseSDK):
             id=id,
             request_body=models.UpdateExternalReferenceRequestBody(
                 external_label=external_label,
-                metadata=utils.unmarshal(metadata, Optional[Dict[str, Any]]),
+                metadata=metadata,
                 is_primary=is_primary,
                 is_default=is_default,
             ),
@@ -869,11 +855,9 @@ class ExternalReferences(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["ExternalReferences"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "401", "403", "404", "409", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -969,11 +953,9 @@ class ExternalReferences(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["ExternalReferences"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["401", "403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1064,11 +1046,9 @@ class ExternalReferences(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["ExternalReferences"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["401", "403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 

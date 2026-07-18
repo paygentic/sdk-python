@@ -17,7 +17,7 @@ class Items(BaseSDK):
         *,
         merchant_id: str,
         name: str,
-        metadata: Optional[Mapping[str, Any]] = None,
+        metadata: Optional[Dict[str, Any]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -46,7 +46,7 @@ class Items(BaseSDK):
         request = models.CreateItemRequest(
             merchant_id=merchant_id,
             name=name,
-            metadata=utils.unmarshal(metadata, Optional[Dict[str, Any]]),
+            metadata=metadata,
         )
 
         req = self._build_request(
@@ -86,11 +86,9 @@ class Items(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Items"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "401", "403", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -124,7 +122,7 @@ class Items(BaseSDK):
         *,
         merchant_id: str,
         name: str,
-        metadata: Optional[Mapping[str, Any]] = None,
+        metadata: Optional[Dict[str, Any]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -153,7 +151,7 @@ class Items(BaseSDK):
         request = models.CreateItemRequest(
             merchant_id=merchant_id,
             name=name,
-            metadata=utils.unmarshal(metadata, Optional[Dict[str, Any]]),
+            metadata=metadata,
         )
 
         req = self._build_request_async(
@@ -193,11 +191,9 @@ class Items(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Items"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "401", "403", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -293,11 +289,9 @@ class Items(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Items"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "401", "403", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -393,11 +387,9 @@ class Items(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Items"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "401", "403", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -491,11 +483,9 @@ class Items(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Items"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["401", "403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -586,11 +576,9 @@ class Items(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Items"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["401", "403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -621,7 +609,7 @@ class Items(BaseSDK):
         *,
         id: str,
         name: Optional[str] = None,
-        metadata: Optional[Mapping[str, Any]] = None,
+        metadata: Optional[Dict[str, Any]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -651,7 +639,7 @@ class Items(BaseSDK):
             id=id,
             request_body=models.UpdateItemRequestBody(
                 name=name,
-                metadata=utils.unmarshal(metadata, Optional[Dict[str, Any]]),
+                metadata=metadata,
             ),
         )
 
@@ -692,11 +680,9 @@ class Items(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Items"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "401", "403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -730,7 +716,7 @@ class Items(BaseSDK):
         *,
         id: str,
         name: Optional[str] = None,
-        metadata: Optional[Mapping[str, Any]] = None,
+        metadata: Optional[Dict[str, Any]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -760,7 +746,7 @@ class Items(BaseSDK):
             id=id,
             request_body=models.UpdateItemRequestBody(
                 name=name,
-                metadata=utils.unmarshal(metadata, Optional[Dict[str, Any]]),
+                metadata=metadata,
             ),
         )
 
@@ -801,11 +787,9 @@ class Items(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Items"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "401", "403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -899,11 +883,9 @@ class Items(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Items"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["401", "403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -994,11 +976,9 @@ class Items(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Items"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["401", "403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 

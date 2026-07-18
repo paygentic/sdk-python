@@ -93,18 +93,9 @@ class Customers(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Customers"],
-                extensions={
-                    "x-rate-limit": {
-                        "errorMessage": "Too many customer list requests. Please wait before trying again.",
-                        "max": 10,
-                        "platformMax": 60,
-                        "timeWindow": "1 second",
-                    }
-                },
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "403", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -213,18 +204,9 @@ class Customers(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Customers"],
-                extensions={
-                    "x-rate-limit": {
-                        "errorMessage": "Too many customer list requests. Please wait before trying again.",
-                        "max": 10,
-                        "platformMax": 60,
-                        "timeWindow": "1 second",
-                    }
-                },
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "403", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -263,7 +245,7 @@ class Customers(BaseSDK):
         consumer_id: Optional[str] = None,
         tax_id: Optional[str] = None,
         external_id: Optional[str] = None,
-        tax_rates: Optional[Mapping[str, float]] = None,
+        tax_rates: Optional[Dict[str, float]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -302,7 +284,7 @@ class Customers(BaseSDK):
             merchant_id=merchant_id,
             tax_id=tax_id,
             external_id=external_id,
-            tax_rates=utils.unmarshal(tax_rates, Optional[Dict[str, float]]),
+            tax_rates=tax_rates,
         )
 
         req = self._build_request(
@@ -342,11 +324,9 @@ class Customers(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Customers"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "403", "404", "409", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -387,7 +367,7 @@ class Customers(BaseSDK):
         consumer_id: Optional[str] = None,
         tax_id: Optional[str] = None,
         external_id: Optional[str] = None,
-        tax_rates: Optional[Mapping[str, float]] = None,
+        tax_rates: Optional[Dict[str, float]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -426,7 +406,7 @@ class Customers(BaseSDK):
             merchant_id=merchant_id,
             tax_id=tax_id,
             external_id=external_id,
-            tax_rates=utils.unmarshal(tax_rates, Optional[Dict[str, float]]),
+            tax_rates=tax_rates,
         )
 
         req = self._build_request_async(
@@ -466,11 +446,9 @@ class Customers(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Customers"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "403", "404", "409", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -566,11 +544,9 @@ class Customers(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Customers"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -661,11 +637,9 @@ class Customers(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Customers"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -756,11 +730,9 @@ class Customers(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Customers"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["401", "403", "404", "409", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -856,11 +828,9 @@ class Customers(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Customers"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["401", "403", "404", "409", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -936,7 +906,7 @@ class Customers(BaseSDK):
             request_body=models.UpdateCustomerRequestBody(
                 tax_id=tax_id,
                 external_id=external_id,
-                tax_rates=utils.unmarshal(tax_rates, Optional[models.TaxRates]),
+                tax_rates=tax_rates,
                 notification_settings=utils.get_pydantic_model(
                     notification_settings,
                     Optional[models.UpdateCustomerNotificationSettings],
@@ -985,11 +955,9 @@ class Customers(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Customers"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "401", "403", "404", "409", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1065,7 +1033,7 @@ class Customers(BaseSDK):
             request_body=models.UpdateCustomerRequestBody(
                 tax_id=tax_id,
                 external_id=external_id,
-                tax_rates=utils.unmarshal(tax_rates, Optional[models.TaxRates]),
+                tax_rates=tax_rates,
                 notification_settings=utils.get_pydantic_model(
                     notification_settings,
                     Optional[models.UpdateCustomerNotificationSettings],
@@ -1114,11 +1082,9 @@ class Customers(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Customers"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "401", "403", "404", "409", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1216,11 +1182,9 @@ class Customers(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Customers"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1315,11 +1279,9 @@ class Customers(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Customers"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1353,7 +1315,7 @@ class Customers(BaseSDK):
         id: str,
         success_redirect_url: Optional[str] = None,
         failure_redirect_url: Optional[str] = None,
-        metadata: Optional[Mapping[str, Any]] = None,
+        metadata: Optional[Dict[str, Any]] = None,
         expires_at: Optional[datetime] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -1389,7 +1351,7 @@ class Customers(BaseSDK):
             request_body=models.CreateCustomerPaymentMethodRequestBody(
                 success_redirect_url=success_redirect_url,
                 failure_redirect_url=failure_redirect_url,
-                metadata=utils.unmarshal(metadata, Optional[Dict[str, Any]]),
+                metadata=metadata,
                 expires_at=expires_at,
             ),
         )
@@ -1435,11 +1397,9 @@ class Customers(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Customers"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1474,7 +1434,7 @@ class Customers(BaseSDK):
         id: str,
         success_redirect_url: Optional[str] = None,
         failure_redirect_url: Optional[str] = None,
-        metadata: Optional[Mapping[str, Any]] = None,
+        metadata: Optional[Dict[str, Any]] = None,
         expires_at: Optional[datetime] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -1510,7 +1470,7 @@ class Customers(BaseSDK):
             request_body=models.CreateCustomerPaymentMethodRequestBody(
                 success_redirect_url=success_redirect_url,
                 failure_redirect_url=failure_redirect_url,
-                metadata=utils.unmarshal(metadata, Optional[Dict[str, Any]]),
+                metadata=metadata,
                 expires_at=expires_at,
             ),
         )
@@ -1556,11 +1516,9 @@ class Customers(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Customers"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 

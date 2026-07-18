@@ -35,10 +35,10 @@ class Sources(BaseSDK):
         name: str,
         plan_id: str,
         type_: models.CreateSourceType,
-        config: Optional[Mapping[str, Any]] = None,
+        config: Optional[Dict[str, Any]] = None,
         description: Optional[str] = None,
         enabled: Optional[bool] = True,
-        metadata: Optional[Mapping[str, Any]] = None,
+        metadata: Optional[Dict[str, Any]] = None,
         processing_mode: Optional[models.CreateSourceProcessingMode] = "automatic",
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -73,10 +73,10 @@ class Sources(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.CreateSourceRequest(
-            config=utils.unmarshal(config, Optional[Dict[str, Any]]),
+            config=config,
             description=description,
             enabled=enabled,
-            metadata=utils.unmarshal(metadata, Optional[Dict[str, Any]]),
+            metadata=metadata,
             name=name,
             plan_id=plan_id,
             processing_mode=processing_mode,
@@ -120,11 +120,9 @@ class Sources(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Sources"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -159,10 +157,10 @@ class Sources(BaseSDK):
         name: str,
         plan_id: str,
         type_: models.CreateSourceType,
-        config: Optional[Mapping[str, Any]] = None,
+        config: Optional[Dict[str, Any]] = None,
         description: Optional[str] = None,
         enabled: Optional[bool] = True,
-        metadata: Optional[Mapping[str, Any]] = None,
+        metadata: Optional[Dict[str, Any]] = None,
         processing_mode: Optional[models.CreateSourceProcessingMode] = "automatic",
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -197,10 +195,10 @@ class Sources(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.CreateSourceRequest(
-            config=utils.unmarshal(config, Optional[Dict[str, Any]]),
+            config=config,
             description=description,
             enabled=enabled,
-            metadata=utils.unmarshal(metadata, Optional[Dict[str, Any]]),
+            metadata=metadata,
             name=name,
             plan_id=plan_id,
             processing_mode=processing_mode,
@@ -244,11 +242,9 @@ class Sources(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Sources"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -344,11 +340,9 @@ class Sources(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Sources"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["403", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -441,11 +435,9 @@ class Sources(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Sources"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["403", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -536,11 +528,9 @@ class Sources(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Sources"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -631,11 +621,9 @@ class Sources(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Sources"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -665,10 +653,10 @@ class Sources(BaseSDK):
         self,
         *,
         id: str,
-        config: Optional[Mapping[str, Any]] = None,
+        config: Optional[Dict[str, Any]] = None,
         description: Optional[str] = None,
         enabled: Optional[bool] = None,
-        metadata: Optional[Mapping[str, Any]] = None,
+        metadata: Optional[Dict[str, Any]] = None,
         name: Optional[str] = None,
         processing_mode: Optional[models.UpdateSourceProcessingMode] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -703,10 +691,10 @@ class Sources(BaseSDK):
         request = models.UpdateSourceRequest(
             id=id,
             request_body=models.UpdateSourceRequestBody(
-                config=utils.unmarshal(config, Optional[Dict[str, Any]]),
+                config=config,
                 description=description,
                 enabled=enabled,
-                metadata=utils.unmarshal(metadata, Optional[Dict[str, Any]]),
+                metadata=metadata,
                 name=name,
                 processing_mode=processing_mode,
             ),
@@ -753,11 +741,9 @@ class Sources(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Sources"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -790,10 +776,10 @@ class Sources(BaseSDK):
         self,
         *,
         id: str,
-        config: Optional[Mapping[str, Any]] = None,
+        config: Optional[Dict[str, Any]] = None,
         description: Optional[str] = None,
         enabled: Optional[bool] = None,
-        metadata: Optional[Mapping[str, Any]] = None,
+        metadata: Optional[Dict[str, Any]] = None,
         name: Optional[str] = None,
         processing_mode: Optional[models.UpdateSourceProcessingMode] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -828,10 +814,10 @@ class Sources(BaseSDK):
         request = models.UpdateSourceRequest(
             id=id,
             request_body=models.UpdateSourceRequestBody(
-                config=utils.unmarshal(config, Optional[Dict[str, Any]]),
+                config=config,
                 description=description,
                 enabled=enabled,
-                metadata=utils.unmarshal(metadata, Optional[Dict[str, Any]]),
+                metadata=metadata,
                 name=name,
                 processing_mode=processing_mode,
             ),
@@ -878,11 +864,9 @@ class Sources(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Sources"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 

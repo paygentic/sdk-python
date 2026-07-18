@@ -82,11 +82,9 @@ class InvoicesV2(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Invoices V2"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["403", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -181,11 +179,9 @@ class InvoicesV2(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Invoices V2"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["403", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -280,11 +276,9 @@ class InvoicesV2(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Invoices V2"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "401", "403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -382,11 +376,9 @@ class InvoicesV2(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Invoices V2"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "401", "403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -524,11 +516,19 @@ class InvoicesV2(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Invoices V2"],
-                extensions={"x-rate-limit": {"max": 60, "timeWindow": "1 minute"}},
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=[
+                "400",
+                "401",
+                "403",
+                "404",
+                "409",
+                "422",
+                "4XX",
+                "500",
+                "5XX",
+            ],
             retry_config=retry_config,
         )
 
@@ -668,11 +668,19 @@ class InvoicesV2(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Invoices V2"],
-                extensions={"x-rate-limit": {"max": 60, "timeWindow": "1 minute"}},
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=[
+                "400",
+                "401",
+                "403",
+                "404",
+                "409",
+                "422",
+                "4XX",
+                "500",
+                "5XX",
+            ],
             retry_config=retry_config,
         )
 
@@ -779,11 +787,9 @@ class InvoicesV2(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Invoices V2"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -885,11 +891,9 @@ class InvoicesV2(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Invoices V2"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -988,11 +992,9 @@ class InvoicesV2(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Invoices V2"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1091,11 +1093,9 @@ class InvoicesV2(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Invoices V2"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1200,11 +1200,9 @@ class InvoicesV2(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Invoices V2"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1312,11 +1310,9 @@ class InvoicesV2(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Invoices V2"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1412,11 +1408,9 @@ class InvoicesV2(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Invoices V2"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1509,11 +1503,9 @@ class InvoicesV2(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Invoices V2"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1621,11 +1613,9 @@ class InvoicesV2(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Invoices V2"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1736,11 +1726,9 @@ class InvoicesV2(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Invoices V2"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 

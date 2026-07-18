@@ -22,7 +22,7 @@ class BillableMetrics(BaseSDK):
         unit: str,
         event_type: Optional[str] = None,
         value_property: Optional[str] = None,
-        group_by: Optional[Mapping[str, str]] = None,
+        group_by: Optional[Dict[str, str]] = None,
         event_from: Optional[datetime] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -67,7 +67,7 @@ class BillableMetrics(BaseSDK):
             unit=unit,
             event_type=event_type,
             value_property=value_property,
-            group_by=utils.unmarshal(group_by, Optional[Dict[str, str]]),
+            group_by=group_by,
             event_from=event_from,
         )
 
@@ -108,11 +108,9 @@ class BillableMetrics(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Billable Metrics"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "401", "403", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -152,7 +150,7 @@ class BillableMetrics(BaseSDK):
         unit: str,
         event_type: Optional[str] = None,
         value_property: Optional[str] = None,
-        group_by: Optional[Mapping[str, str]] = None,
+        group_by: Optional[Dict[str, str]] = None,
         event_from: Optional[datetime] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -197,7 +195,7 @@ class BillableMetrics(BaseSDK):
             unit=unit,
             event_type=event_type,
             value_property=value_property,
-            group_by=utils.unmarshal(group_by, Optional[Dict[str, str]]),
+            group_by=group_by,
             event_from=event_from,
         )
 
@@ -238,11 +236,9 @@ class BillableMetrics(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Billable Metrics"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "401", "403", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -345,11 +341,9 @@ class BillableMetrics(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Billable Metrics"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["401", "403", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -449,11 +443,9 @@ class BillableMetrics(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Billable Metrics"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["401", "403", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -544,11 +536,9 @@ class BillableMetrics(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Billable Metrics"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -639,11 +629,9 @@ class BillableMetrics(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Billable Metrics"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -678,7 +666,7 @@ class BillableMetrics(BaseSDK):
         unit: Optional[str] = None,
         event_type: OptionalNullable[str] = UNSET,
         value_property: OptionalNullable[str] = UNSET,
-        group_by: OptionalNullable[Mapping[str, str]] = UNSET,
+        group_by: OptionalNullable[Dict[str, str]] = UNSET,
         event_from: OptionalNullable[datetime] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -718,7 +706,7 @@ class BillableMetrics(BaseSDK):
                 unit=unit,
                 event_type=event_type,
                 value_property=value_property,
-                group_by=utils.unmarshal(group_by, OptionalNullable[Dict[str, str]]),
+                group_by=group_by,
                 event_from=event_from,
             ),
         )
@@ -764,11 +752,9 @@ class BillableMetrics(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Billable Metrics"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -803,7 +789,7 @@ class BillableMetrics(BaseSDK):
         unit: Optional[str] = None,
         event_type: OptionalNullable[str] = UNSET,
         value_property: OptionalNullable[str] = UNSET,
-        group_by: OptionalNullable[Mapping[str, str]] = UNSET,
+        group_by: OptionalNullable[Dict[str, str]] = UNSET,
         event_from: OptionalNullable[datetime] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -843,7 +829,7 @@ class BillableMetrics(BaseSDK):
                 unit=unit,
                 event_type=event_type,
                 value_property=value_property,
-                group_by=utils.unmarshal(group_by, OptionalNullable[Dict[str, str]]),
+                group_by=group_by,
                 event_from=event_from,
             ),
         )
@@ -889,11 +875,9 @@ class BillableMetrics(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Billable Metrics"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1010,11 +994,9 @@ class BillableMetrics(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Billable Metrics"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "403", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1134,11 +1116,9 @@ class BillableMetrics(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Billable Metrics"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "403", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1255,11 +1235,9 @@ class BillableMetrics(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Billable Metrics"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "403", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1376,11 +1354,9 @@ class BillableMetrics(BaseSDK):
                 security_source=get_security_from_env(
                     self.sdk_configuration.security, models.Security
                 ),
-                tags=["Billable Metrics"],
-                extensions=None,
             ),
             request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            error_status_codes=["400", "403", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
