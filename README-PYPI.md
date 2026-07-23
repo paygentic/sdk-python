@@ -479,6 +479,7 @@ with Paygentic(
 * [list_available](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/plans/README.md#list_available) - List Available Plans
 * [get](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/plans/README.md#get) - Get
 * [update](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/plans/README.md#update) - Update
+* [list_plan_versions](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/plans/README.md#list_plan_versions) - List versions
 
 ### [Prices](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/prices/README.md)
 
@@ -664,9 +665,9 @@ with Paygentic(
 
 
 **Inherit from [`PaygenticError`](https://github.com/paygentic/sdk-python/blob/master/./src/paygentic_sdk/errors/paygenticerror.py)**:
-* [`ValidationError`](https://github.com/paygentic/sdk-python/blob/master/./src/paygentic_sdk/errors/validationerror.py): Bad Request - The request could not be understood or was missing required parameters. Status code `400`. Applicable to 81 of 132 methods.*
-* [`DeleteCustomerConflictError`](https://github.com/paygentic/sdk-python/blob/master/./src/paygentic_sdk/errors/deletecustomerconflicterror.py): Customer cannot be deleted due to active dependencies. Status code `409`. Applicable to 1 of 132 methods.*
-* [`DeleteFeeConflictError`](https://github.com/paygentic/sdk-python/blob/master/./src/paygentic_sdk/errors/deletefeeconflicterror.py): Fee cannot be deleted because it has associated prices. Status code `409`. Applicable to 1 of 132 methods.*
+* [`ValidationError`](https://github.com/paygentic/sdk-python/blob/master/./src/paygentic_sdk/errors/validationerror.py): Bad Request - The request could not be understood or was missing required parameters. Status code `400`. Applicable to 82 of 133 methods.*
+* [`DeleteCustomerConflictError`](https://github.com/paygentic/sdk-python/blob/master/./src/paygentic_sdk/errors/deletecustomerconflicterror.py): Customer cannot be deleted due to active dependencies. Status code `409`. Applicable to 1 of 133 methods.*
+* [`DeleteFeeConflictError`](https://github.com/paygentic/sdk-python/blob/master/./src/paygentic_sdk/errors/deletefeeconflicterror.py): Fee cannot be deleted because it has associated prices. Status code `409`. Applicable to 1 of 133 methods.*
 * [`ResponseValidationError`](https://github.com/paygentic/sdk-python/blob/master/./src/paygentic_sdk/errors/responsevalidationerror.py): Type mismatch between the response data and the expected Pydantic model. Provides access to the Pydantic validation error via the `cause` attribute.
 
 </details>

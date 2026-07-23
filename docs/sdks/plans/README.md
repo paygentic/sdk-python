@@ -11,6 +11,7 @@ A `Plan` links a collection of `Prices` to a `Product`. It functions as a pricin
 * [list_available](#list_available) - List Available Plans
 * [get](#get) - Get
 * [update](#update) - Update
+* [list_plan_versions](#list_plan_versions) - List versions
 
 ## create
 
@@ -254,6 +255,52 @@ with Paygentic(
 ### Response
 
 **[models.Plan](../../models/plan.md)**
+
+### Errors
+
+| Error Type                   | Status Code                  | Content Type                 |
+| ---------------------------- | ---------------------------- | ---------------------------- |
+| errors.Error                 | 400                          | application/json             |
+| errors.ValidationError       | 400                          | application/json             |
+| errors.Error                 | 401, 403, 404                | application/json             |
+| errors.Error                 | 500                          | application/json             |
+| errors.PaygenticDefaultError | 4XX, 5XX                     | \*/\*                        |
+
+## list_plan_versions
+
+List the versions of a plan, newest first. Only accounts that can manage this plan may list its versions; versions can expose in-progress pricing, so read-only access is not sufficient.
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="listPlanVersions" method="get" path="/v0/plans/{id}/versions" -->
+```python
+import os
+from paygentic_sdk import Paygentic
+
+
+with Paygentic(
+    bearer_auth=os.getenv("PAYGENTIC_BEARER_AUTH", ""),
+) as paygentic:
+
+    res = paygentic.plans.list_plan_versions(id="<id>", limit=10, offset=0)
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `id`                                                                | *str*                                                               | :heavy_check_mark:                                                  | N/A                                                                 |
+| `limit`                                                             | *Optional[int]*                                                     | :heavy_minus_sign:                                                  | Maximum number of versions to return                                |
+| `offset`                                                            | *Optional[int]*                                                     | :heavy_minus_sign:                                                  | Number of versions to skip                                          |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+
+### Response
+
+**[models.ListPlanVersionsResponse](../../models/listplanversionsresponse.md)**
 
 ### Errors
 

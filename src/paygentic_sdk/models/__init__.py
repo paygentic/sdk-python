@@ -639,6 +639,13 @@ if TYPE_CHECKING:
         ListPlansResponse,
         ListPlansResponseTypedDict,
     )
+    from .listplanversionsop import (
+        ListPlanVersionsObject,
+        ListPlanVersionsRequest,
+        ListPlanVersionsRequestTypedDict,
+        ListPlanVersionsResponse,
+        ListPlanVersionsResponseTypedDict,
+    )
     from .listpricesop import (
         ListPricesPagination,
         ListPricesPaginationTypedDict,
@@ -771,6 +778,12 @@ if TYPE_CHECKING:
     from .plancreditallocation import (
         PlanCreditAllocation,
         PlanCreditAllocationTypedDict,
+    )
+    from .planversionsummary import (
+        PlanVersionSummary,
+        PlanVersionSummaryObject,
+        PlanVersionSummaryStatus,
+        PlanVersionSummaryTypedDict,
     )
     from .price import Model, Price, PriceObject, PricePaymentTerm, PriceTypedDict
     from .pricefeature import (
@@ -1645,6 +1658,11 @@ __all__ = [
     "ListPaymentsResponse",
     "ListPaymentsResponseTypedDict",
     "ListPaymentsStatus",
+    "ListPlanVersionsObject",
+    "ListPlanVersionsRequest",
+    "ListPlanVersionsRequestTypedDict",
+    "ListPlanVersionsResponse",
+    "ListPlanVersionsResponseTypedDict",
     "ListPlansPagination",
     "ListPlansPaginationTypedDict",
     "ListPlansRequest",
@@ -1773,6 +1791,10 @@ __all__ = [
     "PlanPaymentTerm",
     "PlanPaymentTermTypedDict",
     "PlanTypedDict",
+    "PlanVersionSummary",
+    "PlanVersionSummaryObject",
+    "PlanVersionSummaryStatus",
+    "PlanVersionSummaryTypedDict",
     "Price",
     "PriceFeature",
     "PriceFeatureFeature",
@@ -2549,6 +2571,11 @@ _dynamic_imports: dict[str, str] = {
     "ListPlansRequestTypedDict": ".listplansop",
     "ListPlansResponse": ".listplansop",
     "ListPlansResponseTypedDict": ".listplansop",
+    "ListPlanVersionsObject": ".listplanversionsop",
+    "ListPlanVersionsRequest": ".listplanversionsop",
+    "ListPlanVersionsRequestTypedDict": ".listplanversionsop",
+    "ListPlanVersionsResponse": ".listplanversionsop",
+    "ListPlanVersionsResponseTypedDict": ".listplanversionsop",
     "ListPricesPagination": ".listpricesop",
     "ListPricesPaginationTypedDict": ".listpricesop",
     "ListPricesRequest": ".listpricesop",
@@ -2652,6 +2679,10 @@ _dynamic_imports: dict[str, str] = {
     "TaxBehavior": ".plan",
     "PlanCreditAllocation": ".plancreditallocation",
     "PlanCreditAllocationTypedDict": ".plancreditallocation",
+    "PlanVersionSummary": ".planversionsummary",
+    "PlanVersionSummaryObject": ".planversionsummary",
+    "PlanVersionSummaryStatus": ".planversionsummary",
+    "PlanVersionSummaryTypedDict": ".planversionsummary",
     "Model": ".price",
     "Price": ".price",
     "PriceObject": ".price",

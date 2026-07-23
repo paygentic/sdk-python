@@ -297,6 +297,10 @@ class SubscriptionTypedDict(TypedDict):
     r"""When true, tax rate is forced to 0%."""
     payment: NotRequired[PaymentUnionTypedDict]
     r"""Payment session details when upfront payment is required, or confirmation of a zero-amount paid invoice"""
+    plan_version_id: NotRequired[str]
+    r"""The plan version pinned to this subscription at creation."""
+    version_number: NotRequired[int]
+    r"""The version number of the plan version referenced by planVersionId, as of subscription creation."""
     prefund_amount: NotRequired[str]
     r"""@deprecated Use minimumAccountBalance instead. Minimum required wallet balance in atomic units. Sample values: '200000000000' equals $200.00 minimum, '1000000000000' equals $1000.00 minimum"""
     minimum_account_balance: NotRequired[str]
@@ -363,6 +367,16 @@ class Subscription(BaseModel):
     payment: Optional[PaymentUnion] = None
     r"""Payment session details when upfront payment is required, or confirmation of a zero-amount paid invoice"""
 
+    plan_version_id: Annotated[Optional[str], pydantic.Field(alias="planVersionId")] = (
+        None
+    )
+    r"""The plan version pinned to this subscription at creation."""
+
+    version_number: Annotated[Optional[int], pydantic.Field(alias="versionNumber")] = (
+        None
+    )
+    r"""The version number of the plan version referenced by planVersionId, as of subscription creation."""
+
     prefund_amount: Annotated[Optional[str], pydantic.Field(alias="prefundAmount")] = (
         None
     )
@@ -421,6 +435,8 @@ class Subscription(BaseModel):
                 "estimatedTaxRate",
                 "taxExempt",
                 "payment",
+                "planVersionId",
+                "versionNumber",
                 "prefundAmount",
                 "minimumAccountBalance",
                 "terminatedAt",
