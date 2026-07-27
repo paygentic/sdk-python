@@ -79,7 +79,7 @@ python:
   inferUnionDiscriminators: true
   inputModelSuffix: input
   inputTypedDictSuffix: TypedDict
-  license: Apache-2.0
+  license: MIT
   maxMethodParams: 0
   methodArguments: infer-optional-args
   methodTimeoutArgument: timeout-ms
