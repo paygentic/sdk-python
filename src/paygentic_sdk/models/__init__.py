@@ -396,6 +396,7 @@ if TYPE_CHECKING:
     from .getorderop import GetOrderRequest, GetOrderRequestTypedDict
     from .getpaymentop import GetPaymentRequest, GetPaymentRequestTypedDict
     from .getplanop import GetPlanRequest, GetPlanRequestTypedDict
+    from .getplanversionop import GetPlanVersionRequest, GetPlanVersionRequestTypedDict
     from .getpriceop import GetPriceRequest, GetPriceRequestTypedDict
     from .getproductop import GetProductRequest, GetProductRequestTypedDict
     from .getprofitabilityop import (
@@ -737,6 +738,16 @@ if TYPE_CHECKING:
         MeterEventListObject,
         MeterEventListTypedDict,
     )
+    from .mintplanversionop import (
+        MintPlanVersionRequestRequest,
+        MintPlanVersionRequestRequestTypedDict,
+    )
+    from .mintplanversionrequest import (
+        MintPlanVersionRequest,
+        MintPlanVersionRequestTypedDict,
+        ReplacePrice,
+        ReplacePriceTypedDict,
+    )
     from .offsetpagination import OffsetPagination, OffsetPaginationTypedDict
     from .order import ApprovalStatus, Order, OrderObject, OrderType, OrderTypedDict
     from .orderlineitem import (
@@ -779,13 +790,26 @@ if TYPE_CHECKING:
         PlanCreditAllocation,
         PlanCreditAllocationTypedDict,
     )
+    from .planversion import (
+        PlanVersion,
+        PlanVersionObject,
+        PlanVersionStatus,
+        PlanVersionTypedDict,
+    )
+    from .planversionpriceslot import (
+        PlanVersionPriceSlot,
+        PlanVersionPriceSlotModel,
+        PlanVersionPriceSlotObject,
+        PlanVersionPriceSlotPaymentTerm,
+        PlanVersionPriceSlotTypedDict,
+    )
     from .planversionsummary import (
         PlanVersionSummary,
         PlanVersionSummaryObject,
         PlanVersionSummaryStatus,
         PlanVersionSummaryTypedDict,
     )
-    from .price import Model, Price, PriceObject, PricePaymentTerm, PriceTypedDict
+    from .price import Price, PriceModel1, PriceObject, PricePaymentTerm, PriceTypedDict
     from .pricefeature import (
         PriceFeature,
         PriceFeatureFeature,
@@ -1007,6 +1031,14 @@ if TYPE_CHECKING:
         TerminateSubscriptionRequestTypedDict,
     )
     from .testclock import TestClock, TestClockTypedDict
+    from .transitionplanversionop import (
+        TransitionPlanVersionRequestRequest,
+        TransitionPlanVersionRequestRequestTypedDict,
+    )
+    from .transitionplanversionrequest import (
+        TransitionPlanVersionRequest,
+        TransitionPlanVersionRequestTypedDict,
+    )
     from .updateapprovalop import (
         UpdateApprovalRequestRequest,
         UpdateApprovalRequestRequestTypedDict,
@@ -1474,6 +1506,8 @@ __all__ = [
     "GetPaymentRequestTypedDict",
     "GetPlanRequest",
     "GetPlanRequestTypedDict",
+    "GetPlanVersionRequest",
+    "GetPlanVersionRequestTypedDict",
     "GetPriceRequest",
     "GetPriceRequestTypedDict",
     "GetProductRequest",
@@ -1737,8 +1771,11 @@ __all__ = [
     "MeteredEntitlementDetailTypedDict",
     "MeteredEntitlementListItem",
     "MeteredEntitlementListItemTypedDict",
+    "MintPlanVersionRequest",
+    "MintPlanVersionRequestRequest",
+    "MintPlanVersionRequestRequestTypedDict",
+    "MintPlanVersionRequestTypedDict",
     "Mode",
-    "Model",
     "NextActionAt",
     "NotificationSettings",
     "NotificationSettingsTypedDict",
@@ -1791,10 +1828,19 @@ __all__ = [
     "PlanPaymentTerm",
     "PlanPaymentTermTypedDict",
     "PlanTypedDict",
+    "PlanVersion",
+    "PlanVersionObject",
+    "PlanVersionPriceSlot",
+    "PlanVersionPriceSlotModel",
+    "PlanVersionPriceSlotObject",
+    "PlanVersionPriceSlotPaymentTerm",
+    "PlanVersionPriceSlotTypedDict",
+    "PlanVersionStatus",
     "PlanVersionSummary",
     "PlanVersionSummaryObject",
     "PlanVersionSummaryStatus",
     "PlanVersionSummaryTypedDict",
+    "PlanVersionTypedDict",
     "Price",
     "PriceFeature",
     "PriceFeatureFeature",
@@ -1804,6 +1850,7 @@ __all__ = [
     "PriceFeatureType",
     "PriceFeatureTypedDict",
     "PriceModel",
+    "PriceModel1",
     "PriceModelInput",
     "PriceObject",
     "PricePaymentTerm",
@@ -1856,6 +1903,8 @@ __all__ = [
     "RedirectUrlsTypedDict",
     "RejectSourceEventRequest",
     "RejectSourceEventRequestTypedDict",
+    "ReplacePrice",
+    "ReplacePriceTypedDict",
     "ReplaceScheduleIntervalsObject",
     "ReplaceScheduleIntervalsRequest",
     "ReplaceScheduleIntervalsRequestBillingMode",
@@ -1956,6 +2005,10 @@ __all__ = [
     "TimeSeryTypedDict",
     "To",
     "ToTypedDict",
+    "TransitionPlanVersionRequest",
+    "TransitionPlanVersionRequestRequest",
+    "TransitionPlanVersionRequestRequestTypedDict",
+    "TransitionPlanVersionRequestTypedDict",
     "UnknownEntitlementDetail",
     "UnknownEntitlementListItem",
     "UnknownPaymentUnion",
@@ -2384,6 +2437,8 @@ _dynamic_imports: dict[str, str] = {
     "GetPaymentRequestTypedDict": ".getpaymentop",
     "GetPlanRequest": ".getplanop",
     "GetPlanRequestTypedDict": ".getplanop",
+    "GetPlanVersionRequest": ".getplanversionop",
+    "GetPlanVersionRequestTypedDict": ".getplanversionop",
     "GetPriceRequest": ".getpriceop",
     "GetPriceRequestTypedDict": ".getpriceop",
     "GetProductRequest": ".getproductop",
@@ -2641,6 +2696,12 @@ _dynamic_imports: dict[str, str] = {
     "MeterEventList": ".metereventlist",
     "MeterEventListObject": ".metereventlist",
     "MeterEventListTypedDict": ".metereventlist",
+    "MintPlanVersionRequestRequest": ".mintplanversionop",
+    "MintPlanVersionRequestRequestTypedDict": ".mintplanversionop",
+    "MintPlanVersionRequest": ".mintplanversionrequest",
+    "MintPlanVersionRequestTypedDict": ".mintplanversionrequest",
+    "ReplacePrice": ".mintplanversionrequest",
+    "ReplacePriceTypedDict": ".mintplanversionrequest",
     "OffsetPagination": ".offsetpagination",
     "OffsetPaginationTypedDict": ".offsetpagination",
     "ApprovalStatus": ".order",
@@ -2679,12 +2740,21 @@ _dynamic_imports: dict[str, str] = {
     "TaxBehavior": ".plan",
     "PlanCreditAllocation": ".plancreditallocation",
     "PlanCreditAllocationTypedDict": ".plancreditallocation",
+    "PlanVersion": ".planversion",
+    "PlanVersionObject": ".planversion",
+    "PlanVersionStatus": ".planversion",
+    "PlanVersionTypedDict": ".planversion",
+    "PlanVersionPriceSlot": ".planversionpriceslot",
+    "PlanVersionPriceSlotModel": ".planversionpriceslot",
+    "PlanVersionPriceSlotObject": ".planversionpriceslot",
+    "PlanVersionPriceSlotPaymentTerm": ".planversionpriceslot",
+    "PlanVersionPriceSlotTypedDict": ".planversionpriceslot",
     "PlanVersionSummary": ".planversionsummary",
     "PlanVersionSummaryObject": ".planversionsummary",
     "PlanVersionSummaryStatus": ".planversionsummary",
     "PlanVersionSummaryTypedDict": ".planversionsummary",
-    "Model": ".price",
     "Price": ".price",
+    "PriceModel1": ".price",
     "PriceObject": ".price",
     "PricePaymentTerm": ".price",
     "PriceTypedDict": ".price",
@@ -2860,6 +2930,10 @@ _dynamic_imports: dict[str, str] = {
     "TerminateSubscriptionRequestTypedDict": ".terminatesubscriptionop",
     "TestClock": ".testclock",
     "TestClockTypedDict": ".testclock",
+    "TransitionPlanVersionRequestRequest": ".transitionplanversionop",
+    "TransitionPlanVersionRequestRequestTypedDict": ".transitionplanversionop",
+    "TransitionPlanVersionRequest": ".transitionplanversionrequest",
+    "TransitionPlanVersionRequestTypedDict": ".transitionplanversionrequest",
     "UpdateApprovalRequestRequest": ".updateapprovalop",
     "UpdateApprovalRequestRequestTypedDict": ".updateapprovalop",
     "UpdateApprovalRequest": ".updateapprovalrequest",

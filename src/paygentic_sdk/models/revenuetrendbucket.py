@@ -19,6 +19,8 @@ class RevenueTrendBucketTypedDict(TypedDict):
     r"""Amount of written-off invoices in dollars for this bucket (by writtenOffAt)"""
     completed_payments: str
     r"""Revenue from completed payments in dollars for this bucket"""
+    rebates: str
+    r"""Gross magnitude of usage-scaled rebates (negative metered line items) on invoices issued in this bucket, in dollars. Netted into issuedInvoices; surfaced here for visibility."""
     group_breakdown: NotRequired[List[GroupTrendEntryTypedDict]]
     r"""Per-group trend entries (present when groupBy=plan or groupBy=customer)"""
 
@@ -35,6 +37,9 @@ class RevenueTrendBucket(BaseModel):
 
     completed_payments: Annotated[str, pydantic.Field(alias="completedPayments")]
     r"""Revenue from completed payments in dollars for this bucket"""
+
+    rebates: str
+    r"""Gross magnitude of usage-scaled rebates (negative metered line items) on invoices issued in this bucket, in dollars. Netted into issuedInvoices; surfaced here for visibility."""
 
     group_breakdown: Annotated[
         Optional[List[GroupTrendEntry]], pydantic.Field(alias="groupBreakdown")

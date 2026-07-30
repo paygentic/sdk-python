@@ -1,19 +1,19 @@
 lockVersion: 2.0.0
 id: d05de326-b60d-4921-81eb-a16eab66dffd
 management:
-  docChecksum: bbea83d76e354505eff0a685ccda93f1
+  docChecksum: 27120f9b777062b53d6b2eac22d19bbe
   docVersion: 0.1.0
   speakeasyVersion: 1.761.4
   generationVersion: 2.879.13
-  releaseVersion: 0.4.2
-  configChecksum: 29f5c42883c434fb21ee2ce6c762be7f
+  releaseVersion: 0.4.3
+  configChecksum: 3c99579c60480e4debdbc70f3b64abc4
   repoURL: https://github.com/paygentic/sdk-python.git
   installationURL: https://github.com/paygentic/sdk-python.git
   published: true
 persistentEdits:
-  generation_id: f890c2dc-5110-41a6-918f-4424ed4594f8
-  pristine_commit_hash: baa2891f0bee272e86a76e9b7a24743d683c9025
-  pristine_tree_hash: ae3bc107dc1fc4880f34d14c1a91d5772e667073
+  generation_id: 7874c0d4-4863-4abb-bc3e-ea9712d4d7f9
+  pristine_commit_hash: f943f49a267cef12e3c81b7941cb7173644b0f8c
+  pristine_tree_hash: 6907b081d1a28799f33e68a741587c09da60810c
 features:
   python:
     additionalDependencies: 1.0.0
@@ -418,8 +418,8 @@ trackedFiles:
     pristine_git_object: 5aea9a8357b473672e00baf5e5bb4dff3ccdbd2b
   docs/models/createplanrequest.md:
     id: 0b871427301a
-    last_write_checksum: sha1:32045f0d3f677fa2dd93711b4c719e094ac4e18f
-    pristine_git_object: ae553367ef5a1b14c9658baf2fdd04e279e726f3
+    last_write_checksum: sha1:a5d9da5a0db12f43aba1f1c38435fe4adf7fef71
+    pristine_git_object: 63c765b64a0bbe174496cba9ca35a60c507b2508
   docs/models/createplantaxbehavior.md:
     id: ac05b60a0343
     last_write_checksum: sha1:edc84898d099824977a7da2f63b7eb86e2615f72
@@ -746,12 +746,12 @@ trackedFiles:
     pristine_git_object: 3ef76279a06c35999c4e15cdd59a32b29b86392b
   docs/models/getinvoicelineitemsrequest.md:
     id: 4f89ca4b8f6b
-    last_write_checksum: sha1:ee4b888cbca9a4a18a7b33464f8938da280d5224
-    pristine_git_object: 140b0b0381ba358ef8025daee5ab061f03df7565
+    last_write_checksum: sha1:5fcde024eaf8d962544fabadb0ffae77521a97c2
+    pristine_git_object: ad59713a285b9a640caff983027619d4838fb196
   docs/models/getinvoicerequest.md:
     id: 9c02866b67e0
-    last_write_checksum: sha1:0a0973e908a25dde6a4b55e84c86d5ec65ae57b1
-    pristine_git_object: 300f61b1b43ac9e1c55f1a00f762cc3e12f95637
+    last_write_checksum: sha1:e64cfa3576cc27db3f3a3b93d40bd60279b9ca61
+    pristine_git_object: b0c22dc32bc16aa4842bfa04956e9ea741d69365
   docs/models/getitemrequest.md:
     id: 8dc5604c13e9
     last_write_checksum: sha1:6cd7eaa3743f33f3a4964b17ac2560b45633b044
@@ -772,6 +772,10 @@ trackedFiles:
     id: 4872e63e4e7a
     last_write_checksum: sha1:4fb80a7a95b7a8ab52e53f15bf77383bfe009305
     pristine_git_object: 92f3113e6c5ccac3336cb1f3254a5baae7fc68e2
+  docs/models/getplanversionrequest.md:
+    id: c3725619f4ac
+    last_write_checksum: sha1:4156ba12ddc2ce445dade9bd45e587a2d02667ad
+    pristine_git_object: e93b1fa106deef77068dcaa150480c3d205da4cb
   docs/models/getpricerequest.md:
     id: 7cf947af00f3
     last_write_checksum: sha1:c0dbe9c4c5563606e26029ed47d38c8554f4c1b6
@@ -1396,14 +1400,18 @@ trackedFiles:
     id: 085d4d594069
     last_write_checksum: sha1:848e823b49b7bd43d0bbf61f35f43e7bc7af6229
     pristine_git_object: 3854f750f36aa65628ca630509ca849bfe2a5e81
+  docs/models/mintplanversionrequest.md:
+    id: b37c84788974
+    last_write_checksum: sha1:93aa50f61a821861289efb9b5e1d0294b3ba3fcc
+    pristine_git_object: 04c1511a804c566ed7344f60ee61ed55149b965e
+  docs/models/mintplanversionrequestrequest.md:
+    id: 2d1583c6c108
+    last_write_checksum: sha1:7870a5af017578287c0851fe4f3a5d7483260ecd
+    pristine_git_object: 26cfdda29d937e1d39695963e4f54953000dc86b
   docs/models/mode.md:
     id: 568581cb28bc
     last_write_checksum: sha1:9611de0382f6df69ca24845a16401813b4c58874
     pristine_git_object: 0904cdd64cd4e0d071d7b40d365b60fd6297d89b
-  docs/models/model.md:
-    id: 66e0236ac289
-    last_write_checksum: sha1:d5f33f1f55beeec77a4003e7380d199bd61813cf
-    pristine_git_object: 26b7e5972b37abd0366d365cea8c1dec7eaccbc2
   docs/models/nextactionat.md:
     id: bb40405b7e36
     last_write_checksum: sha1:33aae62140f4a283a574afc4a20df7e7a927f477
@@ -1518,8 +1526,8 @@ trackedFiles:
     pristine_git_object: 564e3510cb8198e911a49e54d25fd6c9106e6010
   docs/models/plan.md:
     id: 900c4149ef4b
-    last_write_checksum: sha1:ad980d0274710d378f71eef97aa06da85c13c675
-    pristine_git_object: a375f364f871adb15284edf3e52b0194fe28e965
+    last_write_checksum: sha1:53a377a75a0a467da89e798dab3af86cefe80332
+    pristine_git_object: a652656b3e9c97fa1e1e1f88b658bcc586c6b4ab
   docs/models/plancreditallocation.md:
     id: 02e8d67e8825
     last_write_checksum: sha1:06d77b927afd12bdc2e5dfef4a06aac30ee5378e
@@ -1532,6 +1540,34 @@ trackedFiles:
     id: d2416276486f
     last_write_checksum: sha1:d63f9ebcf8294ccb9e679a697fcf5edf6081a5d7
     pristine_git_object: b76e1499195af8dfc8960b735acbf260209cf0b6
+  docs/models/planversion.md:
+    id: 50a86da32181
+    last_write_checksum: sha1:e0b78994f1526bbff7248cadf4eb945de189591a
+    pristine_git_object: 2ad8d419d77bdc519ff9678e4625f1e7dbb3aeaa
+  docs/models/planversionobject.md:
+    id: f656a409a074
+    last_write_checksum: sha1:5f878705b881cd7eeff8cfbed6020074b9d6b9e4
+    pristine_git_object: 00c3130e26fd835a04f2674cd4c9300168ea4a37
+  docs/models/planversionpriceslot.md:
+    id: 620d6adebd54
+    last_write_checksum: sha1:43abc0e61fd361d55311fcc1959720b49326f5db
+    pristine_git_object: fa866623d214a4973f2ca0d283c679562e38ce55
+  docs/models/planversionpriceslotmodel.md:
+    id: 5b03909def7c
+    last_write_checksum: sha1:7bf5b9fcb000b2f18448d6591f817dcb3ffd2941
+    pristine_git_object: aebe8f6ede5dafe3f7905c5ea9adcacea2d61a0e
+  docs/models/planversionpriceslotobject.md:
+    id: 1dda1f07117c
+    last_write_checksum: sha1:cc0f62b80af4ac02a0f07fec849ff086d16c1993
+    pristine_git_object: f3c1b860c70d0bf3e727d47b47dd33d78b921b59
+  docs/models/planversionpriceslotpaymentterm.md:
+    id: 6865f41c2fb4
+    last_write_checksum: sha1:26d0cc95c3a230b1c20ab6a3d776dd00d16c1e84
+    pristine_git_object: 0bc26f00d2e268f38f54881838fa6c1fc06d305e
+  docs/models/planversionstatus.md:
+    id: 48bfbe481c81
+    last_write_checksum: sha1:5a70ec5af02b589e80e5b1af25244c2d7b56fa56
+    pristine_git_object: f2ee931b3f762ad5a1fd4692ffab1f5eedc2bb34
   docs/models/planversionsummary.md:
     id: f19880633d57
     last_write_checksum: sha1:09e98eec64d0ff26100d1070c7ce3be9f581f17b
@@ -1546,8 +1582,8 @@ trackedFiles:
     pristine_git_object: 4b42071d4ef08a96f4e8af506283197befb667ae
   docs/models/price.md:
     id: 8c2608dc8674
-    last_write_checksum: sha1:57372fb9310bcdc690fdb70500619e57baf77960
-    pristine_git_object: fcff14cc0e9a951739a453dc65d29c179a7b0cc9
+    last_write_checksum: sha1:c7a5237538a840537ee8deae92f9c324b68cf0be
+    pristine_git_object: 1272da9d60692fff2d6dbc8f630292d303110249
   docs/models/pricefeature.md:
     id: 80b686a6c7c7
     last_write_checksum: sha1:6d5241b6b058814d1f0771f4b1d854c0a73f69ab
@@ -1568,6 +1604,10 @@ trackedFiles:
     id: bd975a2d410b
     last_write_checksum: sha1:a717b1a812771bdbef542724f7afa766e6b9e3ff
     pristine_git_object: d4a83290e4dca9a57c751a5820f9b341863567cb
+  docs/models/pricemodel1.md:
+    id: 24db600fbd90
+    last_write_checksum: sha1:0158c1d2e0f60223b5c7eada8109e2ebac724b8d
+    pristine_git_object: 826c3fc5394a9af322f8526277b61a4ccb12b6bd
   docs/models/pricemodelinput.md:
     id: f336fa64918e
     last_write_checksum: sha1:2bf1f7630ee6748b0bd4fae416b9c7ea32233cb4
@@ -1582,8 +1622,8 @@ trackedFiles:
     pristine_git_object: 2d80088b1476abf9bcb657cf273003c0a5048559
   docs/models/priceproperties1.md:
     id: 030c35651a88
-    last_write_checksum: sha1:984b372318d1280c1fafe35d554b53cae070c15e
-    pristine_git_object: 0773fe487f30d3b4bfe82a02a71dccec4566d3d0
+    last_write_checksum: sha1:95ea281be6c3982a1822efb23838c9a2c652d451
+    pristine_git_object: 142394b9b4dd3923d706e32d81068e7978a8c5a0
   docs/models/priceproperties2.md:
     id: b3410e1e8f2c
     last_write_checksum: sha1:354e1bddb1f2c9ba8ebf4f93dfe81729e01f5a0f
@@ -1684,6 +1724,10 @@ trackedFiles:
     id: a9e3329ed9fa
     last_write_checksum: sha1:2e7d4b60364831f4f86330d861e0a25ae323aeed
     pristine_git_object: 13cdccfe880253fcc9600d41894c769a28b5d002
+  docs/models/replaceprice.md:
+    id: 5230ac30a39c
+    last_write_checksum: sha1:19b7dfd54428e8387b679fadba5440e64de50156
+    pristine_git_object: c5dad2cefdbf69b6a6701607cab7d31d3f95c7cc
   docs/models/replacescheduleintervalsobject.md:
     id: 318e972852e8
     last_write_checksum: sha1:657bd66944e6b8d8a593e1b216aae47c7eece288
@@ -1710,12 +1754,12 @@ trackedFiles:
     pristine_git_object: 9ee5b8fb6eca8c48abc27309b5e7d5514268c87a
   docs/models/revenuesummaryresponse.md:
     id: 500b08d365b7
-    last_write_checksum: sha1:9900398d118d07a591caa24cce9ce3944af83f41
-    pristine_git_object: 91ecdf667d9f337b0fa4bcb8b5da8548535d2bbe
+    last_write_checksum: sha1:82d380478f5b56cf89ba9f0f746d7aa6861ae2f7
+    pristine_git_object: ad30a75b5835a08a1aa3947674ad58b45d8248ea
   docs/models/revenuetrendbucket.md:
     id: 5043c4af1aab
-    last_write_checksum: sha1:15a35232337f704966de62996f1e61e3a801105d
-    pristine_git_object: 6beb85a8ef49470dc5ede58252e560452af75b0e
+    last_write_checksum: sha1:3422f0ee6065ee494fec2252d08638c4eeece26f
+    pristine_git_object: fb5e25ee0dc1153896f21cb62fa71918e4e8b2e0
   docs/models/rulecondition.md:
     id: 4ddee71f9e05
     last_write_checksum: sha1:c979703354f6549baa8ffb5890e9d476d755f244
@@ -1726,8 +1770,8 @@ trackedFiles:
     pristine_git_object: 6ab14aa2c4ab2d70f5398d55022bbf14fd113001
   docs/models/scheduleinterval.md:
     id: 4792384fc173
-    last_write_checksum: sha1:c19b28f16d163188a32893750a7f7d3aef13cfc8
-    pristine_git_object: d9adf93f74f5326b327e64e851a5c2dcefc38f5d
+    last_write_checksum: sha1:4d8632e3bd9341776c7e4065e57f5a38af4f859a
+    pristine_git_object: a2b5fab918bc51aa622c19dead91737d257b9406
   docs/models/scheduleintervalbillingmode.md:
     id: 3a182bc20048
     last_write_checksum: sha1:c4a52dfb3e26321288f7160b16a0b4e09696eb4f
@@ -1778,8 +1822,8 @@ trackedFiles:
     pristine_git_object: 1e3b596b1b05f03568c011ccf7135c2c0d3e52e7
   docs/models/schemasbillingschedule.md:
     id: 21a299349e14
-    last_write_checksum: sha1:84396ca7ae9fa0a514e25830e2252d5a3b1e2f56
-    pristine_git_object: 21d8dab8aed394b0b79e0db93257a4703420366c
+    last_write_checksum: sha1:c859421b698de194c2c8f001725ea59d24528a08
+    pristine_git_object: 75c0922b159b3e1044809de07ac914acfe7e9569
   docs/models/schemasbillingschedulealignmentpolicy.md:
     id: cec10c7dd4ec
     last_write_checksum: sha1:cfcd51903d4a44fc10dc0923867275388af3f0b2
@@ -1948,6 +1992,14 @@ trackedFiles:
     id: 0ebb118c6bfa
     last_write_checksum: sha1:d665919f6c858c3bca62b4d179747bd261fa92f4
     pristine_git_object: 7ae555413fa2f9df0de0ffbb65afb5dcd2719f0e
+  docs/models/transitionplanversionrequest.md:
+    id: 7e86630ff071
+    last_write_checksum: sha1:4b06ca1c1c5b2993674528e2bd733e1e11373797
+    pristine_git_object: b2c21a3db5bb90f264ef76ae21f3e67f6acca57c
+  docs/models/transitionplanversionrequestrequest.md:
+    id: b4bc693b3d95
+    last_write_checksum: sha1:e526f4bc3c7da57ff83394cc424cff87701cc99a
+    pristine_git_object: 0c68e49b49b8fd464ac861003fd190170ab284c2
   docs/models/updateapprovalrequest.md:
     id: caa6afad9bd1
     last_write_checksum: sha1:a674b53ee0f9ef300619ba98e60c6eaa9600d089
@@ -2086,8 +2138,8 @@ trackedFiles:
     pristine_git_object: 05ab5e2d7b7149aad438d1fe4bb4ba505ff01629
   docs/models/updateplanrequestbody.md:
     id: 7866a61e0ccd
-    last_write_checksum: sha1:e14ee2a44d6892907e70db1085d32c64ebf818a8
-    pristine_git_object: cc2a271cfef20219d2fc16275f887d55887a1dcf
+    last_write_checksum: sha1:50489e6ce0e93047142d770a3ef5265be8ca2229
+    pristine_git_object: 832ece4953a1947926e97ab030afff5f44910bd9
   docs/models/updateplantaxbehavior.md:
     id: ef3d77f865bc
     last_write_checksum: sha1:b3914d82585cf058d26cb098af8e1061d3dce589
@@ -2270,8 +2322,8 @@ trackedFiles:
     pristine_git_object: 8a013892ea9e9ad9e78a71e7526373ed978e2e51
   docs/sdks/invoicesv2/README.md:
     id: 671851b727bc
-    last_write_checksum: sha1:7bcd70ba0a0e0c5de3d72aa0cd820741b135126c
-    pristine_git_object: b3cdb21c808e66cdd37b9882b02fa63afb3209d0
+    last_write_checksum: sha1:10556ccad5b7b641c55d593143ff91b00f468cb7
+    pristine_git_object: c37ae6b6db1c29718b574cfee36b9c147324701b
   docs/sdks/items/README.md:
     id: 88a5da5379a5
     last_write_checksum: sha1:e38aee34319e09e33b58c5e7e6184e69af936ce1
@@ -2294,8 +2346,8 @@ trackedFiles:
     pristine_git_object: 9f50efaeb6b01ae85ef196015dc02d16abdf941c
   docs/sdks/plans/README.md:
     id: 2d8c741fff57
-    last_write_checksum: sha1:c2da559a51d0eddedfb2abbab465e3eb8733a486
-    pristine_git_object: 6403fbed10ea4dbbe5bbfc9b886c2a7bdf7c04f2
+    last_write_checksum: sha1:4376a2cf7447b5ab41607919a9f2c6247fed5e69
+    pristine_git_object: 73d37b5817ef8ce8b49536c3cc1a39fc04daefbe
   docs/sdks/prices/README.md:
     id: d73b281620ef
     last_write_checksum: sha1:3d1c2a6ecf6cbfa5419fa74a1b8c5334b47b4823
@@ -2330,8 +2382,8 @@ trackedFiles:
     pristine_git_object: e8dbc882af9174f53ecad44e01ad575a439ccfdc
   docs/sdks/subscriptions/README.md:
     id: 298b9ab3c3e0
-    last_write_checksum: sha1:d62eb308b8b9633c03dd773e32e6e5b39139fbc8
-    pristine_git_object: ddf8f192d5229b67a305072e1001e153863cf1bd
+    last_write_checksum: sha1:36b04730be600c9ba6f45e8a69f6b62e90b8ecb6
+    pristine_git_object: 0f1a922518a9cee25ab24c42b11c0dc04b5dc90f
   docs/sdks/testclocks/README.md:
     id: 81d968b006e9
     last_write_checksum: sha1:9e7bae002d153685d7a78ad58fbfebd1ff208926
@@ -2350,8 +2402,8 @@ trackedFiles:
     pristine_git_object: 9e61ec8e7b151c969a51d28d3ba98b3ceb5d18df
   pyproject.toml:
     id: 5d07e7d72637
-    last_write_checksum: sha1:6e3918196e8905ce0a79011d01fbd6286dcc7a64
-    pristine_git_object: 85acb2dd27ff68d64709076c8525c79a64480dd5
+    last_write_checksum: sha1:78085ba1b6d58a8fa518fb00a6b463ed25033e63
+    pristine_git_object: 7657d986de24cd6a2566b631eb28742d16f16ccd
   scripts/prepare_readme.py:
     id: e0c5957a6035
     last_write_checksum: sha1:e2ebd355f72567204499ca62ee72728d9c3dfd95
@@ -2378,8 +2430,8 @@ trackedFiles:
     pristine_git_object: 6dbd4dcba3a5bac1c92beb0f5db31ef3d2944dea
   src/paygentic_sdk/_version.py:
     id: 52c8c5a320dc
-    last_write_checksum: sha1:fd33304737efbf84e1dbe6eb11769c195d22ae5b
-    pristine_git_object: c3f90daad5a3711111cef313fabbc2f260e5105a
+    last_write_checksum: sha1:53eda656724bcb084e0aaa1430832913f2997db7
+    pristine_git_object: 820da4a6519840684a15c7301d7104cc8a7785bf
   src/paygentic_sdk/approvals.py:
     id: a140b8f5837f
     last_write_checksum: sha1:bfcf43d1fa96f7b0fbdfd5e5af250b2800aa872d
@@ -2474,8 +2526,8 @@ trackedFiles:
     pristine_git_object: 89560b566073785535643e694c112bedbd3db13d
   src/paygentic_sdk/invoices_v2.py:
     id: 68570f2e9f61
-    last_write_checksum: sha1:0f881a538f529b2cb9e56836fa44cd52bd84bd57
-    pristine_git_object: e0da64443ea4969279e8e78032f2f92793b1c9a1
+    last_write_checksum: sha1:354fc464fce13fecb96bf37a4e9e8dba94f42bb7
+    pristine_git_object: 28fb1c1ed9f481bdba32628fd6cf0a0e58475cf7
   src/paygentic_sdk/items.py:
     id: 171ab813c7e0
     last_write_checksum: sha1:e4bd0b45d2af267a04e5f836ab2274ba7f1598eb
@@ -2486,8 +2538,8 @@ trackedFiles:
     pristine_git_object: 572832bcc8c8b00c979b950b18f3981f8f20021d
   src/paygentic_sdk/models/__init__.py:
     id: af295ac47d07
-    last_write_checksum: sha1:49368fa4870a1ee9f53c7bfdfc2a765f69a7d6ed
-    pristine_git_object: c9d7d8ae9a65e2f02fc44c08d2e5f43206e48094
+    last_write_checksum: sha1:2c3189cdecdc1380d5f6992fa8e2692020bcb5c1
+    pristine_git_object: 4e1e81fe6824004a2ccb629f611a02d0c4cc49c9
   src/paygentic_sdk/models/address.py:
     id: 65007c08a9c1
     last_write_checksum: sha1:8fbc276bb2df8c214699ecda862842fe2c4b723a
@@ -2638,8 +2690,8 @@ trackedFiles:
     pristine_git_object: 50c60dca047f50a515b940590284cd8335402153
   src/paygentic_sdk/models/createplanop.py:
     id: 4e31da01599a
-    last_write_checksum: sha1:afcd3f20f6ab8f5e85d4d2de6d99c05baeb046ab
-    pristine_git_object: 74b61372664817309475e504199b64cadbc33826
+    last_write_checksum: sha1:a5144479657a8259ab49f25db22c9f0f6e1d349b
+    pristine_git_object: d3913ddb4a76559772252393ab3d98d27889115a
   src/paygentic_sdk/models/createpriceop.py:
     id: bd40fa0e45aa
     last_write_checksum: sha1:49516db2f6b4ae9804ed9e135b57ed36f57c29e1
@@ -2822,12 +2874,12 @@ trackedFiles:
     pristine_git_object: 9a6e2e08a832e882d555f6968a469ea1f6cc7d47
   src/paygentic_sdk/models/getinvoicelineitemsop.py:
     id: deac79baed07
-    last_write_checksum: sha1:fe6364be8cdcd4832ca59c7ec3bb770aefe374b3
-    pristine_git_object: 03649284a2117f6e0395cf79bc85acb095d5c2dd
+    last_write_checksum: sha1:752283ff24c4124119b884a9f8c296905c5996aa
+    pristine_git_object: 4572d5b1b0fb991fca335f970bca10384930fc41
   src/paygentic_sdk/models/getinvoiceop.py:
     id: d1904e77f9d0
-    last_write_checksum: sha1:a459fb4687b305867bb52a0201b580308780380e
-    pristine_git_object: f151ad2310e46924b7ec3932066190092560786d
+    last_write_checksum: sha1:1d72897ef93da95733e2c734c38d964bb913bac9
+    pristine_git_object: 43862b250aa7e6e11dc77b2784fa96dfed2ad911
   src/paygentic_sdk/models/getitemop.py:
     id: 4ff59fc25fb0
     last_write_checksum: sha1:0c515a9014e6fe2182613dcfe62de8cfd209a636
@@ -2848,6 +2900,10 @@ trackedFiles:
     id: bfb1bf380e5d
     last_write_checksum: sha1:305615232e13c86134d25130fddb43beb4601168
     pristine_git_object: 0a9474477e58a2ba1f0ca556598b7a9417d2d4ad
+  src/paygentic_sdk/models/getplanversionop.py:
+    id: 23723771b1fd
+    last_write_checksum: sha1:f5c1883f64c9726e761d4d11cea2e1149d5e2f18
+    pristine_git_object: 318fcafef6d9a8637cff7a6d7b81f3e062677ecc
   src/paygentic_sdk/models/getpriceop.py:
     id: f9556e3b418b
     last_write_checksum: sha1:ae1e03e7927c44c5fd12f2b4602a53cdb7ff0021
@@ -3108,6 +3164,14 @@ trackedFiles:
     id: 101674ce0738
     last_write_checksum: sha1:f1dae644c7a9e9cab3ba46540bd00158f23d7911
     pristine_git_object: 1e8009ba15c809bb94e93af1c34b166c4b02b93a
+  src/paygentic_sdk/models/mintplanversionop.py:
+    id: f03caaf7849b
+    last_write_checksum: sha1:c3c340356f1ba3a60fa2d24ba81df9e8f9b6ad62
+    pristine_git_object: dc925999d274a45cd960df2554d5fa4141ccc735
+  src/paygentic_sdk/models/mintplanversionrequest.py:
+    id: 7d4fa5cdacf3
+    last_write_checksum: sha1:ef94e808f5c4782cb713dc30f511273f08e0e4a9
+    pristine_git_object: 78ef1398dce701a56612f12cd2413f1d524658ac
   src/paygentic_sdk/models/offsetpagination.py:
     id: e6cd2ca1050d
     last_write_checksum: sha1:cfac9afccc8b81ed8b25a055f87f10bb21fb9275
@@ -3142,20 +3206,28 @@ trackedFiles:
     pristine_git_object: 1fa0e66939d09d5adfaaead666b92afe32c0e824
   src/paygentic_sdk/models/plan.py:
     id: 4a77c5167fa3
-    last_write_checksum: sha1:16bb2e69305e8aadc61365e92a6c4399dcdba83c
-    pristine_git_object: 63cbea8b20ac75cf274e51ba36388d32448d36c4
+    last_write_checksum: sha1:ee9bb801944fb5881488df247235254db5a2caf7
+    pristine_git_object: fd085e7a05291541902736b6cee2828e40dadb9e
   src/paygentic_sdk/models/plancreditallocation.py:
     id: 0d9a3d862ffb
     last_write_checksum: sha1:18bc67cf803c1713c0f52dd20181e262224efea1
     pristine_git_object: 576d2bb61461861228134e4346a7ab6743713bcd
+  src/paygentic_sdk/models/planversion.py:
+    id: ea0376e9bb75
+    last_write_checksum: sha1:593b194769b34212e7990bd8a70d9ae3f4f9270f
+    pristine_git_object: bb39a70d3abf4357feb6001ce8aae249d04086d2
+  src/paygentic_sdk/models/planversionpriceslot.py:
+    id: cfc4ef4d2fc6
+    last_write_checksum: sha1:44a1e8dd375ef767612c3c1ccb87286e0ae1baae
+    pristine_git_object: dc7aff0bdf3e8d2261dad2db3000726409f116fa
   src/paygentic_sdk/models/planversionsummary.py:
     id: 190b3ce563e7
     last_write_checksum: sha1:282ccd6649a67de34f8713ab446f4006f3334c25
     pristine_git_object: ed328740a8d6eae301799871c4fdb37ffc05fa1d
   src/paygentic_sdk/models/price.py:
     id: 21ef4995a58e
-    last_write_checksum: sha1:55042c840918848b72daebe0f90c24d8d04fb86c
-    pristine_git_object: 35a671958b47c754deb62e690173766185b211e9
+    last_write_checksum: sha1:b7b53980c741298acc4b5721bd8d1442f669774b
+    pristine_git_object: da11e70ec77e2fdc4d0667f251ba72f8e62a3b4b
   src/paygentic_sdk/models/pricefeature.py:
     id: ed92ed107d9b
     last_write_checksum: sha1:60544b9438191b149c4b4215b31bdc848302c8cc
@@ -3174,8 +3246,8 @@ trackedFiles:
     pristine_git_object: e6b2efcdd5112cb71ee2faec4c1e64375d1e3b52
   src/paygentic_sdk/models/priceproperties_union.py:
     id: 215ec0092a1b
-    last_write_checksum: sha1:a077dee2abdb4f2096c4e798ace624af3b4c5714
-    pristine_git_object: 5012090473c8dbb5024629b80762d0513f5ecdfc
+    last_write_checksum: sha1:25327103181fa0070fd87b88b5475c00c2d81d98
+    pristine_git_object: 1705954b4de95e7170601f33cd127047ccc6a324
   src/paygentic_sdk/models/product.py:
     id: 823bc241a446
     last_write_checksum: sha1:67575ffeb91463ff8a86a6e4c369e92a5f62e55a
@@ -3238,20 +3310,20 @@ trackedFiles:
     pristine_git_object: 7f30e5d146acd1173a112091b061cbf6306684b2
   src/paygentic_sdk/models/revenuesummaryresponse.py:
     id: 6ce3a32a383d
-    last_write_checksum: sha1:92b50df9349c40ee4ac04a0983e40413a1f86f38
-    pristine_git_object: 556a3c1f07d8939e8d966835a05de6d1f2782dc5
+    last_write_checksum: sha1:1f1957c6547341c6d8e44c76e2a755c8f4028f03
+    pristine_git_object: 6e572a382015b997c16bf39ece778dfe41343c5f
   src/paygentic_sdk/models/revenuetrendbucket.py:
     id: a58d5342ba75
-    last_write_checksum: sha1:9294ef80cf05cfe38ca03aef3deb64b10830d1ba
-    pristine_git_object: e6c112b2d9f1f8b3d5525f26b20642951efa9467
+    last_write_checksum: sha1:a2b639cdef20a4fab49cabb5d9f65cb3bccbf5c4
+    pristine_git_object: ffbff2771a2c69189ecccbb46b8a3415a6c91f59
   src/paygentic_sdk/models/rulecondition.py:
     id: 381aa635d349
     last_write_checksum: sha1:9acf158745b8061e4be6e686ce942da56709a96a
     pristine_git_object: 5fa3e60de85078d5405abb2cae413de18d291d70
   src/paygentic_sdk/models/scheduleinterval.py:
     id: 6e02781318e0
-    last_write_checksum: sha1:45b60306de943a064767c12c8dabf586b4e89124
-    pristine_git_object: a591acce290f5bf97cd90b2e609e8700e3be04b1
+    last_write_checksum: sha1:c5c05daaa1ee1ab12a1ad65d10299cf89e235b27
+    pristine_git_object: cfdfe16b7bcfca82ad5f8cd6c101a9527c6f70f4
   src/paygentic_sdk/models/scheduleinvoice.py:
     id: ab08d6fbbdfc
     last_write_checksum: sha1:fab52da8d896a1f8ed58306c93712a5c6eb2f5a1
@@ -3262,8 +3334,8 @@ trackedFiles:
     pristine_git_object: afb40354404e1f9c90b92a0ab2cd6e5e21a6625b
   src/paygentic_sdk/models/schemas_billingschedule.py:
     id: 5e9939c5d34e
-    last_write_checksum: sha1:e0bdb5e220ce8cb90f2353d17018fcfb73f9e7c9
-    pristine_git_object: 1ef3a3b012c2841bdd7e270ae69b6b9a2c347ca8
+    last_write_checksum: sha1:1eaa1ce4051e7bd90dda853c88fcb96ed947bf1b
+    pristine_git_object: cb490284f61388a69e9904c3d9d0fe5ec70033e2
   src/paygentic_sdk/models/schemas_paymentsession.py:
     id: dfa65dc6d31f
     last_write_checksum: sha1:b2fb0c500d1957431d49d1d1ddabe488dc0d3ef2
@@ -3320,6 +3392,14 @@ trackedFiles:
     id: 25bcc9f491a7
     last_write_checksum: sha1:0d3c0e988478fbbe1bf4631acf95cbd5c55b450e
     pristine_git_object: 33635f377eb04efe2543801349713a9831dcf5ad
+  src/paygentic_sdk/models/transitionplanversionop.py:
+    id: 215d36d81ba4
+    last_write_checksum: sha1:79fef8d5a71a83e1636db5b49bfe3c1f5416850e
+    pristine_git_object: 600939c1fef1d6e08b68bcd14945e811d82d788a
+  src/paygentic_sdk/models/transitionplanversionrequest.py:
+    id: 21210772c2ae
+    last_write_checksum: sha1:2b2f04f1187c3448143d3ede1bbb7806b32bdb31
+    pristine_git_object: 335ddae8c7b4965cab14ee042af7890ba4d4f655
   src/paygentic_sdk/models/updateapprovalop.py:
     id: b739ad0178dc
     last_write_checksum: sha1:de3694fcc0a84787623aaee68e3df30da8ce8c8f
@@ -3382,8 +3462,8 @@ trackedFiles:
     pristine_git_object: f33861509a8b31215a71cb4ce8384cb208eb5d77
   src/paygentic_sdk/models/updateplanop.py:
     id: 167235ed9506
-    last_write_checksum: sha1:9377e0db9ddf6175b3d8b35ba84a3ce632f50219
-    pristine_git_object: 5b01dff386ec9bfac7f6cd2b3da400747ece1a18
+    last_write_checksum: sha1:063946b3b107807117bdf216a4efc821bfec4d41
+    pristine_git_object: c31124987dbfe9d6c201bfe5fad5d305e5d90af0
   src/paygentic_sdk/models/updatepriceop.py:
     id: 278325e23035
     last_write_checksum: sha1:9aa2554fb2a58f73e3d7318d70a16790e6c536f9
@@ -3454,8 +3534,8 @@ trackedFiles:
     pristine_git_object: fdd5c6bfbf8852b05d9c008e0886a964974cfdc5
   src/paygentic_sdk/plans.py:
     id: 6769003229a8
-    last_write_checksum: sha1:116e18460c24ba7b2e4b6c793f57177c9aa3a03f
-    pristine_git_object: 2be45d78338de28408e585dee5dea50e0dcb2230
+    last_write_checksum: sha1:c58e62ec48afd74e2b5b7a14e0966204cbe3941e
+    pristine_git_object: 45fb76de8cfc3d82bef188704f7bbdbb826853f7
   src/paygentic_sdk/prices.py:
     id: 4f8419ebff60
     last_write_checksum: sha1:9be3f403a1528d466d83c20be29a81203887981d
@@ -3502,8 +3582,8 @@ trackedFiles:
     pristine_git_object: 8e1d1d97326acee80d8608998734d7ea59e09033
   src/paygentic_sdk/subscriptions.py:
     id: 8eaf5d7abc44
-    last_write_checksum: sha1:9b2117d02184c32f6e296b37c94dd422fbb01fd9
-    pristine_git_object: bb85f390d187484697ed506b3692634badc28065
+    last_write_checksum: sha1:d95ea442a45f54e6a66076e7504d07402a9f0992
+    pristine_git_object: f2e3588a24fbc01af170f3543a031f09be88e7a6
   src/paygentic_sdk/test_clocks.py:
     id: db58185b8e80
     last_write_checksum: sha1:428f671394101a698b2178f9f88232e790fcc5e4
@@ -4244,10 +4324,10 @@ examples:
   createPlan:
     speakeasy-default-create-plan:
       requestBody:
-        application/json: {"currency": "Won", "defaultTaxCode": "eservice", "defaultTaxRate": 0, "merchantId": "<id>", "name": "<value>", "productId": "<id>", "taxBehavior": "exclusive", "renewalReminderEnabled": true, "renewalReminderDays": 3, "billingVersion": 1}
+        application/json: {"currency": "Won", "defaultTaxCode": "eservice", "defaultTaxRate": 0, "merchantId": "<id>", "name": "<value>", "productId": "<id>", "taxBehavior": "exclusive", "renewalReminderEnabled": true, "renewalReminderDays": 3, "billingVersion": 1, "stablePriceIds": true}
       responses:
         "201":
-          application/json: {"id": "<id>", "object": "plan", "billingCadence": "P1M", "billingInterval": "<value>", "createdAt": "2025-01-04T18:47:28.165Z", "currency": "North Korean Won", "merchantId": "<id>", "name": "<value>", "productId": "<id>", "updatedAt": "2026-06-07T06:34:20.265Z"}
+          application/json: {"id": "<id>", "object": "plan", "billingCadence": "P1M", "billingInterval": "<value>", "createdAt": "2025-01-04T18:47:28.165Z", "currency": "North Korean Won", "merchantId": "<id>", "name": "<value>", "productId": "<id>", "updatedAt": "2026-06-07T06:34:20.265Z", "stablePriceIds": true}
         "400":
           application/json: {"error": "not_found", "message": "The requested resource was not found"}
         "401":
@@ -4292,7 +4372,7 @@ examples:
           id: "<id>"
       responses:
         "200":
-          application/json: {"id": "<id>", "object": "plan", "billingCadence": "P1M", "billingInterval": "<value>", "createdAt": "2025-11-12T08:13:08.969Z", "currency": "Moldovan Leu", "merchantId": "<id>", "name": "<value>", "productId": "<id>", "updatedAt": "2026-05-14T02:22:53.032Z"}
+          application/json: {"id": "<id>", "object": "plan", "billingCadence": "P1M", "billingInterval": "<value>", "createdAt": "2025-11-12T08:13:08.969Z", "currency": "Moldovan Leu", "merchantId": "<id>", "name": "<value>", "productId": "<id>", "updatedAt": "2026-05-14T02:22:53.032Z", "stablePriceIds": true}
         "400":
           application/json: {"error": "not_found", "message": "The requested resource was not found"}
         "401":
@@ -4308,7 +4388,7 @@ examples:
         application/json: {}
       responses:
         "200":
-          application/json: {"id": "<id>", "object": "plan", "billingCadence": "P1M", "billingInterval": "<value>", "createdAt": "2025-02-25T08:23:09.829Z", "currency": "Lek", "merchantId": "<id>", "name": "<value>", "productId": "<id>", "updatedAt": "2025-09-29T06:50:28.959Z"}
+          application/json: {"id": "<id>", "object": "plan", "billingCadence": "P1M", "billingInterval": "<value>", "createdAt": "2025-02-25T08:23:09.829Z", "currency": "Lek", "merchantId": "<id>", "name": "<value>", "productId": "<id>", "updatedAt": "2025-09-29T06:50:28.959Z", "stablePriceIds": true}
         "400":
           application/json: {"error": "not_found", "message": "The requested resource was not found"}
         "401":
@@ -4859,6 +4939,8 @@ examples:
           application/json: {"error": "not_found", "message": "The requested resource was not found"}
         "500":
           application/json: {"error": "not_found", "message": "The requested resource was not found"}
+        "400":
+          application/json: {"error": "not_found", "message": "The requested resource was not found"}
   getInvoiceLineItems:
     speakeasy-default-get-invoice-line-items:
       parameters:
@@ -4872,6 +4954,8 @@ examples:
         "403":
           application/json: {"error": "not_found", "message": "The requested resource was not found"}
         "500":
+          application/json: {"error": "not_found", "message": "The requested resource was not found"}
+        "400":
           application/json: {"error": "not_found", "message": "The requested resource was not found"}
   listPayments:
     speakeasy-default-list-payments:
@@ -5795,6 +5879,54 @@ examples:
           application/json: {"error": "not_found", "message": "The requested resource was not found"}
         "500":
           application/json: {"error": "not_found", "message": "The requested resource was not found"}
+  mintPlanVersion:
+    speakeasy-default-mint-plan-version:
+      parameters:
+        path:
+          id: "<id>"
+      requestBody:
+        application/json: {}
+      responses:
+        "201":
+          application/json: {"id": "<id>", "object": "plan_version", "versionNumber": 591959, "status": "published", "isDefault": false, "subscriptionCount": 692471, "updatedAt": "2026-05-20T11:58:30.688Z", "prices": []}
+        "400":
+          application/json: {"error": "not_found", "message": "The requested resource was not found"}
+        "401":
+          application/json: {"error": "not_found", "message": "The requested resource was not found"}
+        "500":
+          application/json: {"error": "not_found", "message": "The requested resource was not found"}
+  getPlanVersion:
+    speakeasy-default-get-plan-version:
+      parameters:
+        path:
+          id: "<id>"
+          versionNumber: 541574
+      responses:
+        "200":
+          application/json: {"id": "<id>", "object": "plan_version", "versionNumber": 969073, "status": "draft", "isDefault": true, "subscriptionCount": 265555, "updatedAt": "2026-12-13T23:04:42.440Z", "prices": [{"id": "<id>", "object": "price", "merchantId": "<id>", "createdAt": "2025-02-20T18:42:50.017Z", "invoiceDisplayName": "<value>", "model": "dynamic", "paymentTerm": "in_advance", "properties": {"key": "<value>"}, "updatedAt": "2024-10-10T06:17:20.359Z", "grantDiscountEnabled": false, "quantity": 1, "priceDeleted": true}]}
+        "400":
+          application/json: {"error": "not_found", "message": "The requested resource was not found"}
+        "401":
+          application/json: {"error": "not_found", "message": "The requested resource was not found"}
+        "500":
+          application/json: {"error": "not_found", "message": "The requested resource was not found"}
+  transitionPlanVersion:
+    speakeasy-default-transition-plan-version:
+      parameters:
+        path:
+          id: "<id>"
+          versionNumber: 414716
+      requestBody:
+        application/json: {}
+      responses:
+        "200":
+          application/json: {"id": "<id>", "object": "plan_version", "versionNumber": 544555, "status": "published", "isDefault": false, "subscriptionCount": 765460, "updatedAt": "2026-06-21T04:04:44.360Z", "prices": []}
+        "400":
+          application/json: {"error": "not_found", "message": "The requested resource was not found"}
+        "401":
+          application/json: {"error": "not_found", "message": "The requested resource was not found"}
+        "500":
+          application/json: {"error": "not_found", "message": "The requested resource was not found"}
 examplesVersion: 1.0.2
 generatedTests:
   createBillableMetric: "2026-04-17T16:01:55Z"
@@ -5949,16 +6081,7 @@ generatedTests:
   updateApproval: "2026-07-06T12:04:32Z"
   reconcileSubscriptionFeatures: "2026-07-13T08:37:41Z"
   listPlanVersions: "2026-07-23T10:19:36Z"
-releaseNotes: |
-  ## Python SDK Changes:
-  * `paygentic.plans.list_plan_versions()`: **Added**
-  * `paygentic.plans.create()`:  `response.default_version_id` **Added**
-  * `paygentic.plans.list()`:  `response.data[].default_version_id` **Added**
-  * `paygentic.plans.list_available()`:  `response.data[].default_version_id` **Added**
-  * `paygentic.plans.get()`:  `response.default_version_id` **Added**
-  * `paygentic.plans.update()`:  `response.default_version_id` **Added**
-  * `paygentic.subscriptions.list()`:  `response.data[]` **Changed**
-  * `paygentic.subscriptions.create()`:  `response` **Changed**
-  * `paygentic.subscriptions.get()`:  `response` **Changed**
-  * `paygentic.subscriptions.update_subscription()`:  `response` **Changed**
-  * `paygentic.subscriptions.terminate()`:  `response` **Changed**
+  mintPlanVersion: "2026-07-30T16:01:20Z"
+  getPlanVersion: "2026-07-30T16:01:20Z"
+  transitionPlanVersion: "2026-07-30T16:01:20Z"
+releaseNotes: "## Python SDK Changes:\n* `paygentic.billing_schedules.list_billing_schedules()`:  `response.data[].end_date` **Changed** (Breaking ⚠️)\n* `paygentic.billing_schedules.replace_schedule_intervals()`:  `response.data[].end_date` **Changed** (Breaking ⚠️)\n* `paygentic.billing_schedules.list_schedule_intervals()`:  `response.data[].end_date` **Changed** (Breaking ⚠️)\n* `paygentic.billing_schedules.update_billing_schedule()`:  `response.end_date` **Changed** (Breaking ⚠️)\n* `paygentic.billing_schedules.get_billing_schedule()`:  `response.end_date` **Changed** (Breaking ⚠️)\n* `paygentic.billing_schedules.create_billing_schedule()`:  `response.end_date` **Changed** (Breaking ⚠️)\n* `paygentic.plans.list()`:  `response.data[].stable_price_ids` **Added**\n* `paygentic.plans.update()`: \n  *  `request.stable_price_ids` **Added**\n  *  `response.stable_price_ids` **Added**\n  *  `error.status[409]` **Added**\n* `paygentic.subscriptions.create()`:  `error.status[409]` **Added**\n* `paygentic.invoices_v2.get()`:  `error.status[400]` **Added**\n* `paygentic.invoices_v2.get_line_items()`:  `error.status[400]` **Added**\n* `paygentic.revenue.get()`:  `response` **Changed**\n* `paygentic.plans.get()`:  `response.stable_price_ids` **Added**\n* `paygentic.plans.list_available()`:  `response.data[].stable_price_ids` **Added**\n* `paygentic.plans.mint_plan_version()`: **Added**\n* `paygentic.plans.create()`: \n  *  `request.stable_price_ids` **Added**\n  *  `response.stable_price_ids` **Added**\n* `paygentic.plans.transition_plan_version()`: **Added**\n* `paygentic.plans.get_plan_version()`: **Added**\n"

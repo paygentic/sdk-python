@@ -15,7 +15,7 @@ class GetInvoiceLineItemsRequestTypedDict(TypedDict):
     limit: NotRequired[int]
     r"""Maximum number of line items to return"""
     page_token: NotRequired[str]
-    r"""Token for pagination to fetch the next page of results"""
+    r"""Opaque pagination token to fetch the next page of results, taken from a previous response's nextPageToken. Do not construct or parse this value."""
 
 
 class GetInvoiceLineItemsRequest(BaseModel):
@@ -35,7 +35,7 @@ class GetInvoiceLineItemsRequest(BaseModel):
         pydantic.Field(alias="pageToken"),
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = None
-    r"""Token for pagination to fetch the next page of results"""
+    r"""Opaque pagination token to fetch the next page of results, taken from a previous response's nextPageToken. Do not construct or parse this value."""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

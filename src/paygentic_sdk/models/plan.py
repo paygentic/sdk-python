@@ -110,6 +110,8 @@ class PlanTypedDict(TypedDict):
     r"""Credit-pool funding declarations for this plan. Each entry funds a distinct pricing unit's credit pool when a subscription to this plan activates: the allocated amount is minted as a credit grant on the customer's pool for that pricing unit, once at activation, or on a recurring basis only when that allocation explicitly sets recurrencePeriod. A plan may declare zero or more allocations; no two allocations on the same plan target the same pricingUnitId."""
     default_version_id: NotRequired[str]
     r"""Unique identifier for a plan version"""
+    stable_price_ids: NotRequired[bool]
+    r"""Governs price identity when a price on this plan's default version is replaced. When true (default), replacing a price at make-default keeps the original price id live (its value changes) and the superseded value is preserved under a new id. When false, the replacement price's id goes live instead and the superseded value stays under the original id."""
 
 
 class Plan(BaseModel):
@@ -210,6 +212,11 @@ class Plan(BaseModel):
     ] = None
     r"""Unique identifier for a plan version"""
 
+    stable_price_ids: Annotated[
+        Optional[bool], pydantic.Field(alias="stablePriceIds")
+    ] = True
+    r"""Governs price identity when a price on this plan's default version is replaced. When true (default), replacing a price at make-default keeps the original price id live (its value changes) and the superseded value is preserved under a new id. When false, the replacement price's id goes live instead and the superseded value stays under the original id."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
@@ -230,6 +237,7 @@ class Plan(BaseModel):
                 "billingAnchor",
                 "creditAllocations",
                 "defaultVersionId",
+                "stablePriceIds",
             ]
         )
         nullable_fields = set(["billingAnchor"])

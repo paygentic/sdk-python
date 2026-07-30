@@ -17,10 +17,10 @@ from typing import Any, Dict, List, Literal, Optional, Union
 from typing_extensions import Annotated, NotRequired, TypedDict
 
 
-PriceObject = Literal["price",]
+PlanVersionPriceSlotObject = Literal["price",]
 
 
-PriceModel1 = Union[
+PlanVersionPriceSlotModel = Union[
     Literal[
         "standard",
         "dynamic",
@@ -31,7 +31,7 @@ PriceModel1 = Union[
 ]
 
 
-PricePaymentTerm = Union[
+PlanVersionPriceSlotPaymentTerm = Union[
     Literal[
         "in_arrears",
         "in_advance",
@@ -40,18 +40,22 @@ PricePaymentTerm = Union[
 ]
 
 
-class PriceTypedDict(TypedDict):
+class PlanVersionPriceSlotTypedDict(TypedDict):
+    r"""One price slot on a plan version. Every `Price` field is present, plus `priceDeleted` layered on top."""
+
     id: str
     r"""Unique identifier for a price"""
     merchant_id: str
     r"""Unique identifier for an organization"""
     created_at: datetime
     invoice_display_name: str
-    model: PriceModel1
-    payment_term: PricePaymentTerm
+    model: PlanVersionPriceSlotModel
+    payment_term: PlanVersionPriceSlotPaymentTerm
     properties: Dict[str, Any]
     updated_at: datetime
-    object: NotRequired[PriceObject]
+    price_deleted: bool
+    r"""True when the underlying price this slot references has been soft-deleted. The slot can still be removed or replaced to repair the draft; it cannot be published while any slot remains dead."""
+    object: NotRequired[PlanVersionPriceSlotObject]
     billable_metric_id: NotRequired[str]
     fee_id: NotRequired[str]
     r"""The unique identifier for the fee referred to by this price"""
@@ -68,7 +72,9 @@ class PriceTypedDict(TypedDict):
     r"""Quantity used when generating invoice line items for this price. Total per period = quantity × unitPrice. Only supported for fee prices; metered prices derive quantity from usage. Defaults to 1."""
 
 
-class Price(BaseModel):
+class PlanVersionPriceSlot(BaseModel):
+    r"""One price slot on a plan version. Every `Price` field is present, plus `priceDeleted` layered on top."""
+
     id: str
     r"""Unique identifier for a price"""
 
@@ -79,15 +85,20 @@ class Price(BaseModel):
 
     invoice_display_name: Annotated[str, pydantic.Field(alias="invoiceDisplayName")]
 
-    model: PriceModel1
+    model: PlanVersionPriceSlotModel
 
-    payment_term: Annotated[PricePaymentTerm, pydantic.Field(alias="paymentTerm")]
+    payment_term: Annotated[
+        PlanVersionPriceSlotPaymentTerm, pydantic.Field(alias="paymentTerm")
+    ]
 
     properties: Dict[str, Any]
 
     updated_at: Annotated[datetime, pydantic.Field(alias="updatedAt")]
 
-    object: Optional[PriceObject] = "price"
+    price_deleted: Annotated[bool, pydantic.Field(alias="priceDeleted")]
+    r"""True when the underlying price this slot references has been soft-deleted. The slot can still be removed or replaced to repair the draft; it cannot be published while any slot remains dead."""
+
+    object: Optional[PlanVersionPriceSlotObject] = "price"
 
     billable_metric_id: Annotated[
         Optional[str], pydantic.Field(alias="billableMetricId")
@@ -158,6 +169,6 @@ class Price(BaseModel):
 
 
 try:
-    Price.model_rebuild()
+    PlanVersionPriceSlot.model_rebuild()
 except NameError:
     pass

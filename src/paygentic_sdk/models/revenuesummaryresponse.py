@@ -27,6 +27,10 @@ class RevenueSummaryResponseTypedDict(TypedDict):
     r"""Gross total of non-voided refunds (credit notes) issued in the period, in dollars. Already subtracted from netRevenue and invoice totals. Omitted when groupBy=currency is active."""
     refund_count: NotRequired[float]
     r"""Number of non-voided refunds (credit notes) issued in the period. Omitted when groupBy=currency is active."""
+    total_rebates: NotRequired[str]
+    r"""Gross total of usage-scaled rebates (negative metered line items) on invoices issued in the period, in dollars. Already netted into issued invoice grandTotals, so surfaced here for visibility. Omitted when groupBy=currency is active."""
+    rebate_count: NotRequired[float]
+    r"""Number of rebate line items on invoices issued in the period. Omitted when groupBy=currency is active."""
     invoices: NotRequired[InvoiceSummaryTypedDict]
     payments: NotRequired[PaymentSummaryTypedDict]
     trend: NotRequired[List[RevenueTrendBucketTypedDict]]
@@ -56,6 +60,12 @@ class RevenueSummaryResponse(BaseModel):
     refund_count: Annotated[Optional[float], pydantic.Field(alias="refundCount")] = None
     r"""Number of non-voided refunds (credit notes) issued in the period. Omitted when groupBy=currency is active."""
 
+    total_rebates: Annotated[Optional[str], pydantic.Field(alias="totalRebates")] = None
+    r"""Gross total of usage-scaled rebates (negative metered line items) on invoices issued in the period, in dollars. Already netted into issued invoice grandTotals, so surfaced here for visibility. Omitted when groupBy=currency is active."""
+
+    rebate_count: Annotated[Optional[float], pydantic.Field(alias="rebateCount")] = None
+    r"""Number of rebate line items on invoices issued in the period. Omitted when groupBy=currency is active."""
+
     invoices: Optional[InvoiceSummary] = None
 
     payments: Optional[PaymentSummary] = None
@@ -81,6 +91,8 @@ class RevenueSummaryResponse(BaseModel):
                 "netRevenue",
                 "totalRefunds",
                 "refundCount",
+                "totalRebates",
+                "rebateCount",
                 "invoices",
                 "payments",
                 "trend",

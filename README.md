@@ -480,6 +480,9 @@ with Paygentic(
 * [get](docs/sdks/plans/README.md#get) - Get
 * [update](docs/sdks/plans/README.md#update) - Update
 * [list_plan_versions](docs/sdks/plans/README.md#list_plan_versions) - List versions
+* [mint_plan_version](docs/sdks/plans/README.md#mint_plan_version) - Mint a plan version
+* [get_plan_version](docs/sdks/plans/README.md#get_plan_version) - Get a version
+* [transition_plan_version](docs/sdks/plans/README.md#transition_plan_version) - Set the default version
 
 ### [Prices](docs/sdks/prices/README.md)
 
@@ -665,9 +668,9 @@ with Paygentic(
 
 
 **Inherit from [`PaygenticError`](./src/paygentic_sdk/errors/paygenticerror.py)**:
-* [`ValidationError`](./src/paygentic_sdk/errors/validationerror.py): Bad Request - The request could not be understood or was missing required parameters. Status code `400`. Applicable to 82 of 133 methods.*
-* [`DeleteCustomerConflictError`](./src/paygentic_sdk/errors/deletecustomerconflicterror.py): Customer cannot be deleted due to active dependencies. Status code `409`. Applicable to 1 of 133 methods.*
-* [`DeleteFeeConflictError`](./src/paygentic_sdk/errors/deletefeeconflicterror.py): Fee cannot be deleted because it has associated prices. Status code `409`. Applicable to 1 of 133 methods.*
+* [`ValidationError`](./src/paygentic_sdk/errors/validationerror.py): Bad Request - The request could not be understood or was missing required parameters. Status code `400`. Applicable to 87 of 136 methods.*
+* [`DeleteCustomerConflictError`](./src/paygentic_sdk/errors/deletecustomerconflicterror.py): Customer cannot be deleted due to active dependencies. Status code `409`. Applicable to 1 of 136 methods.*
+* [`DeleteFeeConflictError`](./src/paygentic_sdk/errors/deletefeeconflicterror.py): Fee cannot be deleted because it has associated prices. Status code `409`. Applicable to 1 of 136 methods.*
 * [`ResponseValidationError`](./src/paygentic_sdk/errors/responsevalidationerror.py): Type mismatch between the response data and the expected Pydantic model. Provides access to the Pydantic validation error via the `cause` attribute.
 
 </details>

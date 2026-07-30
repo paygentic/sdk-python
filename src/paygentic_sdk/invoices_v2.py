@@ -730,7 +730,7 @@ class InvoicesV2(BaseSDK):
         :param id: The invoice ID
         :param expand: Comma-separated list of fields to expand. Currently supports: lineItems
         :param line_items_limit: Page size for line items when expand=lineItems
-        :param line_items_page_token: Pagination token for line items when expand=lineItems
+        :param line_items_page_token: Opaque pagination token for line items when expand=lineItems, taken from a previous response's nextPageToken. Do not construct or parse this value.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -789,13 +789,16 @@ class InvoicesV2(BaseSDK):
                 ),
             ),
             request=req,
-            error_status_codes=["403", "404", "4XX", "500", "5XX"],
+            error_status_codes=["400", "403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return unmarshal_json_response(models.Invoice, http_res)
+        if utils.match_response(http_res, "400", "application/json"):
+            response_data = unmarshal_json_response(errors.BadRequestUnion, http_res)
+            raise errors.BadRequest(response_data, http_res)
         if utils.match_response(http_res, ["403", "404"], "application/json"):
             response_data = unmarshal_json_response(errors.ErrorData, http_res)
             raise errors.Error(response_data, http_res)
@@ -834,7 +837,7 @@ class InvoicesV2(BaseSDK):
         :param id: The invoice ID
         :param expand: Comma-separated list of fields to expand. Currently supports: lineItems
         :param line_items_limit: Page size for line items when expand=lineItems
-        :param line_items_page_token: Pagination token for line items when expand=lineItems
+        :param line_items_page_token: Opaque pagination token for line items when expand=lineItems, taken from a previous response's nextPageToken. Do not construct or parse this value.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -893,13 +896,16 @@ class InvoicesV2(BaseSDK):
                 ),
             ),
             request=req,
-            error_status_codes=["403", "404", "4XX", "500", "5XX"],
+            error_status_codes=["400", "403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return unmarshal_json_response(models.Invoice, http_res)
+        if utils.match_response(http_res, "400", "application/json"):
+            response_data = unmarshal_json_response(errors.BadRequestUnion, http_res)
+            raise errors.BadRequest(response_data, http_res)
         if utils.match_response(http_res, ["403", "404"], "application/json"):
             response_data = unmarshal_json_response(errors.ErrorData, http_res)
             raise errors.Error(response_data, http_res)
@@ -936,7 +942,7 @@ class InvoicesV2(BaseSDK):
 
         :param id: The invoice ID
         :param limit: Maximum number of line items to return
-        :param page_token: Token for pagination to fetch the next page of results
+        :param page_token: Opaque pagination token to fetch the next page of results, taken from a previous response's nextPageToken. Do not construct or parse this value.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -994,13 +1000,16 @@ class InvoicesV2(BaseSDK):
                 ),
             ),
             request=req,
-            error_status_codes=["403", "404", "4XX", "500", "5XX"],
+            error_status_codes=["400", "403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return unmarshal_json_response(models.InvoiceLineItemsResponse, http_res)
+        if utils.match_response(http_res, "400", "application/json"):
+            response_data = unmarshal_json_response(errors.BadRequestUnion, http_res)
+            raise errors.BadRequest(response_data, http_res)
         if utils.match_response(http_res, ["403", "404"], "application/json"):
             response_data = unmarshal_json_response(errors.ErrorData, http_res)
             raise errors.Error(response_data, http_res)
@@ -1037,7 +1046,7 @@ class InvoicesV2(BaseSDK):
 
         :param id: The invoice ID
         :param limit: Maximum number of line items to return
-        :param page_token: Token for pagination to fetch the next page of results
+        :param page_token: Opaque pagination token to fetch the next page of results, taken from a previous response's nextPageToken. Do not construct or parse this value.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1095,13 +1104,16 @@ class InvoicesV2(BaseSDK):
                 ),
             ),
             request=req,
-            error_status_codes=["403", "404", "4XX", "500", "5XX"],
+            error_status_codes=["400", "403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return unmarshal_json_response(models.InvoiceLineItemsResponse, http_res)
+        if utils.match_response(http_res, "400", "application/json"):
+            response_data = unmarshal_json_response(errors.BadRequestUnion, http_res)
+            raise errors.BadRequest(response_data, http_res)
         if utils.match_response(http_res, ["403", "404"], "application/json"):
             response_data = unmarshal_json_response(errors.ErrorData, http_res)
             raise errors.Error(response_data, http_res)

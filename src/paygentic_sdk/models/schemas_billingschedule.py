@@ -68,7 +68,8 @@ class SchemasBillingScheduleTypedDict(TypedDict):
     merchant_id: str
     status: SchemasBillingScheduleStatus
     start_date: datetime
-    end_date: datetime
+    end_date: Nullable[datetime]
+    r"""Null for an open-ended subscription-owned schedule; order-owned schedules always have a concrete end."""
     billing_anchor: datetime
     alignment_policy: SchemasBillingScheduleAlignmentPolicy
     proration_policy: SchemasBillingScheduleProrationPolicy
@@ -94,7 +95,8 @@ class SchemasBillingSchedule(BaseModel):
 
     start_date: Annotated[datetime, pydantic.Field(alias="startDate")]
 
-    end_date: Annotated[datetime, pydantic.Field(alias="endDate")]
+    end_date: Annotated[Nullable[datetime], pydantic.Field(alias="endDate")]
+    r"""Null for an open-ended subscription-owned schedule; order-owned schedules always have a concrete end."""
 
     billing_anchor: Annotated[datetime, pydantic.Field(alias="billingAnchor")]
 
@@ -140,7 +142,7 @@ class SchemasBillingSchedule(BaseModel):
             ["orderId", "subscriptionId", "paymentTermDays", "deletedAt"]
         )
         nullable_fields = set(
-            ["orderId", "subscriptionId", "paymentTermDays", "deletedAt"]
+            ["orderId", "subscriptionId", "endDate", "paymentTermDays", "deletedAt"]
         )
         serialized = handler(self)
         m = {}

@@ -17,7 +17,7 @@ class GetInvoiceRequestTypedDict(TypedDict):
     line_items_limit: NotRequired[int]
     r"""Page size for line items when expand=lineItems"""
     line_items_page_token: NotRequired[str]
-    r"""Pagination token for line items when expand=lineItems"""
+    r"""Opaque pagination token for line items when expand=lineItems, taken from a previous response's nextPageToken. Do not construct or parse this value."""
 
 
 class GetInvoiceRequest(BaseModel):
@@ -44,7 +44,7 @@ class GetInvoiceRequest(BaseModel):
         pydantic.Field(alias="lineItemsPageToken"),
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = None
-    r"""Pagination token for line items when expand=lineItems"""
+    r"""Opaque pagination token for line items when expand=lineItems, taken from a previous response's nextPageToken. Do not construct or parse this value."""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

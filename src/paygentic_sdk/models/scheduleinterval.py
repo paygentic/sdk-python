@@ -50,7 +50,8 @@ class ScheduleIntervalTypedDict(TypedDict):
     r"""ISO-8601 duration or 'one_off'"""
     billing_mode: ScheduleIntervalBillingMode
     start_date: datetime
-    end_date: datetime
+    end_date: Nullable[datetime]
+    r"""Null for an open-ended subscription-owned interval; order-owned intervals always have a concrete end."""
     metadata: Dict[str, Any]
     created_at: datetime
     updated_at: datetime
@@ -88,7 +89,8 @@ class ScheduleInterval(BaseModel):
 
     start_date: Annotated[datetime, pydantic.Field(alias="startDate")]
 
-    end_date: Annotated[datetime, pydantic.Field(alias="endDate")]
+    end_date: Annotated[Nullable[datetime], pydantic.Field(alias="endDate")]
+    r"""Null for an open-ended subscription-owned interval; order-owned intervals always have a concrete end."""
 
     metadata: Dict[str, Any]
 
@@ -140,6 +142,7 @@ class ScheduleInterval(BaseModel):
                 "description",
                 "unitPrice",
                 "billDate",
+                "endDate",
                 "usageFilter",
             ]
         )
