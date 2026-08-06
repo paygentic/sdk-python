@@ -13,11 +13,13 @@ class GetInvoiceRequestTypedDict(TypedDict):
     id: str
     r"""The invoice ID"""
     expand: NotRequired[str]
-    r"""Comma-separated list of fields to expand. Currently supports: lineItems"""
+    r"""Comma-separated list of fields to expand. Supports: lineItems, items. `items` resolves each returned line's item and its external accounting codes into an `items` collection inside the lineItems block; because those ids come from the lines, requesting `items` also expands `lineItems` on its default paging."""
     line_items_limit: NotRequired[int]
     r"""Page size for line items when expand=lineItems"""
     line_items_page_token: NotRequired[str]
     r"""Opaque pagination token for line items when expand=lineItems, taken from a previous response's nextPageToken. Do not construct or parse this value."""
+    provider: NotRequired[str]
+    r"""Narrows which external references are returned per item when expand=items. Matched exactly against the provider stored on the reference (e.g. accountsiq); there is no allowlist of known providers, but the value must satisfy the same format every stored provider does, so a malformed one is rejected rather than answered with an empty result that reads as \"nothing is mapped\". It never removes lines or items: an item with no reference for this provider comes back with an empty list, so unmapped SKUs stay visible. Ignored when the items expansion is not requested."""
 
 
 class GetInvoiceRequest(BaseModel):
@@ -30,7 +32,7 @@ class GetInvoiceRequest(BaseModel):
         Optional[str],
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = None
-    r"""Comma-separated list of fields to expand. Currently supports: lineItems"""
+    r"""Comma-separated list of fields to expand. Supports: lineItems, items. `items` resolves each returned line's item and its external accounting codes into an `items` collection inside the lineItems block; because those ids come from the lines, requesting `items` also expands `lineItems` on its default paging."""
 
     line_items_limit: Annotated[
         Optional[int],
@@ -46,9 +48,17 @@ class GetInvoiceRequest(BaseModel):
     ] = None
     r"""Opaque pagination token for line items when expand=lineItems, taken from a previous response's nextPageToken. Do not construct or parse this value."""
 
+    provider: Annotated[
+        Optional[str],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Narrows which external references are returned per item when expand=items. Matched exactly against the provider stored on the reference (e.g. accountsiq); there is no allowlist of known providers, but the value must satisfy the same format every stored provider does, so a malformed one is rejected rather than answered with an empty result that reads as \"nothing is mapped\". It never removes lines or items: an item with no reference for this provider comes back with an empty list, so unmapped SKUs stay visible. Ignored when the items expansion is not requested."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["expand", "lineItemsLimit", "lineItemsPageToken"])
+        optional_fields = set(
+            ["expand", "lineItemsLimit", "lineItemsPageToken", "provider"]
+        )
         serialized = handler(self)
         m = {}
 

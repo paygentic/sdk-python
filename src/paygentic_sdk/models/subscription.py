@@ -302,9 +302,9 @@ class SubscriptionTypedDict(TypedDict):
     version_number: NotRequired[int]
     r"""The version number of the plan version referenced by planVersionId, as of subscription creation."""
     prefund_amount: NotRequired[str]
-    r"""@deprecated Use minimumAccountBalance instead. Minimum required wallet balance in atomic units. Sample values: '200000000000' equals $200.00 minimum, '1000000000000' equals $1000.00 minimum"""
+    r"""Deprecated. Legacy-only, not populated for new subscriptions."""
     minimum_account_balance: NotRequired[str]
-    r"""Minimum wallet balance requirement in nanodollars. Can be '0' to disable. The system calculates the difference between this minimum and the customer's current balance, charging only what's needed to reach the minimum. Note: If the calculated charge amount is below payment processor minimums (typically $1.00), the actual charged amount may be automatically adjusted upward to meet the minimum requirement. Sample values: '200000000000' equals $200.00 minimum, '1000000000000' equals $1000.00 minimum"""
+    r"""Deprecated. Legacy-only, not populated for new subscriptions."""
     terminated_at: NotRequired[datetime]
     terminated_by: NotRequired[str]
     r"""ID of who terminated the subscription (customer ID or merchant ID)"""
@@ -313,7 +313,7 @@ class SubscriptionTypedDict(TypedDict):
     test_clock_id: NotRequired[str]
     r"""Test clock ID if this subscription is attached to a test clock. Only present in non-production environments."""
     wallet_id: NotRequired[str]
-    r"""Optional (virtual) wallet ID for the subscription"""
+    r"""Deprecated. Legacy-only, not populated for new subscriptions."""
     renewal_reminder_enabled: NotRequired[Nullable[bool]]
     r"""Whether renewal reminder emails are enabled for this subscription. Null means use plan default."""
     renewal_reminder_days: NotRequired[Nullable[int]]
@@ -377,15 +377,23 @@ class Subscription(BaseModel):
     )
     r"""The version number of the plan version referenced by planVersionId, as of subscription creation."""
 
-    prefund_amount: Annotated[Optional[str], pydantic.Field(alias="prefundAmount")] = (
-        None
-    )
-    r"""@deprecated Use minimumAccountBalance instead. Minimum required wallet balance in atomic units. Sample values: '200000000000' equals $200.00 minimum, '1000000000000' equals $1000.00 minimum"""
+    prefund_amount: Annotated[
+        Optional[str],
+        pydantic.Field(
+            deprecated="warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible.",
+            alias="prefundAmount",
+        ),
+    ] = None
+    r"""Deprecated. Legacy-only, not populated for new subscriptions."""
 
     minimum_account_balance: Annotated[
-        Optional[str], pydantic.Field(alias="minimumAccountBalance")
+        Optional[str],
+        pydantic.Field(
+            deprecated="warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible.",
+            alias="minimumAccountBalance",
+        ),
     ] = None
-    r"""Minimum wallet balance requirement in nanodollars. Can be '0' to disable. The system calculates the difference between this minimum and the customer's current balance, charging only what's needed to reach the minimum. Note: If the calculated charge amount is below payment processor minimums (typically $1.00), the actual charged amount may be automatically adjusted upward to meet the minimum requirement. Sample values: '200000000000' equals $200.00 minimum, '1000000000000' equals $1000.00 minimum"""
+    r"""Deprecated. Legacy-only, not populated for new subscriptions."""
 
     terminated_at: Annotated[
         Optional[datetime], pydantic.Field(alias="terminatedAt")
@@ -402,8 +410,14 @@ class Subscription(BaseModel):
     test_clock_id: Annotated[Optional[str], pydantic.Field(alias="testClockId")] = None
     r"""Test clock ID if this subscription is attached to a test clock. Only present in non-production environments."""
 
-    wallet_id: Annotated[Optional[str], pydantic.Field(alias="walletId")] = None
-    r"""Optional (virtual) wallet ID for the subscription"""
+    wallet_id: Annotated[
+        Optional[str],
+        pydantic.Field(
+            deprecated="warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible.",
+            alias="walletId",
+        ),
+    ] = None
+    r"""Deprecated. Legacy-only, not populated for new subscriptions."""
 
     renewal_reminder_enabled: Annotated[
         OptionalNullable[bool], pydantic.Field(alias="renewalReminderEnabled")

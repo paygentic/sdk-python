@@ -14,6 +14,8 @@ from typing_extensions import Annotated, NotRequired, TypedDict
 class ListItemsRequestTypedDict(TypedDict):
     merchant_id: NotRequired[str]
     r"""Filter items by merchant organization id"""
+    catalog_id: NotRequired[str]
+    r"""Filter items by the product they are filed under"""
     provider: NotRequired[str]
     r"""Provider whose external code to resolve (e.g. `salesforce`, `netsuite`). Must be supplied together with `externalId`."""
     external_id: NotRequired[str]
@@ -22,6 +24,8 @@ class ListItemsRequestTypedDict(TypedDict):
     r"""Maximum items to return. In resolution mode (`provider`+`externalId` supplied) pagination is over the de-duplicated resolved Item set, primary Item first."""
     offset: NotRequired[int]
     r"""Zero-based offset for pagination. In resolution mode this paginates the de-duplicated resolved Item set."""
+    include_archived: NotRequired[bool]
+    r"""Include archived items in the results. By default, archived items are omitted. This is ignored when resolving by `provider` and `externalId`, which always returns the matching item regardless of archived status."""
 
 
 class ListItemsRequest(BaseModel):
@@ -31,6 +35,13 @@ class ListItemsRequest(BaseModel):
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = None
     r"""Filter items by merchant organization id"""
+
+    catalog_id: Annotated[
+        Optional[str],
+        pydantic.Field(alias="catalogId"),
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Filter items by the product they are filed under"""
 
     provider: Annotated[
         Optional[str],
@@ -57,10 +68,25 @@ class ListItemsRequest(BaseModel):
     ] = 0
     r"""Zero-based offset for pagination. In resolution mode this paginates the de-duplicated resolved Item set."""
 
+    include_archived: Annotated[
+        Optional[bool],
+        pydantic.Field(alias="includeArchived"),
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = False
+    r"""Include archived items in the results. By default, archived items are omitted. This is ignored when resolving by `provider` and `externalId`, which always returns the matching item regardless of archived status."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
-            ["merchantId", "provider", "externalId", "limit", "offset"]
+            [
+                "merchantId",
+                "catalogId",
+                "provider",
+                "externalId",
+                "limit",
+                "offset",
+                "includeArchived",
+            ]
         )
         serialized = handler(self)
         m = {}

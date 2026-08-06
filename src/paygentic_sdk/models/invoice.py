@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 from .invoicelineitem import InvoiceLineItem, InvoiceLineItemTypedDict
+from .resolveditem import ResolvedItem, ResolvedItemTypedDict
 from datetime import datetime
 from paygentic_sdk.types import (
     BaseModel,
@@ -22,7 +23,7 @@ r"""The object type"""
 
 
 class InvoiceLineItemsTypedDict(TypedDict):
-    r"""Line items (only present if expand=lineItems query parameter is provided)"""
+    r"""Line items (only present if expand=lineItems query parameter is provided, or if expand=items is, which implies it)"""
 
     invoice_id: str
     r"""The invoice ID"""
@@ -30,12 +31,14 @@ class InvoiceLineItemsTypedDict(TypedDict):
     r"""Array of line items for this page"""
     total_count: int
     r"""Total number of line items across all pages"""
+    items: NotRequired[List[ResolvedItemTypedDict]]
+    r"""Items the returned lines were tagged with, each appearing once, ordered by id. Only present when expand=items is requested. Scoped to the lines in THIS response, not the whole invoice — combine the collections across pages for an invoice-wide set. Join a line to its entry via the line's itemId. A line whose itemId has no entry here is a data-integrity fault — the tag points at an item that no longer resolves for this merchant. It is not the same as an untagged line and must not be counted as unmapped; report it."""
     next_page_token: NotRequired[Nullable[str]]
     r"""Token for fetching the next page, null if no more pages"""
 
 
 class InvoiceLineItems(BaseModel):
-    r"""Line items (only present if expand=lineItems query parameter is provided)"""
+    r"""Line items (only present if expand=lineItems query parameter is provided, or if expand=items is, which implies it)"""
 
     invoice_id: Annotated[str, pydantic.Field(alias="invoiceId")]
     r"""The invoice ID"""
@@ -46,6 +49,9 @@ class InvoiceLineItems(BaseModel):
     total_count: Annotated[int, pydantic.Field(alias="totalCount")]
     r"""Total number of line items across all pages"""
 
+    items: Optional[List[ResolvedItem]] = None
+    r"""Items the returned lines were tagged with, each appearing once, ordered by id. Only present when expand=items is requested. Scoped to the lines in THIS response, not the whole invoice — combine the collections across pages for an invoice-wide set. Join a line to its entry via the line's itemId. A line whose itemId has no entry here is a data-integrity fault — the tag points at an item that no longer resolves for this merchant. It is not the same as an untagged line and must not be counted as unmapped; report it."""
+
     next_page_token: Annotated[
         OptionalNullable[str], pydantic.Field(alias="nextPageToken")
     ] = UNSET
@@ -53,7 +59,7 @@ class InvoiceLineItems(BaseModel):
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["nextPageToken"])
+        optional_fields = set(["items", "nextPageToken"])
         nullable_fields = set(["nextPageToken"])
         serialized = handler(self)
         m = {}
@@ -224,7 +230,7 @@ class InvoiceTypedDict(TypedDict):
     invoice_number: NotRequired[Nullable[str]]
     r"""The invoice number"""
     line_items: NotRequired[Nullable[InvoiceLineItemsTypedDict]]
-    r"""Line items (only present if expand=lineItems query parameter is provided)"""
+    r"""Line items (only present if expand=lineItems query parameter is provided, or if expand=items is, which implies it)"""
     metadata: NotRequired[Dict[str, Any]]
     r"""Additional metadata including transition history"""
     next_action_at: NotRequired[Nullable[datetime]]
@@ -328,7 +334,7 @@ class Invoice(BaseModel):
     line_items: Annotated[
         OptionalNullable[InvoiceLineItems], pydantic.Field(alias="lineItems")
     ] = UNSET
-    r"""Line items (only present if expand=lineItems query parameter is provided)"""
+    r"""Line items (only present if expand=lineItems query parameter is provided, or if expand=items is, which implies it)"""
 
     metadata: Optional[Dict[str, Any]] = None
     r"""Additional metadata including transition history"""

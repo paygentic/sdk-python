@@ -38,6 +38,8 @@ class CreateManualLineItemRequestTypedDict(TypedDict):
     r"""End of the billing period for display purposes. Defaults to now."""
     idempotency_key: NotRequired[Nullable[str]]
     r"""Optional caller-provided idempotency key. Auto-generated if not provided."""
+    item_id: NotRequired[Nullable[str]]
+    r"""Optional item to tag this line with, for accounting/GL mapping. Must belong to the caller's merchant and must not be archived. A manual line has no price, so it is never reached by a later restamp — supplying it here is the only opportunity to tag it."""
 
 
 class CreateManualLineItemRequest(BaseModel):
@@ -84,6 +86,9 @@ class CreateManualLineItemRequest(BaseModel):
     ] = UNSET
     r"""Optional caller-provided idempotency key. Auto-generated if not provided."""
 
+    item_id: Annotated[OptionalNullable[str], pydantic.Field(alias="itemId")] = UNSET
+    r"""Optional item to tag this line with, for accounting/GL mapping. Must belong to the caller's merchant and must not be archived. A manual line has no price, so it is never reached by a later restamp — supplying it here is the only opportunity to tag it."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
@@ -95,10 +100,18 @@ class CreateManualLineItemRequest(BaseModel):
                 "periodStart",
                 "periodEnd",
                 "idempotencyKey",
+                "itemId",
             ]
         )
         nullable_fields = set(
-            ["description", "invoiceAt", "periodStart", "periodEnd", "idempotencyKey"]
+            [
+                "description",
+                "invoiceAt",
+                "periodStart",
+                "periodEnd",
+                "idempotencyKey",
+                "itemId",
+            ]
         )
         serialized = handler(self)
         m = {}

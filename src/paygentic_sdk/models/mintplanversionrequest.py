@@ -24,7 +24,7 @@ class ReplacePrice(BaseModel):
 
 
 class MintPlanVersionRequestTypedDict(TypedDict):
-    r"""A reference-by-id price diff applied to the prices of the plan's current version. Every id references an existing price created via POST /prices; inline price definitions are not accepted. An empty body copies the current prices into the new version unchanged. A version must carry at least one price, so a diff that would leave none is rejected."""
+    r"""A reference-by-id price diff applied to the prices of the plan's current version. Every id references an existing price created via POST /prices; inline price definitions are not accepted. A mint must carry at least one price change, so an empty body is rejected. A version must carry at least one price, so a diff that would leave none is rejected."""
 
     add_prices: NotRequired[List[str]]
     r"""Prices to add to the version. Each must not already be on the plan's current version."""
@@ -35,7 +35,7 @@ class MintPlanVersionRequestTypedDict(TypedDict):
 
 
 class MintPlanVersionRequest(BaseModel):
-    r"""A reference-by-id price diff applied to the prices of the plan's current version. Every id references an existing price created via POST /prices; inline price definitions are not accepted. An empty body copies the current prices into the new version unchanged. A version must carry at least one price, so a diff that would leave none is rejected."""
+    r"""A reference-by-id price diff applied to the prices of the plan's current version. Every id references an existing price created via POST /prices; inline price definitions are not accepted. A mint must carry at least one price change, so an empty body is rejected. A version must carry at least one price, so a diff that would leave none is rejected."""
 
     add_prices: Annotated[Optional[List[str]], pydantic.Field(alias="addPrices")] = None
     r"""Prices to add to the version. Each must not already be on the plan's current version."""

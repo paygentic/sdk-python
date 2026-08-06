@@ -23,6 +23,8 @@ class UpdateBillableMetricRequestBodyTypedDict(TypedDict):
     r"""Updated label for the metric. Sample values: 'LLM Tokens', 'Database Storage', 'Prediction Requests', 'Content Generations'"""
     unit: NotRequired[str]
     r"""Updated measurement unit. Common examples: 'tokens', 'GB', 'requests', 'items', 'hours'"""
+    item_id: NotRequired[Nullable[str]]
+    r"""Optional item tag, used to map this metric's invoice lines to an external accounting/tax identity. Send a new id to re-tag — `productId` is re-derived from that item's catalog, and an archived item is rejected. Send `null` to untag."""
     event_type: NotRequired[Nullable[str]]
     r"""CloudEvents type for meter routing."""
     value_property: NotRequired[Nullable[str]]
@@ -42,6 +44,9 @@ class UpdateBillableMetricRequestBody(BaseModel):
 
     unit: Optional[str] = None
     r"""Updated measurement unit. Common examples: 'tokens', 'GB', 'requests', 'items', 'hours'"""
+
+    item_id: Annotated[OptionalNullable[str], pydantic.Field(alias="itemId")] = UNSET
+    r"""Optional item tag, used to map this metric's invoice lines to an external accounting/tax identity. Send a new id to re-tag — `productId` is re-derived from that item's catalog, and an archived item is rejected. Send `null` to untag."""
 
     event_type: Annotated[OptionalNullable[str], pydantic.Field(alias="eventType")] = (
         UNSET
@@ -70,13 +75,16 @@ class UpdateBillableMetricRequestBody(BaseModel):
                 "description",
                 "name",
                 "unit",
+                "itemId",
                 "eventType",
                 "valueProperty",
                 "groupBy",
                 "eventFrom",
             ]
         )
-        nullable_fields = set(["eventType", "valueProperty", "groupBy", "eventFrom"])
+        nullable_fields = set(
+            ["itemId", "eventType", "valueProperty", "groupBy", "eventFrom"]
+        )
         serialized = handler(self)
         m = {}
 

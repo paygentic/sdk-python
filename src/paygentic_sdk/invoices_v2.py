@@ -422,6 +422,7 @@ class InvoicesV2(BaseSDK):
         period_start: OptionalNullable[datetime] = UNSET,
         period_end: OptionalNullable[datetime] = UNSET,
         idempotency_key: OptionalNullable[str] = UNSET,
+        item_id: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -443,6 +444,7 @@ class InvoicesV2(BaseSDK):
         :param period_start: Start of the billing period for display purposes. Defaults to now.
         :param period_end: End of the billing period for display purposes. Defaults to now.
         :param idempotency_key: Optional caller-provided idempotency key. Auto-generated if not provided.
+        :param item_id: Optional item to tag this line with, for accounting/GL mapping. Must belong to the caller's merchant and must not be archived. A manual line has no price, so it is never reached by a later restamp — supplying it here is the only opportunity to tag it.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -472,6 +474,7 @@ class InvoicesV2(BaseSDK):
                 period_start=period_start,
                 period_end=period_end,
                 idempotency_key=idempotency_key,
+                item_id=item_id,
             ),
         )
 
@@ -574,6 +577,7 @@ class InvoicesV2(BaseSDK):
         period_start: OptionalNullable[datetime] = UNSET,
         period_end: OptionalNullable[datetime] = UNSET,
         idempotency_key: OptionalNullable[str] = UNSET,
+        item_id: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -595,6 +599,7 @@ class InvoicesV2(BaseSDK):
         :param period_start: Start of the billing period for display purposes. Defaults to now.
         :param period_end: End of the billing period for display purposes. Defaults to now.
         :param idempotency_key: Optional caller-provided idempotency key. Auto-generated if not provided.
+        :param item_id: Optional item to tag this line with, for accounting/GL mapping. Must belong to the caller's merchant and must not be archived. A manual line has no price, so it is never reached by a later restamp — supplying it here is the only opportunity to tag it.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -624,6 +629,7 @@ class InvoicesV2(BaseSDK):
                 period_start=period_start,
                 period_end=period_end,
                 idempotency_key=idempotency_key,
+                item_id=item_id,
             ),
         )
 
@@ -718,6 +724,7 @@ class InvoicesV2(BaseSDK):
         expand: Optional[str] = None,
         line_items_limit: Optional[int] = 100,
         line_items_page_token: Optional[str] = None,
+        provider: Optional[str] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -728,9 +735,10 @@ class InvoicesV2(BaseSDK):
         Retrieve a single invoice with real-time aggregates (for ACTIVE/CLOSING/CLOSED) or cached aggregates (for finalized invoices). Optionally include line items with expand=lineItems.
 
         :param id: The invoice ID
-        :param expand: Comma-separated list of fields to expand. Currently supports: lineItems
+        :param expand: Comma-separated list of fields to expand. Supports: lineItems, items. `items` resolves each returned line's item and its external accounting codes into an `items` collection inside the lineItems block; because those ids come from the lines, requesting `items` also expands `lineItems` on its default paging.
         :param line_items_limit: Page size for line items when expand=lineItems
         :param line_items_page_token: Opaque pagination token for line items when expand=lineItems, taken from a previous response's nextPageToken. Do not construct or parse this value.
+        :param provider: Narrows which external references are returned per item when expand=items. Matched exactly against the provider stored on the reference (e.g. accountsiq); there is no allowlist of known providers, but the value must satisfy the same format every stored provider does, so a malformed one is rejected rather than answered with an empty result that reads as \"nothing is mapped\". It never removes lines or items: an item with no reference for this provider comes back with an empty list, so unmapped SKUs stay visible. Ignored when the items expansion is not requested.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -751,6 +759,7 @@ class InvoicesV2(BaseSDK):
             expand=expand,
             line_items_limit=line_items_limit,
             line_items_page_token=line_items_page_token,
+            provider=provider,
         )
 
         req = self._build_request(
@@ -825,6 +834,7 @@ class InvoicesV2(BaseSDK):
         expand: Optional[str] = None,
         line_items_limit: Optional[int] = 100,
         line_items_page_token: Optional[str] = None,
+        provider: Optional[str] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -835,9 +845,10 @@ class InvoicesV2(BaseSDK):
         Retrieve a single invoice with real-time aggregates (for ACTIVE/CLOSING/CLOSED) or cached aggregates (for finalized invoices). Optionally include line items with expand=lineItems.
 
         :param id: The invoice ID
-        :param expand: Comma-separated list of fields to expand. Currently supports: lineItems
+        :param expand: Comma-separated list of fields to expand. Supports: lineItems, items. `items` resolves each returned line's item and its external accounting codes into an `items` collection inside the lineItems block; because those ids come from the lines, requesting `items` also expands `lineItems` on its default paging.
         :param line_items_limit: Page size for line items when expand=lineItems
         :param line_items_page_token: Opaque pagination token for line items when expand=lineItems, taken from a previous response's nextPageToken. Do not construct or parse this value.
+        :param provider: Narrows which external references are returned per item when expand=items. Matched exactly against the provider stored on the reference (e.g. accountsiq); there is no allowlist of known providers, but the value must satisfy the same format every stored provider does, so a malformed one is rejected rather than answered with an empty result that reads as \"nothing is mapped\". It never removes lines or items: an item with no reference for this provider comes back with an empty list, so unmapped SKUs stay visible. Ignored when the items expansion is not requested.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -858,6 +869,7 @@ class InvoicesV2(BaseSDK):
             expand=expand,
             line_items_limit=line_items_limit,
             line_items_page_token=line_items_page_token,
+            provider=provider,
         )
 
         req = self._build_request_async(
@@ -931,6 +943,8 @@ class InvoicesV2(BaseSDK):
         id: str,
         limit: Optional[int] = 100,
         page_token: Optional[str] = None,
+        expand: Optional[str] = None,
+        provider: Optional[str] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -943,6 +957,8 @@ class InvoicesV2(BaseSDK):
         :param id: The invoice ID
         :param limit: Maximum number of line items to return
         :param page_token: Opaque pagination token to fetch the next page of results, taken from a previous response's nextPageToken. Do not construct or parse this value.
+        :param expand: Comma-separated list of fields to expand. Supports: items — resolves each returned line's item and that item's external accounting codes into an `items` collection, so a line can be translated to a GL/SKU code without a second call.
+        :param provider: Narrows which external references are returned per item when expand=items. Matched exactly against the provider stored on the reference (e.g. accountsiq); there is no allowlist of known providers, but the value must satisfy the same format every stored provider does, so a malformed one is rejected rather than answered with an empty result that reads as \"nothing is mapped\". It never removes lines or items: an item with no reference for this provider comes back with an empty list, so unmapped SKUs stay visible. Ignored when the items expansion is not requested.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -962,6 +978,8 @@ class InvoicesV2(BaseSDK):
             id=id,
             limit=limit,
             page_token=page_token,
+            expand=expand,
+            provider=provider,
         )
 
         req = self._build_request(
@@ -1035,6 +1053,8 @@ class InvoicesV2(BaseSDK):
         id: str,
         limit: Optional[int] = 100,
         page_token: Optional[str] = None,
+        expand: Optional[str] = None,
+        provider: Optional[str] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -1047,6 +1067,8 @@ class InvoicesV2(BaseSDK):
         :param id: The invoice ID
         :param limit: Maximum number of line items to return
         :param page_token: Opaque pagination token to fetch the next page of results, taken from a previous response's nextPageToken. Do not construct or parse this value.
+        :param expand: Comma-separated list of fields to expand. Supports: items — resolves each returned line's item and that item's external accounting codes into an `items` collection, so a line can be translated to a GL/SKU code without a second call.
+        :param provider: Narrows which external references are returned per item when expand=items. Matched exactly against the provider stored on the reference (e.g. accountsiq); there is no allowlist of known providers, but the value must satisfy the same format every stored provider does, so a malformed one is rejected rather than answered with an empty result that reads as \"nothing is mapped\". It never removes lines or items: an item with no reference for this provider comes back with an empty list, so unmapped SKUs stay visible. Ignored when the items expansion is not requested.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1066,6 +1088,8 @@ class InvoicesV2(BaseSDK):
             id=id,
             limit=limit,
             page_token=page_token,
+            expand=expand,
+            provider=provider,
         )
 
         req = self._build_request_async(

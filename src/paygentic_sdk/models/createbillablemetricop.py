@@ -30,10 +30,12 @@ class CreateBillableMetricRequestTypedDict(TypedDict):
     r"""Unique identifier for an organization"""
     name: str
     r"""Human-readable label identifying what this metric measures. Sample values: 'Claude Tokens', 'Storage Capacity', 'Model Inference Calls', 'Generated Images', 'Training Compute Hours', 'Data Transfer Volume'"""
-    product_id: str
-    r"""Unique identifier for a product"""
     unit: str
     r"""Measurement unit used when aggregating this metric's values. Common examples: 'tokens', 'GB', 'calls', 'images', 'hours', 'TB', 'queries', 'requests'"""
+    product_id: NotRequired[str]
+    r"""Unique identifier for a product"""
+    item_id: NotRequired[str]
+    r"""Unique identifier for an item"""
     event_type: NotRequired[str]
     r"""CloudEvents type for meter routing. Links this billable metric to the metering service."""
     value_property: NotRequired[str]
@@ -57,11 +59,14 @@ class CreateBillableMetricRequest(BaseModel):
     name: str
     r"""Human-readable label identifying what this metric measures. Sample values: 'Claude Tokens', 'Storage Capacity', 'Model Inference Calls', 'Generated Images', 'Training Compute Hours', 'Data Transfer Volume'"""
 
-    product_id: Annotated[str, pydantic.Field(alias="productId")]
-    r"""Unique identifier for a product"""
-
     unit: str
     r"""Measurement unit used when aggregating this metric's values. Common examples: 'tokens', 'GB', 'calls', 'images', 'hours', 'TB', 'queries', 'requests'"""
+
+    product_id: Annotated[Optional[str], pydantic.Field(alias="productId")] = None
+    r"""Unique identifier for a product"""
+
+    item_id: Annotated[Optional[str], pydantic.Field(alias="itemId")] = None
+    r"""Unique identifier for an item"""
 
     event_type: Annotated[Optional[str], pydantic.Field(alias="eventType")] = None
     r"""CloudEvents type for meter routing. Links this billable metric to the metering service."""
@@ -81,7 +86,16 @@ class CreateBillableMetricRequest(BaseModel):
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["eventType", "valueProperty", "groupBy", "eventFrom"])
+        optional_fields = set(
+            [
+                "productId",
+                "itemId",
+                "eventType",
+                "valueProperty",
+                "groupBy",
+                "eventFrom",
+            ]
+        )
         serialized = handler(self)
         m = {}
 

@@ -45,7 +45,7 @@ LineItemPaymentTerm = Union[
     ],
     UnrecognizedStr,
 ]
-r"""Payment term for fee items. Null for metered/manual lines"""
+r"""Payment term for fee items. Null for metered/manual lines. `null` is listed in the enum as well as via `nullable` because OpenAPI 3.0 validators check the enum independently — `nullable: true` alone does not admit it, and createLineItem (which always returns null here) was emitting a schema-violating body."""
 
 
 class LineItemTypedDict(TypedDict):
@@ -76,7 +76,9 @@ class LineItemTypedDict(TypedDict):
     updated_at: datetime
     r"""When the line item was last updated"""
     price_id: NotRequired[Nullable[str]]
-    r"""The price ID associated with this line item"""
+    r"""The price this line was generated from, or `null` when the line has no originating charge. With `itemId` it says whether a missing tag is fixable: `priceId` set and `itemId` null means the charge was simply untagged, which tagging it and restamping resolves; both null means the line records a grant-credit purchase, which is deferred revenue and is never tagged. Any measure of outstanding mapping work must exclude the latter or it can never reach zero."""
+    item_id: NotRequired[Nullable[str]]
+    r"""Item the line's charge was tagged with, recorded when the line was generated and not re-resolved on read. `null` means the charge carried no tag at that moment, the line predates item stamping, or the line has no originating charge (a grant-credit purchase) — it is an expected value, not an error. Use `priceId` to tell those cases apart."""
     invoice_id: NotRequired[Nullable[str]]
     r"""The invoice ID if this item has been invoiced"""
     description: NotRequired[Nullable[str]]
@@ -88,7 +90,7 @@ class LineItemTypedDict(TypedDict):
     metered_quantity: NotRequired[Nullable[str]]
     r"""Raw metered usage. Null for fee/manual lines"""
     payment_term: NotRequired[Nullable[LineItemPaymentTerm]]
-    r"""Payment term for fee items. Null for metered/manual lines"""
+    r"""Payment term for fee items. Null for metered/manual lines. `null` is listed in the enum as well as via `nullable` because OpenAPI 3.0 validators check the enum independently — `nullable: true` alone does not admit it, and createLineItem (which always returns null here) was emitting a schema-violating body."""
     subtotal: NotRequired[str]
     r"""quantity × unitPrice, before discounts and taxes. For prorated lines, may differ from `quantity × unitPrice` by display precision; subtotal is the authoritative billed amount. Defaults to '0.00' when not yet calculated."""
     taxes_total: NotRequired[Nullable[str]]
@@ -142,7 +144,10 @@ class LineItem(BaseModel):
     r"""When the line item was last updated"""
 
     price_id: Annotated[OptionalNullable[str], pydantic.Field(alias="priceId")] = UNSET
-    r"""The price ID associated with this line item"""
+    r"""The price this line was generated from, or `null` when the line has no originating charge. With `itemId` it says whether a missing tag is fixable: `priceId` set and `itemId` null means the charge was simply untagged, which tagging it and restamping resolves; both null means the line records a grant-credit purchase, which is deferred revenue and is never tagged. Any measure of outstanding mapping work must exclude the latter or it can never reach zero."""
+
+    item_id: Annotated[OptionalNullable[str], pydantic.Field(alias="itemId")] = UNSET
+    r"""Item the line's charge was tagged with, recorded when the line was generated and not re-resolved on read. `null` means the charge carried no tag at that moment, the line predates item stamping, or the line has no originating charge (a grant-credit purchase) — it is an expected value, not an error. Use `priceId` to tell those cases apart."""
 
     invoice_id: Annotated[OptionalNullable[str], pydantic.Field(alias="invoiceId")] = (
         UNSET
@@ -168,7 +173,7 @@ class LineItem(BaseModel):
     payment_term: Annotated[
         OptionalNullable[LineItemPaymentTerm], pydantic.Field(alias="paymentTerm")
     ] = UNSET
-    r"""Payment term for fee items. Null for metered/manual lines"""
+    r"""Payment term for fee items. Null for metered/manual lines. `null` is listed in the enum as well as via `nullable` because OpenAPI 3.0 validators check the enum independently — `nullable: true` alone does not admit it, and createLineItem (which always returns null here) was emitting a schema-violating body."""
 
     subtotal: Optional[str] = None
     r"""quantity × unitPrice, before discounts and taxes. For prorated lines, may differ from `quantity × unitPrice` by display precision; subtotal is the authoritative billed amount. Defaults to '0.00' when not yet calculated."""
@@ -196,6 +201,7 @@ class LineItem(BaseModel):
         optional_fields = set(
             [
                 "priceId",
+                "itemId",
                 "invoiceId",
                 "description",
                 "calculatedAt",
@@ -212,6 +218,7 @@ class LineItem(BaseModel):
         nullable_fields = set(
             [
                 "priceId",
+                "itemId",
                 "invoiceId",
                 "description",
                 "calculatedAt",

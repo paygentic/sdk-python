@@ -3,10 +3,12 @@
 from __future__ import annotations
 from .lineitem import LineItem, LineItemTypedDict
 from .lineitemssummary import LineItemsSummary, LineItemsSummaryTypedDict
-from paygentic_sdk.types import BaseModel
+from .resolveditem import ResolvedItem, ResolvedItemTypedDict
+from paygentic_sdk.types import BaseModel, UNSET_SENTINEL
 import pydantic
-from typing import List, Literal
-from typing_extensions import Annotated, TypedDict
+from pydantic import model_serializer
+from typing import List, Literal, Optional
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 LineItemsResponseObject = Literal["list",]
@@ -21,6 +23,8 @@ class LineItemsResponseTypedDict(TypedDict):
     total_count: int
     r"""Total number of matching line items"""
     summary: LineItemsSummaryTypedDict
+    items: NotRequired[List[ResolvedItemTypedDict]]
+    r"""Items the returned lines were tagged with, each appearing once, ordered by id. Only present when expand=items is requested. Scoped to the lines in THIS response, not to any invoice as a whole — combine the collections across pages for a complete set. Join a line to its entry via the line's itemId. A line whose itemId has no entry here is a data-integrity fault — the tag points at an item that no longer resolves for this merchant. It is not the same as an untagged line and must not be counted as unmapped; report it."""
 
 
 class LineItemsResponse(BaseModel):
@@ -34,6 +38,25 @@ class LineItemsResponse(BaseModel):
     r"""Total number of matching line items"""
 
     summary: LineItemsSummary
+
+    items: Optional[List[ResolvedItem]] = None
+    r"""Items the returned lines were tagged with, each appearing once, ordered by id. Only present when expand=items is requested. Scoped to the lines in THIS response, not to any invoice as a whole — combine the collections across pages for a complete set. Join a line to its entry via the line's itemId. A line whose itemId has no entry here is a data-integrity fault — the tag points at an item that no longer resolves for this merchant. It is not the same as an untagged line and must not be counted as unmapped; report it."""
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(["items"])
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k, serialized.get(n))
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m
 
 
 try:

@@ -18,7 +18,8 @@ class Fees(BaseSDK):
         name: str,
         description: str,
         merchant_id: str,
-        product_id: str,
+        product_id: Optional[str] = None,
+        item_id: Optional[str] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -32,6 +33,7 @@ class Fees(BaseSDK):
         :param description: Explanatory text describing what the fee represents. Sample values: 'One-time setup fee for new customers', 'Monthly base subscription charge', 'Yearly compliance and security update fee'
         :param merchant_id: Unique identifier for an organization
         :param product_id: Unique identifier for a product
+        :param item_id: Unique identifier for an item
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -52,6 +54,7 @@ class Fees(BaseSDK):
             description=description,
             merchant_id=merchant_id,
             product_id=product_id,
+            item_id=item_id,
         )
 
         req = self._build_request(
@@ -128,7 +131,8 @@ class Fees(BaseSDK):
         name: str,
         description: str,
         merchant_id: str,
-        product_id: str,
+        product_id: Optional[str] = None,
+        item_id: Optional[str] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -142,6 +146,7 @@ class Fees(BaseSDK):
         :param description: Explanatory text describing what the fee represents. Sample values: 'One-time setup fee for new customers', 'Monthly base subscription charge', 'Yearly compliance and security update fee'
         :param merchant_id: Unique identifier for an organization
         :param product_id: Unique identifier for a product
+        :param item_id: Unique identifier for an item
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -162,6 +167,7 @@ class Fees(BaseSDK):
             description=description,
             merchant_id=merchant_id,
             product_id=product_id,
+            item_id=item_id,
         )
 
         req = self._build_request_async(
@@ -628,6 +634,7 @@ class Fees(BaseSDK):
         id: str,
         description: Optional[str] = None,
         name: Optional[str] = None,
+        item_id: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -638,6 +645,7 @@ class Fees(BaseSDK):
         :param id: The unique identifier of the fee
         :param description: Revised explanation of what the fee represents.
         :param name: Updated label for the fee.
+        :param item_id: Optional item tag, used to map this fee's invoice lines to an external accounting/tax identity. Send a new id to re-tag — `productId` is re-derived from that item's catalog, and an archived item is rejected. Send `null` to untag.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -658,6 +666,7 @@ class Fees(BaseSDK):
             request_body=models.UpdateFeeRequestBody(
                 description=description,
                 name=name,
+                item_id=item_id,
             ),
         )
 
@@ -732,6 +741,7 @@ class Fees(BaseSDK):
         id: str,
         description: Optional[str] = None,
         name: Optional[str] = None,
+        item_id: OptionalNullable[str] = UNSET,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -742,6 +752,7 @@ class Fees(BaseSDK):
         :param id: The unique identifier of the fee
         :param description: Revised explanation of what the fee represents.
         :param name: Updated label for the fee.
+        :param item_id: Optional item tag, used to map this fee's invoice lines to an external accounting/tax identity. Send a new id to re-tag — `productId` is re-derived from that item's catalog, and an archived item is rejected. Send `null` to untag.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -762,6 +773,7 @@ class Fees(BaseSDK):
             request_body=models.UpdateFeeRequestBody(
                 description=description,
                 name=name,
+                item_id=item_id,
             ),
         )
 

@@ -23,6 +23,10 @@ class ListLineItemsRequestTypedDict(TypedDict):
     r"""Filter by line item status. 'pending' returns items not yet on an invoice, 'invoiced' returns items already assigned to an invoice. Omit to return both. Cannot be combined with invoiceId — when filtering by invoice ID all statuses are returned."""
     invoice_id: NotRequired[str]
     r"""Filter by invoice ID. When provided without subscriptionId, returns all line items for that invoice. At least one of subscriptionId or invoiceId must be provided."""
+    expand: NotRequired[str]
+    r"""Comma-separated list of fields to expand. Supports: items — resolves each returned line's item and that item's external accounting codes into an `items` collection, so a line can be translated to a GL/SKU code without a second call."""
+    provider: NotRequired[str]
+    r"""Narrows which external references are returned per item when expand=items. Matched exactly against the provider stored on the reference (e.g. accountsiq); there is no allowlist of known providers, but the value must satisfy the same format every stored provider does, so a malformed one is rejected rather than answered with an empty result that reads as \"nothing is mapped\". It never removes lines or items: an item with no reference for this provider comes back with an empty list, so unmapped SKUs stay visible. Ignored when the items expansion is not requested."""
     limit: NotRequired[int]
     r"""Maximum number of line items to return"""
     offset: NotRequired[int]
@@ -50,6 +54,18 @@ class ListLineItemsRequest(BaseModel):
     ] = None
     r"""Filter by invoice ID. When provided without subscriptionId, returns all line items for that invoice. At least one of subscriptionId or invoiceId must be provided."""
 
+    expand: Annotated[
+        Optional[str],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Comma-separated list of fields to expand. Supports: items — resolves each returned line's item and that item's external accounting codes into an `items` collection, so a line can be translated to a GL/SKU code without a second call."""
+
+    provider: Annotated[
+        Optional[str],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Narrows which external references are returned per item when expand=items. Matched exactly against the provider stored on the reference (e.g. accountsiq); there is no allowlist of known providers, but the value must satisfy the same format every stored provider does, so a malformed one is rejected rather than answered with an empty result that reads as \"nothing is mapped\". It never removes lines or items: an item with no reference for this provider comes back with an empty list, so unmapped SKUs stay visible. Ignored when the items expansion is not requested."""
+
     limit: Annotated[
         Optional[int],
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
@@ -65,7 +81,15 @@ class ListLineItemsRequest(BaseModel):
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
-            ["subscriptionId", "status", "invoiceId", "limit", "offset"]
+            [
+                "subscriptionId",
+                "status",
+                "invoiceId",
+                "expand",
+                "provider",
+                "limit",
+                "offset",
+            ]
         )
         serialized = handler(self)
         m = {}

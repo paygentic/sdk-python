@@ -44,6 +44,8 @@ class BillableMetricTypedDict(TypedDict):
     name: str
     product_id: str
     r"""Unique identifier for a product"""
+    item_id: Nullable[str]
+    r"""The item this metric is tagged with, or null when untagged. Used to map this metric's invoice lines to an external accounting/tax identity."""
     unit: str
     updated_at: datetime
     object: NotRequired[BillableMetricObject]
@@ -70,6 +72,9 @@ class BillableMetric(BaseModel):
 
     product_id: Annotated[str, pydantic.Field(alias="productId")]
     r"""Unique identifier for a product"""
+
+    item_id: Annotated[Nullable[str], pydantic.Field(alias="itemId")]
+    r"""The item this metric is tagged with, or null when untagged. Used to map this metric's invoice lines to an external accounting/tax identity."""
 
     unit: str
 
@@ -98,7 +103,9 @@ class BillableMetric(BaseModel):
         optional_fields = set(
             ["object", "eventType", "valueProperty", "groupBy", "eventFrom"]
         )
-        nullable_fields = set(["eventType", "valueProperty", "groupBy", "eventFrom"])
+        nullable_fields = set(
+            ["itemId", "eventType", "valueProperty", "groupBy", "eventFrom"]
+        )
         serialized = handler(self)
         m = {}
 

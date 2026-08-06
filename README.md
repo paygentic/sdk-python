@@ -320,7 +320,7 @@ with Paygentic(
     bearer_auth=os.getenv("PAYGENTIC_BEARER_AUTH", ""),
 ) as paygentic:
 
-    res = paygentic.billable_metrics.create(aggregation="SUM", description="Tracks total tokens consumed per API call.", merchant_id="org_YS8jkP59V71TdUvj", name="Token Counter", product_id="prod_abc123", unit="tokens")
+    res = paygentic.billable_metrics.create(aggregation="SUM", description="Tracks total tokens consumed per API call.", merchant_id="org_YS8jkP59V71TdUvj", name="Token Counter", unit="tokens", product_id="prod_abc123")
 
     # Handle response
     print(res)
@@ -576,7 +576,7 @@ with Paygentic(
     bearer_auth=os.getenv("PAYGENTIC_BEARER_AUTH", ""),
 ) as paygentic:
 
-    res = paygentic.billable_metrics.create(aggregation="SUM", description="Tracks total tokens consumed per API call.", merchant_id="org_YS8jkP59V71TdUvj", name="Token Counter", product_id="prod_abc123", unit="tokens",
+    res = paygentic.billable_metrics.create(aggregation="SUM", description="Tracks total tokens consumed per API call.", merchant_id="org_YS8jkP59V71TdUvj", name="Token Counter", unit="tokens", product_id="prod_abc123",
         RetryConfig("backoff", BackoffStrategy(1, 50, 1.1, 100), False))
 
     # Handle response
@@ -596,7 +596,7 @@ with Paygentic(
     bearer_auth=os.getenv("PAYGENTIC_BEARER_AUTH", ""),
 ) as paygentic:
 
-    res = paygentic.billable_metrics.create(aggregation="SUM", description="Tracks total tokens consumed per API call.", merchant_id="org_YS8jkP59V71TdUvj", name="Token Counter", product_id="prod_abc123", unit="tokens")
+    res = paygentic.billable_metrics.create(aggregation="SUM", description="Tracks total tokens consumed per API call.", merchant_id="org_YS8jkP59V71TdUvj", name="Token Counter", unit="tokens", product_id="prod_abc123")
 
     # Handle response
     print(res)
@@ -630,7 +630,7 @@ with Paygentic(
     res = None
     try:
 
-        res = paygentic.billable_metrics.create(aggregation="SUM", description="Tracks total tokens consumed per API call.", merchant_id="org_YS8jkP59V71TdUvj", name="Token Counter", product_id="prod_abc123", unit="tokens")
+        res = paygentic.billable_metrics.create(aggregation="SUM", description="Tracks total tokens consumed per API call.", merchant_id="org_YS8jkP59V71TdUvj", name="Token Counter", unit="tokens", product_id="prod_abc123")
 
         # Handle response
         print(res)
@@ -668,7 +668,7 @@ with Paygentic(
 
 
 **Inherit from [`PaygenticError`](./src/paygentic_sdk/errors/paygenticerror.py)**:
-* [`ValidationError`](./src/paygentic_sdk/errors/validationerror.py): Bad Request - The request could not be understood or was missing required parameters. Status code `400`. Applicable to 87 of 136 methods.*
+* [`ValidationError`](./src/paygentic_sdk/errors/validationerror.py): Bad Request - The request could not be understood or was missing required parameters. Status code `400`. Applicable to 88 of 136 methods.*
 * [`DeleteCustomerConflictError`](./src/paygentic_sdk/errors/deletecustomerconflicterror.py): Customer cannot be deleted due to active dependencies. Status code `409`. Applicable to 1 of 136 methods.*
 * [`DeleteFeeConflictError`](./src/paygentic_sdk/errors/deletefeeconflicterror.py): Fee cannot be deleted because it has associated prices. Status code `409`. Applicable to 1 of 136 methods.*
 * [`ResponseValidationError`](./src/paygentic_sdk/errors/responsevalidationerror.py): Type mismatch between the response data and the expected Pydantic model. Provides access to the Pydantic validation error via the `cause` attribute.
@@ -702,7 +702,7 @@ with Paygentic(
     bearer_auth=os.getenv("PAYGENTIC_BEARER_AUTH", ""),
 ) as paygentic:
 
-    res = paygentic.billable_metrics.create(aggregation="SUM", description="Tracks total tokens consumed per API call.", merchant_id="org_YS8jkP59V71TdUvj", name="Token Counter", product_id="prod_abc123", unit="tokens")
+    res = paygentic.billable_metrics.create(aggregation="SUM", description="Tracks total tokens consumed per API call.", merchant_id="org_YS8jkP59V71TdUvj", name="Token Counter", unit="tokens", product_id="prod_abc123")
 
     # Handle response
     print(res)
@@ -722,7 +722,7 @@ with Paygentic(
     bearer_auth=os.getenv("PAYGENTIC_BEARER_AUTH", ""),
 ) as paygentic:
 
-    res = paygentic.billable_metrics.create(aggregation="SUM", description="Tracks total tokens consumed per API call.", merchant_id="org_YS8jkP59V71TdUvj", name="Token Counter", product_id="prod_abc123", unit="tokens")
+    res = paygentic.billable_metrics.create(aggregation="SUM", description="Tracks total tokens consumed per API call.", merchant_id="org_YS8jkP59V71TdUvj", name="Token Counter", unit="tokens", product_id="prod_abc123")
 
     # Handle response
     print(res)

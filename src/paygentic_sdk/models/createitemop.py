@@ -12,6 +12,8 @@ class CreateItemRequestTypedDict(TypedDict):
     merchant_id: str
     name: str
     r"""Canonical sellable name for the Item"""
+    catalog_id: NotRequired[str]
+    r"""Unique identifier for a product"""
     metadata: NotRequired[Dict[str, Any]]
     r"""Optional key-value metadata"""
 
@@ -22,12 +24,15 @@ class CreateItemRequest(BaseModel):
     name: str
     r"""Canonical sellable name for the Item"""
 
+    catalog_id: Annotated[Optional[str], pydantic.Field(alias="catalogId")] = None
+    r"""Unique identifier for a product"""
+
     metadata: Optional[Dict[str, Any]] = None
     r"""Optional key-value metadata"""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["metadata"])
+        optional_fields = set(["catalogId", "metadata"])
         serialized = handler(self)
         m = {}
 

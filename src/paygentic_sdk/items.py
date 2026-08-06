@@ -17,6 +17,7 @@ class Items(BaseSDK):
         *,
         merchant_id: str,
         name: str,
+        catalog_id: Optional[str] = None,
         metadata: Optional[Dict[str, Any]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -27,6 +28,7 @@ class Items(BaseSDK):
 
         :param merchant_id:
         :param name: Canonical sellable name for the Item
+        :param catalog_id: Unique identifier for a product
         :param metadata: Optional key-value metadata
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -46,6 +48,7 @@ class Items(BaseSDK):
         request = models.CreateItemRequest(
             merchant_id=merchant_id,
             name=name,
+            catalog_id=catalog_id,
             metadata=metadata,
         )
 
@@ -88,7 +91,7 @@ class Items(BaseSDK):
                 ),
             ),
             request=req,
-            error_status_codes=["400", "401", "403", "4XX", "500", "5XX"],
+            error_status_codes=["400", "401", "403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -98,7 +101,7 @@ class Items(BaseSDK):
         if utils.match_response(http_res, "400", "application/json"):
             response_data = unmarshal_json_response(errors.BadRequestUnion, http_res)
             raise errors.BadRequest(response_data, http_res)
-        if utils.match_response(http_res, ["401", "403"], "application/json"):
+        if utils.match_response(http_res, ["401", "403", "404"], "application/json"):
             response_data = unmarshal_json_response(errors.ErrorData, http_res)
             raise errors.Error(response_data, http_res)
         if utils.match_response(http_res, "500", "application/json"):
@@ -122,6 +125,7 @@ class Items(BaseSDK):
         *,
         merchant_id: str,
         name: str,
+        catalog_id: Optional[str] = None,
         metadata: Optional[Dict[str, Any]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -132,6 +136,7 @@ class Items(BaseSDK):
 
         :param merchant_id:
         :param name: Canonical sellable name for the Item
+        :param catalog_id: Unique identifier for a product
         :param metadata: Optional key-value metadata
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -151,6 +156,7 @@ class Items(BaseSDK):
         request = models.CreateItemRequest(
             merchant_id=merchant_id,
             name=name,
+            catalog_id=catalog_id,
             metadata=metadata,
         )
 
@@ -193,7 +199,7 @@ class Items(BaseSDK):
                 ),
             ),
             request=req,
-            error_status_codes=["400", "401", "403", "4XX", "500", "5XX"],
+            error_status_codes=["400", "401", "403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -203,7 +209,7 @@ class Items(BaseSDK):
         if utils.match_response(http_res, "400", "application/json"):
             response_data = unmarshal_json_response(errors.BadRequestUnion, http_res)
             raise errors.BadRequest(response_data, http_res)
-        if utils.match_response(http_res, ["401", "403"], "application/json"):
+        if utils.match_response(http_res, ["401", "403", "404"], "application/json"):
             response_data = unmarshal_json_response(errors.ErrorData, http_res)
             raise errors.Error(response_data, http_res)
         if utils.match_response(http_res, "500", "application/json"):
@@ -609,6 +615,8 @@ class Items(BaseSDK):
         *,
         id: str,
         name: Optional[str] = None,
+        catalog_id: OptionalNullable[str] = UNSET,
+        archived: Optional[bool] = None,
         metadata: Optional[Dict[str, Any]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -619,6 +627,8 @@ class Items(BaseSDK):
 
         :param id: The unique identifier of the item
         :param name:
+        :param catalog_id: The product this item belongs to.
+        :param archived: Set to true to retire this item from your catalog, or false to restore it. Archived items remain readable and continue to resolve on historical invoices.
         :param metadata:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -639,6 +649,8 @@ class Items(BaseSDK):
             id=id,
             request_body=models.UpdateItemRequestBody(
                 name=name,
+                catalog_id=catalog_id,
+                archived=archived,
                 metadata=metadata,
             ),
         )
@@ -716,6 +728,8 @@ class Items(BaseSDK):
         *,
         id: str,
         name: Optional[str] = None,
+        catalog_id: OptionalNullable[str] = UNSET,
+        archived: Optional[bool] = None,
         metadata: Optional[Dict[str, Any]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -726,6 +740,8 @@ class Items(BaseSDK):
 
         :param id: The unique identifier of the item
         :param name:
+        :param catalog_id: The product this item belongs to.
+        :param archived: Set to true to retire this item from your catalog, or false to restore it. Archived items remain readable and continue to resolve on historical invoices.
         :param metadata:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -746,6 +762,8 @@ class Items(BaseSDK):
             id=id,
             request_body=models.UpdateItemRequestBody(
                 name=name,
+                catalog_id=catalog_id,
+                archived=archived,
                 metadata=metadata,
             ),
         )
@@ -885,13 +903,16 @@ class Items(BaseSDK):
                 ),
             ),
             request=req,
-            error_status_codes=["401", "403", "404", "4XX", "500", "5XX"],
+            error_status_codes=["400", "401", "403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
         response_data: Any = None
         if utils.match_response(http_res, "204", "*"):
             return
+        if utils.match_response(http_res, "400", "application/json"):
+            response_data = unmarshal_json_response(errors.BadRequestUnion, http_res)
+            raise errors.BadRequest(response_data, http_res)
         if utils.match_response(http_res, ["401", "403", "404"], "application/json"):
             response_data = unmarshal_json_response(errors.ErrorData, http_res)
             raise errors.Error(response_data, http_res)
@@ -978,13 +999,16 @@ class Items(BaseSDK):
                 ),
             ),
             request=req,
-            error_status_codes=["401", "403", "404", "4XX", "500", "5XX"],
+            error_status_codes=["400", "401", "403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
         response_data: Any = None
         if utils.match_response(http_res, "204", "*"):
             return
+        if utils.match_response(http_res, "400", "application/json"):
+            response_data = unmarshal_json_response(errors.BadRequestUnion, http_res)
+            raise errors.BadRequest(response_data, http_res)
         if utils.match_response(http_res, ["401", "403", "404"], "application/json"):
             response_data = unmarshal_json_response(errors.ErrorData, http_res)
             raise errors.Error(response_data, http_res)

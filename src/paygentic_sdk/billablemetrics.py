@@ -18,8 +18,9 @@ class BillableMetrics(BaseSDK):
         description: str,
         merchant_id: str,
         name: str,
-        product_id: str,
         unit: str,
+        product_id: Optional[str] = None,
+        item_id: Optional[str] = None,
         event_type: Optional[str] = None,
         value_property: Optional[str] = None,
         group_by: Optional[Dict[str, str]] = None,
@@ -37,8 +38,9 @@ class BillableMetrics(BaseSDK):
         :param description: Explanatory text describing what the metric tracks and how it's used for billing. Sample values: 'Total tokens consumed by Claude language model interactions', 'Gigabytes of cloud storage utilized', 'Count of machine learning inference requests processed', 'Quantity of AI-generated images created', 'Compute hours spent training neural networks', 'Terabytes of data transferred'
         :param merchant_id: Unique identifier for an organization
         :param name: Human-readable label identifying what this metric measures. Sample values: 'Claude Tokens', 'Storage Capacity', 'Model Inference Calls', 'Generated Images', 'Training Compute Hours', 'Data Transfer Volume'
-        :param product_id: Unique identifier for a product
         :param unit: Measurement unit used when aggregating this metric's values. Common examples: 'tokens', 'GB', 'calls', 'images', 'hours', 'TB', 'queries', 'requests'
+        :param product_id: Unique identifier for a product
+        :param item_id: Unique identifier for an item
         :param event_type: CloudEvents type for meter routing. Links this billable metric to the metering service.
         :param value_property: JSONPath to extract a numeric value from event data. Must start with `$.` (example: `$.amount` or `$.payload.bytes`). Required for SUM/AVG/MIN/MAX/LATEST aggregations.
         :param group_by: Map of dimension name to JSONPath for group-by queries. Each value must start with `$.` (example: `$.region`).
@@ -64,6 +66,7 @@ class BillableMetrics(BaseSDK):
             merchant_id=merchant_id,
             name=name,
             product_id=product_id,
+            item_id=item_id,
             unit=unit,
             event_type=event_type,
             value_property=value_property,
@@ -146,8 +149,9 @@ class BillableMetrics(BaseSDK):
         description: str,
         merchant_id: str,
         name: str,
-        product_id: str,
         unit: str,
+        product_id: Optional[str] = None,
+        item_id: Optional[str] = None,
         event_type: Optional[str] = None,
         value_property: Optional[str] = None,
         group_by: Optional[Dict[str, str]] = None,
@@ -165,8 +169,9 @@ class BillableMetrics(BaseSDK):
         :param description: Explanatory text describing what the metric tracks and how it's used for billing. Sample values: 'Total tokens consumed by Claude language model interactions', 'Gigabytes of cloud storage utilized', 'Count of machine learning inference requests processed', 'Quantity of AI-generated images created', 'Compute hours spent training neural networks', 'Terabytes of data transferred'
         :param merchant_id: Unique identifier for an organization
         :param name: Human-readable label identifying what this metric measures. Sample values: 'Claude Tokens', 'Storage Capacity', 'Model Inference Calls', 'Generated Images', 'Training Compute Hours', 'Data Transfer Volume'
-        :param product_id: Unique identifier for a product
         :param unit: Measurement unit used when aggregating this metric's values. Common examples: 'tokens', 'GB', 'calls', 'images', 'hours', 'TB', 'queries', 'requests'
+        :param product_id: Unique identifier for a product
+        :param item_id: Unique identifier for an item
         :param event_type: CloudEvents type for meter routing. Links this billable metric to the metering service.
         :param value_property: JSONPath to extract a numeric value from event data. Must start with `$.` (example: `$.amount` or `$.payload.bytes`). Required for SUM/AVG/MIN/MAX/LATEST aggregations.
         :param group_by: Map of dimension name to JSONPath for group-by queries. Each value must start with `$.` (example: `$.region`).
@@ -192,6 +197,7 @@ class BillableMetrics(BaseSDK):
             merchant_id=merchant_id,
             name=name,
             product_id=product_id,
+            item_id=item_id,
             unit=unit,
             event_type=event_type,
             value_property=value_property,
@@ -664,6 +670,7 @@ class BillableMetrics(BaseSDK):
         description: Optional[str] = None,
         name: Optional[str] = None,
         unit: Optional[str] = None,
+        item_id: OptionalNullable[str] = UNSET,
         event_type: OptionalNullable[str] = UNSET,
         value_property: OptionalNullable[str] = UNSET,
         group_by: OptionalNullable[Dict[str, str]] = UNSET,
@@ -679,6 +686,7 @@ class BillableMetrics(BaseSDK):
         :param description: Revised explanation of what the metric represents. Sample values: 'Language model token consumption', 'Database storage capacity used', 'Machine learning prediction API calls', 'AI-generated content items'
         :param name: Updated label for the metric. Sample values: 'LLM Tokens', 'Database Storage', 'Prediction Requests', 'Content Generations'
         :param unit: Updated measurement unit. Common examples: 'tokens', 'GB', 'requests', 'items', 'hours'
+        :param item_id: Optional item tag, used to map this metric's invoice lines to an external accounting/tax identity. Send a new id to re-tag — `productId` is re-derived from that item's catalog, and an archived item is rejected. Send `null` to untag.
         :param event_type: CloudEvents type for meter routing.
         :param value_property: JSONPath to extract a numeric value from event data. Must start with `$.` (example: `$.amount` or `$.payload.bytes`).
         :param group_by: Map of dimension name to JSONPath for group-by queries. Each value must start with `$.` (example: `$.region`).
@@ -704,6 +712,7 @@ class BillableMetrics(BaseSDK):
                 description=description,
                 name=name,
                 unit=unit,
+                item_id=item_id,
                 event_type=event_type,
                 value_property=value_property,
                 group_by=group_by,
@@ -787,6 +796,7 @@ class BillableMetrics(BaseSDK):
         description: Optional[str] = None,
         name: Optional[str] = None,
         unit: Optional[str] = None,
+        item_id: OptionalNullable[str] = UNSET,
         event_type: OptionalNullable[str] = UNSET,
         value_property: OptionalNullable[str] = UNSET,
         group_by: OptionalNullable[Dict[str, str]] = UNSET,
@@ -802,6 +812,7 @@ class BillableMetrics(BaseSDK):
         :param description: Revised explanation of what the metric represents. Sample values: 'Language model token consumption', 'Database storage capacity used', 'Machine learning prediction API calls', 'AI-generated content items'
         :param name: Updated label for the metric. Sample values: 'LLM Tokens', 'Database Storage', 'Prediction Requests', 'Content Generations'
         :param unit: Updated measurement unit. Common examples: 'tokens', 'GB', 'requests', 'items', 'hours'
+        :param item_id: Optional item tag, used to map this metric's invoice lines to an external accounting/tax identity. Send a new id to re-tag — `productId` is re-derived from that item's catalog, and an archived item is rejected. Send `null` to untag.
         :param event_type: CloudEvents type for meter routing.
         :param value_property: JSONPath to extract a numeric value from event data. Must start with `$.` (example: `$.amount` or `$.payload.bytes`).
         :param group_by: Map of dimension name to JSONPath for group-by queries. Each value must start with `$.` (example: `$.region`).
@@ -827,6 +838,7 @@ class BillableMetrics(BaseSDK):
                 description=description,
                 name=name,
                 unit=unit,
+                item_id=item_id,
                 event_type=event_type,
                 value_property=value_property,
                 group_by=group_by,

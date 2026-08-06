@@ -900,6 +900,7 @@ if TYPE_CHECKING:
         ReplaceScheduleIntervalsRequestQuantityTransitionTypedDict,
         ReplaceScheduleIntervalsRequestTypedDict,
     )
+    from .resolveditem import ResolvedItem, ResolvedItemTypedDict
     from .revenuesummaryresponse import (
         RevenueSummaryResponse,
         RevenueSummaryResponseTypedDict,
@@ -1915,6 +1916,8 @@ __all__ = [
     "ReplaceScheduleIntervalsRequestTypedDict",
     "ReplaceScheduleIntervalsResponse",
     "ReplaceScheduleIntervalsResponseTypedDict",
+    "ResolvedItem",
+    "ResolvedItemTypedDict",
     "RevenueSummaryResponse",
     "RevenueSummaryResponseTypedDict",
     "RevenueTrendBucket",
@@ -2825,6 +2828,8 @@ _dynamic_imports: dict[str, str] = {
     "ReplaceScheduleIntervalsRequestQuantityTransition": ".replacescheduleintervalsrequest",
     "ReplaceScheduleIntervalsRequestQuantityTransitionTypedDict": ".replacescheduleintervalsrequest",
     "ReplaceScheduleIntervalsRequestTypedDict": ".replacescheduleintervalsrequest",
+    "ResolvedItem": ".resolveditem",
+    "ResolvedItemTypedDict": ".resolveditem",
     "RevenueSummaryResponse": ".revenuesummaryresponse",
     "RevenueSummaryResponseTypedDict": ".revenuesummaryresponse",
     "RevenueTrendBucket": ".revenuetrendbucket",

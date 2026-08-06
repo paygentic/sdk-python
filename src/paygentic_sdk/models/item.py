@@ -3,7 +3,7 @@
 from __future__ import annotations
 from .externalreference import ExternalReference, ExternalReferenceTypedDict
 from datetime import datetime
-from paygentic_sdk.types import BaseModel, UNSET_SENTINEL
+from paygentic_sdk.types import BaseModel, Nullable, UNSET_SENTINEL
 import pydantic
 from pydantic import model_serializer
 from typing import Any, Dict, List, Literal, Optional
@@ -15,10 +15,15 @@ ItemObject = Literal["item",]
 
 class ItemTypedDict(TypedDict):
     id: str
+    r"""Unique identifier for an item"""
     merchant_id: str
     name: str
     metadata: Dict[str, Any]
     external_references: List[ExternalReferenceTypedDict]
+    catalog_id: Nullable[str]
+    r"""The product this item belongs to."""
+    archived_at: Nullable[datetime]
+    r"""When this item was retired from the catalog. Null while active."""
     created_at: datetime
     updated_at: datetime
     object: NotRequired[ItemObject]
@@ -26,6 +31,7 @@ class ItemTypedDict(TypedDict):
 
 class Item(BaseModel):
     id: str
+    r"""Unique identifier for an item"""
 
     merchant_id: Annotated[str, pydantic.Field(alias="merchantId")]
 
@@ -37,6 +43,12 @@ class Item(BaseModel):
         List[ExternalReference], pydantic.Field(alias="externalReferences")
     ]
 
+    catalog_id: Annotated[Nullable[str], pydantic.Field(alias="catalogId")]
+    r"""The product this item belongs to."""
+
+    archived_at: Annotated[Nullable[datetime], pydantic.Field(alias="archivedAt")]
+    r"""When this item was retired from the catalog. Null while active."""
+
     created_at: Annotated[datetime, pydantic.Field(alias="createdAt")]
 
     updated_at: Annotated[datetime, pydantic.Field(alias="updatedAt")]
@@ -46,15 +58,24 @@ class Item(BaseModel):
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(["object"])
+        nullable_fields = set(["catalogId", "archivedAt"])
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
             k = f.alias or n
             val = serialized.get(k, serialized.get(n))
+            is_nullable_and_explicitly_set = (
+                k in nullable_fields
+                and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
+            )
 
             if val != UNSET_SENTINEL:
-                if val is not None or k not in optional_fields:
+                if (
+                    val is not None
+                    or k not in optional_fields
+                    or is_nullable_and_explicitly_set
+                ):
                     m[k] = val
 
         return m
