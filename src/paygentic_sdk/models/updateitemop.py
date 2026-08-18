@@ -20,7 +20,7 @@ class UpdateItemRequestBodyTypedDict(TypedDict):
     catalog_id: NotRequired[Nullable[str]]
     r"""The product this item belongs to."""
     archived: NotRequired[bool]
-    r"""Set to true to retire this item from your catalog, or false to restore it. Archived items remain readable and continue to resolve on historical invoices."""
+    r"""Set to true to retire this item from your catalog, or false to restore it. Archived items remain readable and continue to resolve on historical invoices. Archiving also releases this item's claim on its external codes: any reference it holds as primary becomes non-primary, freeing that (provider, externalId) for a replacement item while the reference stays attached so this item's own invoice lines keep resolving it. Restoring the item does not reclaim primary status. Archiving is rejected while live billableMetrics or fees are anchored to the item — re-tag or retire those charges first."""
     metadata: NotRequired[Dict[str, Any]]
 
 
@@ -33,7 +33,7 @@ class UpdateItemRequestBody(BaseModel):
     r"""The product this item belongs to."""
 
     archived: Optional[bool] = None
-    r"""Set to true to retire this item from your catalog, or false to restore it. Archived items remain readable and continue to resolve on historical invoices."""
+    r"""Set to true to retire this item from your catalog, or false to restore it. Archived items remain readable and continue to resolve on historical invoices. Archiving also releases this item's claim on its external codes: any reference it holds as primary becomes non-primary, freeing that (provider, externalId) for a replacement item while the reference stays attached so this item's own invoice lines keep resolving it. Restoring the item does not reclaim primary status. Archiving is rejected while live billableMetrics or fees are anchored to the item — re-tag or retire those charges first."""
 
     metadata: Optional[Dict[str, Any]] = None
 

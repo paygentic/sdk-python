@@ -8,7 +8,7 @@ Lifecycle status of the version.
 from paygentic_sdk.models import PlanVersionSummaryStatus
 
 # Open enum: unrecognized values are captured as UnrecognizedStr
-value: PlanVersionSummaryStatus = "draft"
+value: PlanVersionSummaryStatus = "published"
 ```
 
 
@@ -16,6 +16,5 @@ value: PlanVersionSummaryStatus = "draft"
 
 This is an open enum. Unrecognized values will not fail type checks.
 
-- `"draft"`
 - `"published"`
 - `"archived"`

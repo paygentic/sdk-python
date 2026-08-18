@@ -15,7 +15,6 @@ PlanVersionObject = Literal["plan_version",]
 
 PlanVersionStatus = Union[
     Literal[
-        "draft",
         "published",
         "archived",
     ],
@@ -25,7 +24,7 @@ r"""Lifecycle status of the version."""
 
 
 class PlanVersionTypedDict(TypedDict):
-    r"""A single plan version, including its price slots. Extends the list summary with the version's prices for draft review."""
+    r"""A single plan version, including its price slots. Extends the list summary with the version's prices."""
 
     id: str
     r"""Unique identifier for a plan version"""
@@ -39,17 +38,17 @@ class PlanVersionTypedDict(TypedDict):
     subscription_count: int
     r"""Number of committed-status subscriptions pinned to this version at creation time. Not a live-billing cohort."""
     updated_at: datetime
-    r"""When this version was last modified. Optimistic-concurrency token: read this value and echo it back as an `If-Match` header on a draft-price-mutation request to reject the write (412) if the draft changed since this read."""
+    r"""When this version was last modified."""
     prices: List[PlanVersionPriceSlotTypedDict]
     r"""The price slots that make up this version."""
     published_at: NotRequired[datetime]
-    r"""When this version was published. Absent for draft versions."""
+    r"""When this version was published."""
     based_on_version_id: NotRequired[str]
     r"""Unique identifier for a plan version"""
 
 
 class PlanVersion(BaseModel):
-    r"""A single plan version, including its price slots. Extends the list summary with the version's prices for draft review."""
+    r"""A single plan version, including its price slots. Extends the list summary with the version's prices."""
 
     id: str
     r"""Unique identifier for a plan version"""
@@ -69,7 +68,7 @@ class PlanVersion(BaseModel):
     r"""Number of committed-status subscriptions pinned to this version at creation time. Not a live-billing cohort."""
 
     updated_at: Annotated[datetime, pydantic.Field(alias="updatedAt")]
-    r"""When this version was last modified. Optimistic-concurrency token: read this value and echo it back as an `If-Match` header on a draft-price-mutation request to reject the write (412) if the draft changed since this read."""
+    r"""When this version was last modified."""
 
     prices: List[PlanVersionPriceSlot]
     r"""The price slots that make up this version."""
@@ -77,7 +76,7 @@ class PlanVersion(BaseModel):
     published_at: Annotated[Optional[datetime], pydantic.Field(alias="publishedAt")] = (
         None
     )
-    r"""When this version was published. Absent for draft versions."""
+    r"""When this version was published."""
 
     based_on_version_id: Annotated[
         Optional[str], pydantic.Field(alias="basedOnVersionId")

@@ -83,6 +83,16 @@ class InvoiceLineItems(BaseModel):
         return m
 
 
+PdfSource = Union[
+    Literal[
+        "paygentic",
+        "tax_provider",
+    ],
+    UnrecognizedStr,
+]
+r"""Who produced the document at pdfUrl, or null when there is none. `paygentic` means pdfUrl is this API's download endpoint and the request must carry your API key; `tax_provider` means it is the provider's own link, which opens directly in a browser."""
+
+
 InvoiceStatus = Union[
     Literal[
         "ACTIVE",
@@ -242,7 +252,9 @@ class InvoiceTypedDict(TypedDict):
     payment_url: NotRequired[Nullable[str]]
     r"""Payment URL for completing payment (only present when status is ISSUED and unpaidAmount > 0)"""
     pdf_url: NotRequired[Nullable[str]]
-    r"""Direct PDF download link for tax invoice"""
+    r"""Link to the invoice document, or null when there is none. For Paygentic-rendered documents this is GET /v2/invoices/{id}/pdf, which requires authentication; for documents supplied by the tax provider it is the provider's own direct link. The URL is stable and does not expire. Branch on pdfSource rather than on the shape of this URL."""
+    pdf_source: NotRequired[Nullable[PdfSource]]
+    r"""Who produced the document at pdfUrl, or null when there is none. `paygentic` means pdfUrl is this API's download endpoint and the request must carry your API key; `tax_provider` means it is the provider's own link, which opens directly in a browser."""
     permalink: NotRequired[Nullable[str]]
     r"""Public URL to view tax invoice"""
     tax: NotRequired[Nullable[TaxTypedDict]]
@@ -358,7 +370,12 @@ class Invoice(BaseModel):
     r"""Payment URL for completing payment (only present when status is ISSUED and unpaidAmount > 0)"""
 
     pdf_url: Annotated[OptionalNullable[str], pydantic.Field(alias="pdfUrl")] = UNSET
-    r"""Direct PDF download link for tax invoice"""
+    r"""Link to the invoice document, or null when there is none. For Paygentic-rendered documents this is GET /v2/invoices/{id}/pdf, which requires authentication; for documents supplied by the tax provider it is the provider's own direct link. The URL is stable and does not expire. Branch on pdfSource rather than on the shape of this URL."""
+
+    pdf_source: Annotated[
+        OptionalNullable[PdfSource], pydantic.Field(alias="pdfSource")
+    ] = UNSET
+    r"""Who produced the document at pdfUrl, or null when there is none. `paygentic` means pdfUrl is this API's download endpoint and the request must carry your API key; `tax_provider` means it is the provider's own link, which opens directly in a browser."""
 
     permalink: OptionalNullable[str] = UNSET
     r"""Public URL to view tax invoice"""
@@ -380,6 +397,7 @@ class Invoice(BaseModel):
                 "dueAt",
                 "paymentUrl",
                 "pdfUrl",
+                "pdfSource",
                 "permalink",
                 "tax",
             ]
@@ -393,6 +411,7 @@ class Invoice(BaseModel):
                 "dueAt",
                 "paymentUrl",
                 "pdfUrl",
+                "pdfSource",
                 "permalink",
                 "tax",
             ]

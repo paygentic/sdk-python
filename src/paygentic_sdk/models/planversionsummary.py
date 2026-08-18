@@ -14,7 +14,6 @@ PlanVersionSummaryObject = Literal["plan_version",]
 
 PlanVersionSummaryStatus = Union[
     Literal[
-        "draft",
         "published",
         "archived",
     ],
@@ -36,7 +35,7 @@ class PlanVersionSummaryTypedDict(TypedDict):
     subscription_count: int
     r"""Number of committed-status subscriptions (active or pending payment) pinned to this version at creation time. This is a count of pins recorded when each subscription was created, not a live-billing cohort: for billing, subscriptions follow the plan's current default version regardless of the version they were pinned to."""
     published_at: NotRequired[datetime]
-    r"""When this version was published. Absent for draft versions."""
+    r"""When this version was published."""
 
 
 class PlanVersionSummary(BaseModel):
@@ -60,7 +59,7 @@ class PlanVersionSummary(BaseModel):
     published_at: Annotated[Optional[datetime], pydantic.Field(alias="publishedAt")] = (
         None
     )
-    r"""When this version was published. Absent for draft versions."""
+    r"""When this version was published."""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

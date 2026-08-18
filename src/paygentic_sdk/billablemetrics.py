@@ -279,6 +279,7 @@ class BillableMetrics(BaseSDK):
         merchant_id: str,
         limit: Optional[int] = 10,
         offset: Optional[int] = 0,
+        item_id: Optional[str] = None,
         product_id: Optional[str] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -290,6 +291,7 @@ class BillableMetrics(BaseSDK):
         :param merchant_id: Filter billable metrics by merchant organization ID.
         :param limit: Number of billable metrics to return.
         :param offset: Number of billable metrics to skip.
+        :param item_id: Filter to the charges tagged with this item. Lets a surface that needs only one item's charges read exactly those, rather than reading the whole product's and filtering — which makes its completeness a function of how large the product is.
         :param product_id: Filter billable metrics by product ID.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -310,6 +312,7 @@ class BillableMetrics(BaseSDK):
             limit=limit,
             merchant_id=merchant_id,
             offset=offset,
+            item_id=item_id,
             product_id=product_id,
         )
 
@@ -381,6 +384,7 @@ class BillableMetrics(BaseSDK):
         merchant_id: str,
         limit: Optional[int] = 10,
         offset: Optional[int] = 0,
+        item_id: Optional[str] = None,
         product_id: Optional[str] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -392,6 +396,7 @@ class BillableMetrics(BaseSDK):
         :param merchant_id: Filter billable metrics by merchant organization ID.
         :param limit: Number of billable metrics to return.
         :param offset: Number of billable metrics to skip.
+        :param item_id: Filter to the charges tagged with this item. Lets a surface that needs only one item's charges read exactly those, rather than reading the whole product's and filtering — which makes its completeness a function of how large the product is.
         :param product_id: Filter billable metrics by product ID.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -412,6 +417,7 @@ class BillableMetrics(BaseSDK):
             limit=limit,
             merchant_id=merchant_id,
             offset=offset,
+            item_id=item_id,
             product_id=product_id,
         )
 
@@ -686,7 +692,7 @@ class BillableMetrics(BaseSDK):
         :param description: Revised explanation of what the metric represents. Sample values: 'Language model token consumption', 'Database storage capacity used', 'Machine learning prediction API calls', 'AI-generated content items'
         :param name: Updated label for the metric. Sample values: 'LLM Tokens', 'Database Storage', 'Prediction Requests', 'Content Generations'
         :param unit: Updated measurement unit. Common examples: 'tokens', 'GB', 'requests', 'items', 'hours'
-        :param item_id: Optional item tag, used to map this metric's invoice lines to an external accounting/tax identity. Send a new id to re-tag — `productId` is re-derived from that item's catalog, and an archived item is rejected. Send `null` to untag.
+        :param item_id: Optional item tag, used to map this metric's invoice lines to an external accounting/tax identity. Send a new id to re-tag — the item must be filed under this charge's own product, and an archived item is rejected. An item from another product is refused with `ITEM_PRODUCT_MISMATCH`: a tag is an accounting grouping and does not move the charge between products, and no field here could move it back. Re-file the item to move every charge anchored to it together. Send `null` to untag. Every line item whose invoice has not closed reports this charge's current tag, so a re-tag takes effect on the bill in progress and on any generated ahead of it — no further action, and no window to wait for. Lines on a closed invoice keep the item recorded at close and never move. Un-tagging works the same way: those lines report no item.
         :param event_type: CloudEvents type for meter routing.
         :param value_property: JSONPath to extract a numeric value from event data. Must start with `$.` (example: `$.amount` or `$.payload.bytes`).
         :param group_by: Map of dimension name to JSONPath for group-by queries. Each value must start with `$.` (example: `$.region`).
@@ -763,14 +769,17 @@ class BillableMetrics(BaseSDK):
                 ),
             ),
             request=req,
-            error_status_codes=["403", "404", "4XX", "500", "5XX"],
+            error_status_codes=["400", "403", "404", "409", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return unmarshal_json_response(models.BillableMetric, http_res)
-        if utils.match_response(http_res, ["403", "404"], "application/json"):
+        if utils.match_response(http_res, "400", "application/json"):
+            response_data = unmarshal_json_response(errors.BadRequestUnion, http_res)
+            raise errors.BadRequest(response_data, http_res)
+        if utils.match_response(http_res, ["403", "404", "409"], "application/json"):
             response_data = unmarshal_json_response(errors.ErrorData, http_res)
             raise errors.Error(response_data, http_res)
         if utils.match_response(http_res, "500", "application/json"):
@@ -812,7 +821,7 @@ class BillableMetrics(BaseSDK):
         :param description: Revised explanation of what the metric represents. Sample values: 'Language model token consumption', 'Database storage capacity used', 'Machine learning prediction API calls', 'AI-generated content items'
         :param name: Updated label for the metric. Sample values: 'LLM Tokens', 'Database Storage', 'Prediction Requests', 'Content Generations'
         :param unit: Updated measurement unit. Common examples: 'tokens', 'GB', 'requests', 'items', 'hours'
-        :param item_id: Optional item tag, used to map this metric's invoice lines to an external accounting/tax identity. Send a new id to re-tag — `productId` is re-derived from that item's catalog, and an archived item is rejected. Send `null` to untag.
+        :param item_id: Optional item tag, used to map this metric's invoice lines to an external accounting/tax identity. Send a new id to re-tag — the item must be filed under this charge's own product, and an archived item is rejected. An item from another product is refused with `ITEM_PRODUCT_MISMATCH`: a tag is an accounting grouping and does not move the charge between products, and no field here could move it back. Re-file the item to move every charge anchored to it together. Send `null` to untag. Every line item whose invoice has not closed reports this charge's current tag, so a re-tag takes effect on the bill in progress and on any generated ahead of it — no further action, and no window to wait for. Lines on a closed invoice keep the item recorded at close and never move. Un-tagging works the same way: those lines report no item.
         :param event_type: CloudEvents type for meter routing.
         :param value_property: JSONPath to extract a numeric value from event data. Must start with `$.` (example: `$.amount` or `$.payload.bytes`).
         :param group_by: Map of dimension name to JSONPath for group-by queries. Each value must start with `$.` (example: `$.region`).
@@ -889,14 +898,17 @@ class BillableMetrics(BaseSDK):
                 ),
             ),
             request=req,
-            error_status_codes=["403", "404", "4XX", "500", "5XX"],
+            error_status_codes=["400", "403", "404", "409", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return unmarshal_json_response(models.BillableMetric, http_res)
-        if utils.match_response(http_res, ["403", "404"], "application/json"):
+        if utils.match_response(http_res, "400", "application/json"):
+            response_data = unmarshal_json_response(errors.BadRequestUnion, http_res)
+            raise errors.BadRequest(response_data, http_res)
+        if utils.match_response(http_res, ["403", "404", "409"], "application/json"):
             response_data = unmarshal_json_response(errors.ErrorData, http_res)
             raise errors.Error(response_data, http_res)
         if utils.match_response(http_res, "500", "application/json"):

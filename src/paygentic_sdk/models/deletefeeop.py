@@ -3,6 +3,7 @@
 from __future__ import annotations
 from paygentic_sdk.types import BaseModel, UNSET_SENTINEL
 from paygentic_sdk.utils import FieldMetadata, PathParamMetadata
+import pydantic
 from pydantic import model_serializer
 from typing import List, Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
@@ -20,9 +21,39 @@ class DeleteFeeRequest(BaseModel):
     r"""The unique identifier of the fee"""
 
 
+class DeleteFeeItemTypedDict(TypedDict):
+    id: NotRequired[str]
+    invoice_display_name: NotRequired[str]
+
+
+class DeleteFeeItem(BaseModel):
+    id: Optional[str] = None
+
+    invoice_display_name: Annotated[
+        Optional[str], pydantic.Field(alias="invoiceDisplayName")
+    ] = None
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(["id", "invoiceDisplayName"])
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k, serialized.get(n))
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m
+
+
 class DeleteFeeBlockerTypedDict(TypedDict):
     type: NotRequired[str]
     count: NotRequired[int]
+    items: NotRequired[List[DeleteFeeItemTypedDict]]
 
 
 class DeleteFeeBlocker(BaseModel):
@@ -30,9 +61,11 @@ class DeleteFeeBlocker(BaseModel):
 
     count: Optional[int] = None
 
+    items: Optional[List[DeleteFeeItem]] = None
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["type", "count"])
+        optional_fields = set(["type", "count", "items"])
         serialized = handler(self)
         m = {}
 
@@ -69,3 +102,9 @@ class DeleteFeeDetails(BaseModel):
                     m[k] = val
 
         return m
+
+
+try:
+    DeleteFeeItem.model_rebuild()
+except NameError:
+    pass

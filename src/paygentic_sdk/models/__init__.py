@@ -273,16 +273,26 @@ if TYPE_CHECKING:
         DeleteFeeBlockerTypedDict,
         DeleteFeeDetails,
         DeleteFeeDetailsTypedDict,
+        DeleteFeeItem,
+        DeleteFeeItemTypedDict,
         DeleteFeeRequest,
         DeleteFeeRequestTypedDict,
     )
-    from .deleteitemop import DeleteItemRequest, DeleteItemRequestTypedDict
     from .deleteorderlineitemop import (
         DeleteOrderLineItemRequest,
         DeleteOrderLineItemRequestTypedDict,
     )
     from .deleteorderop import DeleteOrderRequest, DeleteOrderRequestTypedDict
-    from .deletepriceop import DeletePriceRequest, DeletePriceRequestTypedDict
+    from .deletepriceop import (
+        DeletePriceBlocker,
+        DeletePriceBlockerTypedDict,
+        DeletePriceDetails,
+        DeletePriceDetailsTypedDict,
+        DeletePriceItem,
+        DeletePriceItemTypedDict,
+        DeletePriceRequest,
+        DeletePriceRequestTypedDict,
+    )
     from .deletesourceruleop import (
         DeleteSourceRuleRequest,
         DeleteSourceRuleRequestTypedDict,
@@ -294,6 +304,10 @@ if TYPE_CHECKING:
     from .disconnectmerchantintegrationop import (
         DisconnectMerchantIntegrationRequest,
         DisconnectMerchantIntegrationRequestTypedDict,
+    )
+    from .downloadinvoicepdfop import (
+        DownloadInvoicePdfRequest,
+        DownloadInvoicePdfRequestTypedDict,
     )
     from .entitlementdetail import (
         EntitlementDetail,
@@ -436,6 +450,7 @@ if TYPE_CHECKING:
         InvoiceObject,
         InvoiceStatus,
         InvoiceTypedDict,
+        PdfSource,
         Tax,
         TaxTypedDict,
     )
@@ -716,6 +731,7 @@ if TYPE_CHECKING:
         ListTestClocksResponse,
         ListTestClocksResponseTypedDict,
     )
+    from .mappingcapabilities import MappingCapabilities, MappingCapabilitiesTypedDict
     from .merchantintegration import (
         MerchantIntegration,
         MerchantIntegrationObject,
@@ -1402,14 +1418,20 @@ __all__ = [
     "DeleteFeeBlockerTypedDict",
     "DeleteFeeDetails",
     "DeleteFeeDetailsTypedDict",
+    "DeleteFeeItem",
+    "DeleteFeeItemTypedDict",
     "DeleteFeeRequest",
     "DeleteFeeRequestTypedDict",
-    "DeleteItemRequest",
-    "DeleteItemRequestTypedDict",
     "DeleteOrderLineItemRequest",
     "DeleteOrderLineItemRequestTypedDict",
     "DeleteOrderRequest",
     "DeleteOrderRequestTypedDict",
+    "DeletePriceBlocker",
+    "DeletePriceBlockerTypedDict",
+    "DeletePriceDetails",
+    "DeletePriceDetailsTypedDict",
+    "DeletePriceItem",
+    "DeletePriceItemTypedDict",
     "DeletePriceRequest",
     "DeletePriceRequestTypedDict",
     "DeleteSourceRuleRequest",
@@ -1418,6 +1440,8 @@ __all__ = [
     "DeleteTestClockRequestTypedDict",
     "DisconnectMerchantIntegrationRequest",
     "DisconnectMerchantIntegrationRequestTypedDict",
+    "DownloadInvoicePdfRequest",
+    "DownloadInvoicePdfRequestTypedDict",
     "EntitlementDetail",
     "EntitlementDetailTypedDict",
     "EntitlementListItem",
@@ -1752,6 +1776,8 @@ __all__ = [
     "ListTestClocksRequestTypedDict",
     "ListTestClocksResponse",
     "ListTestClocksResponseTypedDict",
+    "MappingCapabilities",
+    "MappingCapabilitiesTypedDict",
     "Merchant",
     "MerchantIntegration",
     "MerchantIntegrationObject",
@@ -1820,6 +1846,7 @@ __all__ = [
     "PaymentTypedDict",
     "PaymentUnion",
     "PaymentUnionTypedDict",
+    "PdfSource",
     "Period",
     "PeriodTypedDict",
     "Plan",
@@ -2339,14 +2366,20 @@ _dynamic_imports: dict[str, str] = {
     "DeleteFeeBlockerTypedDict": ".deletefeeop",
     "DeleteFeeDetails": ".deletefeeop",
     "DeleteFeeDetailsTypedDict": ".deletefeeop",
+    "DeleteFeeItem": ".deletefeeop",
+    "DeleteFeeItemTypedDict": ".deletefeeop",
     "DeleteFeeRequest": ".deletefeeop",
     "DeleteFeeRequestTypedDict": ".deletefeeop",
-    "DeleteItemRequest": ".deleteitemop",
-    "DeleteItemRequestTypedDict": ".deleteitemop",
     "DeleteOrderLineItemRequest": ".deleteorderlineitemop",
     "DeleteOrderLineItemRequestTypedDict": ".deleteorderlineitemop",
     "DeleteOrderRequest": ".deleteorderop",
     "DeleteOrderRequestTypedDict": ".deleteorderop",
+    "DeletePriceBlocker": ".deletepriceop",
+    "DeletePriceBlockerTypedDict": ".deletepriceop",
+    "DeletePriceDetails": ".deletepriceop",
+    "DeletePriceDetailsTypedDict": ".deletepriceop",
+    "DeletePriceItem": ".deletepriceop",
+    "DeletePriceItemTypedDict": ".deletepriceop",
     "DeletePriceRequest": ".deletepriceop",
     "DeletePriceRequestTypedDict": ".deletepriceop",
     "DeleteSourceRuleRequest": ".deletesourceruleop",
@@ -2355,6 +2388,8 @@ _dynamic_imports: dict[str, str] = {
     "DeleteTestClockRequestTypedDict": ".deletetestclockop",
     "DisconnectMerchantIntegrationRequest": ".disconnectmerchantintegrationop",
     "DisconnectMerchantIntegrationRequestTypedDict": ".disconnectmerchantintegrationop",
+    "DownloadInvoicePdfRequest": ".downloadinvoicepdfop",
+    "DownloadInvoicePdfRequestTypedDict": ".downloadinvoicepdfop",
     "EntitlementDetail": ".entitlementdetail",
     "EntitlementDetailTypedDict": ".entitlementdetail",
     "UnknownEntitlementDetail": ".entitlementdetail",
@@ -2482,6 +2517,7 @@ _dynamic_imports: dict[str, str] = {
     "InvoiceObject": ".invoice",
     "InvoiceStatus": ".invoice",
     "InvoiceTypedDict": ".invoice",
+    "PdfSource": ".invoice",
     "Tax": ".invoice",
     "TaxTypedDict": ".invoice",
     "InvoiceCategorySummary": ".invoicecategorysummary",
@@ -2683,6 +2719,8 @@ _dynamic_imports: dict[str, str] = {
     "ListTestClocksRequestTypedDict": ".listtestclocksop",
     "ListTestClocksResponse": ".listtestclocksop",
     "ListTestClocksResponseTypedDict": ".listtestclocksop",
+    "MappingCapabilities": ".mappingcapabilities",
+    "MappingCapabilitiesTypedDict": ".mappingcapabilities",
     "MerchantIntegration": ".merchantintegration",
     "MerchantIntegrationObject": ".merchantintegration",
     "MerchantIntegrationTypedDict": ".merchantintegration",

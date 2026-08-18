@@ -233,7 +233,7 @@ class MerchantIntegrations(BaseSDK):
         Create or re-activate a merchant's connection to a provider. Idempotent on `(merchantId, provider)` — connecting an already-connected provider re-activates the existing row, never creating a duplicate.
 
         :param merchant_id: Unique identifier for an organization
-        :param provider: External provider a merchant can connect at the tenant level
+        :param provider: External provider a merchant can connect at the tenant level. `netsuite` and `accountsiq` are returned on reads wherever a connection exists, but connecting them is accepted only in local and development environments; elsewhere the connect request is refused with 404.
         :param external_id: Ampersand installation id.
         :param status: Connection lifecycle state. Live Ampersand health is separate and not stored here.
         :param config:
@@ -349,7 +349,7 @@ class MerchantIntegrations(BaseSDK):
         Create or re-activate a merchant's connection to a provider. Idempotent on `(merchantId, provider)` — connecting an already-connected provider re-activates the existing row, never creating a duplicate.
 
         :param merchant_id: Unique identifier for an organization
-        :param provider: External provider a merchant can connect at the tenant level
+        :param provider: External provider a merchant can connect at the tenant level. `netsuite` and `accountsiq` are returned on reads wherever a connection exists, but connecting them is accepted only in local and development environments; elsewhere the connect request is refused with 404.
         :param external_id: Ampersand installation id.
         :param status: Connection lifecycle state. Live Ampersand health is separate and not stored here.
         :param config:

@@ -12,6 +12,7 @@ if TYPE_CHECKING:
         DeleteCustomerConflictErrorData,
     )
     from .deletefeeop import DeleteFeeConflictError, DeleteFeeConflictErrorData
+    from .deletepriceop import DeletePriceConflictError, DeletePriceConflictErrorData
     from .error import Error, ErrorData
     from .no_response_error import NoResponseError
     from .paygenticdefaulterror import PaygenticDefaultError
@@ -25,6 +26,8 @@ __all__ = [
     "DeleteCustomerConflictErrorData",
     "DeleteFeeConflictError",
     "DeleteFeeConflictErrorData",
+    "DeletePriceConflictError",
+    "DeletePriceConflictErrorData",
     "Error",
     "ErrorData",
     "NoResponseError",
@@ -42,6 +45,8 @@ _dynamic_imports: dict[str, str] = {
     "DeleteCustomerConflictErrorData": ".deletecustomerop",
     "DeleteFeeConflictError": ".deletefeeop",
     "DeleteFeeConflictErrorData": ".deletefeeop",
+    "DeletePriceConflictError": ".deletepriceop",
+    "DeletePriceConflictErrorData": ".deletepriceop",
     "Error": ".error",
     "ErrorData": ".error",
     "NoResponseError": ".no_response_error",

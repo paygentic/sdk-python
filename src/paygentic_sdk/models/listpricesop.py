@@ -13,6 +13,8 @@ from typing_extensions import Annotated, NotRequired, TypedDict
 class ListPricesRequestTypedDict(TypedDict):
     billable_metric_id: NotRequired[str]
     r"""Filter prices by billable metric ID"""
+    merchant_id: NotRequired[str]
+    r"""Filter prices by merchant organization ID. Matches prices reached via either a billable metric or a fee belonging to that merchant. Unlike the unfiltered listing, this includes prices whose billable metric or fee has been deleted — deleting a parent does not delete its prices, and they can still bill. Returns 404 if the merchant does not exist."""
     limit: NotRequired[int]
     r"""Number of prices to return"""
     offset: NotRequired[int]
@@ -26,6 +28,13 @@ class ListPricesRequest(BaseModel):
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = None
     r"""Filter prices by billable metric ID"""
+
+    merchant_id: Annotated[
+        Optional[str],
+        pydantic.Field(alias="merchantId"),
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Filter prices by merchant organization ID. Matches prices reached via either a billable metric or a fee belonging to that merchant. Unlike the unfiltered listing, this includes prices whose billable metric or fee has been deleted — deleting a parent does not delete its prices, and they can still bill. Returns 404 if the merchant does not exist."""
 
     limit: Annotated[
         Optional[int],
@@ -41,7 +50,7 @@ class ListPricesRequest(BaseModel):
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["billableMetricId", "limit", "offset"])
+        optional_fields = set(["billableMetricId", "merchantId", "limit", "offset"])
         serialized = handler(self)
         m = {}
 

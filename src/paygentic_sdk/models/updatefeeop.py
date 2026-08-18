@@ -21,7 +21,7 @@ class UpdateFeeRequestBodyTypedDict(TypedDict):
     name: NotRequired[str]
     r"""Updated label for the fee."""
     item_id: NotRequired[Nullable[str]]
-    r"""Optional item tag, used to map this fee's invoice lines to an external accounting/tax identity. Send a new id to re-tag — `productId` is re-derived from that item's catalog, and an archived item is rejected. Send `null` to untag."""
+    r"""Optional item tag, used to map this fee's invoice lines to an external accounting/tax identity. Send a new id to re-tag — the item must be filed under this charge's own product, and an archived item is rejected. An item from another product is refused with `ITEM_PRODUCT_MISMATCH`: a tag is an accounting grouping and does not move the charge between products, and no field here could move it back. Re-file the item to move every charge anchored to it together. Send `null` to untag. Every line item whose invoice has not closed reports this charge's current tag, so a re-tag takes effect on the bill in progress and on any generated ahead of it — no further action, and no window to wait for. Lines on a closed invoice keep the item recorded at close and never move. Un-tagging works the same way: those lines report no item."""
 
 
 class UpdateFeeRequestBody(BaseModel):
@@ -32,7 +32,7 @@ class UpdateFeeRequestBody(BaseModel):
     r"""Updated label for the fee."""
 
     item_id: Annotated[OptionalNullable[str], pydantic.Field(alias="itemId")] = UNSET
-    r"""Optional item tag, used to map this fee's invoice lines to an external accounting/tax identity. Send a new id to re-tag — `productId` is re-derived from that item's catalog, and an archived item is rejected. Send `null` to untag."""
+    r"""Optional item tag, used to map this fee's invoice lines to an external accounting/tax identity. Send a new id to re-tag — the item must be filed under this charge's own product, and an archived item is rejected. An item from another product is refused with `ITEM_PRODUCT_MISMATCH`: a tag is an accounting grouping and does not move the charge between products, and no field here could move it back. Re-file the item to move every charge anchored to it together. Send `null` to untag. Every line item whose invoice has not closed reports this charge's current tag, so a re-tag takes effect on the bill in progress and on any generated ahead of it — no further action, and no window to wait for. Lines on a closed invoice keep the item recorded at close and never move. Un-tagging works the same way: those lines report no item."""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

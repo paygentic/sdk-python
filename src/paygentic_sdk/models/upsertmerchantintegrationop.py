@@ -14,7 +14,7 @@ class UpsertMerchantIntegrationRequestTypedDict(TypedDict):
     merchant_id: str
     r"""Unique identifier for an organization"""
     provider: MerchantIntegrationProvider
-    r"""External provider a merchant can connect at the tenant level"""
+    r"""External provider a merchant can connect at the tenant level. `netsuite` and `accountsiq` are returned on reads wherever a connection exists, but connecting them is accepted only in local and development environments; elsewhere the connect request is refused with 404."""
     external_id: NotRequired[str]
     r"""Ampersand installation id."""
     status: NotRequired[MerchantIntegrationStatus]
@@ -28,7 +28,7 @@ class UpsertMerchantIntegrationRequest(BaseModel):
     r"""Unique identifier for an organization"""
 
     provider: MerchantIntegrationProvider
-    r"""External provider a merchant can connect at the tenant level"""
+    r"""External provider a merchant can connect at the tenant level. `netsuite` and `accountsiq` are returned on reads wherever a connection exists, but connecting them is accepted only in local and development environments; elsewhere the connect request is refused with 404."""
 
     external_id: Annotated[Optional[str], pydantic.Field(alias="externalId")] = None
     r"""Ampersand installation id."""

@@ -17,6 +17,8 @@ class ListFeesRequestTypedDict(TypedDict):
     r"""Number of fees to return."""
     offset: NotRequired[int]
     r"""Number of fees to skip."""
+    item_id: NotRequired[str]
+    r"""Filter to the charges tagged with this item. Lets a surface that needs only one item's charges read exactly those, rather than reading the whole product's and filtering — which makes its completeness a function of how large the product is."""
     product_id: NotRequired[str]
     r"""Filter fees by product ID."""
 
@@ -41,6 +43,13 @@ class ListFeesRequest(BaseModel):
     ] = 0
     r"""Number of fees to skip."""
 
+    item_id: Annotated[
+        Optional[str],
+        pydantic.Field(alias="itemId"),
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Filter to the charges tagged with this item. Lets a surface that needs only one item's charges read exactly those, rather than reading the whole product's and filtering — which makes its completeness a function of how large the product is."""
+
     product_id: Annotated[
         Optional[str],
         pydantic.Field(alias="productId"),
@@ -50,7 +59,7 @@ class ListFeesRequest(BaseModel):
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["limit", "offset", "productId"])
+        optional_fields = set(["limit", "offset", "itemId", "productId"])
         serialized = handler(self)
         m = {}
 

@@ -63,6 +63,8 @@ class CostUsageResponseTypedDict(TypedDict):
     object: NotRequired[CostUsageResponseObject]
     event_type: NotRequired[str]
     r"""CloudEvents type for metered costs."""
+    unit: NotRequired[str]
+    r"""Unit label for metered costs (e.g. 'token', 'request'). Absent when the cost defines no unit."""
     total_quantity: NotRequired[Nullable[float]]
     r"""Total usage quantity (metered costs only). Null when usage was not computed."""
     groups: NotRequired[List[GroupTypedDict]]
@@ -89,6 +91,9 @@ class CostUsageResponse(BaseModel):
     event_type: Annotated[Optional[str], pydantic.Field(alias="eventType")] = None
     r"""CloudEvents type for metered costs."""
 
+    unit: Optional[str] = None
+    r"""Unit label for metered costs (e.g. 'token', 'request'). Absent when the cost defines no unit."""
+
     total_quantity: Annotated[
         OptionalNullable[float], pydantic.Field(alias="totalQuantity")
     ] = UNSET
@@ -105,7 +110,7 @@ class CostUsageResponse(BaseModel):
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
-            ["object", "eventType", "totalQuantity", "groups", "timeSeries"]
+            ["object", "eventType", "unit", "totalQuantity", "groups", "timeSeries"]
         )
         nullable_fields = set(["totalCost", "totalQuantity"])
         serialized = handler(self)

@@ -244,7 +244,7 @@ class BillingSchedules(BaseSDK):
         :param end_date:
         :param billing_anchor:
         :param order_id:
-        :param subscription_id:
+        :param subscription_id: Not supported for creating a billing schedule. Use orderId — every billing schedule belongs to an order.
         :param alignment_policy:
         :param proration_policy:
         :param payment_term_days:
@@ -379,7 +379,7 @@ class BillingSchedules(BaseSDK):
         :param end_date:
         :param billing_anchor:
         :param order_id:
-        :param subscription_id:
+        :param subscription_id: Not supported for creating a billing schedule. Use orderId — every billing schedule belongs to an order.
         :param alignment_policy:
         :param proration_policy:
         :param payment_term_days:

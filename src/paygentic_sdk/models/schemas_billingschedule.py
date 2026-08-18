@@ -69,7 +69,7 @@ class SchemasBillingScheduleTypedDict(TypedDict):
     status: SchemasBillingScheduleStatus
     start_date: datetime
     end_date: Nullable[datetime]
-    r"""Null for an open-ended subscription-owned schedule; order-owned schedules always have a concrete end."""
+    r"""The schedule's end date. Always present."""
     billing_anchor: datetime
     alignment_policy: SchemasBillingScheduleAlignmentPolicy
     proration_policy: SchemasBillingScheduleProrationPolicy
@@ -96,7 +96,7 @@ class SchemasBillingSchedule(BaseModel):
     start_date: Annotated[datetime, pydantic.Field(alias="startDate")]
 
     end_date: Annotated[Nullable[datetime], pydantic.Field(alias="endDate")]
-    r"""Null for an open-ended subscription-owned schedule; order-owned schedules always have a concrete end."""
+    r"""The schedule's end date. Always present."""
 
     billing_anchor: Annotated[datetime, pydantic.Field(alias="billingAnchor")]
 

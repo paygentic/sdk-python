@@ -54,7 +54,7 @@ class PlanVersionPriceSlotTypedDict(TypedDict):
     properties: Dict[str, Any]
     updated_at: datetime
     price_deleted: bool
-    r"""True when the underlying price this slot references has been soft-deleted. The slot can still be removed or replaced to repair the draft; it cannot be published while any slot remains dead."""
+    r"""True when the underlying price this slot references has been soft-deleted."""
     object: NotRequired[PlanVersionPriceSlotObject]
     billable_metric_id: NotRequired[str]
     fee_id: NotRequired[str]
@@ -96,7 +96,7 @@ class PlanVersionPriceSlot(BaseModel):
     updated_at: Annotated[datetime, pydantic.Field(alias="updatedAt")]
 
     price_deleted: Annotated[bool, pydantic.Field(alias="priceDeleted")]
-    r"""True when the underlying price this slot references has been soft-deleted. The slot can still be removed or replaced to repair the draft; it cannot be published while any slot remains dead."""
+    r"""True when the underlying price this slot references has been soft-deleted."""
 
     object: Optional[PlanVersionPriceSlotObject] = "price"
 

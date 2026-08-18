@@ -11,17 +11,18 @@ Reason = Union[
     Literal[
         "entitlement_failed",
         "grant_mint_failed",
+        "reset_cycle_misaligned",
     ],
     UnrecognizedStr,
 ]
-r"""Coded failure reason. `grant_mint_failed` means the entitlement was created but its initial metered grant could not be minted; re-running this reconciliation retries the mint."""
+r"""Coded failure reason. `entitlement_failed` means the entitlement itself could not be created. `grant_mint_failed` means the entitlement was created but its initial metered grant could not be minted; re-running this reconciliation retries the mint. `reset_cycle_misaligned` means the feature grants a credit discount on a reset cycle that is not the window it would be billed on, so re-running cannot succeed until the plan or the price is corrected."""
 
 
 class ReconciledFeatureFailedTypedDict(TypedDict):
     feature_id: str
     feature_key: str
     reason: Reason
-    r"""Coded failure reason. `grant_mint_failed` means the entitlement was created but its initial metered grant could not be minted; re-running this reconciliation retries the mint."""
+    r"""Coded failure reason. `entitlement_failed` means the entitlement itself could not be created. `grant_mint_failed` means the entitlement was created but its initial metered grant could not be minted; re-running this reconciliation retries the mint. `reset_cycle_misaligned` means the feature grants a credit discount on a reset cycle that is not the window it would be billed on, so re-running cannot succeed until the plan or the price is corrected."""
 
 
 class ReconciledFeatureFailed(BaseModel):
@@ -30,7 +31,7 @@ class ReconciledFeatureFailed(BaseModel):
     feature_key: Annotated[str, pydantic.Field(alias="featureKey")]
 
     reason: Reason
-    r"""Coded failure reason. `grant_mint_failed` means the entitlement was created but its initial metered grant could not be minted; re-running this reconciliation retries the mint."""
+    r"""Coded failure reason. `entitlement_failed` means the entitlement itself could not be created. `grant_mint_failed` means the entitlement was created but its initial metered grant could not be minted; re-running this reconciliation retries the mint. `reset_cycle_misaligned` means the feature grants a credit discount on a reset cycle that is not the window it would be billed on, so re-running cannot succeed until the plan or the price is corrected."""
 
 
 try:

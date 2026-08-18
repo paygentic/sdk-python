@@ -6,13 +6,13 @@ from paygentic_sdk.utils import FieldMetadata, PathParamMetadata
 from typing_extensions import Annotated, TypedDict
 
 
-class DeleteItemRequestTypedDict(TypedDict):
+class DownloadInvoicePdfRequestTypedDict(TypedDict):
     id: str
-    r"""The unique identifier of the item"""
+    r"""The invoice ID"""
 
 
-class DeleteItemRequest(BaseModel):
+class DownloadInvoicePdfRequest(BaseModel):
     id: Annotated[
         str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))
     ]
-    r"""The unique identifier of the item"""
+    r"""The invoice ID"""

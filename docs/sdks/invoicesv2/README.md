@@ -11,6 +11,7 @@ Invoice V2 operations supporting billing cycles organized by time periods. Warni
 * [create_line_item](#create_line_item) - Create Manual Line Item
 * [get](#get) - Get
 * [get_line_items](#get_line_items) - Get Line Items
+* [download_invoice_pdf](#download_invoice_pdf) - Download Invoice PDF
 * [create_invoice_refund](#create_invoice_refund) - Refund Invoice
 * [list_invoice_refunds](#list_invoice_refunds) - List Invoice Refunds
 * [void_invoice_refund](#void_invoice_refund) - Void Invoice Refund
@@ -250,6 +251,48 @@ with Paygentic(
 | errors.Error                 | 400                          | application/json             |
 | errors.ValidationError       | 400                          | application/json             |
 | errors.Error                 | 403, 404                     | application/json             |
+| errors.Error                 | 500                          | application/json             |
+| errors.PaygenticDefaultError | 4XX, 5XX                     | \*/\*                        |
+
+## download_invoice_pdf
+
+Downloads the Paygentic-rendered invoice document. The caller must be authenticated and entitled to the invoice; the stored document is streamed back, so no storage URL is ever handed out. Returns 404 when the invoice's document is the tax provider's rather than ours — in that case the invoice resource reports pdfSource `tax_provider` and its pdfUrl points at the provider's link instead.
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="downloadInvoicePdf" method="get" path="/v2/invoices/{id}/pdf" -->
+```python
+import os
+from paygentic_sdk import Paygentic
+
+
+with Paygentic(
+    bearer_auth=os.getenv("PAYGENTIC_BEARER_AUTH", ""),
+) as paygentic:
+
+    res = paygentic.invoices_v2.download_invoice_pdf(id="<id>")
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `id`                                                                | *str*                                                               | :heavy_check_mark:                                                  | The invoice ID                                                      |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+
+### Response
+
+**[httpx.Response](../../models/.md)**
+
+### Errors
+
+| Error Type                   | Status Code                  | Content Type                 |
+| ---------------------------- | ---------------------------- | ---------------------------- |
+| errors.Error                 | 401, 403, 404                | application/json             |
 | errors.Error                 | 500                          | application/json             |
 | errors.PaygenticDefaultError | 4XX, 5XX                     | \*/\*                        |
 

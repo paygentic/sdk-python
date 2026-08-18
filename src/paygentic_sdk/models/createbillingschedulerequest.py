@@ -44,6 +44,7 @@ class CreateBillingScheduleRequestTypedDict(TypedDict):
     billing_anchor: datetime
     order_id: NotRequired[str]
     subscription_id: NotRequired[str]
+    r"""Not supported for creating a billing schedule. Use orderId — every billing schedule belongs to an order."""
     alignment_policy: NotRequired[CreateBillingScheduleRequestAlignmentPolicy]
     proration_policy: NotRequired[CreateBillingScheduleRequestProrationPolicy]
     payment_term_days: NotRequired[Nullable[int]]
@@ -64,6 +65,7 @@ class CreateBillingScheduleRequest(BaseModel):
     subscription_id: Annotated[
         Optional[str], pydantic.Field(alias="subscriptionId")
     ] = None
+    r"""Not supported for creating a billing schedule. Use orderId — every billing schedule belongs to an order."""
 
     alignment_policy: Annotated[
         Optional[CreateBillingScheduleRequestAlignmentPolicy],

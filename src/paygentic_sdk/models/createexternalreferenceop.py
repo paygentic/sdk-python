@@ -24,9 +24,18 @@ class CreateExternalReferenceRequestTypedDict(TypedDict):
     metadata: NotRequired[Dict[str, Any]]
     r"""Provider-specific fields (e.g. `{ \"sfObject\": \"Product2\" }`)"""
     is_primary: NotRequired[bool]
-    r"""Whether this is the canonical reference for `(provider, externalId)`. The primary is unique per merchant; non-primary references are aliases."""
+    r"""Whether this reference claims `(provider, externalId)` — the code resolves back to this one entity. Unique per merchant; unclaimed references are aliases. **Omitting it claims the code.** Send `false` for a code that is only ever sent outward, such as a ledger account several items post to — claiming that refuses the second item to use it. The default is not derived from the provider: what a code is for is a property of the operation recording it, and one provider can both resolve an arriving code and be sent a selected one. Declaring a schema default here would defeat the distinction, because a generated client materialises the default into the request body and the caller can no longer express \"I did not say\"."""
     is_default: NotRequired[bool]
-    r"""Whether this is the default target for the entity + provider. At most one default per `(entityType, entityId, provider)`."""
+    r"""Whether this is the code sent *to* the provider for this entity. At most one per `(entityType, entityId, provider)`. **Omit** to have the entity's first code for the provider designated automatically — see the note on `isPrimary` for why this carries no schema default."""
+    move_claim: NotRequired[bool]
+    r"""Take this code's claim from whichever entity currently holds it, in the same transaction.
+
+    Without it, claiming a code another entity claims is a `409` identifying the holder — the right answer to an accident, and the common case. With it, the reassignment is the point.
+
+    It exists because the alternative route — remove the old claim, then create the new one — leaves a window in which the code resolves to nothing. An arrival in that window is still recorded, untagged rather than rejected, so nothing is lost; but it is silent while it lasts and leaves work to repair.
+
+    Deliberately opt-in, unlike moving a designation. A designation moves within one entity; a claim moves *between* entities and changes what future arrivals resolve to, which should never be a side effect of recording a code. Ignored when the write is not claiming the code.
+    """
 
 
 class CreateExternalReferenceRequest(BaseModel):
@@ -52,15 +61,27 @@ class CreateExternalReferenceRequest(BaseModel):
     metadata: Optional[Dict[str, Any]] = None
     r"""Provider-specific fields (e.g. `{ \"sfObject\": \"Product2\" }`)"""
 
-    is_primary: Annotated[Optional[bool], pydantic.Field(alias="isPrimary")] = True
-    r"""Whether this is the canonical reference for `(provider, externalId)`. The primary is unique per merchant; non-primary references are aliases."""
+    is_primary: Annotated[Optional[bool], pydantic.Field(alias="isPrimary")] = None
+    r"""Whether this reference claims `(provider, externalId)` — the code resolves back to this one entity. Unique per merchant; unclaimed references are aliases. **Omitting it claims the code.** Send `false` for a code that is only ever sent outward, such as a ledger account several items post to — claiming that refuses the second item to use it. The default is not derived from the provider: what a code is for is a property of the operation recording it, and one provider can both resolve an arriving code and be sent a selected one. Declaring a schema default here would defeat the distinction, because a generated client materialises the default into the request body and the caller can no longer express \"I did not say\"."""
 
-    is_default: Annotated[Optional[bool], pydantic.Field(alias="isDefault")] = False
-    r"""Whether this is the default target for the entity + provider. At most one default per `(entityType, entityId, provider)`."""
+    is_default: Annotated[Optional[bool], pydantic.Field(alias="isDefault")] = None
+    r"""Whether this is the code sent *to* the provider for this entity. At most one per `(entityType, entityId, provider)`. **Omit** to have the entity's first code for the provider designated automatically — see the note on `isPrimary` for why this carries no schema default."""
+
+    move_claim: Annotated[Optional[bool], pydantic.Field(alias="moveClaim")] = None
+    r"""Take this code's claim from whichever entity currently holds it, in the same transaction.
+
+    Without it, claiming a code another entity claims is a `409` identifying the holder — the right answer to an accident, and the common case. With it, the reassignment is the point.
+
+    It exists because the alternative route — remove the old claim, then create the new one — leaves a window in which the code resolves to nothing. An arrival in that window is still recorded, untagged rather than rejected, so nothing is lost; but it is silent while it lasts and leaves work to repair.
+
+    Deliberately opt-in, unlike moving a designation. A designation moves within one entity; a claim moves *between* entities and changes what future arrivals resolve to, which should never be a side effect of recording a code. Ignored when the write is not claiming the code.
+    """
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["externalLabel", "metadata", "isPrimary", "isDefault"])
+        optional_fields = set(
+            ["externalLabel", "metadata", "isPrimary", "isDefault", "moveClaim"]
+        )
         serialized = handler(self)
         m = {}
 

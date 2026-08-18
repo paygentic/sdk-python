@@ -22,8 +22,9 @@ class ExternalReferences(BaseSDK):
         external_id: str,
         external_label: Optional[str] = None,
         metadata: Optional[Dict[str, Any]] = None,
-        is_primary: Optional[bool] = True,
-        is_default: Optional[bool] = False,
+        is_primary: Optional[bool] = None,
+        is_default: Optional[bool] = None,
+        move_claim: Optional[bool] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -38,8 +39,15 @@ class ExternalReferences(BaseSDK):
         :param external_id: Identifier of the record in the external system
         :param external_label: Human-friendly name shown in UIs (e.g. a NetSuite financial-treatment name)
         :param metadata: Provider-specific fields (e.g. `{ \"sfObject\": \"Product2\" }`)
-        :param is_primary: Whether this is the canonical reference for `(provider, externalId)`. The primary is unique per merchant; non-primary references are aliases.
-        :param is_default: Whether this is the default target for the entity + provider. At most one default per `(entityType, entityId, provider)`.
+        :param is_primary: Whether this reference claims `(provider, externalId)` — the code resolves back to this one entity. Unique per merchant; unclaimed references are aliases. **Omitting it claims the code.** Send `false` for a code that is only ever sent outward, such as a ledger account several items post to — claiming that refuses the second item to use it. The default is not derived from the provider: what a code is for is a property of the operation recording it, and one provider can both resolve an arriving code and be sent a selected one. Declaring a schema default here would defeat the distinction, because a generated client materialises the default into the request body and the caller can no longer express \"I did not say\".
+        :param is_default: Whether this is the code sent *to* the provider for this entity. At most one per `(entityType, entityId, provider)`. **Omit** to have the entity's first code for the provider designated automatically — see the note on `isPrimary` for why this carries no schema default.
+        :param move_claim: Take this code's claim from whichever entity currently holds it, in the same transaction.
+
+            Without it, claiming a code another entity claims is a `409` identifying the holder — the right answer to an accident, and the common case. With it, the reassignment is the point.
+
+            It exists because the alternative route — remove the old claim, then create the new one — leaves a window in which the code resolves to nothing. An arrival in that window is still recorded, untagged rather than rejected, so nothing is lost; but it is silent while it lasts and leaves work to repair.
+
+            Deliberately opt-in, unlike moving a designation. A designation moves within one entity; a claim moves *between* entities and changes what future arrivals resolve to, which should never be a side effect of recording a code. Ignored when the write is not claiming the code.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -65,6 +73,7 @@ class ExternalReferences(BaseSDK):
             metadata=metadata,
             is_primary=is_primary,
             is_default=is_default,
+            move_claim=move_claim,
         )
 
         req = self._build_request(
@@ -147,8 +156,9 @@ class ExternalReferences(BaseSDK):
         external_id: str,
         external_label: Optional[str] = None,
         metadata: Optional[Dict[str, Any]] = None,
-        is_primary: Optional[bool] = True,
-        is_default: Optional[bool] = False,
+        is_primary: Optional[bool] = None,
+        is_default: Optional[bool] = None,
+        move_claim: Optional[bool] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -163,8 +173,15 @@ class ExternalReferences(BaseSDK):
         :param external_id: Identifier of the record in the external system
         :param external_label: Human-friendly name shown in UIs (e.g. a NetSuite financial-treatment name)
         :param metadata: Provider-specific fields (e.g. `{ \"sfObject\": \"Product2\" }`)
-        :param is_primary: Whether this is the canonical reference for `(provider, externalId)`. The primary is unique per merchant; non-primary references are aliases.
-        :param is_default: Whether this is the default target for the entity + provider. At most one default per `(entityType, entityId, provider)`.
+        :param is_primary: Whether this reference claims `(provider, externalId)` — the code resolves back to this one entity. Unique per merchant; unclaimed references are aliases. **Omitting it claims the code.** Send `false` for a code that is only ever sent outward, such as a ledger account several items post to — claiming that refuses the second item to use it. The default is not derived from the provider: what a code is for is a property of the operation recording it, and one provider can both resolve an arriving code and be sent a selected one. Declaring a schema default here would defeat the distinction, because a generated client materialises the default into the request body and the caller can no longer express \"I did not say\".
+        :param is_default: Whether this is the code sent *to* the provider for this entity. At most one per `(entityType, entityId, provider)`. **Omit** to have the entity's first code for the provider designated automatically — see the note on `isPrimary` for why this carries no schema default.
+        :param move_claim: Take this code's claim from whichever entity currently holds it, in the same transaction.
+
+            Without it, claiming a code another entity claims is a `409` identifying the holder — the right answer to an accident, and the common case. With it, the reassignment is the point.
+
+            It exists because the alternative route — remove the old claim, then create the new one — leaves a window in which the code resolves to nothing. An arrival in that window is still recorded, untagged rather than rejected, so nothing is lost; but it is silent while it lasts and leaves work to repair.
+
+            Deliberately opt-in, unlike moving a designation. A designation moves within one entity; a claim moves *between* entities and changes what future arrivals resolve to, which should never be a side effect of recording a code. Ignored when the write is not claiming the code.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -190,6 +207,7 @@ class ExternalReferences(BaseSDK):
             metadata=metadata,
             is_primary=is_primary,
             is_default=is_default,
+            move_claim=move_claim,
         )
 
         req = self._build_request_async(
