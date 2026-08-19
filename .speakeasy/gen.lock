@@ -1,19 +1,19 @@
 lockVersion: 2.0.0
 id: d05de326-b60d-4921-81eb-a16eab66dffd
 management:
-  docChecksum: cb0a72e9762255f1a5ecffe5b16b53ca
+  docChecksum: 2305f519c14b20a67613b658c3b06b9d
   docVersion: 0.1.0
   speakeasyVersion: 1.761.4
   generationVersion: 2.879.13
-  releaseVersion: 0.5.0
-  configChecksum: 1dc2e6c754db4edb2315ca5e54a42084
+  releaseVersion: 0.5.1
+  configChecksum: f8b9f5f358b6a35d5e55a5403c0b9267
   repoURL: https://github.com/paygentic/sdk-python.git
   installationURL: https://github.com/paygentic/sdk-python.git
   published: true
 persistentEdits:
-  generation_id: 9780d63f-2092-49c1-8b08-84d532f873a2
-  pristine_commit_hash: 30839a64f6ef8b624e9b722a7841222876c0ec15
-  pristine_tree_hash: 8cc9d083a6a9e3c78597f97b326ac990778c2d29
+  generation_id: 226b2536-1950-4243-a071-b3723f43fdeb
+  pristine_commit_hash: 18118a38978dcb52f3ad0f70926243bddcfdb6ec
+  pristine_tree_hash: 0b7f395aead35ffc55d7d9294971f8277ef41775
 features:
   python:
     additionalDependencies: 1.0.0
@@ -2435,8 +2435,8 @@ trackedFiles:
     pristine_git_object: 9e61ec8e7b151c969a51d28d3ba98b3ceb5d18df
   pyproject.toml:
     id: 5d07e7d72637
-    last_write_checksum: sha1:6738fa315dfc3f665557d70a5846374e176062e2
-    pristine_git_object: 737bdaa33b1bc37dcd3e483bb13269cdacc6d428
+    last_write_checksum: sha1:46813994d7c3e91fd68980b9b968d400069822e7
+    pristine_git_object: 4c766c21d6ec391ea933d0741e527399413d9461
   scripts/prepare_readme.py:
     id: e0c5957a6035
     last_write_checksum: sha1:e2ebd355f72567204499ca62ee72728d9c3dfd95
@@ -2463,8 +2463,8 @@ trackedFiles:
     pristine_git_object: 6dbd4dcba3a5bac1c92beb0f5db31ef3d2944dea
   src/paygentic_sdk/_version.py:
     id: 52c8c5a320dc
-    last_write_checksum: sha1:713b11122a30bfa8b5705fd3dbba453f3ec67a51
-    pristine_git_object: 2fa26f210cfc6fd145b9b1ba2209c21c9516432e
+    last_write_checksum: sha1:d3a73cd32361375bbddbf6aafb07e7e157d8f600
+    pristine_git_object: 46b4c5cb8891957ec44375f456e81ca6cf4ab30e
   src/paygentic_sdk/approvals.py:
     id: a140b8f5837f
     last_write_checksum: sha1:bfcf43d1fa96f7b0fbdfd5e5af250b2800aa872d
@@ -6151,4 +6151,3 @@ generatedTests:
   getPlanVersion: "2026-07-30T16:01:20Z"
   transitionPlanVersion: "2026-07-30T16:01:20Z"
   downloadInvoicePdf: "2026-08-18T13:02:31Z"
-releaseNotes: "## Python SDK Changes:\n* `paygentic.plans.mint_plan_version()`:  `response.status.enum(draft)` **Removed** (Breaking ⚠️)\n* `paygentic.merchant_integrations.disconnect_merchant_integration()`:  `response` **Changed** (Breaking ⚠️)\n* `paygentic.merchant_integrations.get_merchant_integration()`:  `response` **Changed** (Breaking ⚠️)\n* `paygentic.merchant_integrations.upsert_merchant_integration()`: \n  *  `request.provider` **Changed**\n  *  `response` **Changed** (Breaking ⚠️)\n* `paygentic.merchant_integrations.list_merchant_integrations()`: \n  *  `request.provider` **Changed**\n  *  `response.data[]` **Changed** (Breaking ⚠️)\n* `paygentic.plans.transition_plan_version()`:  `response.status.enum(draft)` **Removed** (Breaking ⚠️)\n* `paygentic.plans.get_plan_version()`:  `response.status.enum(draft)` **Removed** (Breaking ⚠️)\n* `paygentic.plans.list_plan_versions()`:  `response.data[].status.enum(draft)` **Removed** (Breaking ⚠️)\n* `paygentic.fees.update()`:  `error` **Changed**\n* `paygentic.invoices_v2.get()`:  `response.pdf_source` **Added**\n* `paygentic.invoices_v2.download_invoice_pdf()`: **Added**\n* `paygentic.prices.list()`: \n  *  `request.merchant_id` **Added**\n  *  `error.status[404]` **Added**\n* `paygentic.prices.delete()`:  `error.status[409]` **Added**\n* `paygentic.subscriptions.reconcile_subscription_features()`:  `response.features.failed[].reason.enum(reset_cycle_misaligned)` **Added**\n* `paygentic.invoices_v2.list()`:  `response.data[].pdf_source` **Added**\n* `paygentic.fees.delete()`:  `error.details.blockers[].items` **Added**\n* `paygentic.costs.get_cost_summary()`:  `response.unit` **Added**\n* `paygentic.external_references.create_external_reference()`:  `request` **Changed**\n* `paygentic.fees.list()`:  `request.item_id` **Added**\n* `paygentic.billable_metrics.update()`:  `error` **Changed**\n* `paygentic.billable_metrics.list()`:  `request.item_id` **Added**\n* `paygentic.items.delete_item()`: **Removed** (Breaking ⚠️)\n"
