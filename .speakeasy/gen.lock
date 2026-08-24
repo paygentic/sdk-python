@@ -5,15 +5,15 @@ management:
   docVersion: 0.1.0
   speakeasyVersion: 1.761.4
   generationVersion: 2.879.13
-  releaseVersion: 0.5.2
-  configChecksum: 195cac21252daba0f530edb21e653391
+  releaseVersion: 0.5.3
+  configChecksum: a6754c7483311334d90fcfcf3112a583
   repoURL: https://github.com/paygentic/sdk-python.git
   installationURL: https://github.com/paygentic/sdk-python.git
   published: true
 persistentEdits:
-  generation_id: 0986d1de-1400-4ca8-a6e3-ae82339652a2
-  pristine_commit_hash: c56756bdfcc88d27e5ac16a499eb5cd704a7895a
-  pristine_tree_hash: b69120082321695ce6316a70bd5c13087d194574
+  generation_id: 4171b7ce-ca37-46d6-ada3-487ff5db7081
+  pristine_commit_hash: fc3de80d9f09c3234f69a83eec1594cb40ac275a
+  pristine_tree_hash: 864dcb38957a5e77c109d144f984736adb714a6a
 features:
   python:
     additionalDependencies: 1.0.0
@@ -2435,8 +2435,8 @@ trackedFiles:
     pristine_git_object: 9e61ec8e7b151c969a51d28d3ba98b3ceb5d18df
   pyproject.toml:
     id: 5d07e7d72637
-    last_write_checksum: sha1:c0f49ea5dbb2093b751bed1b9c743a2bb959a09f
-    pristine_git_object: 18859d9be482bfe8aaf164f8f334bc55252d77a9
+    last_write_checksum: sha1:841b63a88f6f1328476516eefbe3667d3f83407b
+    pristine_git_object: 4d40be30f5fb9766f5a0d2546d462f9b4e24fcdf
   scripts/prepare_readme.py:
     id: e0c5957a6035
     last_write_checksum: sha1:e2ebd355f72567204499ca62ee72728d9c3dfd95
@@ -2463,8 +2463,8 @@ trackedFiles:
     pristine_git_object: 6dbd4dcba3a5bac1c92beb0f5db31ef3d2944dea
   src/paygentic_sdk/_version.py:
     id: 52c8c5a320dc
-    last_write_checksum: sha1:f328ae1692172579de67ab7fe0e89736d144de5f
-    pristine_git_object: fc18872c440189364e294316f761b88cce6f5ba4
+    last_write_checksum: sha1:723a4d48ee6e15ce4f2fb2465c4f6b7b3847ad61
+    pristine_git_object: 05b9058aa2f75fb5ba0e278e9b8d4523ca266976
   src/paygentic_sdk/approvals.py:
     id: a140b8f5837f
     last_write_checksum: sha1:bfcf43d1fa96f7b0fbdfd5e5af250b2800aa872d
@@ -6151,7 +6151,3 @@ generatedTests:
   getPlanVersion: "2026-07-30T16:01:20Z"
   transitionPlanVersion: "2026-07-30T16:01:20Z"
   downloadInvoicePdf: "2026-08-18T13:02:31Z"
-releaseNotes: |
-  ## Python SDK Changes:
-  * `paygentic.invoices_v2.list_line_items()`:  `response.data[].type.enum(adjustment)` **Added**
-  * `paygentic.invoices_v2.create_line_item()`:  `response.type.enum(adjustment)` **Added**

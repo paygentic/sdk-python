@@ -13,7 +13,7 @@ targets:
         sourceRevisionDigest: sha256:21b171aa4294d8d0a9448a626197ddbea6bcc7ff14c1a7785a5a66aaddf195cd
         sourceBlobDigest: sha256:c7563bba1e1d9e82a18359e061688992eada2117cdfccdddd36df40a057c153d
         codeSamplesNamespace: paygentic-api-python-code-samples
-        codeSamplesRevisionDigest: sha256:b921da9950ddf41368636f9b8635d2ec7c36510f55d152319b19be2f8cf14ed3
+        codeSamplesRevisionDigest: sha256:b06caef34ee2cfc11acf9a49125aa607e59b9e35da769090a86facf431ae58dc
 workflow:
     workflowVersion: 1.0.0
     speakeasyVersion: 1.761.4
