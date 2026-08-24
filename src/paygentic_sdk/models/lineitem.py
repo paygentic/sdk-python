@@ -22,10 +22,11 @@ LineItemType = Union[
         "metered",
         "manual",
         "discount",
+        "adjustment",
     ],
     UnrecognizedStr,
 ]
-r"""The type of line item. 'discount' line items represent grant discounts with negative subtotal/total amounts."""
+r"""The type of line item. 'discount' and 'adjustment' line items have negative subtotal/total amounts: 'discount' is a grant discount, 'adjustment' is a discount agreed on the subscription."""
 
 
 LineItemStatus = Union[
@@ -56,7 +57,7 @@ class LineItemTypedDict(TypedDict):
     customer_id: str
     r"""The customer ID that owns this line item"""
     type: LineItemType
-    r"""The type of line item. 'discount' line items represent grant discounts with negative subtotal/total amounts."""
+    r"""The type of line item. 'discount' and 'adjustment' line items have negative subtotal/total amounts: 'discount' is a grant discount, 'adjustment' is a discount agreed on the subscription."""
     status: LineItemStatus
     r"""Whether this item is pending or already on an invoice"""
     display_name: str
@@ -114,7 +115,7 @@ class LineItem(BaseModel):
     r"""The customer ID that owns this line item"""
 
     type: LineItemType
-    r"""The type of line item. 'discount' line items represent grant discounts with negative subtotal/total amounts."""
+    r"""The type of line item. 'discount' and 'adjustment' line items have negative subtotal/total amounts: 'discount' is a grant discount, 'adjustment' is a discount agreed on the subscription."""
 
     status: LineItemStatus
     r"""Whether this item is pending or already on an invoice"""

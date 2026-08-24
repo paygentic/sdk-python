@@ -12,7 +12,7 @@ class PriceFeatureInputTypedDict(TypedDict):
     feature_id: str
     r"""The feature to associate with this price"""
     entitlement_template: NotRequired[Dict[str, Any]]
-    r"""Template for entitlement values when this feature is provisioned"""
+    r"""Template for entitlement values when this feature is provisioned. Omit the field to attach the feature without declaring an allowance. An explicit empty object declares an allowance with default values."""
 
 
 class PriceFeatureInput(BaseModel):
@@ -22,7 +22,7 @@ class PriceFeatureInput(BaseModel):
     entitlement_template: Annotated[
         Optional[Dict[str, Any]], pydantic.Field(alias="entitlementTemplate")
     ] = None
-    r"""Template for entitlement values when this feature is provisioned"""
+    r"""Template for entitlement values when this feature is provisioned. Omit the field to attach the feature without declaring an allowance. An explicit empty object declares an allowance with default values."""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

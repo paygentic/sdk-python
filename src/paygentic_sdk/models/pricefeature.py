@@ -52,6 +52,7 @@ class PriceFeatureTypedDict(TypedDict):
     id: str
     feature_id: str
     entitlement_template: Dict[str, Any]
+    r"""The allowance this price declares for the feature. An empty object where the price attaches the feature without declaring one."""
     feature: NotRequired[PriceFeatureFeatureTypedDict]
 
 
@@ -63,6 +64,7 @@ class PriceFeature(BaseModel):
     entitlement_template: Annotated[
         Dict[str, Any], pydantic.Field(alias="entitlementTemplate")
     ]
+    r"""The allowance this price declares for the feature. An empty object where the price attaches the feature without declaring one."""
 
     feature: Optional[PriceFeatureFeature] = None
 
