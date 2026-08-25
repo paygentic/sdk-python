@@ -1,19 +1,19 @@
 lockVersion: 2.0.0
 id: d05de326-b60d-4921-81eb-a16eab66dffd
 management:
-  docChecksum: 58b03c4b6d10ac0380b02e3e95c005cd
+  docChecksum: 46edb618cf0aaa2e5a409e1c48026124
   docVersion: 0.1.0
   speakeasyVersion: 1.761.4
   generationVersion: 2.879.13
-  releaseVersion: 0.5.3
-  configChecksum: a6754c7483311334d90fcfcf3112a583
+  releaseVersion: 0.5.4
+  configChecksum: 8f37a203aae7a9fc7eb1a0f10b328b53
   repoURL: https://github.com/paygentic/sdk-python.git
   installationURL: https://github.com/paygentic/sdk-python.git
   published: true
 persistentEdits:
-  generation_id: 4171b7ce-ca37-46d6-ada3-487ff5db7081
-  pristine_commit_hash: fc3de80d9f09c3234f69a83eec1594cb40ac275a
-  pristine_tree_hash: 864dcb38957a5e77c109d144f984736adb714a6a
+  generation_id: 2c02873b-5e61-4537-beb1-b478c055444e
+  pristine_commit_hash: 84f0e0f42f11ac4543e16d4d62967fbf7b126fad
+  pristine_tree_hash: 4d4cec4121b08a1accb9309309805aad75d9575f
 features:
   python:
     additionalDependencies: 1.0.0
@@ -585,6 +585,10 @@ trackedFiles:
     id: f280819c8d3f
     last_write_checksum: sha1:5c857f9722af943d9402b4bdef41f17de6255cbd
     pristine_git_object: 0d93ea3b8f2789aa89cd36f0bf6537549e5f2443
+  docs/models/documentwithheldreason.md:
+    id: 824a265ecbdc
+    last_write_checksum: sha1:261b20b5a37941db2e75bc0385f4d18ec6ee5cdd
+    pristine_git_object: 8c8ffd5a1d500824ad9df64a6ae85b6b4af05e30
   docs/models/downloadinvoicepdfrequest.md:
     id: c7b6f52d80ca
     last_write_checksum: sha1:ce1c79f61e818c0c4c414d32816e7efc460e7a10
@@ -891,8 +895,8 @@ trackedFiles:
     pristine_git_object: e4d0494082e906b4f83bcbfb71822afa3bbb9e2c
   docs/models/invoice.md:
     id: 18e2034f11ad
-    last_write_checksum: sha1:868d65ffa70e5407c2be5d8e51e3b90bd1efc4a6
-    pristine_git_object: 9346f4fca899442d44efb13ed1d2dedf22e7ce34
+    last_write_checksum: sha1:dc9392b60fb7d5896340a2cf9359028e715f4ab6
+    pristine_git_object: 238be8577fa0bccff49e5d25d82cd61225d462ad
   docs/models/invoicecategorysummary.md:
     id: 028b6380d691
     last_write_checksum: sha1:a5922c327a530dad003d9f056c5b4e1a336693d8
@@ -2435,8 +2439,8 @@ trackedFiles:
     pristine_git_object: 9e61ec8e7b151c969a51d28d3ba98b3ceb5d18df
   pyproject.toml:
     id: 5d07e7d72637
-    last_write_checksum: sha1:841b63a88f6f1328476516eefbe3667d3f83407b
-    pristine_git_object: 4d40be30f5fb9766f5a0d2546d462f9b4e24fcdf
+    last_write_checksum: sha1:e795ba9667c88b8262cef890c75d80e0b1aad498
+    pristine_git_object: 53ef33fadb8fd606a635fd28bbd32ea91bb42f3c
   scripts/prepare_readme.py:
     id: e0c5957a6035
     last_write_checksum: sha1:e2ebd355f72567204499ca62ee72728d9c3dfd95
@@ -2463,8 +2467,8 @@ trackedFiles:
     pristine_git_object: 6dbd4dcba3a5bac1c92beb0f5db31ef3d2944dea
   src/paygentic_sdk/_version.py:
     id: 52c8c5a320dc
-    last_write_checksum: sha1:723a4d48ee6e15ce4f2fb2465c4f6b7b3847ad61
-    pristine_git_object: 05b9058aa2f75fb5ba0e278e9b8d4523ca266976
+    last_write_checksum: sha1:599eb95f6c900d02047cbb558cc4b4064389bba5
+    pristine_git_object: 863c48cf72dcc3e529b0a9c998f1d59bada69809
   src/paygentic_sdk/approvals.py:
     id: a140b8f5837f
     last_write_checksum: sha1:bfcf43d1fa96f7b0fbdfd5e5af250b2800aa872d
@@ -2575,8 +2579,8 @@ trackedFiles:
     pristine_git_object: f20a44fe5040c1f91735d6138d6ec5cbc9353035
   src/paygentic_sdk/models/__init__.py:
     id: af295ac47d07
-    last_write_checksum: sha1:4a4495af57795d24aaf2e74d5e622958b78e621e
-    pristine_git_object: d11bdddaff0bec8dd8d3150897e231d86f40c140
+    last_write_checksum: sha1:7f8f3e5f6332fc9d29821ee2afbdbf63dbe593f9
+    pristine_git_object: 8cde81daf8e60c2f3d3087a59831f5d60177d1d1
   src/paygentic_sdk/models/address.py:
     id: 65007c08a9c1
     last_write_checksum: sha1:8fbc276bb2df8c214699ecda862842fe2c4b723a
@@ -2995,8 +2999,8 @@ trackedFiles:
     pristine_git_object: 3551e707526e71dff329d7e4e4fc72d73596bea4
   src/paygentic_sdk/models/invoice.py:
     id: cf50fbcc1ed7
-    last_write_checksum: sha1:8e7685a2050472c62010220d501c1f6d4df5bbb2
-    pristine_git_object: 4582588a92cb6d08c74ece35dd3d26387de2f0dc
+    last_write_checksum: sha1:0c500480d21e24aac017e4164cc0f6c2711c5137
+    pristine_git_object: b6224bbf0481cd6ea5d89c5c85d4a23eb4317948
   src/paygentic_sdk/models/invoicecategorysummary.py:
     id: d8a3d10b59b7
     last_write_checksum: sha1:7bd77117de59babb7ae520a540e65978e101fcd1
@@ -6151,3 +6155,7 @@ generatedTests:
   getPlanVersion: "2026-07-30T16:01:20Z"
   transitionPlanVersion: "2026-07-30T16:01:20Z"
   downloadInvoicePdf: "2026-08-18T13:02:31Z"
+releaseNotes: |
+  ## Python SDK Changes:
+  * `paygentic.invoices_v2.list()`:  `response.data[].document_withheld_reason` **Added**
+  * `paygentic.invoices_v2.get()`:  `response.document_withheld_reason` **Added**

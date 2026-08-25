@@ -444,6 +444,7 @@ if TYPE_CHECKING:
         IngestEventRequestTypedDict,
     )
     from .invoice import (
+        DocumentWithheldReason,
         Invoice,
         InvoiceLineItems,
         InvoiceLineItemsTypedDict,
@@ -1440,6 +1441,7 @@ __all__ = [
     "DeleteTestClockRequestTypedDict",
     "DisconnectMerchantIntegrationRequest",
     "DisconnectMerchantIntegrationRequestTypedDict",
+    "DocumentWithheldReason",
     "DownloadInvoicePdfRequest",
     "DownloadInvoicePdfRequestTypedDict",
     "EntitlementDetail",
@@ -2511,6 +2513,7 @@ _dynamic_imports: dict[str, str] = {
     "IngestEventRequestBody2": ".ingesteventop",
     "IngestEventRequestBody2TypedDict": ".ingesteventop",
     "IngestEventRequestTypedDict": ".ingesteventop",
+    "DocumentWithheldReason": ".invoice",
     "Invoice": ".invoice",
     "InvoiceLineItems": ".invoice",
     "InvoiceLineItemsTypedDict": ".invoice",
