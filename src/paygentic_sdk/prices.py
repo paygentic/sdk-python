@@ -17,9 +17,7 @@ class Prices(BaseSDK):
         *,
         invoice_display_name: str,
         payment_term: models.CreatePricePaymentTerm,
-        properties: Union[
-            models.PricePropertiesUnion, models.PricePropertiesUnionTypedDict
-        ],
+        properties: Union[models.PriceProperties, models.PricePropertiesTypedDict],
         billable_metric_id: Optional[str] = None,
         fee_id: Optional[str] = None,
         pricing_unit_id: Optional[str] = None,
@@ -71,9 +69,7 @@ class Prices(BaseSDK):
             invoice_display_name=invoice_display_name,
             payment_term=payment_term,
             billing_cadence=billing_cadence,
-            properties=utils.get_pydantic_model(
-                properties, models.PricePropertiesUnion
-            ),
+            properties=utils.get_pydantic_model(properties, models.PriceProperties),
             feature=utils.get_pydantic_model(
                 feature, Optional[models.PriceFeatureInput]
             ),
@@ -154,9 +150,7 @@ class Prices(BaseSDK):
         *,
         invoice_display_name: str,
         payment_term: models.CreatePricePaymentTerm,
-        properties: Union[
-            models.PricePropertiesUnion, models.PricePropertiesUnionTypedDict
-        ],
+        properties: Union[models.PriceProperties, models.PricePropertiesTypedDict],
         billable_metric_id: Optional[str] = None,
         fee_id: Optional[str] = None,
         pricing_unit_id: Optional[str] = None,
@@ -208,9 +202,7 @@ class Prices(BaseSDK):
             invoice_display_name=invoice_display_name,
             payment_term=payment_term,
             billing_cadence=billing_cadence,
-            properties=utils.get_pydantic_model(
-                properties, models.PricePropertiesUnion
-            ),
+            properties=utils.get_pydantic_model(properties, models.PriceProperties),
             feature=utils.get_pydantic_model(
                 feature, Optional[models.PriceFeatureInput]
             ),
@@ -683,7 +675,7 @@ class Prices(BaseSDK):
         invoice_display_name: Optional[str] = None,
         model: Optional[models.PriceModelInput] = None,
         properties: Optional[
-            Union[models.PricePropertiesUnion, models.PricePropertiesUnionTypedDict]
+            Union[models.PriceProperties, models.PricePropertiesTypedDict]
         ] = None,
         payment_term: Optional[models.UpdatePricePaymentTerm] = None,
         billing_cadence: OptionalNullable[str] = UNSET,
@@ -733,7 +725,7 @@ class Prices(BaseSDK):
                 invoice_display_name=invoice_display_name,
                 model=model,
                 properties=utils.get_pydantic_model(
-                    properties, Optional[models.PricePropertiesUnion]
+                    properties, Optional[models.PriceProperties]
                 ),
                 payment_term=payment_term,
                 billing_cadence=billing_cadence,
@@ -788,7 +780,7 @@ class Prices(BaseSDK):
                 ),
             ),
             request=req,
-            error_status_codes=["400", "401", "403", "404", "4XX", "500", "5XX"],
+            error_status_codes=["400", "401", "403", "404", "409", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -801,6 +793,11 @@ class Prices(BaseSDK):
         if utils.match_response(http_res, ["401", "403", "404"], "application/json"):
             response_data = unmarshal_json_response(errors.ErrorData, http_res)
             raise errors.Error(response_data, http_res)
+        if utils.match_response(http_res, "409", "application/json"):
+            response_data = unmarshal_json_response(
+                errors.UpdatePriceConflictErrorData, http_res
+            )
+            raise errors.UpdatePriceConflictError(response_data, http_res)
         if utils.match_response(http_res, "500", "application/json"):
             response_data = unmarshal_json_response(errors.ErrorData, http_res)
             raise errors.Error(response_data, http_res)
@@ -826,7 +823,7 @@ class Prices(BaseSDK):
         invoice_display_name: Optional[str] = None,
         model: Optional[models.PriceModelInput] = None,
         properties: Optional[
-            Union[models.PricePropertiesUnion, models.PricePropertiesUnionTypedDict]
+            Union[models.PriceProperties, models.PricePropertiesTypedDict]
         ] = None,
         payment_term: Optional[models.UpdatePricePaymentTerm] = None,
         billing_cadence: OptionalNullable[str] = UNSET,
@@ -876,7 +873,7 @@ class Prices(BaseSDK):
                 invoice_display_name=invoice_display_name,
                 model=model,
                 properties=utils.get_pydantic_model(
-                    properties, Optional[models.PricePropertiesUnion]
+                    properties, Optional[models.PriceProperties]
                 ),
                 payment_term=payment_term,
                 billing_cadence=billing_cadence,
@@ -931,7 +928,7 @@ class Prices(BaseSDK):
                 ),
             ),
             request=req,
-            error_status_codes=["400", "401", "403", "404", "4XX", "500", "5XX"],
+            error_status_codes=["400", "401", "403", "404", "409", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -944,6 +941,11 @@ class Prices(BaseSDK):
         if utils.match_response(http_res, ["401", "403", "404"], "application/json"):
             response_data = unmarshal_json_response(errors.ErrorData, http_res)
             raise errors.Error(response_data, http_res)
+        if utils.match_response(http_res, "409", "application/json"):
+            response_data = unmarshal_json_response(
+                errors.UpdatePriceConflictErrorData, http_res
+            )
+            raise errors.UpdatePriceConflictError(response_data, http_res)
         if utils.match_response(http_res, "500", "application/json"):
             response_data = unmarshal_json_response(errors.ErrorData, http_res)
             raise errors.Error(response_data, http_res)

@@ -17,6 +17,7 @@ if TYPE_CHECKING:
     from .no_response_error import NoResponseError
     from .paygenticdefaulterror import PaygenticDefaultError
     from .responsevalidationerror import ResponseValidationError
+    from .updatepriceop import UpdatePriceConflictError, UpdatePriceConflictErrorData
     from .validationerror import ValidationError, ValidationErrorData
 
 __all__ = [
@@ -34,6 +35,8 @@ __all__ = [
     "PaygenticDefaultError",
     "PaygenticError",
     "ResponseValidationError",
+    "UpdatePriceConflictError",
+    "UpdatePriceConflictErrorData",
     "ValidationError",
     "ValidationErrorData",
 ]
@@ -52,6 +55,8 @@ _dynamic_imports: dict[str, str] = {
     "NoResponseError": ".no_response_error",
     "PaygenticDefaultError": ".paygenticdefaulterror",
     "ResponseValidationError": ".responsevalidationerror",
+    "UpdatePriceConflictError": ".updatepriceop",
+    "UpdatePriceConflictErrorData": ".updatepriceop",
     "ValidationError": ".validationerror",
     "ValidationErrorData": ".validationerror",
 }

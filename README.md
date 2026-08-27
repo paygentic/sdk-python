@@ -543,6 +543,9 @@ with Paygentic(
 * [generate_portal_link](docs/sdks/subscriptions/README.md#generate_portal_link) - Generate Portal Link
 * [terminate](docs/sdks/subscriptions/README.md#terminate) - Terminate
 * [reconcile_subscription_features](docs/sdks/subscriptions/README.md#reconcile_subscription_features) - Reconcile Features
+* [list_subscription_adjustments](docs/sdks/subscriptions/README.md#list_subscription_adjustments) - List Adjustments
+* [create_subscription_adjustment](docs/sdks/subscriptions/README.md#create_subscription_adjustment) - Create Adjustment
+* [delete_subscription_adjustment](docs/sdks/subscriptions/README.md#delete_subscription_adjustment) - Delete Adjustment
 
 ### [TestClocks](docs/sdks/testclocks/README.md)
 
@@ -657,7 +660,7 @@ with Paygentic(
 * [`PaygenticError`](./src/paygentic_sdk/errors/paygenticerror.py): The base class for HTTP error responses.
   * [`Error`](./src/paygentic_sdk/errors/error.py): *
 
-<details><summary>Less common errors (9)</summary>
+<details><summary>Less common errors (10)</summary>
 
 <br />
 
@@ -668,10 +671,11 @@ with Paygentic(
 
 
 **Inherit from [`PaygenticError`](./src/paygentic_sdk/errors/paygenticerror.py)**:
-* [`ValidationError`](./src/paygentic_sdk/errors/validationerror.py): Bad Request - The request could not be understood or was missing required parameters. Status code `400`. Applicable to 89 of 136 methods.*
-* [`DeleteCustomerConflictError`](./src/paygentic_sdk/errors/deletecustomerconflicterror.py): Customer cannot be deleted due to active dependencies. Status code `409`. Applicable to 1 of 136 methods.*
-* [`DeleteFeeConflictError`](./src/paygentic_sdk/errors/deletefeeconflicterror.py): Fee cannot be deleted because it has associated prices. Status code `409`. Applicable to 1 of 136 methods.*
-* [`DeletePriceConflictError`](./src/paygentic_sdk/errors/deletepriceconflicterror.py): Price cannot be deleted because a live plan still references it. Status code `409`. Applicable to 1 of 136 methods.*
+* [`ValidationError`](./src/paygentic_sdk/errors/validationerror.py): Bad Request - The request could not be understood or was missing required parameters. Status code `400`. Applicable to 90 of 139 methods.*
+* [`DeleteCustomerConflictError`](./src/paygentic_sdk/errors/deletecustomerconflicterror.py): Customer cannot be deleted due to active dependencies. Status code `409`. Applicable to 1 of 139 methods.*
+* [`DeleteFeeConflictError`](./src/paygentic_sdk/errors/deletefeeconflicterror.py): Fee cannot be deleted because it has associated prices. Status code `409`. Applicable to 1 of 139 methods.*
+* [`UpdatePriceConflictError`](./src/paygentic_sdk/errors/updatepriceconflicterror.py): Price cannot be restructured because a subscription still bills it directly. Status code `409`. Applicable to 1 of 139 methods.*
+* [`DeletePriceConflictError`](./src/paygentic_sdk/errors/deletepriceconflicterror.py): Price cannot be deleted because a live plan still references it. Status code `409`. Applicable to 1 of 139 methods.*
 * [`ResponseValidationError`](./src/paygentic_sdk/errors/responsevalidationerror.py): Type mismatch between the response data and the expected Pydantic model. Provides access to the Pydantic validation error via the `cause` attribute.
 
 </details>

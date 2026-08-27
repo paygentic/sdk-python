@@ -1,4 +1,4 @@
-# PriceProperties1
+# StandardPriceProperties
 
 Standard pricing model
 

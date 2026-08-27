@@ -1,4 +1,4 @@
-# PriceProperties2
+# DynamicPriceProperties
 
 Dynamic pricing model
 

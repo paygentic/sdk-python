@@ -1,0 +1,9 @@
+# CreateSubscriptionAdjustmentRequestRequest
+
+
+## Fields
+
+| Field                                                                                          | Type                                                                                           | Required                                                                                       | Description                                                                                    |
+| ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| `id`                                                                                           | *str*                                                                                          | :heavy_check_mark:                                                                             | The subscription ID                                                                            |
+| `create_subscription_adjustment_request`                                                       | [models.CreateSubscriptionAdjustmentRequest](../models/createsubscriptionadjustmentrequest.md) | :heavy_check_mark:                                                                             | N/A                                                                                            |

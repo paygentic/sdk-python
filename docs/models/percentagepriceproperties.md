@@ -1,4 +1,4 @@
-# PriceProperties4
+# PercentagePriceProperties
 
 Percentage pricing model
 

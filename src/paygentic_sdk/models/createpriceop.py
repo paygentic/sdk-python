@@ -3,7 +3,7 @@
 from __future__ import annotations
 from .pricefeatureinput import PriceFeatureInput, PriceFeatureInputTypedDict
 from .pricemodelinput import PriceModelInput
-from .priceproperties_union import PricePropertiesUnion, PricePropertiesUnionTypedDict
+from .priceproperties import PriceProperties, PricePropertiesTypedDict
 from paygentic_sdk.types import (
     BaseModel,
     Nullable,
@@ -29,7 +29,7 @@ class CreatePriceRequestTypedDict(TypedDict):
     r"""Line item label shown on customer invoices. Sample values: 'Claude Token Consumption', 'Storage Usage (GB)', 'Inference API Calls', 'Image Generation Count', 'Training Compute Hours', 'Data Transfer (TB)'"""
     payment_term: CreatePricePaymentTerm
     r"""Billing timing preference: 'in_advance' (prepaid — charged upfront or drawn from a prepaid commitment) or 'in_arrears' (charged at period end)."""
-    properties: PricePropertiesUnionTypedDict
+    properties: PricePropertiesTypedDict
     billable_metric_id: NotRequired[str]
     r"""Unique identifier for a billable metric"""
     fee_id: NotRequired[str]
@@ -54,7 +54,7 @@ class CreatePriceRequest(BaseModel):
     payment_term: Annotated[CreatePricePaymentTerm, pydantic.Field(alias="paymentTerm")]
     r"""Billing timing preference: 'in_advance' (prepaid — charged upfront or drawn from a prepaid commitment) or 'in_arrears' (charged at period end)."""
 
-    properties: PricePropertiesUnion
+    properties: PriceProperties
 
     billable_metric_id: Annotated[
         Optional[str], pydantic.Field(alias="billableMetricId")

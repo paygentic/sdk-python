@@ -3,7 +3,7 @@
 from __future__ import annotations
 from .pricefeature import PriceFeature, PriceFeatureTypedDict
 from .pricemodel import PriceModel
-from .priceproperties_union import PricePropertiesUnion, PricePropertiesUnionTypedDict
+from .priceproperties import PriceProperties, PricePropertiesTypedDict
 from datetime import datetime
 from paygentic_sdk.types import (
     BaseModel,
@@ -39,7 +39,7 @@ class SchemasPriceTypedDict(TypedDict):
     created_at: datetime
     invoice_display_name: str
     payment_term: SchemasPricePaymentTerm
-    properties: PricePropertiesUnionTypedDict
+    properties: PricePropertiesTypedDict
     updated_at: datetime
     quantity: int
     r"""Quantity for invoice line items. Total per period = quantity × unitPrice. Only supported for fee prices; metered prices derive quantity from usage. Defaults to 1."""
@@ -75,7 +75,7 @@ class SchemasPrice(BaseModel):
         SchemasPricePaymentTerm, pydantic.Field(alias="paymentTerm")
     ]
 
-    properties: PricePropertiesUnion
+    properties: PriceProperties
 
     updated_at: Annotated[datetime, pydantic.Field(alias="updatedAt")]
 

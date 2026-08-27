@@ -13,6 +13,9 @@ A `Subscription` is a customer's commitment to purchase a `Product` following th
 * [generate_portal_link](#generate_portal_link) - Generate Portal Link
 * [terminate](#terminate) - Terminate
 * [reconcile_subscription_features](#reconcile_subscription_features) - Reconcile Features
+* [list_subscription_adjustments](#list_subscription_adjustments) - List Adjustments
+* [create_subscription_adjustment](#create_subscription_adjustment) - Create Adjustment
+* [delete_subscription_adjustment](#delete_subscription_adjustment) - Delete Adjustment
 
 ## list
 
@@ -346,5 +349,138 @@ with Paygentic(
 | errors.Error                 | 400                          | application/json             |
 | errors.ValidationError       | 400                          | application/json             |
 | errors.Error                 | 401, 403, 404                | application/json             |
+| errors.Error                 | 500                          | application/json             |
+| errors.PaygenticDefaultError | 4XX, 5XX                     | \*/\*                        |
+
+## list_subscription_adjustments
+
+Reads the adjustments on the subscription, oldest window first. A subscription with no adjustment returns an empty array. Paginated, because a long-running subscription accumulates one adjustment per rate change of every deal it has carried.
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="listSubscriptionAdjustments" method="get" path="/v0/subscriptions/{id}/adjustments" -->
+```python
+import os
+from paygentic_sdk import Paygentic
+
+
+with Paygentic(
+    bearer_auth=os.getenv("PAYGENTIC_BEARER_AUTH", ""),
+) as paygentic:
+
+    res = paygentic.subscriptions.list_subscription_adjustments(id="<id>", limit="10", offset="0")
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `id`                                                                | *str*                                                               | :heavy_check_mark:                                                  | The subscription ID                                                 |
+| `limit`                                                             | *Optional[str]*                                                     | :heavy_minus_sign:                                                  | Number of adjustments to return                                     |
+| `offset`                                                            | *Optional[str]*                                                     | :heavy_minus_sign:                                                  | Number of adjustments to skip                                       |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+
+### Response
+
+**[models.SubscriptionAdjustmentsResponse](../../models/subscriptionadjustmentsresponse.md)**
+
+### Errors
+
+| Error Type                   | Status Code                  | Content Type                 |
+| ---------------------------- | ---------------------------- | ---------------------------- |
+| errors.Error                 | 401, 403, 404                | application/json             |
+| errors.Error                 | 500                          | application/json             |
+| errors.PaygenticDefaultError | 4XX, 5XX                     | \*/\*                        |
+
+## create_subscription_adjustment
+
+Attaches a percentage discount to the subscription for a dated window. Every invoice calculated while the window is open carries one discount line for each discounted charge, and tax is assessed on the reduced amount. An invoice that already exists is not changed, including one still in draft — the discount reaches the periods that close after it is created. There is no update operation, and a window cannot be changed after it is created. To change a rate before any invoice has issued under the discount, delete the adjustment and create a replacement. Once an invoice has issued the adjustment is permanent, so set effectiveTo at creation time whenever the deal has a known end date.
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="createSubscriptionAdjustment" method="post" path="/v0/subscriptions/{id}/adjustments" -->
+```python
+import os
+from paygentic_sdk import Paygentic
+from paygentic_sdk.utils import parse_datetime
+
+
+with Paygentic(
+    bearer_auth=os.getenv("PAYGENTIC_BEARER_AUTH", ""),
+) as paygentic:
+
+    res = paygentic.subscriptions.create_subscription_adjustment(id="<id>", type_="percentageDiscount", percentage_discount="0.35", effective_from=parse_datetime("2026-01-01T00:00:00Z"), effective_to=None, description="FY26 Growth", idempotency_key="adj_fy26_growth_001")
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                                                                                                                                                                                                                                                                                     | Type                                                                                                                                                                                                                                                                                                                          | Required                                                                                                                                                                                                                                                                                                                      | Description                                                                                                                                                                                                                                                                                                                   | Example                                                                                                                                                                                                                                                                                                                       |
+| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `id`                                                                                                                                                                                                                                                                                                                          | *str*                                                                                                                                                                                                                                                                                                                         | :heavy_check_mark:                                                                                                                                                                                                                                                                                                            | The subscription ID                                                                                                                                                                                                                                                                                                           |                                                                                                                                                                                                                                                                                                                               |
+| `type`                                                                                                                                                                                                                                                                                                                        | [models.CreateSubscriptionAdjustmentRequestType](../../models/createsubscriptionadjustmentrequesttype.md)                                                                                                                                                                                                                     | :heavy_check_mark:                                                                                                                                                                                                                                                                                                            | The kind of adjustment. `percentageDiscount` reduces every discountable charge by a rate.                                                                                                                                                                                                                                     |                                                                                                                                                                                                                                                                                                                               |
+| `percentage_discount`                                                                                                                                                                                                                                                                                                         | *str*                                                                                                                                                                                                                                                                                                                         | :heavy_check_mark:                                                                                                                                                                                                                                                                                                            | The discount rate as a decimal fraction between 0 and 1, sent as a string. "0.35" means 35 percent. "1" means 100 percent, not 1 percent. At most 6 decimal places. A value of 0 or above 1 is rejected.                                                                                                                      |                                                                                                                                                                                                                                                                                                                               |
+| `effective_from`                                                                                                                                                                                                                                                                                                              | [date](https://docs.python.org/3/library/datetime.html#date-objects)                                                                                                                                                                                                                                                          | :heavy_check_mark:                                                                                                                                                                                                                                                                                                            | The first instant the discount applies. Inclusive.                                                                                                                                                                                                                                                                            |                                                                                                                                                                                                                                                                                                                               |
+| `effective_to`                                                                                                                                                                                                                                                                                                                | [date](https://docs.python.org/3/library/datetime.html#date-objects)                                                                                                                                                                                                                                                          | :heavy_minus_sign:                                                                                                                                                                                                                                                                                                            | The instant the discount stops applying. Exclusive, so a window ending on the same date another begins neither overlaps nor leaves a gap. Null means the discount never stops, and it cannot be ended later — set an instant whenever the deal has a known end date. Must be after effectiveFrom.                             |                                                                                                                                                                                                                                                                                                                               |
+| `description`                                                                                                                                                                                                                                                                                                                 | *OptionalNullable[str]*                                                                                                                                                                                                                                                                                                       | :heavy_minus_sign:                                                                                                                                                                                                                                                                                                            | The deal's own name, shown on each discount line of the invoice.                                                                                                                                                                                                                                                              |                                                                                                                                                                                                                                                                                                                               |
+| `idempotency_key`                                                                                                                                                                                                                                                                                                             | *Optional[str]*                                                                                                                                                                                                                                                                                                               | :heavy_minus_sign:                                                                                                                                                                                                                                                                                                            | A key of your choosing that makes a retry safe. Sending the same key against the same subscription returns the adjustment already created and creates no second one. Without a key a retried request creates a second adjustment, and two percentage discounts compound — two of 0.35 bill 57.75 percent off, not 35 percent. | adj_fy26_growth_001                                                                                                                                                                                                                                                                                                           |
+| `retries`                                                                                                                                                                                                                                                                                                                     | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                                                                                                                                                                                                                              | :heavy_minus_sign:                                                                                                                                                                                                                                                                                                            | Configuration to override the default retry behavior of the client.                                                                                                                                                                                                                                                           |                                                                                                                                                                                                                                                                                                                               |
+
+### Response
+
+**[models.SubscriptionAdjustment](../../models/subscriptionadjustment.md)**
+
+### Errors
+
+| Error Type                   | Status Code                  | Content Type                 |
+| ---------------------------- | ---------------------------- | ---------------------------- |
+| errors.Error                 | 400                          | application/json             |
+| errors.ValidationError       | 400                          | application/json             |
+| errors.Error                 | 401, 403, 404                | application/json             |
+| errors.Error                 | 500                          | application/json             |
+| errors.PaygenticDefaultError | 4XX, 5XX                     | \*/\*                        |
+
+## delete_subscription_adjustment
+
+Deletes an adjustment that has not yet reached an issued invoice. No invoice changes: an invoice still in draft keeps its numbers, and loses the discount only when its period is calculated again. An adjustment that has already discounted an issued invoice cannot be deleted, because the invoice records why the customer was charged that amount. Its window cannot be shortened afterwards either, so set effectiveTo at creation time whenever the deal has a known end date.
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="deleteSubscriptionAdjustment" method="delete" path="/v0/subscriptions/{id}/adjustments/{adjustmentId}" -->
+```python
+import os
+from paygentic_sdk import Paygentic
+
+
+with Paygentic(
+    bearer_auth=os.getenv("PAYGENTIC_BEARER_AUTH", ""),
+) as paygentic:
+
+    paygentic.subscriptions.delete_subscription_adjustment(id="<id>", adjustment_id="<id>")
+
+    # Use the SDK ...
+
+```
+
+### Parameters
+
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `id`                                                                | *str*                                                               | :heavy_check_mark:                                                  | The subscription ID                                                 |
+| `adjustment_id`                                                     | *str*                                                               | :heavy_check_mark:                                                  | The adjustment ID                                                   |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+
+### Errors
+
+| Error Type                   | Status Code                  | Content Type                 |
+| ---------------------------- | ---------------------------- | ---------------------------- |
+| errors.Error                 | 401, 403, 404, 409           | application/json             |
 | errors.Error                 | 500                          | application/json             |
 | errors.PaygenticDefaultError | 4XX, 5XX                     | \*/\*                        |

@@ -3,7 +3,7 @@
 from __future__ import annotations
 from .pricefeatureinput import PriceFeatureInput, PriceFeatureInputTypedDict
 from .pricemodelinput import PriceModelInput
-from .priceproperties_union import PricePropertiesUnion, PricePropertiesUnionTypedDict
+from .priceproperties import PriceProperties, PricePropertiesTypedDict
 from paygentic_sdk.types import (
     BaseModel,
     Nullable,
@@ -14,7 +14,7 @@ from paygentic_sdk.types import (
 from paygentic_sdk.utils import FieldMetadata, PathParamMetadata, RequestMetadata
 import pydantic
 from pydantic import model_serializer
-from typing import Literal, Optional
+from typing import List, Literal, Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
 
 
@@ -34,7 +34,7 @@ class UpdatePriceRequestBodyTypedDict(TypedDict):
     r"""Updated invoice line item label. Sample values: 'LLM Token Usage', 'Storage Charges', 'API Call Fees'"""
     model: NotRequired[PriceModelInput]
     r"""The pricing model to set. Only 'standard' is accepted. Legacy 'dynamic'/'volume'/'percentage' prices can still be edited (other fields) but cannot be switched to those models. Percentage/revenue-share is expressed via 'standard' with a unit-price multiplier."""
-    properties: NotRequired[PricePropertiesUnionTypedDict]
+    properties: NotRequired[PricePropertiesTypedDict]
     payment_term: NotRequired[UpdatePricePaymentTerm]
     r"""Billing timing preference: 'in_advance' (prepaid — charged upfront or drawn from a prepaid commitment) or 'in_arrears' (charged at period end)."""
     billing_cadence: NotRequired[Nullable[str]]
@@ -66,7 +66,7 @@ class UpdatePriceRequestBody(BaseModel):
     model: Optional[PriceModelInput] = None
     r"""The pricing model to set. Only 'standard' is accepted. Legacy 'dynamic'/'volume'/'percentage' prices can still be edited (other fields) but cannot be switched to those models. Percentage/revenue-share is expressed via 'standard' with a unit-price multiplier."""
 
-    properties: Optional[PricePropertiesUnion] = None
+    properties: Optional[PriceProperties] = None
 
     payment_term: Annotated[
         Optional[UpdatePricePaymentTerm], pydantic.Field(alias="paymentTerm")
@@ -146,7 +146,43 @@ class UpdatePriceRequest(BaseModel):
     ]
 
 
+class UpdatePriceDetailsTypedDict(TypedDict):
+    price_id: NotRequired[str]
+    fields: NotRequired[List[str]]
+    subscription_count: NotRequired[int]
+
+
+class UpdatePriceDetails(BaseModel):
+    price_id: Annotated[Optional[str], pydantic.Field(alias="priceId")] = None
+
+    fields: Optional[List[str]] = None
+
+    subscription_count: Annotated[
+        Optional[int], pydantic.Field(alias="subscriptionCount")
+    ] = None
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(["priceId", "fields", "subscriptionCount"])
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k, serialized.get(n))
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m
+
+
 try:
     UpdatePriceRequestBody.model_rebuild()
+except NameError:
+    pass
+try:
+    UpdatePriceDetails.model_rebuild()
 except NameError:
     pass
