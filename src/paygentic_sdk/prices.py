@@ -27,6 +27,7 @@ class Prices(BaseSDK):
             Union[models.PriceFeatureInput, models.PriceFeatureInputTypedDict]
         ] = None,
         grant_discount_enabled: Optional[bool] = False,
+        is_obligation: Optional[bool] = False,
         quantity: Optional[int] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -41,10 +42,11 @@ class Prices(BaseSDK):
         :param billable_metric_id: Unique identifier for a billable metric
         :param fee_id: The unique identifier for the fee referred to by this price. Either billableMetricId or feeId must be provided.
         :param pricing_unit_id: Unique identifier for a pricing unit
-        :param model: Pricing calculation model. Required for billable metrics, optional for fees (defaults to 'standard'). Only 'standard' is accepted; for percentage/revenue-share use 'standard' with a unit-price multiplier. Legacy prices using 'dynamic'/'volume'/'percentage' stay readable and billable but cannot be created.
+        :param model: Pricing calculation model. Required for billable metrics, optional for fees (defaults to 'standard'). 'standard' and 'volume' are accepted; fees only support 'standard'. For percentage/revenue-share use 'standard' with a unit-price multiplier. Legacy prices using 'dynamic'/'percentage' stay readable and billable but cannot be created.
         :param billing_cadence: ISO 8601 duration for recurring charges (e.g., 'P1M' for monthly, 'P1Y' for yearly) or 'P0D' for one-time charges. Required for fees, optional for billable metrics. Sample values: 'P0D' for one-time, 'P1M' for monthly recurring, 'P1Y' for yearly recurring
         :param feature:
         :param grant_discount_enabled: When true, grants applied to a subscription will discount usage charged by this price. Only supported for standard metered prices.
+        :param is_obligation: A fixed amount owed whole rather than a per-period rate. An obligation is not prorated over a partial first period: when a subscription starts before its billing anchor, no truncated stub is billed and the first charge is the full amount at the next anchor. An obligation also refuses an interval boundary that falls strictly inside one of its own billing periods, since part of an amount owed whole is not a thing to bill. Defaults to false, which is a rate and is today's behaviour for every price. Not supported on a metered price, whose amount resolves from usage at close.
         :param quantity: Quantity for invoice line items. Total per period = quantity × unitPrice. Only supported for fee prices; metered prices derive quantity from usage. Defaults to 1.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -74,6 +76,7 @@ class Prices(BaseSDK):
                 feature, Optional[models.PriceFeatureInput]
             ),
             grant_discount_enabled=grant_discount_enabled,
+            is_obligation=is_obligation,
             quantity=quantity,
         )
 
@@ -160,6 +163,7 @@ class Prices(BaseSDK):
             Union[models.PriceFeatureInput, models.PriceFeatureInputTypedDict]
         ] = None,
         grant_discount_enabled: Optional[bool] = False,
+        is_obligation: Optional[bool] = False,
         quantity: Optional[int] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -174,10 +178,11 @@ class Prices(BaseSDK):
         :param billable_metric_id: Unique identifier for a billable metric
         :param fee_id: The unique identifier for the fee referred to by this price. Either billableMetricId or feeId must be provided.
         :param pricing_unit_id: Unique identifier for a pricing unit
-        :param model: Pricing calculation model. Required for billable metrics, optional for fees (defaults to 'standard'). Only 'standard' is accepted; for percentage/revenue-share use 'standard' with a unit-price multiplier. Legacy prices using 'dynamic'/'volume'/'percentage' stay readable and billable but cannot be created.
+        :param model: Pricing calculation model. Required for billable metrics, optional for fees (defaults to 'standard'). 'standard' and 'volume' are accepted; fees only support 'standard'. For percentage/revenue-share use 'standard' with a unit-price multiplier. Legacy prices using 'dynamic'/'percentage' stay readable and billable but cannot be created.
         :param billing_cadence: ISO 8601 duration for recurring charges (e.g., 'P1M' for monthly, 'P1Y' for yearly) or 'P0D' for one-time charges. Required for fees, optional for billable metrics. Sample values: 'P0D' for one-time, 'P1M' for monthly recurring, 'P1Y' for yearly recurring
         :param feature:
         :param grant_discount_enabled: When true, grants applied to a subscription will discount usage charged by this price. Only supported for standard metered prices.
+        :param is_obligation: A fixed amount owed whole rather than a per-period rate. An obligation is not prorated over a partial first period: when a subscription starts before its billing anchor, no truncated stub is billed and the first charge is the full amount at the next anchor. An obligation also refuses an interval boundary that falls strictly inside one of its own billing periods, since part of an amount owed whole is not a thing to bill. Defaults to false, which is a rate and is today's behaviour for every price. Not supported on a metered price, whose amount resolves from usage at close.
         :param quantity: Quantity for invoice line items. Total per period = quantity × unitPrice. Only supported for fee prices; metered prices derive quantity from usage. Defaults to 1.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -207,6 +212,7 @@ class Prices(BaseSDK):
                 feature, Optional[models.PriceFeatureInput]
             ),
             grant_discount_enabled=grant_discount_enabled,
+            is_obligation=is_obligation,
             quantity=quantity,
         )
 
@@ -683,6 +689,7 @@ class Prices(BaseSDK):
             Union[models.PriceFeatureInput, models.PriceFeatureInputTypedDict]
         ] = UNSET,
         grant_discount_enabled: Optional[bool] = None,
+        is_obligation: Optional[bool] = None,
         quantity: Optional[int] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -695,12 +702,13 @@ class Prices(BaseSDK):
         :param billable_metric_id: Unique identifier for a billable metric
         :param pricing_unit_id: Denominate this metered price in a pricing unit (credits). Set to a pricing unit ID to draw down a credit pool, null to revert to real currency, or omit to leave unchanged.
         :param invoice_display_name: Updated invoice line item label. Sample values: 'LLM Token Usage', 'Storage Charges', 'API Call Fees'
-        :param model: The pricing model to set. Only 'standard' is accepted. Legacy 'dynamic'/'volume'/'percentage' prices can still be edited (other fields) but cannot be switched to those models. Percentage/revenue-share is expressed via 'standard' with a unit-price multiplier.
+        :param model: The pricing model to set. 'standard' and 'volume' are accepted. Legacy 'dynamic'/'percentage' prices can still be edited (other fields) but cannot be switched back to those models. Percentage/revenue-share is expressed via 'standard' with a unit-price multiplier.
         :param properties:
         :param payment_term: Billing timing preference: 'in_advance' (prepaid — charged upfront or drawn from a prepaid commitment) or 'in_arrears' (charged at period end).
         :param billing_cadence: ISO 8601 duration for recurring fees (e.g., 'P1M' for monthly, 'P1Y' for yearly, or 'P0D' for one-time)
         :param feature: Feature to associate. Set to null to remove existing feature. Omit to leave unchanged.
         :param grant_discount_enabled: When true, grants applied to a subscription will discount usage charged by this price. Only supported for standard metered prices.
+        :param is_obligation: A fixed amount owed whole rather than a per-period rate. An obligation is not prorated over a partial first period: when a subscription starts before its billing anchor, no truncated stub is billed and the first charge is the full amount at the next anchor. An obligation also refuses an interval boundary that falls strictly inside one of its own billing periods, since part of an amount owed whole is not a thing to bill. Defaults to false, which is a rate and is today's behaviour for every price. Not supported on a metered price, whose amount resolves from usage at close.
         :param quantity: Quantity for invoice line items. Total per period = quantity × unitPrice. Only supported for fee prices; metered prices derive quantity from usage. Defaults to 1.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -733,6 +741,7 @@ class Prices(BaseSDK):
                     feature, OptionalNullable[models.PriceFeatureInput]
                 ),
                 grant_discount_enabled=grant_discount_enabled,
+                is_obligation=is_obligation,
                 quantity=quantity,
             ),
         )
@@ -831,6 +840,7 @@ class Prices(BaseSDK):
             Union[models.PriceFeatureInput, models.PriceFeatureInputTypedDict]
         ] = UNSET,
         grant_discount_enabled: Optional[bool] = None,
+        is_obligation: Optional[bool] = None,
         quantity: Optional[int] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -843,12 +853,13 @@ class Prices(BaseSDK):
         :param billable_metric_id: Unique identifier for a billable metric
         :param pricing_unit_id: Denominate this metered price in a pricing unit (credits). Set to a pricing unit ID to draw down a credit pool, null to revert to real currency, or omit to leave unchanged.
         :param invoice_display_name: Updated invoice line item label. Sample values: 'LLM Token Usage', 'Storage Charges', 'API Call Fees'
-        :param model: The pricing model to set. Only 'standard' is accepted. Legacy 'dynamic'/'volume'/'percentage' prices can still be edited (other fields) but cannot be switched to those models. Percentage/revenue-share is expressed via 'standard' with a unit-price multiplier.
+        :param model: The pricing model to set. 'standard' and 'volume' are accepted. Legacy 'dynamic'/'percentage' prices can still be edited (other fields) but cannot be switched back to those models. Percentage/revenue-share is expressed via 'standard' with a unit-price multiplier.
         :param properties:
         :param payment_term: Billing timing preference: 'in_advance' (prepaid — charged upfront or drawn from a prepaid commitment) or 'in_arrears' (charged at period end).
         :param billing_cadence: ISO 8601 duration for recurring fees (e.g., 'P1M' for monthly, 'P1Y' for yearly, or 'P0D' for one-time)
         :param feature: Feature to associate. Set to null to remove existing feature. Omit to leave unchanged.
         :param grant_discount_enabled: When true, grants applied to a subscription will discount usage charged by this price. Only supported for standard metered prices.
+        :param is_obligation: A fixed amount owed whole rather than a per-period rate. An obligation is not prorated over a partial first period: when a subscription starts before its billing anchor, no truncated stub is billed and the first charge is the full amount at the next anchor. An obligation also refuses an interval boundary that falls strictly inside one of its own billing periods, since part of an amount owed whole is not a thing to bill. Defaults to false, which is a rate and is today's behaviour for every price. Not supported on a metered price, whose amount resolves from usage at close.
         :param quantity: Quantity for invoice line items. Total per period = quantity × unitPrice. Only supported for fee prices; metered prices derive quantity from usage. Defaults to 1.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -881,6 +892,7 @@ class Prices(BaseSDK):
                     feature, OptionalNullable[models.PriceFeatureInput]
                 ),
                 grant_discount_enabled=grant_discount_enabled,
+                is_obligation=is_obligation,
                 quantity=quantity,
             ),
         )

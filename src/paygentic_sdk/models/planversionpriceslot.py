@@ -68,6 +68,8 @@ class PlanVersionPriceSlotTypedDict(TypedDict):
     r"""Features associated with this price"""
     grant_discount_enabled: NotRequired[bool]
     r"""When true, grants applied to a subscription will discount usage charged by this price. Only supported for standard metered prices."""
+    is_obligation: NotRequired[bool]
+    r"""A fixed amount owed whole rather than a per-period rate. An obligation is not prorated over a partial first period: when a subscription starts before its billing anchor, no truncated stub is billed and the first charge is the full amount at the next anchor. An obligation also refuses an interval boundary that falls strictly inside one of its own billing periods, since part of an amount owed whole is not a thing to bill. Defaults to false, which is a rate and is today's behaviour for every price. Not supported on a metered price, whose amount resolves from usage at close."""
     quantity: NotRequired[int]
     r"""Quantity used when generating invoice line items for this price. Total per period = quantity × unitPrice. Only supported for fee prices; metered prices derive quantity from usage. Defaults to 1."""
 
@@ -126,6 +128,11 @@ class PlanVersionPriceSlot(BaseModel):
     ] = False
     r"""When true, grants applied to a subscription will discount usage charged by this price. Only supported for standard metered prices."""
 
+    is_obligation: Annotated[Optional[bool], pydantic.Field(alias="isObligation")] = (
+        False
+    )
+    r"""A fixed amount owed whole rather than a per-period rate. An obligation is not prorated over a partial first period: when a subscription starts before its billing anchor, no truncated stub is billed and the first charge is the full amount at the next anchor. An obligation also refuses an interval boundary that falls strictly inside one of its own billing periods, since part of an amount owed whole is not a thing to bill. Defaults to false, which is a rate and is today's behaviour for every price. Not supported on a metered price, whose amount resolves from usage at close."""
+
     quantity: Optional[int] = 1
     r"""Quantity used when generating invoice line items for this price. Total per period = quantity × unitPrice. Only supported for fee prices; metered prices derive quantity from usage. Defaults to 1."""
 
@@ -142,6 +149,7 @@ class PlanVersionPriceSlot(BaseModel):
                 "unitAmount",
                 "features",
                 "grantDiscountEnabled",
+                "isObligation",
                 "quantity",
             ]
         )

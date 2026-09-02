@@ -53,11 +53,13 @@ class SchemasPriceTypedDict(TypedDict):
     billing_cadence: NotRequired[Nullable[str]]
     r"""ISO 8601 duration. 'P0D' for one-time, 'P1M' for monthly, 'P1Y' for yearly. Required for fees, optional for billable metrics. Defaults to plan's billingCadence if not specified."""
     model: NotRequired[PriceModel]
-    r"""Pricing model of a price as returned by the API. Includes legacy models ('dynamic', 'volume', 'percentage') retained for existing prices; only 'standard' can be created (see PriceModelInput)."""
+    r"""Pricing model of a price as returned by the API. Includes the legacy models ('dynamic', 'percentage') retained for existing prices; 'standard' and 'volume' can be created (see PriceModelInput)."""
     features: NotRequired[List[PriceFeatureTypedDict]]
     r"""Features associated with this price"""
     grant_discount_enabled: NotRequired[bool]
     r"""When true, grants applied to a subscription will discount usage charged by this price. Only supported for standard metered prices."""
+    is_obligation: NotRequired[bool]
+    r"""A fixed amount owed whole rather than a per-period rate. An obligation is not prorated over a partial first period: when a subscription starts before its billing anchor, no truncated stub is billed and the first charge is the full amount at the next anchor. An obligation also refuses an interval boundary that falls strictly inside one of its own billing periods, since part of an amount owed whole is not a thing to bill. Defaults to false, which is a rate and is today's behaviour for every price. Not supported on a metered price, whose amount resolves from usage at close."""
 
 
 class SchemasPrice(BaseModel):
@@ -103,7 +105,7 @@ class SchemasPrice(BaseModel):
     r"""ISO 8601 duration. 'P0D' for one-time, 'P1M' for monthly, 'P1Y' for yearly. Required for fees, optional for billable metrics. Defaults to plan's billingCadence if not specified."""
 
     model: Optional[PriceModel] = None
-    r"""Pricing model of a price as returned by the API. Includes legacy models ('dynamic', 'volume', 'percentage') retained for existing prices; only 'standard' can be created (see PriceModelInput)."""
+    r"""Pricing model of a price as returned by the API. Includes the legacy models ('dynamic', 'percentage') retained for existing prices; 'standard' and 'volume' can be created (see PriceModelInput)."""
 
     features: Optional[List[PriceFeature]] = None
     r"""Features associated with this price"""
@@ -112,6 +114,11 @@ class SchemasPrice(BaseModel):
         Optional[bool], pydantic.Field(alias="grantDiscountEnabled")
     ] = False
     r"""When true, grants applied to a subscription will discount usage charged by this price. Only supported for standard metered prices."""
+
+    is_obligation: Annotated[Optional[bool], pydantic.Field(alias="isObligation")] = (
+        False
+    )
+    r"""A fixed amount owed whole rather than a per-period rate. An obligation is not prorated over a partial first period: when a subscription starts before its billing anchor, no truncated stub is billed and the first charge is the full amount at the next anchor. An obligation also refuses an interval boundary that falls strictly inside one of its own billing periods, since part of an amount owed whole is not a thing to bill. Defaults to false, which is a rate and is today's behaviour for every price. Not supported on a metered price, whose amount resolves from usage at close."""
 
     @model_serializer(mode="wrap")
     def _serialize_model(self, handler):
@@ -125,6 +132,7 @@ class SchemasPrice(BaseModel):
                 "model",
                 "features",
                 "grantDiscountEnabled",
+                "isObligation",
             ]
         )
         nullable_fields = set(["billingCadence"])

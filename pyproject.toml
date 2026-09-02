@@ -1,6 +1,6 @@
 [project]
 name = "paygentic-sdk"
-version = "0.5.5"
+version = "0.5.6"
 description = "Official Python SDK for the Paygentic API. Build billing, subscriptions, and usage-based monetization into your product."
 authors = [{ name = "Speakeasy" },]
 readme = "README-PYPI.md"

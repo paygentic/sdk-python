@@ -33,7 +33,7 @@ class UpdatePriceRequestBodyTypedDict(TypedDict):
     invoice_display_name: NotRequired[str]
     r"""Updated invoice line item label. Sample values: 'LLM Token Usage', 'Storage Charges', 'API Call Fees'"""
     model: NotRequired[PriceModelInput]
-    r"""The pricing model to set. Only 'standard' is accepted. Legacy 'dynamic'/'volume'/'percentage' prices can still be edited (other fields) but cannot be switched to those models. Percentage/revenue-share is expressed via 'standard' with a unit-price multiplier."""
+    r"""The pricing model to set. 'standard' and 'volume' are accepted. Legacy 'dynamic'/'percentage' prices can still be edited (other fields) but cannot be switched back to those models. Percentage/revenue-share is expressed via 'standard' with a unit-price multiplier."""
     properties: NotRequired[PricePropertiesTypedDict]
     payment_term: NotRequired[UpdatePricePaymentTerm]
     r"""Billing timing preference: 'in_advance' (prepaid — charged upfront or drawn from a prepaid commitment) or 'in_arrears' (charged at period end)."""
@@ -43,6 +43,8 @@ class UpdatePriceRequestBodyTypedDict(TypedDict):
     r"""Feature to associate. Set to null to remove existing feature. Omit to leave unchanged."""
     grant_discount_enabled: NotRequired[bool]
     r"""When true, grants applied to a subscription will discount usage charged by this price. Only supported for standard metered prices."""
+    is_obligation: NotRequired[bool]
+    r"""A fixed amount owed whole rather than a per-period rate. An obligation is not prorated over a partial first period: when a subscription starts before its billing anchor, no truncated stub is billed and the first charge is the full amount at the next anchor. An obligation also refuses an interval boundary that falls strictly inside one of its own billing periods, since part of an amount owed whole is not a thing to bill. Defaults to false, which is a rate and is today's behaviour for every price. Not supported on a metered price, whose amount resolves from usage at close."""
     quantity: NotRequired[int]
     r"""Quantity for invoice line items. Total per period = quantity × unitPrice. Only supported for fee prices; metered prices derive quantity from usage. Defaults to 1."""
 
@@ -64,7 +66,7 @@ class UpdatePriceRequestBody(BaseModel):
     r"""Updated invoice line item label. Sample values: 'LLM Token Usage', 'Storage Charges', 'API Call Fees'"""
 
     model: Optional[PriceModelInput] = None
-    r"""The pricing model to set. Only 'standard' is accepted. Legacy 'dynamic'/'volume'/'percentage' prices can still be edited (other fields) but cannot be switched to those models. Percentage/revenue-share is expressed via 'standard' with a unit-price multiplier."""
+    r"""The pricing model to set. 'standard' and 'volume' are accepted. Legacy 'dynamic'/'percentage' prices can still be edited (other fields) but cannot be switched back to those models. Percentage/revenue-share is expressed via 'standard' with a unit-price multiplier."""
 
     properties: Optional[PriceProperties] = None
 
@@ -86,6 +88,11 @@ class UpdatePriceRequestBody(BaseModel):
     ] = None
     r"""When true, grants applied to a subscription will discount usage charged by this price. Only supported for standard metered prices."""
 
+    is_obligation: Annotated[Optional[bool], pydantic.Field(alias="isObligation")] = (
+        None
+    )
+    r"""A fixed amount owed whole rather than a per-period rate. An obligation is not prorated over a partial first period: when a subscription starts before its billing anchor, no truncated stub is billed and the first charge is the full amount at the next anchor. An obligation also refuses an interval boundary that falls strictly inside one of its own billing periods, since part of an amount owed whole is not a thing to bill. Defaults to false, which is a rate and is today's behaviour for every price. Not supported on a metered price, whose amount resolves from usage at close."""
+
     quantity: Optional[int] = None
     r"""Quantity for invoice line items. Total per period = quantity × unitPrice. Only supported for fee prices; metered prices derive quantity from usage. Defaults to 1."""
 
@@ -102,6 +109,7 @@ class UpdatePriceRequestBody(BaseModel):
                 "billingCadence",
                 "feature",
                 "grantDiscountEnabled",
+                "isObligation",
                 "quantity",
             ]
         )
