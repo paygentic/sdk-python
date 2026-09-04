@@ -476,6 +476,7 @@ if TYPE_CHECKING:
         EventType,
         InvoiceLineItem,
         InvoiceLineItemLineItemType,
+        InvoiceLineItemPaymentTerm,
         InvoiceLineItemTypedDict,
     )
     from .invoicelineitemsresponse import (
@@ -1617,6 +1618,7 @@ __all__ = [
     "InvoiceCategorySummaryTypedDict",
     "InvoiceLineItem",
     "InvoiceLineItemLineItemType",
+    "InvoiceLineItemPaymentTerm",
     "InvoiceLineItemTypedDict",
     "InvoiceLineItems",
     "InvoiceLineItemsResponse",
@@ -2579,6 +2581,7 @@ _dynamic_imports: dict[str, str] = {
     "EventType": ".invoicelineitem",
     "InvoiceLineItem": ".invoicelineitem",
     "InvoiceLineItemLineItemType": ".invoicelineitem",
+    "InvoiceLineItemPaymentTerm": ".invoicelineitem",
     "InvoiceLineItemTypedDict": ".invoicelineitem",
     "InvoiceLineItemsResponse": ".invoicelineitemsresponse",
     "InvoiceLineItemsResponseTypedDict": ".invoicelineitemsresponse",

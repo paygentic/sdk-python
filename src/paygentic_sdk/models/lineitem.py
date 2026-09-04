@@ -46,7 +46,7 @@ LineItemPaymentTerm = Union[
     ],
     UnrecognizedStr,
 ]
-r"""Payment term for fee items. Null for metered/manual lines. `null` is listed in the enum as well as via `nullable` because OpenAPI 3.0 validators check the enum independently — `nullable: true` alone does not admit it, and createLineItem (which always returns null here) was emitting a schema-violating body."""
+r"""When the line falls due relative to the window it covers. A fee line carries its price's term; a metered line is stamped `in_arrears`, though metered rows predating that rule carry `null`. Manual, grant-discount and adjustment lines are billed on no term of their own and are `null`. `null` is listed in the enum as well as via `nullable` because OpenAPI 3.0 validators check the enum independently — `nullable: true` alone does not admit it, and createLineItem (which always returns null here) was emitting a schema-violating body."""
 
 
 class LineItemTypedDict(TypedDict):
@@ -91,7 +91,7 @@ class LineItemTypedDict(TypedDict):
     metered_quantity: NotRequired[Nullable[str]]
     r"""Raw metered usage. Null for fee/manual lines"""
     payment_term: NotRequired[Nullable[LineItemPaymentTerm]]
-    r"""Payment term for fee items. Null for metered/manual lines. `null` is listed in the enum as well as via `nullable` because OpenAPI 3.0 validators check the enum independently — `nullable: true` alone does not admit it, and createLineItem (which always returns null here) was emitting a schema-violating body."""
+    r"""When the line falls due relative to the window it covers. A fee line carries its price's term; a metered line is stamped `in_arrears`, though metered rows predating that rule carry `null`. Manual, grant-discount and adjustment lines are billed on no term of their own and are `null`. `null` is listed in the enum as well as via `nullable` because OpenAPI 3.0 validators check the enum independently — `nullable: true` alone does not admit it, and createLineItem (which always returns null here) was emitting a schema-violating body."""
     subtotal: NotRequired[str]
     r"""quantity × unitPrice, before discounts and taxes. For prorated lines, may differ from `quantity × unitPrice` by display precision; subtotal is the authoritative billed amount. Defaults to '0.00' when not yet calculated."""
     taxes_total: NotRequired[Nullable[str]]
@@ -174,7 +174,7 @@ class LineItem(BaseModel):
     payment_term: Annotated[
         OptionalNullable[LineItemPaymentTerm], pydantic.Field(alias="paymentTerm")
     ] = UNSET
-    r"""Payment term for fee items. Null for metered/manual lines. `null` is listed in the enum as well as via `nullable` because OpenAPI 3.0 validators check the enum independently — `nullable: true` alone does not admit it, and createLineItem (which always returns null here) was emitting a schema-violating body."""
+    r"""When the line falls due relative to the window it covers. A fee line carries its price's term; a metered line is stamped `in_arrears`, though metered rows predating that rule carry `null`. Manual, grant-discount and adjustment lines are billed on no term of their own and are `null`. `null` is listed in the enum as well as via `nullable` because OpenAPI 3.0 validators check the enum independently — `nullable: true` alone does not admit it, and createLineItem (which always returns null here) was emitting a schema-violating body."""
 
     subtotal: Optional[str] = None
     r"""quantity × unitPrice, before discounts and taxes. For prorated lines, may differ from `quantity × unitPrice` by display precision; subtotal is the authoritative billed amount. Defaults to '0.00' when not yet calculated."""
