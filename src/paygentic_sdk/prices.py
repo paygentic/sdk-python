@@ -22,12 +22,15 @@ class Prices(BaseSDK):
         fee_id: Optional[str] = None,
         pricing_unit_id: Optional[str] = None,
         model: Optional[models.PriceModelInput] = None,
+        invoice_display_group: OptionalNullable[str] = UNSET,
         billing_cadence: OptionalNullable[str] = UNSET,
         feature: Optional[
             Union[models.PriceFeatureInput, models.PriceFeatureInputTypedDict]
         ] = None,
         grant_discount_enabled: Optional[bool] = False,
         is_obligation: Optional[bool] = False,
+        rate_type: Optional[models.RateType] = None,
+        tax: Optional[Union[models.PriceTax, models.PriceTaxTypedDict]] = None,
         quantity: Optional[int] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -43,10 +46,13 @@ class Prices(BaseSDK):
         :param fee_id: The unique identifier for the fee referred to by this price. Either billableMetricId or feeId must be provided.
         :param pricing_unit_id: Unique identifier for a pricing unit
         :param model: Pricing calculation model. Required for billable metrics, optional for fees (defaults to 'standard'). 'standard' and 'volume' are accepted; fees only support 'standard'. For percentage/revenue-share use 'standard' with a unit-price multiplier. Legacy prices using 'dynamic'/'percentage' stay readable and billable but cannot be created.
+        :param invoice_display_group: Presentation only. Prices sharing this value, within one billing period, print as a single row on the rendered invoice PDF and are described by this string. Every member still bills its own line item on the ledger, this API and the compliance document. The combined row's rate is derived from the members' own rates. Requires the 'standard' pricing model. Sample values: 'Cross Border Fees', 'FX Fees'
         :param billing_cadence: ISO 8601 duration for recurring charges (e.g., 'P1M' for monthly, 'P1Y' for yearly) or 'P0D' for one-time charges. Required for fees, optional for billable metrics. Sample values: 'P0D' for one-time, 'P1M' for monthly recurring, 'P1Y' for yearly recurring
         :param feature:
         :param grant_discount_enabled: When true, grants applied to a subscription will discount usage charged by this price. Only supported for standard metered prices.
         :param is_obligation: A fixed amount owed whole rather than a per-period rate. An obligation is not prorated over a partial first period: when a subscription starts before its billing anchor, no truncated stub is billed and the first charge is the full amount at the next anchor. An obligation also refuses an interval boundary that falls strictly inside one of its own billing periods, since part of an amount owed whole is not a thing to bill. Defaults to false, which is a rate and is today's behaviour for every price. Not supported on a metered price, whose amount resolves from usage at close.
+        :param rate_type: What properties.unitPrice is denominated in. 'amount' (the default) is an amount of the invoice currency for each unit metered, so the quantity is the multiplier. 'proportion' is the reverse: a dimensionless share of a currency-denominated quantity, so '0.02' is 2% and the invoice prints '2.00%'. Presentation only. Requires a standard metered price in real currency.
+        :param tax: A price's tax declaration. Optional on write — a price that declares nothing is `IN_SCOPE`, and is billed and taxed exactly as it was before this object existed. Always present on read. Replaced as a whole on update: send the object to change it, omit it to leave it alone.
         :param quantity: Quantity for invoice line items. Total per period = quantity × unitPrice. Only supported for fee prices; metered prices derive quantity from usage. Defaults to 1.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -69,6 +75,7 @@ class Prices(BaseSDK):
             pricing_unit_id=pricing_unit_id,
             model=model,
             invoice_display_name=invoice_display_name,
+            invoice_display_group=invoice_display_group,
             payment_term=payment_term,
             billing_cadence=billing_cadence,
             properties=utils.get_pydantic_model(properties, models.PriceProperties),
@@ -77,6 +84,8 @@ class Prices(BaseSDK):
             ),
             grant_discount_enabled=grant_discount_enabled,
             is_obligation=is_obligation,
+            rate_type=rate_type,
+            tax=utils.get_pydantic_model(tax, Optional[models.PriceTax]),
             quantity=quantity,
         )
 
@@ -158,12 +167,15 @@ class Prices(BaseSDK):
         fee_id: Optional[str] = None,
         pricing_unit_id: Optional[str] = None,
         model: Optional[models.PriceModelInput] = None,
+        invoice_display_group: OptionalNullable[str] = UNSET,
         billing_cadence: OptionalNullable[str] = UNSET,
         feature: Optional[
             Union[models.PriceFeatureInput, models.PriceFeatureInputTypedDict]
         ] = None,
         grant_discount_enabled: Optional[bool] = False,
         is_obligation: Optional[bool] = False,
+        rate_type: Optional[models.RateType] = None,
+        tax: Optional[Union[models.PriceTax, models.PriceTaxTypedDict]] = None,
         quantity: Optional[int] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -179,10 +191,13 @@ class Prices(BaseSDK):
         :param fee_id: The unique identifier for the fee referred to by this price. Either billableMetricId or feeId must be provided.
         :param pricing_unit_id: Unique identifier for a pricing unit
         :param model: Pricing calculation model. Required for billable metrics, optional for fees (defaults to 'standard'). 'standard' and 'volume' are accepted; fees only support 'standard'. For percentage/revenue-share use 'standard' with a unit-price multiplier. Legacy prices using 'dynamic'/'percentage' stay readable and billable but cannot be created.
+        :param invoice_display_group: Presentation only. Prices sharing this value, within one billing period, print as a single row on the rendered invoice PDF and are described by this string. Every member still bills its own line item on the ledger, this API and the compliance document. The combined row's rate is derived from the members' own rates. Requires the 'standard' pricing model. Sample values: 'Cross Border Fees', 'FX Fees'
         :param billing_cadence: ISO 8601 duration for recurring charges (e.g., 'P1M' for monthly, 'P1Y' for yearly) or 'P0D' for one-time charges. Required for fees, optional for billable metrics. Sample values: 'P0D' for one-time, 'P1M' for monthly recurring, 'P1Y' for yearly recurring
         :param feature:
         :param grant_discount_enabled: When true, grants applied to a subscription will discount usage charged by this price. Only supported for standard metered prices.
         :param is_obligation: A fixed amount owed whole rather than a per-period rate. An obligation is not prorated over a partial first period: when a subscription starts before its billing anchor, no truncated stub is billed and the first charge is the full amount at the next anchor. An obligation also refuses an interval boundary that falls strictly inside one of its own billing periods, since part of an amount owed whole is not a thing to bill. Defaults to false, which is a rate and is today's behaviour for every price. Not supported on a metered price, whose amount resolves from usage at close.
+        :param rate_type: What properties.unitPrice is denominated in. 'amount' (the default) is an amount of the invoice currency for each unit metered, so the quantity is the multiplier. 'proportion' is the reverse: a dimensionless share of a currency-denominated quantity, so '0.02' is 2% and the invoice prints '2.00%'. Presentation only. Requires a standard metered price in real currency.
+        :param tax: A price's tax declaration. Optional on write — a price that declares nothing is `IN_SCOPE`, and is billed and taxed exactly as it was before this object existed. Always present on read. Replaced as a whole on update: send the object to change it, omit it to leave it alone.
         :param quantity: Quantity for invoice line items. Total per period = quantity × unitPrice. Only supported for fee prices; metered prices derive quantity from usage. Defaults to 1.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -205,6 +220,7 @@ class Prices(BaseSDK):
             pricing_unit_id=pricing_unit_id,
             model=model,
             invoice_display_name=invoice_display_name,
+            invoice_display_group=invoice_display_group,
             payment_term=payment_term,
             billing_cadence=billing_cadence,
             properties=utils.get_pydantic_model(properties, models.PriceProperties),
@@ -213,6 +229,8 @@ class Prices(BaseSDK):
             ),
             grant_discount_enabled=grant_discount_enabled,
             is_obligation=is_obligation,
+            rate_type=rate_type,
+            tax=utils.get_pydantic_model(tax, Optional[models.PriceTax]),
             quantity=quantity,
         )
 
@@ -679,6 +697,7 @@ class Prices(BaseSDK):
         billable_metric_id: Optional[str] = None,
         pricing_unit_id: OptionalNullable[str] = UNSET,
         invoice_display_name: Optional[str] = None,
+        invoice_display_group: OptionalNullable[str] = UNSET,
         model: Optional[models.PriceModelInput] = None,
         properties: Optional[
             Union[models.PriceProperties, models.PricePropertiesTypedDict]
@@ -690,6 +709,8 @@ class Prices(BaseSDK):
         ] = UNSET,
         grant_discount_enabled: Optional[bool] = None,
         is_obligation: Optional[bool] = None,
+        rate_type: Optional[models.RateType] = None,
+        tax: Optional[Union[models.PriceTax, models.PriceTaxTypedDict]] = None,
         quantity: Optional[int] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -702,6 +723,7 @@ class Prices(BaseSDK):
         :param billable_metric_id: Unique identifier for a billable metric
         :param pricing_unit_id: Denominate this metered price in a pricing unit (credits). Set to a pricing unit ID to draw down a credit pool, null to revert to real currency, or omit to leave unchanged.
         :param invoice_display_name: Updated invoice line item label. Sample values: 'LLM Token Usage', 'Storage Charges', 'API Call Fees'
+        :param invoice_display_group: Presentation only. Prices sharing this value, within one billing period, print as a single row on the rendered invoice PDF and are described by this string. Every member still bills its own line item on the ledger, this API and the compliance document. The combined row's rate is derived from the members' own rates. Requires the 'standard' pricing model. Sample values: 'Cross Border Fees', 'FX Fees'
         :param model: The pricing model to set. 'standard' and 'volume' are accepted. Legacy 'dynamic'/'percentage' prices can still be edited (other fields) but cannot be switched back to those models. Percentage/revenue-share is expressed via 'standard' with a unit-price multiplier.
         :param properties:
         :param payment_term: Billing timing preference: 'in_advance' (prepaid — charged upfront or drawn from a prepaid commitment) or 'in_arrears' (charged at period end).
@@ -709,6 +731,8 @@ class Prices(BaseSDK):
         :param feature: Feature to associate. Set to null to remove existing feature. Omit to leave unchanged.
         :param grant_discount_enabled: When true, grants applied to a subscription will discount usage charged by this price. Only supported for standard metered prices.
         :param is_obligation: A fixed amount owed whole rather than a per-period rate. An obligation is not prorated over a partial first period: when a subscription starts before its billing anchor, no truncated stub is billed and the first charge is the full amount at the next anchor. An obligation also refuses an interval boundary that falls strictly inside one of its own billing periods, since part of an amount owed whole is not a thing to bill. Defaults to false, which is a rate and is today's behaviour for every price. Not supported on a metered price, whose amount resolves from usage at close.
+        :param rate_type: What properties.unitPrice is denominated in. 'amount' (the default) is an amount of the invoice currency for each unit metered, so the quantity is the multiplier. 'proportion' is the reverse: a dimensionless share of a currency-denominated quantity, so '0.02' is 2% and the invoice prints '2.00%'. Presentation only. Requires a standard metered price in real currency.
+        :param tax: A price's tax declaration. Optional on write — a price that declares nothing is `IN_SCOPE`, and is billed and taxed exactly as it was before this object existed. Always present on read. Replaced as a whole on update: send the object to change it, omit it to leave it alone.
         :param quantity: Quantity for invoice line items. Total per period = quantity × unitPrice. Only supported for fee prices; metered prices derive quantity from usage. Defaults to 1.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -731,6 +755,7 @@ class Prices(BaseSDK):
                 billable_metric_id=billable_metric_id,
                 pricing_unit_id=pricing_unit_id,
                 invoice_display_name=invoice_display_name,
+                invoice_display_group=invoice_display_group,
                 model=model,
                 properties=utils.get_pydantic_model(
                     properties, Optional[models.PriceProperties]
@@ -742,6 +767,8 @@ class Prices(BaseSDK):
                 ),
                 grant_discount_enabled=grant_discount_enabled,
                 is_obligation=is_obligation,
+                rate_type=rate_type,
+                tax=utils.get_pydantic_model(tax, Optional[models.PriceTax]),
                 quantity=quantity,
             ),
         )
@@ -830,6 +857,7 @@ class Prices(BaseSDK):
         billable_metric_id: Optional[str] = None,
         pricing_unit_id: OptionalNullable[str] = UNSET,
         invoice_display_name: Optional[str] = None,
+        invoice_display_group: OptionalNullable[str] = UNSET,
         model: Optional[models.PriceModelInput] = None,
         properties: Optional[
             Union[models.PriceProperties, models.PricePropertiesTypedDict]
@@ -841,6 +869,8 @@ class Prices(BaseSDK):
         ] = UNSET,
         grant_discount_enabled: Optional[bool] = None,
         is_obligation: Optional[bool] = None,
+        rate_type: Optional[models.RateType] = None,
+        tax: Optional[Union[models.PriceTax, models.PriceTaxTypedDict]] = None,
         quantity: Optional[int] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
@@ -853,6 +883,7 @@ class Prices(BaseSDK):
         :param billable_metric_id: Unique identifier for a billable metric
         :param pricing_unit_id: Denominate this metered price in a pricing unit (credits). Set to a pricing unit ID to draw down a credit pool, null to revert to real currency, or omit to leave unchanged.
         :param invoice_display_name: Updated invoice line item label. Sample values: 'LLM Token Usage', 'Storage Charges', 'API Call Fees'
+        :param invoice_display_group: Presentation only. Prices sharing this value, within one billing period, print as a single row on the rendered invoice PDF and are described by this string. Every member still bills its own line item on the ledger, this API and the compliance document. The combined row's rate is derived from the members' own rates. Requires the 'standard' pricing model. Sample values: 'Cross Border Fees', 'FX Fees'
         :param model: The pricing model to set. 'standard' and 'volume' are accepted. Legacy 'dynamic'/'percentage' prices can still be edited (other fields) but cannot be switched back to those models. Percentage/revenue-share is expressed via 'standard' with a unit-price multiplier.
         :param properties:
         :param payment_term: Billing timing preference: 'in_advance' (prepaid — charged upfront or drawn from a prepaid commitment) or 'in_arrears' (charged at period end).
@@ -860,6 +891,8 @@ class Prices(BaseSDK):
         :param feature: Feature to associate. Set to null to remove existing feature. Omit to leave unchanged.
         :param grant_discount_enabled: When true, grants applied to a subscription will discount usage charged by this price. Only supported for standard metered prices.
         :param is_obligation: A fixed amount owed whole rather than a per-period rate. An obligation is not prorated over a partial first period: when a subscription starts before its billing anchor, no truncated stub is billed and the first charge is the full amount at the next anchor. An obligation also refuses an interval boundary that falls strictly inside one of its own billing periods, since part of an amount owed whole is not a thing to bill. Defaults to false, which is a rate and is today's behaviour for every price. Not supported on a metered price, whose amount resolves from usage at close.
+        :param rate_type: What properties.unitPrice is denominated in. 'amount' (the default) is an amount of the invoice currency for each unit metered, so the quantity is the multiplier. 'proportion' is the reverse: a dimensionless share of a currency-denominated quantity, so '0.02' is 2% and the invoice prints '2.00%'. Presentation only. Requires a standard metered price in real currency.
+        :param tax: A price's tax declaration. Optional on write — a price that declares nothing is `IN_SCOPE`, and is billed and taxed exactly as it was before this object existed. Always present on read. Replaced as a whole on update: send the object to change it, omit it to leave it alone.
         :param quantity: Quantity for invoice line items. Total per period = quantity × unitPrice. Only supported for fee prices; metered prices derive quantity from usage. Defaults to 1.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -882,6 +915,7 @@ class Prices(BaseSDK):
                 billable_metric_id=billable_metric_id,
                 pricing_unit_id=pricing_unit_id,
                 invoice_display_name=invoice_display_name,
+                invoice_display_group=invoice_display_group,
                 model=model,
                 properties=utils.get_pydantic_model(
                     properties, Optional[models.PriceProperties]
@@ -893,6 +927,8 @@ class Prices(BaseSDK):
                 ),
                 grant_discount_enabled=grant_discount_enabled,
                 is_obligation=is_obligation,
+                rate_type=rate_type,
+                tax=utils.get_pydantic_model(tax, Optional[models.PriceTax]),
                 quantity=quantity,
             ),
         )

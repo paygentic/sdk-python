@@ -4,6 +4,8 @@ from __future__ import annotations
 from .pricefeature import PriceFeature, PriceFeatureTypedDict
 from .pricemodel import PriceModel
 from .priceproperties import PriceProperties, PricePropertiesTypedDict
+from .pricetax import PriceTax, PriceTaxTypedDict
+from .ratetype import RateType
 from datetime import datetime
 from paygentic_sdk.types import (
     BaseModel,
@@ -41,6 +43,8 @@ class SchemasPriceTypedDict(TypedDict):
     payment_term: SchemasPricePaymentTerm
     properties: PricePropertiesTypedDict
     updated_at: datetime
+    tax: PriceTaxTypedDict
+    r"""A price's tax declaration. Optional on write — a price that declares nothing is `IN_SCOPE`, and is billed and taxed exactly as it was before this object existed. Always present on read. Replaced as a whole on update: send the object to change it, omit it to leave it alone."""
     quantity: int
     r"""Quantity for invoice line items. Total per period = quantity × unitPrice. Only supported for fee prices; metered prices derive quantity from usage. Defaults to 1."""
     object: NotRequired[SchemasPriceObject]
@@ -52,6 +56,8 @@ class SchemasPriceTypedDict(TypedDict):
     r"""Unique identifier for a pricing unit"""
     billing_cadence: NotRequired[Nullable[str]]
     r"""ISO 8601 duration. 'P0D' for one-time, 'P1M' for monthly, 'P1Y' for yearly. Required for fees, optional for billable metrics. Defaults to plan's billingCadence if not specified."""
+    invoice_display_group: NotRequired[Nullable[str]]
+    r"""Presentation only. Prices sharing this value, within one billing period, print as a single row on the rendered invoice PDF and are described by this string. Every member still bills its own line item on the ledger, this API and the compliance document. The combined row's rate is derived from the members' own rates. Requires the 'standard' pricing model. Sample values: 'Cross Border Fees', 'FX Fees'"""
     model: NotRequired[PriceModel]
     r"""Pricing model of a price as returned by the API. Includes the legacy models ('dynamic', 'percentage') retained for existing prices; 'standard' and 'volume' can be created (see PriceModelInput)."""
     features: NotRequired[List[PriceFeatureTypedDict]]
@@ -60,6 +66,8 @@ class SchemasPriceTypedDict(TypedDict):
     r"""When true, grants applied to a subscription will discount usage charged by this price. Only supported for standard metered prices."""
     is_obligation: NotRequired[bool]
     r"""A fixed amount owed whole rather than a per-period rate. An obligation is not prorated over a partial first period: when a subscription starts before its billing anchor, no truncated stub is billed and the first charge is the full amount at the next anchor. An obligation also refuses an interval boundary that falls strictly inside one of its own billing periods, since part of an amount owed whole is not a thing to bill. Defaults to false, which is a rate and is today's behaviour for every price. Not supported on a metered price, whose amount resolves from usage at close."""
+    rate_type: NotRequired[RateType]
+    r"""What properties.unitPrice is denominated in. 'amount' (the default) is an amount of the invoice currency for each unit metered, so the quantity is the multiplier. 'proportion' is the reverse: a dimensionless share of a currency-denominated quantity, so '0.02' is 2% and the invoice prints '2.00%'. Presentation only. Requires a standard metered price in real currency."""
 
 
 class SchemasPrice(BaseModel):
@@ -80,6 +88,9 @@ class SchemasPrice(BaseModel):
     properties: PriceProperties
 
     updated_at: Annotated[datetime, pydantic.Field(alias="updatedAt")]
+
+    tax: PriceTax
+    r"""A price's tax declaration. Optional on write — a price that declares nothing is `IN_SCOPE`, and is billed and taxed exactly as it was before this object existed. Always present on read. Replaced as a whole on update: send the object to change it, omit it to leave it alone."""
 
     quantity: int
     r"""Quantity for invoice line items. Total per period = quantity × unitPrice. Only supported for fee prices; metered prices derive quantity from usage. Defaults to 1."""
@@ -104,6 +115,11 @@ class SchemasPrice(BaseModel):
     ] = UNSET
     r"""ISO 8601 duration. 'P0D' for one-time, 'P1M' for monthly, 'P1Y' for yearly. Required for fees, optional for billable metrics. Defaults to plan's billingCadence if not specified."""
 
+    invoice_display_group: Annotated[
+        OptionalNullable[str], pydantic.Field(alias="invoiceDisplayGroup")
+    ] = UNSET
+    r"""Presentation only. Prices sharing this value, within one billing period, print as a single row on the rendered invoice PDF and are described by this string. Every member still bills its own line item on the ledger, this API and the compliance document. The combined row's rate is derived from the members' own rates. Requires the 'standard' pricing model. Sample values: 'Cross Border Fees', 'FX Fees'"""
+
     model: Optional[PriceModel] = None
     r"""Pricing model of a price as returned by the API. Includes the legacy models ('dynamic', 'percentage') retained for existing prices; 'standard' and 'volume' can be created (see PriceModelInput)."""
 
@@ -120,6 +136,9 @@ class SchemasPrice(BaseModel):
     )
     r"""A fixed amount owed whole rather than a per-period rate. An obligation is not prorated over a partial first period: when a subscription starts before its billing anchor, no truncated stub is billed and the first charge is the full amount at the next anchor. An obligation also refuses an interval boundary that falls strictly inside one of its own billing periods, since part of an amount owed whole is not a thing to bill. Defaults to false, which is a rate and is today's behaviour for every price. Not supported on a metered price, whose amount resolves from usage at close."""
 
+    rate_type: Annotated[Optional[RateType], pydantic.Field(alias="rateType")] = None
+    r"""What properties.unitPrice is denominated in. 'amount' (the default) is an amount of the invoice currency for each unit metered, so the quantity is the multiplier. 'proportion' is the reverse: a dimensionless share of a currency-denominated quantity, so '0.02' is 2% and the invoice prints '2.00%'. Presentation only. Requires a standard metered price in real currency."""
+
     @model_serializer(mode="wrap")
     def _serialize_model(self, handler):
         optional_fields = set(
@@ -129,13 +148,15 @@ class SchemasPrice(BaseModel):
                 "feeId",
                 "pricingUnitId",
                 "billingCadence",
+                "invoiceDisplayGroup",
                 "model",
                 "features",
                 "grantDiscountEnabled",
                 "isObligation",
+                "rateType",
             ]
         )
-        nullable_fields = set(["billingCadence"])
+        nullable_fields = set(["billingCadence", "invoiceDisplayGroup"])
         serialized = handler(self)
         m = {}
 

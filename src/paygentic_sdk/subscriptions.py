@@ -1528,7 +1528,7 @@ class Subscriptions(BaseSDK):
                 ),
             ),
             request=req,
-            error_status_codes=["400", "401", "403", "404", "4XX", "500", "5XX"],
+            error_status_codes=["400", "401", "403", "404", "429", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1538,7 +1538,9 @@ class Subscriptions(BaseSDK):
         if utils.match_response(http_res, "400", "application/json"):
             response_data = unmarshal_json_response(errors.BadRequestUnion, http_res)
             raise errors.BadRequest(response_data, http_res)
-        if utils.match_response(http_res, ["401", "403", "404"], "application/json"):
+        if utils.match_response(
+            http_res, ["401", "403", "404", "429"], "application/json"
+        ):
             response_data = unmarshal_json_response(errors.ErrorData, http_res)
             raise errors.Error(response_data, http_res)
         if utils.match_response(http_res, "500", "application/json"):
@@ -1638,7 +1640,7 @@ class Subscriptions(BaseSDK):
                 ),
             ),
             request=req,
-            error_status_codes=["400", "401", "403", "404", "4XX", "500", "5XX"],
+            error_status_codes=["400", "401", "403", "404", "429", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1648,7 +1650,9 @@ class Subscriptions(BaseSDK):
         if utils.match_response(http_res, "400", "application/json"):
             response_data = unmarshal_json_response(errors.BadRequestUnion, http_res)
             raise errors.BadRequest(response_data, http_res)
-        if utils.match_response(http_res, ["401", "403", "404"], "application/json"):
+        if utils.match_response(
+            http_res, ["401", "403", "404", "429"], "application/json"
+        ):
             response_data = unmarshal_json_response(errors.ErrorData, http_res)
             raise errors.Error(response_data, http_res)
         if utils.match_response(http_res, "500", "application/json"):
@@ -1877,12 +1881,10 @@ class Subscriptions(BaseSDK):
         self,
         *,
         id: str,
-        type_: models.CreateSubscriptionAdjustmentRequestType,
-        percentage_discount: str,
-        effective_from: datetime,
-        effective_to: OptionalNullable[datetime] = UNSET,
-        description: OptionalNullable[str] = UNSET,
-        idempotency_key: Optional[str] = None,
+        create_subscription_adjustment_request: Union[
+            models.CreateSubscriptionAdjustmentRequest,
+            models.CreateSubscriptionAdjustmentRequestTypedDict,
+        ],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -1890,15 +1892,10 @@ class Subscriptions(BaseSDK):
     ) -> models.SubscriptionAdjustment:
         r"""Create Adjustment
 
-        Attaches a percentage discount to the subscription for a dated window. Every invoice calculated while the window is open carries one discount line for each discounted charge, and tax is assessed on the reduced amount. An invoice that already exists is not changed, including one still in draft — the discount reaches the periods that close after it is created. There is no update operation, and a window cannot be changed after it is created. To change a rate before any invoice has issued under the discount, delete the adjustment and create a replacement. Once an invoice has issued the adjustment is permanent, so set effectiveTo at creation time whenever the deal has a known end date.
+        Attaches an adjustment to the subscription for a dated window. A percentageDiscount reduces every discountable charge by a rate and carries one discount line per charge on the invoice. A usageDiscount takes a number of usage units off one metered price's billable quantity before that line is priced, so the line re-slots on a volume ladder and shows the corrected quantity; it emits no line of its own. Tax is assessed on the reduced amount either way. An invoice that already exists is not changed, including one still in draft — the adjustment reaches the periods that close after it is created. There is no update operation, and a window cannot be changed after it is created. To change an adjustment before any invoice has issued under it, delete it and create a replacement. Once an invoice has issued the adjustment is permanent, so set effectiveTo at creation time whenever the deal has a known end date.
 
         :param id: The subscription ID
-        :param type: The kind of adjustment. `percentageDiscount` reduces every discountable charge by a rate.
-        :param percentage_discount: The discount rate as a decimal fraction between 0 and 1, sent as a string. \"0.35\" means 35 percent. \"1\" means 100 percent, not 1 percent. At most 6 decimal places. A value of 0 or above 1 is rejected.
-        :param effective_from: The first instant the discount applies. Inclusive.
-        :param effective_to: The instant the discount stops applying. Exclusive, so a window ending on the same date another begins neither overlaps nor leaves a gap. Null means the discount never stops, and it cannot be ended later — set an instant whenever the deal has a known end date. Must be after effectiveFrom.
-        :param description: The deal's own name, shown on each discount line of the invoice.
-        :param idempotency_key: A key of your choosing that makes a retry safe. Sending the same key against the same subscription returns the adjustment already created and creates no second one. Without a key a retried request creates a second adjustment, and two percentage discounts compound — two of 0.35 bill 57.75 percent off, not 35 percent.
+        :param create_subscription_adjustment_request:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1916,13 +1913,9 @@ class Subscriptions(BaseSDK):
 
         request = models.CreateSubscriptionAdjustmentRequestRequest(
             id=id,
-            create_subscription_adjustment_request=models.CreateSubscriptionAdjustmentRequest(
-                type=type_,
-                percentage_discount=percentage_discount,
-                effective_from=effective_from,
-                effective_to=effective_to,
-                description=description,
-                idempotency_key=idempotency_key,
+            create_subscription_adjustment_request=utils.get_pydantic_model(
+                create_subscription_adjustment_request,
+                models.CreateSubscriptionAdjustmentRequest,
             ),
         )
 
@@ -2002,12 +1995,10 @@ class Subscriptions(BaseSDK):
         self,
         *,
         id: str,
-        type_: models.CreateSubscriptionAdjustmentRequestType,
-        percentage_discount: str,
-        effective_from: datetime,
-        effective_to: OptionalNullable[datetime] = UNSET,
-        description: OptionalNullable[str] = UNSET,
-        idempotency_key: Optional[str] = None,
+        create_subscription_adjustment_request: Union[
+            models.CreateSubscriptionAdjustmentRequest,
+            models.CreateSubscriptionAdjustmentRequestTypedDict,
+        ],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -2015,15 +2006,10 @@ class Subscriptions(BaseSDK):
     ) -> models.SubscriptionAdjustment:
         r"""Create Adjustment
 
-        Attaches a percentage discount to the subscription for a dated window. Every invoice calculated while the window is open carries one discount line for each discounted charge, and tax is assessed on the reduced amount. An invoice that already exists is not changed, including one still in draft — the discount reaches the periods that close after it is created. There is no update operation, and a window cannot be changed after it is created. To change a rate before any invoice has issued under the discount, delete the adjustment and create a replacement. Once an invoice has issued the adjustment is permanent, so set effectiveTo at creation time whenever the deal has a known end date.
+        Attaches an adjustment to the subscription for a dated window. A percentageDiscount reduces every discountable charge by a rate and carries one discount line per charge on the invoice. A usageDiscount takes a number of usage units off one metered price's billable quantity before that line is priced, so the line re-slots on a volume ladder and shows the corrected quantity; it emits no line of its own. Tax is assessed on the reduced amount either way. An invoice that already exists is not changed, including one still in draft — the adjustment reaches the periods that close after it is created. There is no update operation, and a window cannot be changed after it is created. To change an adjustment before any invoice has issued under it, delete it and create a replacement. Once an invoice has issued the adjustment is permanent, so set effectiveTo at creation time whenever the deal has a known end date.
 
         :param id: The subscription ID
-        :param type: The kind of adjustment. `percentageDiscount` reduces every discountable charge by a rate.
-        :param percentage_discount: The discount rate as a decimal fraction between 0 and 1, sent as a string. \"0.35\" means 35 percent. \"1\" means 100 percent, not 1 percent. At most 6 decimal places. A value of 0 or above 1 is rejected.
-        :param effective_from: The first instant the discount applies. Inclusive.
-        :param effective_to: The instant the discount stops applying. Exclusive, so a window ending on the same date another begins neither overlaps nor leaves a gap. Null means the discount never stops, and it cannot be ended later — set an instant whenever the deal has a known end date. Must be after effectiveFrom.
-        :param description: The deal's own name, shown on each discount line of the invoice.
-        :param idempotency_key: A key of your choosing that makes a retry safe. Sending the same key against the same subscription returns the adjustment already created and creates no second one. Without a key a retried request creates a second adjustment, and two percentage discounts compound — two of 0.35 bill 57.75 percent off, not 35 percent.
+        :param create_subscription_adjustment_request:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -2041,13 +2027,9 @@ class Subscriptions(BaseSDK):
 
         request = models.CreateSubscriptionAdjustmentRequestRequest(
             id=id,
-            create_subscription_adjustment_request=models.CreateSubscriptionAdjustmentRequest(
-                type=type_,
-                percentage_discount=percentage_discount,
-                effective_from=effective_from,
-                effective_to=effective_to,
-                description=description,
-                idempotency_key=idempotency_key,
+            create_subscription_adjustment_request=utils.get_pydantic_model(
+                create_subscription_adjustment_request,
+                models.CreateSubscriptionAdjustmentRequest,
             ),
         )
 

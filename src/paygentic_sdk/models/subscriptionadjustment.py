@@ -2,17 +2,23 @@
 
 from __future__ import annotations
 from datetime import datetime
-from paygentic_sdk.types import BaseModel, Nullable, UNSET_SENTINEL
+from paygentic_sdk.types import BaseModel, Nullable, UNSET_SENTINEL, UnrecognizedStr
 import pydantic
 from pydantic import model_serializer
-from typing import Literal
+from typing import List, Literal, Union
 from typing_extensions import Annotated, TypedDict
 
 
 SubscriptionAdjustmentObject = Literal["subscriptionAdjustment",]
 
 
-SubscriptionAdjustmentType = Literal["percentageDiscount",]
+SubscriptionAdjustmentType = Union[
+    Literal[
+        "percentageDiscount",
+        "usageDiscount",
+    ],
+    UnrecognizedStr,
+]
 
 
 class SubscriptionAdjustmentTypedDict(TypedDict):
@@ -22,14 +28,18 @@ class SubscriptionAdjustmentTypedDict(TypedDict):
     subscription_id: str
     r"""Unique identifier for a subscription"""
     type: SubscriptionAdjustmentType
-    percentage_discount: str
-    r"""The discount rate as a decimal fraction between 0 and 1. \"0.35\" means 35 percent."""
+    percentage_discount: Nullable[str]
+    r"""The discount rate as a decimal fraction between 0 and 1. \"0.35\" means 35 percent. Null on a usageDiscount, which carries a unit count instead."""
+    usage_discount: Nullable[str]
+    r"""The number of usage units taken off the targeted line's billable quantity. Null on a percentageDiscount, which carries a rate instead."""
+    target_price_ids: List[str]
+    r"""The prices this adjustment reduces. Exactly one metered price on a usageDiscount; empty on a percentageDiscount, which reduces every discountable charge."""
     effective_from: datetime
-    r"""The first instant the discount applies. Inclusive."""
+    r"""Opens the window. Read per type: INCLUSIVE on a percentageDiscount, whose window is prorated by day overlap; EXCLUSIVE on a usageDiscount, which corrects a line whose period END falls strictly after this instant."""
     effective_to: Nullable[datetime]
-    r"""The instant the discount stops applying. Exclusive. Null means the discount never stops."""
+    r"""Closes the window, or null for never. Read per type: EXCLUSIVE on a percentageDiscount; INCLUSIVE on a usageDiscount, which corrects a line whose period END falls on or before this instant."""
     description: Nullable[str]
-    r"""The deal's own name, shown on each discount line of the invoice."""
+    r"""The deal's own name. Shown on each discount line a percentageDiscount emits; a usageDiscount emits no line, so its description is carried here only."""
     created_at: datetime
 
 
@@ -44,17 +54,25 @@ class SubscriptionAdjustment(BaseModel):
 
     type: SubscriptionAdjustmentType
 
-    percentage_discount: Annotated[str, pydantic.Field(alias="percentageDiscount")]
-    r"""The discount rate as a decimal fraction between 0 and 1. \"0.35\" means 35 percent."""
+    percentage_discount: Annotated[
+        Nullable[str], pydantic.Field(alias="percentageDiscount")
+    ]
+    r"""The discount rate as a decimal fraction between 0 and 1. \"0.35\" means 35 percent. Null on a usageDiscount, which carries a unit count instead."""
+
+    usage_discount: Annotated[Nullable[str], pydantic.Field(alias="usageDiscount")]
+    r"""The number of usage units taken off the targeted line's billable quantity. Null on a percentageDiscount, which carries a rate instead."""
+
+    target_price_ids: Annotated[List[str], pydantic.Field(alias="targetPriceIds")]
+    r"""The prices this adjustment reduces. Exactly one metered price on a usageDiscount; empty on a percentageDiscount, which reduces every discountable charge."""
 
     effective_from: Annotated[datetime, pydantic.Field(alias="effectiveFrom")]
-    r"""The first instant the discount applies. Inclusive."""
+    r"""Opens the window. Read per type: INCLUSIVE on a percentageDiscount, whose window is prorated by day overlap; EXCLUSIVE on a usageDiscount, which corrects a line whose period END falls strictly after this instant."""
 
     effective_to: Annotated[Nullable[datetime], pydantic.Field(alias="effectiveTo")]
-    r"""The instant the discount stops applying. Exclusive. Null means the discount never stops."""
+    r"""Closes the window, or null for never. Read per type: EXCLUSIVE on a percentageDiscount; INCLUSIVE on a usageDiscount, which corrects a line whose period END falls on or before this instant."""
 
     description: Nullable[str]
-    r"""The deal's own name, shown on each discount line of the invoice."""
+    r"""The deal's own name. Shown on each discount line a percentageDiscount emits; a usageDiscount emits no line, so its description is carried here only."""
 
     created_at: Annotated[datetime, pydantic.Field(alias="createdAt")]
 

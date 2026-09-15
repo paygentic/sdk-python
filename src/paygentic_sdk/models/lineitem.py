@@ -12,7 +12,7 @@ from paygentic_sdk.types import (
 )
 import pydantic
 from pydantic import model_serializer
-from typing import Literal, Optional, Union
+from typing import List, Literal, Optional, Union
 from typing_extensions import Annotated, NotRequired, TypedDict
 
 
@@ -90,6 +90,8 @@ class LineItemTypedDict(TypedDict):
     r"""Units sold. Null for metered lines until invoice close"""
     metered_quantity: NotRequired[Nullable[str]]
     r"""Raw metered usage. Null for fee/manual lines"""
+    usage_discount_ids: NotRequired[List[str]]
+    r"""The subscription adjustments of type `usageDiscount` that reduced this line's billable `quantity`. Empty for every other line. Where this is non-empty, `quantity` is below `meteredQuantity` because an operator waived units, rather than because a grant covered them."""
     payment_term: NotRequired[Nullable[LineItemPaymentTerm]]
     r"""When the line falls due relative to the window it covers. A fee line carries its price's term; a metered line is stamped `in_arrears`, though metered rows predating that rule carry `null`. Manual, grant-discount and adjustment lines are billed on no term of their own and are `null`. `null` is listed in the enum as well as via `nullable` because OpenAPI 3.0 validators check the enum independently — `nullable: true` alone does not admit it, and createLineItem (which always returns null here) was emitting a schema-violating body."""
     subtotal: NotRequired[str]
@@ -171,6 +173,11 @@ class LineItem(BaseModel):
     ] = UNSET
     r"""Raw metered usage. Null for fee/manual lines"""
 
+    usage_discount_ids: Annotated[
+        Optional[List[str]], pydantic.Field(alias="usageDiscountIds")
+    ] = None
+    r"""The subscription adjustments of type `usageDiscount` that reduced this line's billable `quantity`. Empty for every other line. Where this is non-empty, `quantity` is below `meteredQuantity` because an operator waived units, rather than because a grant covered them."""
+
     payment_term: Annotated[
         OptionalNullable[LineItemPaymentTerm], pydantic.Field(alias="paymentTerm")
     ] = UNSET
@@ -208,6 +215,7 @@ class LineItem(BaseModel):
                 "calculatedAt",
                 "quantity",
                 "meteredQuantity",
+                "usageDiscountIds",
                 "paymentTerm",
                 "subtotal",
                 "taxesTotal",

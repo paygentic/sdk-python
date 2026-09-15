@@ -193,6 +193,10 @@ if TYPE_CHECKING:
         CreatePaymentRequestTypedDict,
         Currency,
     )
+    from .createpercentagediscountadjustment import (
+        CreatePercentageDiscountAdjustment,
+        CreatePercentageDiscountAdjustmentTypedDict,
+    )
     from .createplanop import (
         BillingVersion,
         CreatePlanBillingCadence,
@@ -225,7 +229,6 @@ if TYPE_CHECKING:
     )
     from .createsubscriptionadjustmentrequest import (
         CreateSubscriptionAdjustmentRequest,
-        CreateSubscriptionAdjustmentRequestType,
         CreateSubscriptionAdjustmentRequestTypedDict,
     )
     from .createsubscriptionop import (
@@ -241,6 +244,10 @@ if TYPE_CHECKING:
     from .createtestclockop import (
         CreateTestClockRequest,
         CreateTestClockRequestTypedDict,
+    )
+    from .createusagediscountadjustment import (
+        CreateUsageDiscountAdjustment,
+        CreateUsageDiscountAdjustmentTypedDict,
     )
     from .currencybreakdownentry import (
         CurrencyBreakdownEntry,
@@ -836,6 +843,7 @@ if TYPE_CHECKING:
         PlanVersionPriceSlotModel,
         PlanVersionPriceSlotObject,
         PlanVersionPriceSlotPaymentTerm,
+        PlanVersionPriceSlotRateType,
         PlanVersionPriceSlotTypedDict,
     )
     from .planversionsummary import (
@@ -844,7 +852,14 @@ if TYPE_CHECKING:
         PlanVersionSummaryStatus,
         PlanVersionSummaryTypedDict,
     )
-    from .price import Price, PriceModel1, PriceObject, PricePaymentTerm, PriceTypedDict
+    from .price import (
+        Price,
+        PriceModel1,
+        PriceObject,
+        PricePaymentTerm,
+        PriceRateType,
+        PriceTypedDict,
+    )
     from .pricefeature import (
         PriceFeature,
         PriceFeatureFeature,
@@ -869,6 +884,7 @@ if TYPE_CHECKING:
         VolumeTier,
         VolumeTierTypedDict,
     )
+    from .pricetax import OutsideScopeLabel, PriceTax, PriceTaxTypedDict, SupplyScope
     from .product import Product, ProductObject, ProductTypedDict
     from .profitabilityrow import ProfitabilityRow, ProfitabilityRowTypedDict
     from .profitabilitysummaryresponse import (
@@ -891,6 +907,7 @@ if TYPE_CHECKING:
         PurchaseGrantResponsePaymentSessionTypedDict,
         PurchaseGrantResponseTypedDict,
     )
+    from .ratetype import RateType
     from .reconciledfeatureadded import (
         ReconciledFeatureAdded,
         ReconciledFeatureAddedTypedDict,
@@ -1394,6 +1411,8 @@ __all__ = [
     "CreatePaymentLineItemTypedDict",
     "CreatePaymentRequest",
     "CreatePaymentRequestTypedDict",
+    "CreatePercentageDiscountAdjustment",
+    "CreatePercentageDiscountAdjustmentTypedDict",
     "CreatePlanBillingCadence",
     "CreatePlanBillingInterval",
     "CreatePlanRequest",
@@ -1415,7 +1434,6 @@ __all__ = [
     "CreateSubscriptionAdjustmentRequest",
     "CreateSubscriptionAdjustmentRequestRequest",
     "CreateSubscriptionAdjustmentRequestRequestTypedDict",
-    "CreateSubscriptionAdjustmentRequestType",
     "CreateSubscriptionAdjustmentRequestTypedDict",
     "CreateSubscriptionCustomer",
     "CreateSubscriptionCustomerTypedDict",
@@ -1423,6 +1441,8 @@ __all__ = [
     "CreateSubscriptionRequestTypedDict",
     "CreateTestClockRequest",
     "CreateTestClockRequestTypedDict",
+    "CreateUsageDiscountAdjustment",
+    "CreateUsageDiscountAdjustmentTypedDict",
     "Currency",
     "CurrencyBreakdownEntry",
     "CurrencyBreakdownEntryTypedDict",
@@ -1861,6 +1881,7 @@ __all__ = [
     "OrderObject",
     "OrderType",
     "OrderTypedDict",
+    "OutsideScopeLabel",
     "Pagination",
     "PaginationTypedDict",
     "Payment",
@@ -1904,6 +1925,7 @@ __all__ = [
     "PlanVersionPriceSlotModel",
     "PlanVersionPriceSlotObject",
     "PlanVersionPriceSlotPaymentTerm",
+    "PlanVersionPriceSlotRateType",
     "PlanVersionPriceSlotTypedDict",
     "PlanVersionStatus",
     "PlanVersionSummary",
@@ -1926,6 +1948,9 @@ __all__ = [
     "PricePaymentTerm",
     "PriceProperties",
     "PricePropertiesTypedDict",
+    "PriceRateType",
+    "PriceTax",
+    "PriceTaxTypedDict",
     "PriceTypedDict",
     "PriorPeriod",
     "PriorPeriodTypedDict",
@@ -1948,6 +1973,7 @@ __all__ = [
     "PurchaseGrantResponsePaymentSession",
     "PurchaseGrantResponsePaymentSessionTypedDict",
     "PurchaseGrantResponseTypedDict",
+    "RateType",
     "Reason",
     "ReconcileSubscriptionFeaturesRequest",
     "ReconcileSubscriptionFeaturesRequestBody",
@@ -2062,6 +2088,7 @@ __all__ = [
     "SubscriptionReconciliationTypedDict",
     "SubscriptionStatusEnum",
     "SubscriptionTypedDict",
+    "SupplyScope",
     "Tax",
     "TaxBehavior",
     "TaxRates",
@@ -2354,6 +2381,8 @@ _dynamic_imports: dict[str, str] = {
     "CreatePaymentRequest": ".createpaymentop",
     "CreatePaymentRequestTypedDict": ".createpaymentop",
     "Currency": ".createpaymentop",
+    "CreatePercentageDiscountAdjustment": ".createpercentagediscountadjustment",
+    "CreatePercentageDiscountAdjustmentTypedDict": ".createpercentagediscountadjustment",
     "BillingVersion": ".createplanop",
     "CreatePlanBillingCadence": ".createplanop",
     "CreatePlanBillingInterval": ".createplanop",
@@ -2376,7 +2405,6 @@ _dynamic_imports: dict[str, str] = {
     "CreateSubscriptionAdjustmentRequestRequest": ".createsubscriptionadjustmentop",
     "CreateSubscriptionAdjustmentRequestRequestTypedDict": ".createsubscriptionadjustmentop",
     "CreateSubscriptionAdjustmentRequest": ".createsubscriptionadjustmentrequest",
-    "CreateSubscriptionAdjustmentRequestType": ".createsubscriptionadjustmentrequest",
     "CreateSubscriptionAdjustmentRequestTypedDict": ".createsubscriptionadjustmentrequest",
     "CreateSubscriptionAddress": ".createsubscriptionop",
     "CreateSubscriptionAddressTypedDict": ".createsubscriptionop",
@@ -2388,6 +2416,8 @@ _dynamic_imports: dict[str, str] = {
     "RedirectUrlsTypedDict": ".createsubscriptionop",
     "CreateTestClockRequest": ".createtestclockop",
     "CreateTestClockRequestTypedDict": ".createtestclockop",
+    "CreateUsageDiscountAdjustment": ".createusagediscountadjustment",
+    "CreateUsageDiscountAdjustmentTypedDict": ".createusagediscountadjustment",
     "CurrencyBreakdownEntry": ".currencybreakdownentry",
     "CurrencyBreakdownEntryTypedDict": ".currencybreakdownentry",
     "Customer": ".customer",
@@ -2848,6 +2878,7 @@ _dynamic_imports: dict[str, str] = {
     "PlanVersionPriceSlotModel": ".planversionpriceslot",
     "PlanVersionPriceSlotObject": ".planversionpriceslot",
     "PlanVersionPriceSlotPaymentTerm": ".planversionpriceslot",
+    "PlanVersionPriceSlotRateType": ".planversionpriceslot",
     "PlanVersionPriceSlotTypedDict": ".planversionpriceslot",
     "PlanVersionSummary": ".planversionsummary",
     "PlanVersionSummaryObject": ".planversionsummary",
@@ -2857,6 +2888,7 @@ _dynamic_imports: dict[str, str] = {
     "PriceModel1": ".price",
     "PriceObject": ".price",
     "PricePaymentTerm": ".price",
+    "PriceRateType": ".price",
     "PriceTypedDict": ".price",
     "PriceFeature": ".pricefeature",
     "PriceFeatureFeature": ".pricefeature",
@@ -2879,6 +2911,10 @@ _dynamic_imports: dict[str, str] = {
     "VolumePricePropertiesTypedDict": ".priceproperties",
     "VolumeTier": ".priceproperties",
     "VolumeTierTypedDict": ".priceproperties",
+    "OutsideScopeLabel": ".pricetax",
+    "PriceTax": ".pricetax",
+    "PriceTaxTypedDict": ".pricetax",
+    "SupplyScope": ".pricetax",
     "Product": ".product",
     "ProductObject": ".product",
     "ProductTypedDict": ".product",
@@ -2897,6 +2933,7 @@ _dynamic_imports: dict[str, str] = {
     "PurchaseGrantResponsePaymentSession": ".purchasegrantresponse",
     "PurchaseGrantResponsePaymentSessionTypedDict": ".purchasegrantresponse",
     "PurchaseGrantResponseTypedDict": ".purchasegrantresponse",
+    "RateType": ".ratetype",
     "ReconciledFeatureAdded": ".reconciledfeatureadded",
     "ReconciledFeatureAddedTypedDict": ".reconciledfeatureadded",
     "Reason": ".reconciledfeaturefailed",
