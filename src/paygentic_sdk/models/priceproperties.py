@@ -34,17 +34,17 @@ class PercentagePriceProperties(BaseModel):
 
 class VolumeTierTypedDict(TypedDict):
     up_to: Nullable[str]
-    r"""Inclusive upper bound of the band, as a decimal string. Null on the last band only, which carries the remainder. Sample values: '100' bounds the band at 100 units, null leaves the top open."""
+    r"""Inclusive upper bound of the band, as a decimal string greater than 0, capped at 6 decimal places, and less than 1e65 in magnitude. Bounds must strictly ascend across the ladder. Null on the last band only, which carries the remainder. Sample values: '100' bounds the band at 100 units, null leaves the top open."""
     unit_price: str
-    r"""Per-unit cost inside this band, as a decimal string, capped at 6 decimal places. Sample values: '5' represents $5 per unit, '0.004' represents $0.004 per unit."""
+    r"""Per-unit cost inside this band, as a decimal string, capped at 6 decimal places and less than 1e65 in magnitude. Must be zero or greater. Unlike StandardPriceProperties.unitPrice, a band rate cannot be negative. To bill a usage-scaled rebate, use model 'standard' with a negative unitPrice. Sample values: '5' represents $5 per unit, '0.004' represents $0.004 per unit."""
 
 
 class VolumeTier(BaseModel):
     up_to: Annotated[Nullable[str], pydantic.Field(alias="upTo")]
-    r"""Inclusive upper bound of the band, as a decimal string. Null on the last band only, which carries the remainder. Sample values: '100' bounds the band at 100 units, null leaves the top open."""
+    r"""Inclusive upper bound of the band, as a decimal string greater than 0, capped at 6 decimal places, and less than 1e65 in magnitude. Bounds must strictly ascend across the ladder. Null on the last band only, which carries the remainder. Sample values: '100' bounds the band at 100 units, null leaves the top open."""
 
     unit_price: Annotated[str, pydantic.Field(alias="unitPrice")]
-    r"""Per-unit cost inside this band, as a decimal string, capped at 6 decimal places. Sample values: '5' represents $5 per unit, '0.004' represents $0.004 per unit."""
+    r"""Per-unit cost inside this band, as a decimal string, capped at 6 decimal places and less than 1e65 in magnitude. Must be zero or greater. Unlike StandardPriceProperties.unitPrice, a band rate cannot be negative. To bill a usage-scaled rebate, use model 'standard' with a negative unitPrice. Sample values: '5' represents $5 per unit, '0.004' represents $0.004 per unit."""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
@@ -65,14 +65,14 @@ class VolumePricePropertiesTypedDict(TypedDict):
     r"""Volume pricing model"""
 
     tiers: List[VolumeTierTypedDict]
-    r"""Ordered ladder of bands. The band is selected by the period's total metered usage, and its rate applies to every billed unit. A band matches when the quantity is less than or equal to its `upTo`, and the first matching band wins; the previous band's `upTo` is the exclusive lower bound, and the first band's floor is 0."""
+    r"""Ordered ladder of bands. The band is selected by the period's total metered usage, and its rate applies to every billed unit. A band matches when the quantity is less than or equal to its `upTo`, and the first matching band wins; the previous band's `upTo` is the exclusive lower bound, and the first band's floor is 0. Exactly one band carries `upTo: null` and it must be the last. Bounds must strictly ascend. The API refuses a ladder whose bounds are out of order rather than sorting it. Because one rate applies to every unit, a total can fall as usage rises: on a ladder of '100' at '5' then null at '3', 100 units bill 500 and 101 units bill 303."""
 
 
 class VolumePriceProperties(BaseModel):
     r"""Volume pricing model"""
 
     tiers: List[VolumeTier]
-    r"""Ordered ladder of bands. The band is selected by the period's total metered usage, and its rate applies to every billed unit. A band matches when the quantity is less than or equal to its `upTo`, and the first matching band wins; the previous band's `upTo` is the exclusive lower bound, and the first band's floor is 0."""
+    r"""Ordered ladder of bands. The band is selected by the period's total metered usage, and its rate applies to every billed unit. A band matches when the quantity is less than or equal to its `upTo`, and the first matching band wins; the previous band's `upTo` is the exclusive lower bound, and the first band's floor is 0. Exactly one band carries `upTo: null` and it must be the last. Bounds must strictly ascend. The API refuses a ladder whose bounds are out of order rather than sorting it. Because one rate applies to every unit, a total can fall as usage rises: on a ladder of '100' at '5' then null at '3', 100 units bill 500 and 101 units bill 303."""
 
 
 class DynamicPricePropertiesTypedDict(TypedDict):

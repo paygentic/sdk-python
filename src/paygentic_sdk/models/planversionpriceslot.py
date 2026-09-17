@@ -85,6 +85,10 @@ class PlanVersionPriceSlotTypedDict(TypedDict):
     r"""A fixed amount owed whole rather than a per-period rate. An obligation is not prorated over a partial first period: when a subscription starts before its billing anchor, no truncated stub is billed and the first charge is the full amount at the next anchor. An obligation also refuses an interval boundary that falls strictly inside one of its own billing periods, since part of an amount owed whole is not a thing to bill. Defaults to false, which is a rate and is today's behaviour for every price. Not supported on a metered price, whose amount resolves from usage at close."""
     rate_type: NotRequired[PlanVersionPriceSlotRateType]
     r"""What properties.unitPrice is denominated in. 'amount' (the default) is an amount of the invoice currency for each unit metered, so the quantity is the multiplier. 'proportion' is the reverse: a dimensionless share of a currency-denominated quantity, so '0.02' is 2% and the invoice prints '2.00%'. Presentation only. Requires a standard metered price in real currency."""
+    invoice_display_group: NotRequired[Nullable[str]]
+    r"""Presentation only. Prices sharing this value, within one billing period, print as a single row on the rendered invoice PDF and are described by this string. Every member still bills its own line item on the ledger, this API and the compliance document. The combined row's rate is derived from the members' own rates. Requires the 'standard' pricing model. Sample values: 'Cross Border Fees', 'FX Fees'"""
+    pricing_unit_id: NotRequired[str]
+    r"""Unique identifier for a pricing unit"""
     quantity: NotRequired[int]
     r"""Quantity used when generating invoice line items for this price. Total per period = quantity × unitPrice. Only supported for fee prices; metered prices derive quantity from usage. Defaults to 1."""
 
@@ -156,6 +160,16 @@ class PlanVersionPriceSlot(BaseModel):
     ] = "amount"
     r"""What properties.unitPrice is denominated in. 'amount' (the default) is an amount of the invoice currency for each unit metered, so the quantity is the multiplier. 'proportion' is the reverse: a dimensionless share of a currency-denominated quantity, so '0.02' is 2% and the invoice prints '2.00%'. Presentation only. Requires a standard metered price in real currency."""
 
+    invoice_display_group: Annotated[
+        OptionalNullable[str], pydantic.Field(alias="invoiceDisplayGroup")
+    ] = UNSET
+    r"""Presentation only. Prices sharing this value, within one billing period, print as a single row on the rendered invoice PDF and are described by this string. Every member still bills its own line item on the ledger, this API and the compliance document. The combined row's rate is derived from the members' own rates. Requires the 'standard' pricing model. Sample values: 'Cross Border Fees', 'FX Fees'"""
+
+    pricing_unit_id: Annotated[Optional[str], pydantic.Field(alias="pricingUnitId")] = (
+        None
+    )
+    r"""Unique identifier for a pricing unit"""
+
     quantity: Optional[int] = 1
     r"""Quantity used when generating invoice line items for this price. Total per period = quantity × unitPrice. Only supported for fee prices; metered prices derive quantity from usage. Defaults to 1."""
 
@@ -174,10 +188,12 @@ class PlanVersionPriceSlot(BaseModel):
                 "grantDiscountEnabled",
                 "isObligation",
                 "rateType",
+                "invoiceDisplayGroup",
+                "pricingUnitId",
                 "quantity",
             ]
         )
-        nullable_fields = set(["billingCadence"])
+        nullable_fields = set(["billingCadence", "invoiceDisplayGroup"])
         serialized = handler(self)
         m = {}
 
