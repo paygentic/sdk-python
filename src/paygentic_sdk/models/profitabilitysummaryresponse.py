@@ -2,13 +2,39 @@
 
 from __future__ import annotations
 from .profitabilityrow import ProfitabilityRow, ProfitabilityRowTypedDict
-from paygentic_sdk.types import BaseModel, UNSET_SENTINEL
+from datetime import datetime
+from paygentic_sdk.types import (
+    BaseModel,
+    Nullable,
+    OptionalNullable,
+    UNSET,
+    UNSET_SENTINEL,
+)
 from paygentic_sdk.utils import validate_const
 import pydantic
 from pydantic import model_serializer
 from pydantic.functional_validators import AfterValidator
 from typing import List, Literal, Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
+
+
+class ProfitabilitySummaryResponseRevenueRangeTypedDict(TypedDict):
+    r"""Where the caller's revenue actually lies in time. Scoped by the same filters as the request (merchant, and where given customer, subscription and currency), so it is not an account-wide statement. Present only when the selected range returned nothing. An object carries the bounds of the real revenue; null means no revenue under these filters at any time; an absent field means the extent was not resolved, because the result was not empty or because the lookup failed. An absent field must never be read as an absence. The bounds may span more than this endpoint's maximum queryable range, so clamp before re-querying."""
+
+    from_: datetime
+    r"""Earliest invoice issue instant."""
+    to: datetime
+    r"""Latest invoice issue instant."""
+
+
+class ProfitabilitySummaryResponseRevenueRange(BaseModel):
+    r"""Where the caller's revenue actually lies in time. Scoped by the same filters as the request (merchant, and where given customer, subscription and currency), so it is not an account-wide statement. Present only when the selected range returned nothing. An object carries the bounds of the real revenue; null means no revenue under these filters at any time; an absent field means the extent was not resolved, because the result was not empty or because the lookup failed. An absent field must never be read as an absence. The bounds may span more than this endpoint's maximum queryable range, so clamp before re-querying."""
+
+    from_: Annotated[datetime, pydantic.Field(alias="from")]
+    r"""Earliest invoice issue instant."""
+
+    to: datetime
+    r"""Latest invoice issue instant."""
 
 
 class ProfitabilitySummaryResponseTypedDict(TypedDict):
@@ -20,6 +46,10 @@ class ProfitabilitySummaryResponseTypedDict(TypedDict):
     r"""Object type identifier"""
     warnings: NotRequired[List[str]]
     r"""Non-fatal warnings collected during cost discovery (e.g. an individual cost query failed). Empty array on a clean run."""
+    revenue_range: NotRequired[
+        Nullable[ProfitabilitySummaryResponseRevenueRangeTypedDict]
+    ]
+    r"""Where the caller's revenue actually lies in time. Scoped by the same filters as the request (merchant, and where given customer, subscription and currency), so it is not an account-wide statement. Present only when the selected range returned nothing. An object carries the bounds of the real revenue; null means no revenue under these filters at any time; an absent field means the extent was not resolved, because the result was not empty or because the lookup failed. An absent field must never be read as an absence. The bounds may span more than this endpoint's maximum queryable range, so clamp before re-querying."""
 
 
 class ProfitabilitySummaryResponse(BaseModel):
@@ -41,23 +71,42 @@ class ProfitabilitySummaryResponse(BaseModel):
     warnings: Optional[List[str]] = None
     r"""Non-fatal warnings collected during cost discovery (e.g. an individual cost query failed). Empty array on a clean run."""
 
+    revenue_range: Annotated[
+        OptionalNullable[ProfitabilitySummaryResponseRevenueRange],
+        pydantic.Field(alias="revenueRange"),
+    ] = UNSET
+    r"""Where the caller's revenue actually lies in time. Scoped by the same filters as the request (merchant, and where given customer, subscription and currency), so it is not an account-wide statement. Present only when the selected range returned nothing. An object carries the bounds of the real revenue; null means no revenue under these filters at any time; an absent field means the extent was not resolved, because the result was not empty or because the lookup failed. An absent field must never be read as an absence. The bounds may span more than this endpoint's maximum queryable range, so clamp before re-querying."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["warnings"])
+        optional_fields = set(["warnings", "revenueRange"])
+        nullable_fields = set(["revenueRange"])
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
             k = f.alias or n
             val = serialized.get(k, serialized.get(n))
+            is_nullable_and_explicitly_set = (
+                k in nullable_fields
+                and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
+            )
 
             if val != UNSET_SENTINEL:
-                if val is not None or k not in optional_fields:
+                if (
+                    val is not None
+                    or k not in optional_fields
+                    or is_nullable_and_explicitly_set
+                ):
                     m[k] = val
 
         return m
 
 
+try:
+    ProfitabilitySummaryResponseRevenueRange.model_rebuild()
+except NameError:
+    pass
 try:
     ProfitabilitySummaryResponse.model_rebuild()
 except NameError:

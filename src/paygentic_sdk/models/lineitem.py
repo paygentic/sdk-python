@@ -103,7 +103,7 @@ class LineItemTypedDict(TypedDict):
     estimated_metered_quantity: NotRequired[Nullable[str]]
     r"""Real-time estimated metered usage quantity. Only present for type=metered items during an active billing period. Null for fee/manual items or when estimation is unavailable."""
     estimated_subtotal: NotRequired[Nullable[str]]
-    r"""Real-time estimated subtotal based on current metered usage. Only present for type=metered items during an active billing period. Null for fee/manual items or when estimation is unavailable."""
+    r"""Real-time estimated subtotal for a line whose amount is not final yet: current usage for a metered item, the rate the subscription is on for a fee. Null for manual items, and for any line whose amount is already final or cannot be estimated."""
 
 
 class LineItem(BaseModel):
@@ -202,7 +202,7 @@ class LineItem(BaseModel):
     estimated_subtotal: Annotated[
         OptionalNullable[str], pydantic.Field(alias="estimatedSubtotal")
     ] = UNSET
-    r"""Real-time estimated subtotal based on current metered usage. Only present for type=metered items during an active billing period. Null for fee/manual items or when estimation is unavailable."""
+    r"""Real-time estimated subtotal for a line whose amount is not final yet: current usage for a metered item, the rate the subscription is on for a fee. Null for manual items, and for any line whose amount is already final or cannot be estimated."""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

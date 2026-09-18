@@ -9,13 +9,39 @@ from .groupinvoicesummary import GroupInvoiceSummary, GroupInvoiceSummaryTypedDi
 from .invoicesummary import InvoiceSummary, InvoiceSummaryTypedDict
 from .paymentsummary import PaymentSummary, PaymentSummaryTypedDict
 from .revenuetrendbucket import RevenueTrendBucket, RevenueTrendBucketTypedDict
-from paygentic_sdk.types import BaseModel, UNSET_SENTINEL
+from datetime import datetime
+from paygentic_sdk.types import (
+    BaseModel,
+    Nullable,
+    OptionalNullable,
+    UNSET,
+    UNSET_SENTINEL,
+)
 from paygentic_sdk.utils import validate_const
 import pydantic
 from pydantic import model_serializer
 from pydantic.functional_validators import AfterValidator
 from typing import List, Literal, Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
+
+
+class RevenueSummaryResponseRevenueRangeTypedDict(TypedDict):
+    r"""Where the caller's revenue actually lies in time. Scoped by the same filters as the request (merchant, and where given customer, subscription and currency), so it is not an account-wide statement. Present only when the selected range returned nothing. An object carries the bounds of the real revenue; null means no revenue under these filters at any time; an absent field means the extent was not resolved, because the result was not empty or because the lookup failed. An absent field must never be read as an absence. The bounds may span more than this endpoint's maximum queryable range, so clamp before re-querying."""
+
+    from_: datetime
+    r"""Earliest invoice issue instant."""
+    to: datetime
+    r"""Latest invoice issue instant."""
+
+
+class RevenueSummaryResponseRevenueRange(BaseModel):
+    r"""Where the caller's revenue actually lies in time. Scoped by the same filters as the request (merchant, and where given customer, subscription and currency), so it is not an account-wide statement. Present only when the selected range returned nothing. An object carries the bounds of the real revenue; null means no revenue under these filters at any time; an absent field means the extent was not resolved, because the result was not empty or because the lookup failed. An absent field must never be read as an absence. The bounds may span more than this endpoint's maximum queryable range, so clamp before re-querying."""
+
+    from_: Annotated[datetime, pydantic.Field(alias="from")]
+    r"""Earliest invoice issue instant."""
+
+    to: datetime
+    r"""Latest invoice issue instant."""
 
 
 class RevenueSummaryResponseTypedDict(TypedDict):
@@ -39,6 +65,8 @@ class RevenueSummaryResponseTypedDict(TypedDict):
     r"""Invoice breakdown by group dimension (only present when groupBy=plan or groupBy=customer is specified)"""
     currency_breakdown: NotRequired[List[CurrencyBreakdownEntryTypedDict]]
     r"""Per-currency revenue aggregates (only present when groupBy=currency is specified). Primary currency appears first, then alphabetical by ISO code. When present, top-level netRevenue, invoices, payments, and trend fields are omitted."""
+    revenue_range: NotRequired[Nullable[RevenueSummaryResponseRevenueRangeTypedDict]]
+    r"""Where the caller's revenue actually lies in time. Scoped by the same filters as the request (merchant, and where given customer, subscription and currency), so it is not an account-wide statement. Present only when the selected range returned nothing. An object carries the bounds of the real revenue; null means no revenue under these filters at any time; an absent field means the extent was not resolved, because the result was not empty or because the lookup failed. An absent field must never be read as an absence. The bounds may span more than this endpoint's maximum queryable range, so clamp before re-querying."""
 
 
 class RevenueSummaryResponse(BaseModel):
@@ -84,6 +112,12 @@ class RevenueSummaryResponse(BaseModel):
     ] = None
     r"""Per-currency revenue aggregates (only present when groupBy=currency is specified). Primary currency appears first, then alphabetical by ISO code. When present, top-level netRevenue, invoices, payments, and trend fields are omitted."""
 
+    revenue_range: Annotated[
+        OptionalNullable[RevenueSummaryResponseRevenueRange],
+        pydantic.Field(alias="revenueRange"),
+    ] = UNSET
+    r"""Where the caller's revenue actually lies in time. Scoped by the same filters as the request (merchant, and where given customer, subscription and currency), so it is not an account-wide statement. Present only when the selected range returned nothing. An object carries the bounds of the real revenue; null means no revenue under these filters at any time; an absent field means the extent was not resolved, because the result was not empty or because the lookup failed. An absent field must never be read as an absence. The bounds may span more than this endpoint's maximum queryable range, so clamp before re-querying."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
@@ -98,22 +132,36 @@ class RevenueSummaryResponse(BaseModel):
                 "trend",
                 "groupBreakdown",
                 "currencyBreakdown",
+                "revenueRange",
             ]
         )
+        nullable_fields = set(["revenueRange"])
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
             k = f.alias or n
             val = serialized.get(k, serialized.get(n))
+            is_nullable_and_explicitly_set = (
+                k in nullable_fields
+                and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
+            )
 
             if val != UNSET_SENTINEL:
-                if val is not None or k not in optional_fields:
+                if (
+                    val is not None
+                    or k not in optional_fields
+                    or is_nullable_and_explicitly_set
+                ):
                     m[k] = val
 
         return m
 
 
+try:
+    RevenueSummaryResponseRevenueRange.model_rebuild()
+except NameError:
+    pass
 try:
     RevenueSummaryResponse.model_rebuild()
 except NameError:

@@ -889,6 +889,8 @@ if TYPE_CHECKING:
     from .profitabilityrow import ProfitabilityRow, ProfitabilityRowTypedDict
     from .profitabilitysummaryresponse import (
         ProfitabilitySummaryResponse,
+        ProfitabilitySummaryResponseRevenueRange,
+        ProfitabilitySummaryResponseRevenueRangeTypedDict,
         ProfitabilitySummaryResponseTypedDict,
     )
     from .profitabilitytrend import ProfitabilityTrend, ProfitabilityTrendTypedDict
@@ -954,6 +956,8 @@ if TYPE_CHECKING:
     from .resolveditem import ResolvedItem, ResolvedItemTypedDict
     from .revenuesummaryresponse import (
         RevenueSummaryResponse,
+        RevenueSummaryResponseRevenueRange,
+        RevenueSummaryResponseRevenueRangeTypedDict,
         RevenueSummaryResponseTypedDict,
     )
     from .revenuetrendbucket import RevenueTrendBucket, RevenueTrendBucketTypedDict
@@ -1961,6 +1965,8 @@ __all__ = [
     "ProfitabilityRow",
     "ProfitabilityRowTypedDict",
     "ProfitabilitySummaryResponse",
+    "ProfitabilitySummaryResponseRevenueRange",
+    "ProfitabilitySummaryResponseRevenueRangeTypedDict",
     "ProfitabilitySummaryResponseTypedDict",
     "ProfitabilityTrend",
     "ProfitabilityTrendTypedDict",
@@ -2006,6 +2012,8 @@ __all__ = [
     "ResolvedItem",
     "ResolvedItemTypedDict",
     "RevenueSummaryResponse",
+    "RevenueSummaryResponseRevenueRange",
+    "RevenueSummaryResponseRevenueRangeTypedDict",
     "RevenueSummaryResponseTypedDict",
     "RevenueTrendBucket",
     "RevenueTrendBucketTypedDict",
@@ -2921,6 +2929,8 @@ _dynamic_imports: dict[str, str] = {
     "ProfitabilityRow": ".profitabilityrow",
     "ProfitabilityRowTypedDict": ".profitabilityrow",
     "ProfitabilitySummaryResponse": ".profitabilitysummaryresponse",
+    "ProfitabilitySummaryResponseRevenueRange": ".profitabilitysummaryresponse",
+    "ProfitabilitySummaryResponseRevenueRangeTypedDict": ".profitabilitysummaryresponse",
     "ProfitabilitySummaryResponseTypedDict": ".profitabilitysummaryresponse",
     "ProfitabilityTrend": ".profitabilitytrend",
     "ProfitabilityTrendTypedDict": ".profitabilitytrend",
@@ -2964,6 +2974,8 @@ _dynamic_imports: dict[str, str] = {
     "ResolvedItem": ".resolveditem",
     "ResolvedItemTypedDict": ".resolveditem",
     "RevenueSummaryResponse": ".revenuesummaryresponse",
+    "RevenueSummaryResponseRevenueRange": ".revenuesummaryresponse",
+    "RevenueSummaryResponseRevenueRangeTypedDict": ".revenuesummaryresponse",
     "RevenueSummaryResponseTypedDict": ".revenuesummaryresponse",
     "RevenueTrendBucket": ".revenuetrendbucket",
     "RevenueTrendBucketTypedDict": ".revenuetrendbucket",
