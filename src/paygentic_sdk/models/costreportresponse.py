@@ -4,7 +4,13 @@ from __future__ import annotations
 from .costreportgroup import CostReportGroup, CostReportGroupTypedDict
 from .costreporttimeseries import CostReportTimeSeries, CostReportTimeSeriesTypedDict
 from datetime import datetime
-from paygentic_sdk.types import BaseModel, UNSET_SENTINEL
+from paygentic_sdk.types import (
+    BaseModel,
+    Nullable,
+    OptionalNullable,
+    UNSET,
+    UNSET_SENTINEL,
+)
 import pydantic
 from pydantic import model_serializer
 from typing import List, Literal, Optional
@@ -39,6 +45,25 @@ class Pagination(BaseModel):
     offset: int
 
 
+class CostReportResponseCostRangeTypedDict(TypedDict):
+    r"""Where the caller's cost data actually lies in time. Present only when the selected range returned no cost. An object carries the bounds of the real cost events; null means the caller has no cost event at any time; an absent field means the extent was not resolved, because the result was not empty, because the lookup failed, or because the metering service does not serve the bounds method. An absent field must never be read as an absence."""
+
+    from_: datetime
+    r"""Earliest cost event instant."""
+    to: datetime
+    r"""Latest cost event instant."""
+
+
+class CostReportResponseCostRange(BaseModel):
+    r"""Where the caller's cost data actually lies in time. Present only when the selected range returned no cost. An object carries the bounds of the real cost events; null means the caller has no cost event at any time; an absent field means the extent was not resolved, because the result was not empty, because the lookup failed, or because the metering service does not serve the bounds method. An absent field must never be read as an absence."""
+
+    from_: Annotated[datetime, pydantic.Field(alias="from")]
+    r"""Earliest cost event instant."""
+
+    to: datetime
+    r"""Latest cost event instant."""
+
+
 class CostReportResponseTypedDict(TypedDict):
     currency: str
     r"""ISO 4217 currency code for all monetary values in this response."""
@@ -59,6 +84,8 @@ class CostReportResponseTypedDict(TypedDict):
     object: NotRequired[CostReportResponseObject]
     warnings: NotRequired[List[str]]
     r"""Non-fatal warnings, e.g. costs that could not be queried."""
+    cost_range: NotRequired[Nullable[CostReportResponseCostRangeTypedDict]]
+    r"""Where the caller's cost data actually lies in time. Present only when the selected range returned no cost. An object carries the bounds of the real cost events; null means the caller has no cost event at any time; an absent field means the extent was not resolved, because the result was not empty, because the lookup failed, or because the metering service does not serve the bounds method. An absent field must never be read as an absence."""
 
 
 class CostReportResponse(BaseModel):
@@ -96,18 +123,32 @@ class CostReportResponse(BaseModel):
     warnings: Optional[List[str]] = None
     r"""Non-fatal warnings, e.g. costs that could not be queried."""
 
+    cost_range: Annotated[
+        OptionalNullable[CostReportResponseCostRange], pydantic.Field(alias="costRange")
+    ] = UNSET
+    r"""Where the caller's cost data actually lies in time. Present only when the selected range returned no cost. An object carries the bounds of the real cost events; null means the caller has no cost event at any time; an absent field means the extent was not resolved, because the result was not empty, because the lookup failed, or because the metering service does not serve the bounds method. An absent field must never be read as an absence."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["object", "warnings"])
+        optional_fields = set(["object", "warnings", "costRange"])
+        nullable_fields = set(["costRange"])
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
             k = f.alias or n
             val = serialized.get(k, serialized.get(n))
+            is_nullable_and_explicitly_set = (
+                k in nullable_fields
+                and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
+            )
 
             if val != UNSET_SENTINEL:
-                if val is not None or k not in optional_fields:
+                if (
+                    val is not None
+                    or k not in optional_fields
+                    or is_nullable_and_explicitly_set
+                ):
                     m[k] = val
 
         return m
@@ -115,6 +156,10 @@ class CostReportResponse(BaseModel):
 
 try:
     Period.model_rebuild()
+except NameError:
+    pass
+try:
+    CostReportResponseCostRange.model_rebuild()
 except NameError:
     pass
 try:

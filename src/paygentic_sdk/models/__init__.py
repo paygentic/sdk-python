@@ -75,6 +75,8 @@ if TYPE_CHECKING:
     )
     from .costreportresponse import (
         CostReportResponse,
+        CostReportResponseCostRange,
+        CostReportResponseCostRangeTypedDict,
         CostReportResponseObject,
         CostReportResponseTypedDict,
         Pagination,
@@ -889,6 +891,8 @@ if TYPE_CHECKING:
     from .profitabilityrow import ProfitabilityRow, ProfitabilityRowTypedDict
     from .profitabilitysummaryresponse import (
         ProfitabilitySummaryResponse,
+        ProfitabilitySummaryResponseCostRange,
+        ProfitabilitySummaryResponseCostRangeTypedDict,
         ProfitabilitySummaryResponseRevenueRange,
         ProfitabilitySummaryResponseRevenueRangeTypedDict,
         ProfitabilitySummaryResponseTypedDict,
@@ -1339,6 +1343,8 @@ __all__ = [
     "CostReportGroup",
     "CostReportGroupTypedDict",
     "CostReportResponse",
+    "CostReportResponseCostRange",
+    "CostReportResponseCostRangeTypedDict",
     "CostReportResponseObject",
     "CostReportResponseTypedDict",
     "CostReportTimeSeries",
@@ -1965,6 +1971,8 @@ __all__ = [
     "ProfitabilityRow",
     "ProfitabilityRowTypedDict",
     "ProfitabilitySummaryResponse",
+    "ProfitabilitySummaryResponseCostRange",
+    "ProfitabilitySummaryResponseCostRangeTypedDict",
     "ProfitabilitySummaryResponseRevenueRange",
     "ProfitabilitySummaryResponseRevenueRangeTypedDict",
     "ProfitabilitySummaryResponseTypedDict",
@@ -2306,6 +2314,8 @@ _dynamic_imports: dict[str, str] = {
     "PriorPeriod": ".costreportgroup",
     "PriorPeriodTypedDict": ".costreportgroup",
     "CostReportResponse": ".costreportresponse",
+    "CostReportResponseCostRange": ".costreportresponse",
+    "CostReportResponseCostRangeTypedDict": ".costreportresponse",
     "CostReportResponseObject": ".costreportresponse",
     "CostReportResponseTypedDict": ".costreportresponse",
     "Pagination": ".costreportresponse",
@@ -2929,6 +2939,8 @@ _dynamic_imports: dict[str, str] = {
     "ProfitabilityRow": ".profitabilityrow",
     "ProfitabilityRowTypedDict": ".profitabilityrow",
     "ProfitabilitySummaryResponse": ".profitabilitysummaryresponse",
+    "ProfitabilitySummaryResponseCostRange": ".profitabilitysummaryresponse",
+    "ProfitabilitySummaryResponseCostRangeTypedDict": ".profitabilitysummaryresponse",
     "ProfitabilitySummaryResponseRevenueRange": ".profitabilitysummaryresponse",
     "ProfitabilitySummaryResponseRevenueRangeTypedDict": ".profitabilitysummaryresponse",
     "ProfitabilitySummaryResponseTypedDict": ".profitabilitysummaryresponse",
