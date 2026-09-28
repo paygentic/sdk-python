@@ -32,14 +32,14 @@ class CreateBillableMetricRequestTypedDict(TypedDict):
     r"""Human-readable label identifying what this metric measures. Sample values: 'Claude Tokens', 'Storage Capacity', 'Model Inference Calls', 'Generated Images', 'Training Compute Hours', 'Data Transfer Volume'"""
     unit: str
     r"""Measurement unit used when aggregating this metric's values. Common examples: 'tokens', 'GB', 'calls', 'images', 'hours', 'TB', 'queries', 'requests'"""
+    event_type: str
+    r"""CloudEvents type for meter routing. Links this billable metric to the metering service."""
     product_id: NotRequired[str]
     r"""Unique identifier for a product"""
     item_id: NotRequired[str]
     r"""Unique identifier for an item"""
-    event_type: NotRequired[str]
-    r"""CloudEvents type for meter routing. Links this billable metric to the metering service."""
     value_property: NotRequired[str]
-    r"""JSONPath to extract a numeric value from event data. Must start with `$.` (example: `$.amount` or `$.payload.bytes`). Required for SUM/AVG/MIN/MAX/LATEST aggregations."""
+    r"""JSONPath to extract a numeric value from event data. Must start with `$.` (example: `$.amount` or `$.payload.bytes`). Required for SUM/AVG/MIN/MAX/LATEST aggregations. Optional for UNIQUE_COUNT, which counts distinct values of this property when set and distinct events when not. Not stored for COUNT."""
     group_by: NotRequired[Dict[str, str]]
     r"""Map of dimension name to JSONPath for group-by queries. Each value must start with `$.` (example: `$.region`)."""
     event_from: NotRequired[datetime]
@@ -62,19 +62,19 @@ class CreateBillableMetricRequest(BaseModel):
     unit: str
     r"""Measurement unit used when aggregating this metric's values. Common examples: 'tokens', 'GB', 'calls', 'images', 'hours', 'TB', 'queries', 'requests'"""
 
+    event_type: Annotated[str, pydantic.Field(alias="eventType")]
+    r"""CloudEvents type for meter routing. Links this billable metric to the metering service."""
+
     product_id: Annotated[Optional[str], pydantic.Field(alias="productId")] = None
     r"""Unique identifier for a product"""
 
     item_id: Annotated[Optional[str], pydantic.Field(alias="itemId")] = None
     r"""Unique identifier for an item"""
 
-    event_type: Annotated[Optional[str], pydantic.Field(alias="eventType")] = None
-    r"""CloudEvents type for meter routing. Links this billable metric to the metering service."""
-
     value_property: Annotated[Optional[str], pydantic.Field(alias="valueProperty")] = (
         None
     )
-    r"""JSONPath to extract a numeric value from event data. Must start with `$.` (example: `$.amount` or `$.payload.bytes`). Required for SUM/AVG/MIN/MAX/LATEST aggregations."""
+    r"""JSONPath to extract a numeric value from event data. Must start with `$.` (example: `$.amount` or `$.payload.bytes`). Required for SUM/AVG/MIN/MAX/LATEST aggregations. Optional for UNIQUE_COUNT, which counts distinct values of this property when set and distinct events when not. Not stored for COUNT."""
 
     group_by: Annotated[Optional[Dict[str, str]], pydantic.Field(alias="groupBy")] = (
         None
@@ -87,14 +87,7 @@ class CreateBillableMetricRequest(BaseModel):
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
-            [
-                "productId",
-                "itemId",
-                "eventType",
-                "valueProperty",
-                "groupBy",
-                "eventFrom",
-            ]
+            ["productId", "itemId", "valueProperty", "groupBy", "eventFrom"]
         )
         serialized = handler(self)
         m = {}

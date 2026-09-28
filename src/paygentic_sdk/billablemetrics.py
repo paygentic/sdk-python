@@ -19,9 +19,9 @@ class BillableMetrics(BaseSDK):
         merchant_id: str,
         name: str,
         unit: str,
+        event_type: str,
         product_id: Optional[str] = None,
         item_id: Optional[str] = None,
-        event_type: Optional[str] = None,
         value_property: Optional[str] = None,
         group_by: Optional[Dict[str, str]] = None,
         event_from: Optional[datetime] = None,
@@ -39,10 +39,10 @@ class BillableMetrics(BaseSDK):
         :param merchant_id: Unique identifier for an organization
         :param name: Human-readable label identifying what this metric measures. Sample values: 'Claude Tokens', 'Storage Capacity', 'Model Inference Calls', 'Generated Images', 'Training Compute Hours', 'Data Transfer Volume'
         :param unit: Measurement unit used when aggregating this metric's values. Common examples: 'tokens', 'GB', 'calls', 'images', 'hours', 'TB', 'queries', 'requests'
+        :param event_type: CloudEvents type for meter routing. Links this billable metric to the metering service.
         :param product_id: Unique identifier for a product
         :param item_id: Unique identifier for an item
-        :param event_type: CloudEvents type for meter routing. Links this billable metric to the metering service.
-        :param value_property: JSONPath to extract a numeric value from event data. Must start with `$.` (example: `$.amount` or `$.payload.bytes`). Required for SUM/AVG/MIN/MAX/LATEST aggregations.
+        :param value_property: JSONPath to extract a numeric value from event data. Must start with `$.` (example: `$.amount` or `$.payload.bytes`). Required for SUM/AVG/MIN/MAX/LATEST aggregations. Optional for UNIQUE_COUNT, which counts distinct values of this property when set and distinct events when not. Not stored for COUNT.
         :param group_by: Map of dimension name to JSONPath for group-by queries. Each value must start with `$.` (example: `$.region`).
         :param event_from: Only count events after this timestamp. Used for meter versioning.
         :param retries: Override the default retry configuration for this method
@@ -150,9 +150,9 @@ class BillableMetrics(BaseSDK):
         merchant_id: str,
         name: str,
         unit: str,
+        event_type: str,
         product_id: Optional[str] = None,
         item_id: Optional[str] = None,
-        event_type: Optional[str] = None,
         value_property: Optional[str] = None,
         group_by: Optional[Dict[str, str]] = None,
         event_from: Optional[datetime] = None,
@@ -170,10 +170,10 @@ class BillableMetrics(BaseSDK):
         :param merchant_id: Unique identifier for an organization
         :param name: Human-readable label identifying what this metric measures. Sample values: 'Claude Tokens', 'Storage Capacity', 'Model Inference Calls', 'Generated Images', 'Training Compute Hours', 'Data Transfer Volume'
         :param unit: Measurement unit used when aggregating this metric's values. Common examples: 'tokens', 'GB', 'calls', 'images', 'hours', 'TB', 'queries', 'requests'
+        :param event_type: CloudEvents type for meter routing. Links this billable metric to the metering service.
         :param product_id: Unique identifier for a product
         :param item_id: Unique identifier for an item
-        :param event_type: CloudEvents type for meter routing. Links this billable metric to the metering service.
-        :param value_property: JSONPath to extract a numeric value from event data. Must start with `$.` (example: `$.amount` or `$.payload.bytes`). Required for SUM/AVG/MIN/MAX/LATEST aggregations.
+        :param value_property: JSONPath to extract a numeric value from event data. Must start with `$.` (example: `$.amount` or `$.payload.bytes`). Required for SUM/AVG/MIN/MAX/LATEST aggregations. Optional for UNIQUE_COUNT, which counts distinct values of this property when set and distinct events when not. Not stored for COUNT.
         :param group_by: Map of dimension name to JSONPath for group-by queries. Each value must start with `$.` (example: `$.region`).
         :param event_from: Only count events after this timestamp. Used for meter versioning.
         :param retries: Override the default retry configuration for this method
@@ -677,7 +677,7 @@ class BillableMetrics(BaseSDK):
         name: Optional[str] = None,
         unit: Optional[str] = None,
         item_id: OptionalNullable[str] = UNSET,
-        event_type: OptionalNullable[str] = UNSET,
+        event_type: Optional[str] = None,
         value_property: OptionalNullable[str] = UNSET,
         group_by: OptionalNullable[Dict[str, str]] = UNSET,
         event_from: OptionalNullable[datetime] = UNSET,
@@ -693,8 +693,8 @@ class BillableMetrics(BaseSDK):
         :param name: Updated label for the metric. Sample values: 'LLM Tokens', 'Database Storage', 'Prediction Requests', 'Content Generations'
         :param unit: Updated measurement unit. Common examples: 'tokens', 'GB', 'requests', 'items', 'hours'
         :param item_id: Optional item tag, used to map this metric's invoice lines to an external accounting/tax identity. Send a new id to re-tag — the item must be filed under this charge's own product, and an archived item is rejected. An item from another product is refused with `ITEM_PRODUCT_MISMATCH`: a tag is an accounting grouping and does not move the charge between products, and no field here could move it back. Re-file the item to move every charge anchored to it together. Send `null` to untag. Every line item whose invoice has not closed reports this charge's current tag, so a re-tag takes effect on the bill in progress and on any generated ahead of it — no further action, and no window to wait for. Lines on a closed invoice keep the item recorded at close and never move. Un-tagging works the same way: those lines report no item.
-        :param event_type: CloudEvents type for meter routing.
-        :param value_property: JSONPath to extract a numeric value from event data. Must start with `$.` (example: `$.amount` or `$.payload.bytes`).
+        :param event_type: CloudEvents type for meter routing. Cannot be cleared: every billable metric needs one.
+        :param value_property: JSONPath to extract a numeric value from event data. Must start with `$.` (example: `$.amount` or `$.payload.bytes`). Cannot be cleared on a SUM/AVG/MIN/MAX/LATEST metric. Not stored for COUNT.
         :param group_by: Map of dimension name to JSONPath for group-by queries. Each value must start with `$.` (example: `$.region`).
         :param event_from: Only count events after this timestamp.
         :param retries: Override the default retry configuration for this method
@@ -806,7 +806,7 @@ class BillableMetrics(BaseSDK):
         name: Optional[str] = None,
         unit: Optional[str] = None,
         item_id: OptionalNullable[str] = UNSET,
-        event_type: OptionalNullable[str] = UNSET,
+        event_type: Optional[str] = None,
         value_property: OptionalNullable[str] = UNSET,
         group_by: OptionalNullable[Dict[str, str]] = UNSET,
         event_from: OptionalNullable[datetime] = UNSET,
@@ -822,8 +822,8 @@ class BillableMetrics(BaseSDK):
         :param name: Updated label for the metric. Sample values: 'LLM Tokens', 'Database Storage', 'Prediction Requests', 'Content Generations'
         :param unit: Updated measurement unit. Common examples: 'tokens', 'GB', 'requests', 'items', 'hours'
         :param item_id: Optional item tag, used to map this metric's invoice lines to an external accounting/tax identity. Send a new id to re-tag — the item must be filed under this charge's own product, and an archived item is rejected. An item from another product is refused with `ITEM_PRODUCT_MISMATCH`: a tag is an accounting grouping and does not move the charge between products, and no field here could move it back. Re-file the item to move every charge anchored to it together. Send `null` to untag. Every line item whose invoice has not closed reports this charge's current tag, so a re-tag takes effect on the bill in progress and on any generated ahead of it — no further action, and no window to wait for. Lines on a closed invoice keep the item recorded at close and never move. Un-tagging works the same way: those lines report no item.
-        :param event_type: CloudEvents type for meter routing.
-        :param value_property: JSONPath to extract a numeric value from event data. Must start with `$.` (example: `$.amount` or `$.payload.bytes`).
+        :param event_type: CloudEvents type for meter routing. Cannot be cleared: every billable metric needs one.
+        :param value_property: JSONPath to extract a numeric value from event data. Must start with `$.` (example: `$.amount` or `$.payload.bytes`). Cannot be cleared on a SUM/AVG/MIN/MAX/LATEST metric. Not stored for COUNT.
         :param group_by: Map of dimension name to JSONPath for group-by queries. Each value must start with `$.` (example: `$.region`).
         :param event_from: Only count events after this timestamp.
         :param retries: Override the default retry configuration for this method

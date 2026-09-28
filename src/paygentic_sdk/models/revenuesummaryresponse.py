@@ -48,9 +48,9 @@ class RevenueSummaryResponseTypedDict(TypedDict):
     object: Literal["revenue_summary"]
     r"""Object type identifier"""
     net_revenue: NotRequired[str]
-    r"""Net collected revenue in dollars (paid invoices + completed payments), already net of non-voided refunds. Omitted when groupBy=currency is active."""
+    r"""Revenue in dollars, excluding tax: invoices issued in the period plus completed payments, less non-voided refunds issued in the period. Invoices and refunds are counted excluding tax. Omitted when groupBy=currency is active."""
     total_refunds: NotRequired[str]
-    r"""Gross total of non-voided refunds (credit notes) issued in the period, in dollars. Already subtracted from netRevenue and invoice totals. Omitted when groupBy=currency is active."""
+    r"""Total of non-voided refunds (credit notes) issued in the period, in dollars, including tax. netRevenue subtracts these refunds excluding tax. Omitted when groupBy=currency is active."""
     refund_count: NotRequired[float]
     r"""Number of non-voided refunds (credit notes) issued in the period. Omitted when groupBy=currency is active."""
     total_rebates: NotRequired[str]
@@ -80,10 +80,10 @@ class RevenueSummaryResponse(BaseModel):
     r"""Object type identifier"""
 
     net_revenue: Annotated[Optional[str], pydantic.Field(alias="netRevenue")] = None
-    r"""Net collected revenue in dollars (paid invoices + completed payments), already net of non-voided refunds. Omitted when groupBy=currency is active."""
+    r"""Revenue in dollars, excluding tax: invoices issued in the period plus completed payments, less non-voided refunds issued in the period. Invoices and refunds are counted excluding tax. Omitted when groupBy=currency is active."""
 
     total_refunds: Annotated[Optional[str], pydantic.Field(alias="totalRefunds")] = None
-    r"""Gross total of non-voided refunds (credit notes) issued in the period, in dollars. Already subtracted from netRevenue and invoice totals. Omitted when groupBy=currency is active."""
+    r"""Total of non-voided refunds (credit notes) issued in the period, in dollars, including tax. netRevenue subtracts these refunds excluding tax. Omitted when groupBy=currency is active."""
 
     refund_count: Annotated[Optional[float], pydantic.Field(alias="refundCount")] = None
     r"""Number of non-voided refunds (credit notes) issued in the period. Omitted when groupBy=currency is active."""

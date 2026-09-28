@@ -14,7 +14,7 @@ class CurrencyBreakdownEntryTypedDict(TypedDict):
     currency: str
     r"""ISO 4217 currency code (uppercase, e.g. USD, EUR, GBP)"""
     net_revenue: str
-    r"""Net collected revenue in dollars for this currency (issued invoices + completed payments)"""
+    r"""Revenue in dollars for this currency, excluding tax: invoices issued in the period plus completed payments"""
     invoices: InvoiceSummaryTypedDict
     payments: PaymentSummaryTypedDict
     trend: List[RevenueTrendBucketTypedDict]
@@ -26,7 +26,7 @@ class CurrencyBreakdownEntry(BaseModel):
     r"""ISO 4217 currency code (uppercase, e.g. USD, EUR, GBP)"""
 
     net_revenue: Annotated[str, pydantic.Field(alias="netRevenue")]
-    r"""Net collected revenue in dollars for this currency (issued invoices + completed payments)"""
+    r"""Revenue in dollars for this currency, excluding tax: invoices issued in the period plus completed payments"""
 
     invoices: InvoiceSummary
 

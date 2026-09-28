@@ -217,7 +217,7 @@ class TestClocks(BaseSDK):
 
         Creates a new test clock with an optional initial time. If no time is provided, uses the current time.
 
-        :param current_time: Initial time for the test clock (defaults to current time). Cannot be more than 1 hour in the past to prevent accidental backdating. The 1-hour buffer accounts for clock drift and network delays.
+        :param current_time: Initial time for the test clock (defaults to current time). May be in the past, which lets a subscription on the clock start on a past date and bill its periods as the clock advances.
         :param description: Description of the test clock's purpose
         :param merchant_id: The merchant organization that will own this test clock. If not provided, will be extracted from authenticated user's context.
         :param name: Name of the test clock
@@ -321,7 +321,7 @@ class TestClocks(BaseSDK):
 
         Creates a new test clock with an optional initial time. If no time is provided, uses the current time.
 
-        :param current_time: Initial time for the test clock (defaults to current time). Cannot be more than 1 hour in the past to prevent accidental backdating. The 1-hour buffer accounts for clock drift and network delays.
+        :param current_time: Initial time for the test clock (defaults to current time). May be in the past, which lets a subscription on the clock start on a past date and bill its periods as the clock advances.
         :param description: Description of the test clock's purpose
         :param merchant_id: The merchant organization that will own this test clock. If not provided, will be extracted from authenticated user's context.
         :param name: Name of the test clock

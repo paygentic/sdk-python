@@ -14,7 +14,7 @@ class RevenueTrendBucketTypedDict(TypedDict):
     timestamp: datetime
     r"""Start time of this bucket"""
     issued_invoices: str
-    r"""Total amount of all invoices issued in this bucket (all statuses, by issuedAt)"""
+    r"""Total amount of all invoices issued in this bucket (all statuses, by issuedAt), excluding tax"""
     written_off_invoices: str
     r"""Amount of written-off invoices in dollars for this bucket (by writtenOffAt)"""
     completed_payments: str
@@ -30,7 +30,7 @@ class RevenueTrendBucket(BaseModel):
     r"""Start time of this bucket"""
 
     issued_invoices: Annotated[str, pydantic.Field(alias="issuedInvoices")]
-    r"""Total amount of all invoices issued in this bucket (all statuses, by issuedAt)"""
+    r"""Total amount of all invoices issued in this bucket (all statuses, by issuedAt), excluding tax"""
 
     written_off_invoices: Annotated[str, pydantic.Field(alias="writtenOffInvoices")]
     r"""Amount of written-off invoices in dollars for this bucket (by writtenOffAt)"""

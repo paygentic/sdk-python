@@ -16,6 +16,8 @@ SubscriptionAdjustmentType = Union[
     Literal[
         "percentageDiscount",
         "usageDiscount",
+        "minimumQuantity",
+        "maximumQuantity",
     ],
     UnrecognizedStr,
 ]
@@ -29,17 +31,21 @@ class SubscriptionAdjustmentTypedDict(TypedDict):
     r"""Unique identifier for a subscription"""
     type: SubscriptionAdjustmentType
     percentage_discount: Nullable[str]
-    r"""The discount rate as a decimal fraction between 0 and 1. \"0.35\" means 35 percent. Null on a usageDiscount, which carries a unit count instead."""
+    r"""The discount rate as a decimal fraction between 0 and 1. \"0.35\" means 35 percent. Null on every other type."""
     usage_discount: Nullable[str]
-    r"""The number of usage units taken off the targeted line's billable quantity. Null on a percentageDiscount, which carries a rate instead."""
+    r"""The number of usage units taken off the targeted line's billable quantity. Null on every other type."""
+    minimum_quantity: Nullable[str]
+    r"""The contracted minimum quantity billed for one period of the targeted price. Null on every other type."""
+    maximum_quantity: Nullable[str]
+    r"""The contracted maximum quantity billed for one period of the targeted price. Null on every other type."""
     target_price_ids: List[str]
-    r"""The prices this adjustment reduces. Exactly one metered price on a usageDiscount; empty on a percentageDiscount, which reduces every discountable charge."""
+    r"""The prices this adjustment applies to. Exactly one price on a usageDiscount; empty on a percentageDiscount, which reduces every discountable charge. A minimumQuantity or maximumQuantity is created against exactly one price, and later lists more than one only where that charge moved to a new price — a floating subscription moving to a new plan version, or a price edit freezing the subscription's version. Every id listed is the same charge, and the bound applies to whichever one a period bills under."""
     effective_from: datetime
-    r"""Opens the window. Read per type: INCLUSIVE on a percentageDiscount, whose window is prorated by day overlap; EXCLUSIVE on a usageDiscount, which corrects a line whose period END falls strictly after this instant."""
+    r"""Opens the window. Read per type: INCLUSIVE on a percentageDiscount, whose window is prorated by day overlap; EXCLUSIVE on a usageDiscount and on both quantity bounds, which apply to a line whose period END falls strictly after this instant."""
     effective_to: Nullable[datetime]
-    r"""Closes the window, or null for never. Read per type: EXCLUSIVE on a percentageDiscount; INCLUSIVE on a usageDiscount, which corrects a line whose period END falls on or before this instant."""
+    r"""Closes the window, or null for never. Read per type: EXCLUSIVE on a percentageDiscount; INCLUSIVE on a usageDiscount and on both quantity bounds, which apply to a line whose period END falls on or before this instant. A delete shortens this to the end of the last period the adjustment has already been billed on."""
     description: Nullable[str]
-    r"""The deal's own name. Shown on each discount line a percentageDiscount emits; a usageDiscount emits no line, so its description is carried here only."""
+    r"""The deal's own name. Shown on each discount line a percentageDiscount emits; every other type emits no line, so its description is carried here only."""
     created_at: datetime
 
 
@@ -57,22 +63,28 @@ class SubscriptionAdjustment(BaseModel):
     percentage_discount: Annotated[
         Nullable[str], pydantic.Field(alias="percentageDiscount")
     ]
-    r"""The discount rate as a decimal fraction between 0 and 1. \"0.35\" means 35 percent. Null on a usageDiscount, which carries a unit count instead."""
+    r"""The discount rate as a decimal fraction between 0 and 1. \"0.35\" means 35 percent. Null on every other type."""
 
     usage_discount: Annotated[Nullable[str], pydantic.Field(alias="usageDiscount")]
-    r"""The number of usage units taken off the targeted line's billable quantity. Null on a percentageDiscount, which carries a rate instead."""
+    r"""The number of usage units taken off the targeted line's billable quantity. Null on every other type."""
+
+    minimum_quantity: Annotated[Nullable[str], pydantic.Field(alias="minimumQuantity")]
+    r"""The contracted minimum quantity billed for one period of the targeted price. Null on every other type."""
+
+    maximum_quantity: Annotated[Nullable[str], pydantic.Field(alias="maximumQuantity")]
+    r"""The contracted maximum quantity billed for one period of the targeted price. Null on every other type."""
 
     target_price_ids: Annotated[List[str], pydantic.Field(alias="targetPriceIds")]
-    r"""The prices this adjustment reduces. Exactly one metered price on a usageDiscount; empty on a percentageDiscount, which reduces every discountable charge."""
+    r"""The prices this adjustment applies to. Exactly one price on a usageDiscount; empty on a percentageDiscount, which reduces every discountable charge. A minimumQuantity or maximumQuantity is created against exactly one price, and later lists more than one only where that charge moved to a new price — a floating subscription moving to a new plan version, or a price edit freezing the subscription's version. Every id listed is the same charge, and the bound applies to whichever one a period bills under."""
 
     effective_from: Annotated[datetime, pydantic.Field(alias="effectiveFrom")]
-    r"""Opens the window. Read per type: INCLUSIVE on a percentageDiscount, whose window is prorated by day overlap; EXCLUSIVE on a usageDiscount, which corrects a line whose period END falls strictly after this instant."""
+    r"""Opens the window. Read per type: INCLUSIVE on a percentageDiscount, whose window is prorated by day overlap; EXCLUSIVE on a usageDiscount and on both quantity bounds, which apply to a line whose period END falls strictly after this instant."""
 
     effective_to: Annotated[Nullable[datetime], pydantic.Field(alias="effectiveTo")]
-    r"""Closes the window, or null for never. Read per type: EXCLUSIVE on a percentageDiscount; INCLUSIVE on a usageDiscount, which corrects a line whose period END falls on or before this instant."""
+    r"""Closes the window, or null for never. Read per type: EXCLUSIVE on a percentageDiscount; INCLUSIVE on a usageDiscount and on both quantity bounds, which apply to a line whose period END falls on or before this instant. A delete shortens this to the end of the last period the adjustment has already been billed on."""
 
     description: Nullable[str]
-    r"""The deal's own name. Shown on each discount line a percentageDiscount emits; a usageDiscount emits no line, so its description is carried here only."""
+    r"""The deal's own name. Shown on each discount line a percentageDiscount emits; every other type emits no line, so its description is carried here only."""
 
     created_at: Annotated[datetime, pydantic.Field(alias="createdAt")]
 

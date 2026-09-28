@@ -14,7 +14,7 @@ class ProfitabilityRowTypedDict(TypedDict):
     customer_name: str
     r"""Display name for the row. 'Other' for the overflow row."""
     net_revenue: str
-    r"""Net revenue (paid + outstanding) in unit currency, with two decimals."""
+    r"""Revenue excluding tax (paid + outstanding invoices issued in the period), in unit currency, with two decimals."""
     total_cost: str
     r"""Aggregated cost in unit currency, with two decimals."""
     profit: str
@@ -33,7 +33,7 @@ class ProfitabilityRow(BaseModel):
     r"""Display name for the row. 'Other' for the overflow row."""
 
     net_revenue: Annotated[str, pydantic.Field(alias="netRevenue")]
-    r"""Net revenue (paid + outstanding) in unit currency, with two decimals."""
+    r"""Revenue excluding tax (paid + outstanding invoices issued in the period), in unit currency, with two decimals."""
 
     total_cost: Annotated[str, pydantic.Field(alias="totalCost")]
     r"""Aggregated cost in unit currency, with two decimals."""

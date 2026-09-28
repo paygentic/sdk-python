@@ -25,10 +25,10 @@ class UpdateBillableMetricRequestBodyTypedDict(TypedDict):
     r"""Updated measurement unit. Common examples: 'tokens', 'GB', 'requests', 'items', 'hours'"""
     item_id: NotRequired[Nullable[str]]
     r"""Optional item tag, used to map this metric's invoice lines to an external accounting/tax identity. Send a new id to re-tag — the item must be filed under this charge's own product, and an archived item is rejected. An item from another product is refused with `ITEM_PRODUCT_MISMATCH`: a tag is an accounting grouping and does not move the charge between products, and no field here could move it back. Re-file the item to move every charge anchored to it together. Send `null` to untag. Every line item whose invoice has not closed reports this charge's current tag, so a re-tag takes effect on the bill in progress and on any generated ahead of it — no further action, and no window to wait for. Lines on a closed invoice keep the item recorded at close and never move. Un-tagging works the same way: those lines report no item."""
-    event_type: NotRequired[Nullable[str]]
-    r"""CloudEvents type for meter routing."""
+    event_type: NotRequired[str]
+    r"""CloudEvents type for meter routing. Cannot be cleared: every billable metric needs one."""
     value_property: NotRequired[Nullable[str]]
-    r"""JSONPath to extract a numeric value from event data. Must start with `$.` (example: `$.amount` or `$.payload.bytes`)."""
+    r"""JSONPath to extract a numeric value from event data. Must start with `$.` (example: `$.amount` or `$.payload.bytes`). Cannot be cleared on a SUM/AVG/MIN/MAX/LATEST metric. Not stored for COUNT."""
     group_by: NotRequired[Nullable[Dict[str, str]]]
     r"""Map of dimension name to JSONPath for group-by queries. Each value must start with `$.` (example: `$.region`)."""
     event_from: NotRequired[Nullable[datetime]]
@@ -48,15 +48,13 @@ class UpdateBillableMetricRequestBody(BaseModel):
     item_id: Annotated[OptionalNullable[str], pydantic.Field(alias="itemId")] = UNSET
     r"""Optional item tag, used to map this metric's invoice lines to an external accounting/tax identity. Send a new id to re-tag — the item must be filed under this charge's own product, and an archived item is rejected. An item from another product is refused with `ITEM_PRODUCT_MISMATCH`: a tag is an accounting grouping and does not move the charge between products, and no field here could move it back. Re-file the item to move every charge anchored to it together. Send `null` to untag. Every line item whose invoice has not closed reports this charge's current tag, so a re-tag takes effect on the bill in progress and on any generated ahead of it — no further action, and no window to wait for. Lines on a closed invoice keep the item recorded at close and never move. Un-tagging works the same way: those lines report no item."""
 
-    event_type: Annotated[OptionalNullable[str], pydantic.Field(alias="eventType")] = (
-        UNSET
-    )
-    r"""CloudEvents type for meter routing."""
+    event_type: Annotated[Optional[str], pydantic.Field(alias="eventType")] = None
+    r"""CloudEvents type for meter routing. Cannot be cleared: every billable metric needs one."""
 
     value_property: Annotated[
         OptionalNullable[str], pydantic.Field(alias="valueProperty")
     ] = UNSET
-    r"""JSONPath to extract a numeric value from event data. Must start with `$.` (example: `$.amount` or `$.payload.bytes`)."""
+    r"""JSONPath to extract a numeric value from event data. Must start with `$.` (example: `$.amount` or `$.payload.bytes`). Cannot be cleared on a SUM/AVG/MIN/MAX/LATEST metric. Not stored for COUNT."""
 
     group_by: Annotated[
         OptionalNullable[Dict[str, str]], pydantic.Field(alias="groupBy")
@@ -82,9 +80,7 @@ class UpdateBillableMetricRequestBody(BaseModel):
                 "eventFrom",
             ]
         )
-        nullable_fields = set(
-            ["itemId", "eventType", "valueProperty", "groupBy", "eventFrom"]
-        )
+        nullable_fields = set(["itemId", "valueProperty", "groupBy", "eventFrom"])
         serialized = handler(self)
         m = {}
 

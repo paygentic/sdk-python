@@ -11,7 +11,7 @@ from typing_extensions import Annotated, NotRequired, TypedDict
 
 class CreateTestClockRequestTypedDict(TypedDict):
     current_time: NotRequired[datetime]
-    r"""Initial time for the test clock (defaults to current time). Cannot be more than 1 hour in the past to prevent accidental backdating. The 1-hour buffer accounts for clock drift and network delays."""
+    r"""Initial time for the test clock (defaults to current time). May be in the past, which lets a subscription on the clock start on a past date and bill its periods as the clock advances."""
     description: NotRequired[str]
     r"""Description of the test clock's purpose"""
     merchant_id: NotRequired[str]
@@ -24,7 +24,7 @@ class CreateTestClockRequest(BaseModel):
     current_time: Annotated[Optional[datetime], pydantic.Field(alias="currentTime")] = (
         None
     )
-    r"""Initial time for the test clock (defaults to current time). Cannot be more than 1 hour in the past to prevent accidental backdating. The 1-hour buffer accounts for clock drift and network delays."""
+    r"""Initial time for the test clock (defaults to current time). May be in the past, which lets a subscription on the clock start on a past date and bill its periods as the clock advances."""
 
     description: Optional[str] = None
     r"""Description of the test clock's purpose"""

@@ -2134,10 +2134,10 @@ class Subscriptions(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ):
+    ) -> Optional[models.SubscriptionAdjustment]:
         r"""Delete Adjustment
 
-        Deletes an adjustment that has not yet reached an issued invoice. No invoice changes: an invoice still in draft keeps its numbers, and loses the discount only when its period is calculated again. An adjustment that has already discounted an issued invoice cannot be deleted, because the invoice records why the customer was charged that amount. Its window cannot be shortened afterwards either, so set effectiveTo at creation time whenever the deal has a known end date.
+        Stops an adjustment from applying to any period it has not already been billed on. An adjustment that has never reached an issued invoice is removed, and the response is 204. An adjustment that has already been billed on an issued invoice is RETRACTED instead: its effectiveTo moves to the end of the last period it was billed on, the adjustment still exists, and the response is 200 carrying it. Read a 200 as \"shortened\", not as \"removed\". No invoice changes either way: an issued invoice keeps its numbers, and a draft loses the adjustment only when its period is calculated again. Deleting the same adjustment again returns the same 200 and the same window.
 
         :param id: The subscription ID
         :param adjustment_id: The adjustment ID
@@ -2202,8 +2202,10 @@ class Subscriptions(BaseSDK):
         )
 
         response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(models.SubscriptionAdjustment, http_res)
         if utils.match_response(http_res, "204", "*"):
-            return
+            return None
         if utils.match_response(
             http_res, ["401", "403", "404", "409"], "application/json"
         ):
@@ -2234,10 +2236,10 @@ class Subscriptions(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ):
+    ) -> Optional[models.SubscriptionAdjustment]:
         r"""Delete Adjustment
 
-        Deletes an adjustment that has not yet reached an issued invoice. No invoice changes: an invoice still in draft keeps its numbers, and loses the discount only when its period is calculated again. An adjustment that has already discounted an issued invoice cannot be deleted, because the invoice records why the customer was charged that amount. Its window cannot be shortened afterwards either, so set effectiveTo at creation time whenever the deal has a known end date.
+        Stops an adjustment from applying to any period it has not already been billed on. An adjustment that has never reached an issued invoice is removed, and the response is 204. An adjustment that has already been billed on an issued invoice is RETRACTED instead: its effectiveTo moves to the end of the last period it was billed on, the adjustment still exists, and the response is 200 carrying it. Read a 200 as \"shortened\", not as \"removed\". No invoice changes either way: an issued invoice keeps its numbers, and a draft loses the adjustment only when its period is calculated again. Deleting the same adjustment again returns the same 200 and the same window.
 
         :param id: The subscription ID
         :param adjustment_id: The adjustment ID
@@ -2302,8 +2304,10 @@ class Subscriptions(BaseSDK):
         )
 
         response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(models.SubscriptionAdjustment, http_res)
         if utils.match_response(http_res, "204", "*"):
-            return
+            return None
         if utils.match_response(
             http_res, ["401", "403", "404", "409"], "application/json"
         ):

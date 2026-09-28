@@ -9,7 +9,7 @@ class InvoiceCategorySummaryTypedDict(TypedDict):
     count: int
     r"""Number of invoices in this category"""
     amount: str
-    r"""Total amount of invoices in this category in dollars"""
+    r"""Total amount of invoices in this category in dollars, including tax"""
 
 
 class InvoiceCategorySummary(BaseModel):
@@ -17,4 +17,4 @@ class InvoiceCategorySummary(BaseModel):
     r"""Number of invoices in this category"""
 
     amount: str
-    r"""Total amount of invoices in this category in dollars"""
+    r"""Total amount of invoices in this category in dollars, including tax"""

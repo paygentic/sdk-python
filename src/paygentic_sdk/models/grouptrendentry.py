@@ -12,7 +12,7 @@ class GroupTrendEntryTypedDict(TypedDict):
     group_label: str
     r"""Human-readable label for the group (e.g. plan name)"""
     issued_invoices: str
-    r"""Total issued invoice amount in dollars for this group in this bucket"""
+    r"""Total issued invoice amount in dollars for this group in this bucket, excluding tax"""
 
 
 class GroupTrendEntry(BaseModel):
@@ -23,7 +23,7 @@ class GroupTrendEntry(BaseModel):
     r"""Human-readable label for the group (e.g. plan name)"""
 
     issued_invoices: Annotated[str, pydantic.Field(alias="issuedInvoices")]
-    r"""Total issued invoice amount in dollars for this group in this bucket"""
+    r"""Total issued invoice amount in dollars for this group in this bucket, excluding tax"""
 
 
 try:

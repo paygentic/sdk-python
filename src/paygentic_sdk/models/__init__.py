@@ -167,6 +167,14 @@ if TYPE_CHECKING:
         CreateManualLineItemRequest,
         CreateManualLineItemRequestTypedDict,
     )
+    from .createmaximumquantityadjustment import (
+        CreateMaximumQuantityAdjustment,
+        CreateMaximumQuantityAdjustmentTypedDict,
+    )
+    from .createminimumquantityadjustment import (
+        CreateMinimumQuantityAdjustment,
+        CreateMinimumQuantityAdjustmentTypedDict,
+    )
     from .createorderapprovalop import (
         CreateOrderApprovalRequestRequest,
         CreateOrderApprovalRequestRequestTypedDict,
@@ -1406,6 +1414,10 @@ __all__ = [
     "CreateLineItemRequestTypedDict",
     "CreateManualLineItemRequest",
     "CreateManualLineItemRequestTypedDict",
+    "CreateMaximumQuantityAdjustment",
+    "CreateMaximumQuantityAdjustmentTypedDict",
+    "CreateMinimumQuantityAdjustment",
+    "CreateMinimumQuantityAdjustmentTypedDict",
     "CreateOrderApprovalRequest",
     "CreateOrderApprovalRequestRequest",
     "CreateOrderApprovalRequestRequestTypedDict",
@@ -2383,6 +2395,10 @@ _dynamic_imports: dict[str, str] = {
     "CreateLineItemRequestTypedDict": ".createlineitemop",
     "CreateManualLineItemRequest": ".createmanuallineitemrequest",
     "CreateManualLineItemRequestTypedDict": ".createmanuallineitemrequest",
+    "CreateMaximumQuantityAdjustment": ".createmaximumquantityadjustment",
+    "CreateMaximumQuantityAdjustmentTypedDict": ".createmaximumquantityadjustment",
+    "CreateMinimumQuantityAdjustment": ".createminimumquantityadjustment",
+    "CreateMinimumQuantityAdjustmentTypedDict": ".createminimumquantityadjustment",
     "CreateOrderApprovalRequestRequest": ".createorderapprovalop",
     "CreateOrderApprovalRequestRequestTypedDict": ".createorderapprovalop",
     "CreateOrderApprovalRequest": ".createorderapprovalrequest",
