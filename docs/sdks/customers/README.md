@@ -326,7 +326,7 @@ with Paygentic(
 
 ### Response
 
-**[models.PaymentSession](../../models/paymentsession.md)**
+**[models.CustomerPaymentSession](../../models/customerpaymentsession.md)**
 
 ### Errors
 

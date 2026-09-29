@@ -12,14 +12,14 @@ from paygentic_sdk.types import (
 )
 import pydantic
 from pydantic import model_serializer
-from typing import Any, Dict, List, Literal, Union
+from typing import Any, Dict, Literal, Union
 from typing_extensions import Annotated, NotRequired, TypedDict
 
 
-SchemasBillingScheduleObject = Literal["billing_schedule",]
+OrderBillingScheduleObject = Literal["billing_schedule",]
 
 
-SchemasBillingScheduleStatus = Union[
+OrderBillingScheduleStatus = Union[
     Literal[
         "draft",
         "active",
@@ -30,7 +30,7 @@ SchemasBillingScheduleStatus = Union[
 ]
 
 
-SchemasBillingScheduleAlignmentPolicy = Union[
+OrderBillingScheduleAlignmentPolicy = Union[
     Literal[
         "anchor",
         "calendar",
@@ -40,7 +40,7 @@ SchemasBillingScheduleAlignmentPolicy = Union[
 ]
 
 
-SchemasBillingScheduleProrationPolicy = Union[
+OrderBillingScheduleProrationPolicy = Union[
     Literal[
         "none",
         "daily",
@@ -49,7 +49,7 @@ SchemasBillingScheduleProrationPolicy = Union[
 ]
 
 
-SchemasBillingSchedulePeriodPreset = Union[
+OrderBillingSchedulePeriodPreset = Union[
     Literal[
         "single",
         "P1M",
@@ -62,58 +62,54 @@ SchemasBillingSchedulePeriodPreset = Union[
 ]
 
 
-class SchemasBillingScheduleTypedDict(TypedDict):
+class OrderBillingScheduleTypedDict(TypedDict):
+    r"""Summary of a billing schedule owned by this order. The full schedule (with intervals + staged invoices) is served under /billingSchedules. Owner-polymorphic: a schedule belongs to exactly one Order or one Subscription (XOR); cadence lives on ScheduleIntervals, not the header."""
+
     id: str
-    object: SchemasBillingScheduleObject
+    object: OrderBillingScheduleObject
     merchant_id: str
-    status: SchemasBillingScheduleStatus
+    status: OrderBillingScheduleStatus
     start_date: datetime
-    end_date: Nullable[datetime]
-    r"""The schedule's end date. Always present."""
+    end_date: datetime
     billing_anchor: datetime
-    alignment_policy: SchemasBillingScheduleAlignmentPolicy
-    proration_policy: SchemasBillingScheduleProrationPolicy
-    period_preset: SchemasBillingSchedulePeriodPreset
-    custom_period_windows: List[Any]
+    alignment_policy: OrderBillingScheduleAlignmentPolicy
+    proration_policy: OrderBillingScheduleProrationPolicy
+    period_preset: OrderBillingSchedulePeriodPreset
     metadata: Dict[str, Any]
     created_at: datetime
     updated_at: datetime
     order_id: NotRequired[Nullable[str]]
     subscription_id: NotRequired[Nullable[str]]
     payment_term_days: NotRequired[Nullable[int]]
-    deleted_at: NotRequired[Nullable[datetime]]
 
 
-class SchemasBillingSchedule(BaseModel):
+class OrderBillingSchedule(BaseModel):
+    r"""Summary of a billing schedule owned by this order. The full schedule (with intervals + staged invoices) is served under /billingSchedules. Owner-polymorphic: a schedule belongs to exactly one Order or one Subscription (XOR); cadence lives on ScheduleIntervals, not the header."""
+
     id: str
 
-    object: SchemasBillingScheduleObject
+    object: OrderBillingScheduleObject
 
     merchant_id: Annotated[str, pydantic.Field(alias="merchantId")]
 
-    status: SchemasBillingScheduleStatus
+    status: OrderBillingScheduleStatus
 
     start_date: Annotated[datetime, pydantic.Field(alias="startDate")]
 
-    end_date: Annotated[Nullable[datetime], pydantic.Field(alias="endDate")]
-    r"""The schedule's end date. Always present."""
+    end_date: Annotated[datetime, pydantic.Field(alias="endDate")]
 
     billing_anchor: Annotated[datetime, pydantic.Field(alias="billingAnchor")]
 
     alignment_policy: Annotated[
-        SchemasBillingScheduleAlignmentPolicy, pydantic.Field(alias="alignmentPolicy")
+        OrderBillingScheduleAlignmentPolicy, pydantic.Field(alias="alignmentPolicy")
     ]
 
     proration_policy: Annotated[
-        SchemasBillingScheduleProrationPolicy, pydantic.Field(alias="prorationPolicy")
+        OrderBillingScheduleProrationPolicy, pydantic.Field(alias="prorationPolicy")
     ]
 
     period_preset: Annotated[
-        SchemasBillingSchedulePeriodPreset, pydantic.Field(alias="periodPreset")
-    ]
-
-    custom_period_windows: Annotated[
-        List[Any], pydantic.Field(alias="customPeriodWindows")
+        OrderBillingSchedulePeriodPreset, pydantic.Field(alias="periodPreset")
     ]
 
     metadata: Dict[str, Any]
@@ -132,18 +128,10 @@ class SchemasBillingSchedule(BaseModel):
         OptionalNullable[int], pydantic.Field(alias="paymentTermDays")
     ] = UNSET
 
-    deleted_at: Annotated[
-        OptionalNullable[datetime], pydantic.Field(alias="deletedAt")
-    ] = UNSET
-
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(
-            ["orderId", "subscriptionId", "paymentTermDays", "deletedAt"]
-        )
-        nullable_fields = set(
-            ["orderId", "subscriptionId", "endDate", "paymentTermDays", "deletedAt"]
-        )
+        optional_fields = set(["orderId", "subscriptionId", "paymentTermDays"])
+        nullable_fields = set(["orderId", "subscriptionId", "paymentTermDays"])
         serialized = handler(self)
         m = {}
 
@@ -167,6 +155,6 @@ class SchemasBillingSchedule(BaseModel):
 
 
 try:
-    SchemasBillingSchedule.model_rebuild()
+    OrderBillingSchedule.model_rebuild()
 except NameError:
     pass

@@ -1,12 +1,12 @@
-# SchemasBillingScheduleProrationPolicy
+# OrderBillingScheduleProrationPolicy
 
 ## Example Usage
 
 ```python
-from paygentic_sdk.models import SchemasBillingScheduleProrationPolicy
+from paygentic_sdk.models import OrderBillingScheduleProrationPolicy
 
 # Open enum: unrecognized values are captured as UnrecognizedStr
-value: SchemasBillingScheduleProrationPolicy = "none"
+value: OrderBillingScheduleProrationPolicy = "none"
 ```
 
 

@@ -26,7 +26,9 @@ class Plans(BaseSDK):
         default_tax_rate: Optional[float] = 0,
         description: Optional[str] = None,
         invoice_display_name: Optional[str] = None,
-        prices: Optional[List[str]] = None,
+        prices: Optional[
+            Union[List[models.PlanLineRef], List[models.PlanLineRefTypedDict]]
+        ] = None,
         tax_behavior: Optional[models.CreatePlanTaxBehavior] = "exclusive",
         renewal_reminder_enabled: Optional[bool] = True,
         renewal_reminder_days: Optional[int] = 3,
@@ -56,7 +58,7 @@ class Plans(BaseSDK):
         :param default_tax_rate: Fallback tax rate percentage when automatic tax calculation fails. Sample values: 8.5 represents 8.5% tax, 10.0 represents 10% tax, 0 represents no tax
         :param description: Plan details explaining included features and limits. Sample values: 'Claude API access with 500K tokens monthly allowance', 'Unlimited cloud storage plus real-time analytics tools', 'Complete machine learning infrastructure with GPU access', 'Flexible usage-based pricing with no monthly commitment'
         :param invoice_display_name: Plan name shown on billing statements. Sample values: 'LLM API Basic Plan', 'Data Warehouse Business', 'ML Platform Enterprise', 'Pay-Per-Use Model'
-        :param prices: Array of price IDs to associate with this plan
+        :param prices: The prices this plan starts with. An entry is either a price ID on its own, or an object that names a price ID and the key by which you address that line. A price ID on its own receives a generated key.
         :param tax_behavior: Whether tax is added on top of the price (exclusive) or included in the price (inclusive)
         :param renewal_reminder_enabled: Whether to send renewal reminder emails to customers before their subscription renews
         :param renewal_reminder_days: Number of days before renewal to send the reminder email
@@ -89,7 +91,7 @@ class Plans(BaseSDK):
             invoice_display_name=invoice_display_name,
             merchant_id=merchant_id,
             name=name,
-            prices=prices,
+            prices=utils.get_pydantic_model(prices, Optional[List[models.PlanLineRef]]),
             product_id=product_id,
             tax_behavior=tax_behavior,
             renewal_reminder_enabled=renewal_reminder_enabled,
@@ -183,7 +185,9 @@ class Plans(BaseSDK):
         default_tax_rate: Optional[float] = 0,
         description: Optional[str] = None,
         invoice_display_name: Optional[str] = None,
-        prices: Optional[List[str]] = None,
+        prices: Optional[
+            Union[List[models.PlanLineRef], List[models.PlanLineRefTypedDict]]
+        ] = None,
         tax_behavior: Optional[models.CreatePlanTaxBehavior] = "exclusive",
         renewal_reminder_enabled: Optional[bool] = True,
         renewal_reminder_days: Optional[int] = 3,
@@ -213,7 +217,7 @@ class Plans(BaseSDK):
         :param default_tax_rate: Fallback tax rate percentage when automatic tax calculation fails. Sample values: 8.5 represents 8.5% tax, 10.0 represents 10% tax, 0 represents no tax
         :param description: Plan details explaining included features and limits. Sample values: 'Claude API access with 500K tokens monthly allowance', 'Unlimited cloud storage plus real-time analytics tools', 'Complete machine learning infrastructure with GPU access', 'Flexible usage-based pricing with no monthly commitment'
         :param invoice_display_name: Plan name shown on billing statements. Sample values: 'LLM API Basic Plan', 'Data Warehouse Business', 'ML Platform Enterprise', 'Pay-Per-Use Model'
-        :param prices: Array of price IDs to associate with this plan
+        :param prices: The prices this plan starts with. An entry is either a price ID on its own, or an object that names a price ID and the key by which you address that line. A price ID on its own receives a generated key.
         :param tax_behavior: Whether tax is added on top of the price (exclusive) or included in the price (inclusive)
         :param renewal_reminder_enabled: Whether to send renewal reminder emails to customers before their subscription renews
         :param renewal_reminder_days: Number of days before renewal to send the reminder email
@@ -246,7 +250,7 @@ class Plans(BaseSDK):
             invoice_display_name=invoice_display_name,
             merchant_id=merchant_id,
             name=name,
-            prices=prices,
+            prices=utils.get_pydantic_model(prices, Optional[List[models.PlanLineRef]]),
             product_id=product_id,
             tax_behavior=tax_behavior,
             renewal_reminder_enabled=renewal_reminder_enabled,
@@ -1451,11 +1455,10 @@ class Plans(BaseSDK):
         self,
         *,
         id: str,
-        add_prices: Optional[List[str]] = None,
-        remove_prices: Optional[List[str]] = None,
-        replace_prices: Optional[
-            Union[List[models.ReplacePrice], List[models.ReplacePriceTypedDict]]
-        ] = None,
+        prices: Union[
+            List[models.MintPlanLineRef], List[models.MintPlanLineRefTypedDict]
+        ],
+        based_on_version_id: Optional[str] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -1463,12 +1466,11 @@ class Plans(BaseSDK):
     ) -> models.PlanVersion:
         r"""Mint a plan version
 
-        Mint a new plan version from a price diff and make it the version the plan bills from, in one step. The diff references existing prices by id: create prices beforehand with POST /prices, then add, remove, or replace them here. To return to an earlier price set, make that version the default with a PATCH on the version.
+        Mint a new plan version from the price set it is to hold, and make it the version the plan bills from, in one step. The request names the complete set, not a change to it: create prices beforehand with POST /prices, then list every price the new version holds. The change against the current version follows from the keys — a key on both sides with a different price ID replaces that line, a key only in the request adds a line, and a key the current version holds and the request omits removes that line. To return to an earlier price set, make that version the default with a PATCH on the version.
 
         :param id:
-        :param add_prices: Prices to add to the version. Each must not already be on the plan's current version.
-        :param remove_prices: Prices to remove. Each must be on the plan's current version.
-        :param replace_prices: Prices to swap in place, preserving the slot's lineage so the price keeps its identity where the plan is configured for stable price ids. replacesPriceId must be on the plan's current version; withPriceId is the new price.
+        :param prices: The full price set the new version holds. To move off the previous addPrices, removePrices and replacePrices fields: a replacePrices entry becomes the same key with the new price ID, a removePrices entry becomes an omitted key, and an addPrices entry becomes a new entry.
+        :param based_on_version_id: The ID of the plan version you read the current price set from. Supply it to be told when the plan has moved on: the request is rejected with 409 if the plan's current version is no longer this one, so a set built from a stale read cannot drop a line another caller has just added. Omit it to write the set unconditionally.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1487,11 +1489,8 @@ class Plans(BaseSDK):
         request = models.MintPlanVersionRequestRequest(
             id=id,
             mint_plan_version_request=models.MintPlanVersionRequest(
-                add_prices=add_prices,
-                remove_prices=remove_prices,
-                replace_prices=utils.get_pydantic_model(
-                    replace_prices, Optional[List[models.ReplacePrice]]
-                ),
+                prices=utils.get_pydantic_model(prices, List[models.MintPlanLineRef]),
+                based_on_version_id=based_on_version_id,
             ),
         )
 
@@ -1573,11 +1572,10 @@ class Plans(BaseSDK):
         self,
         *,
         id: str,
-        add_prices: Optional[List[str]] = None,
-        remove_prices: Optional[List[str]] = None,
-        replace_prices: Optional[
-            Union[List[models.ReplacePrice], List[models.ReplacePriceTypedDict]]
-        ] = None,
+        prices: Union[
+            List[models.MintPlanLineRef], List[models.MintPlanLineRefTypedDict]
+        ],
+        based_on_version_id: Optional[str] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -1585,12 +1583,11 @@ class Plans(BaseSDK):
     ) -> models.PlanVersion:
         r"""Mint a plan version
 
-        Mint a new plan version from a price diff and make it the version the plan bills from, in one step. The diff references existing prices by id: create prices beforehand with POST /prices, then add, remove, or replace them here. To return to an earlier price set, make that version the default with a PATCH on the version.
+        Mint a new plan version from the price set it is to hold, and make it the version the plan bills from, in one step. The request names the complete set, not a change to it: create prices beforehand with POST /prices, then list every price the new version holds. The change against the current version follows from the keys — a key on both sides with a different price ID replaces that line, a key only in the request adds a line, and a key the current version holds and the request omits removes that line. To return to an earlier price set, make that version the default with a PATCH on the version.
 
         :param id:
-        :param add_prices: Prices to add to the version. Each must not already be on the plan's current version.
-        :param remove_prices: Prices to remove. Each must be on the plan's current version.
-        :param replace_prices: Prices to swap in place, preserving the slot's lineage so the price keeps its identity where the plan is configured for stable price ids. replacesPriceId must be on the plan's current version; withPriceId is the new price.
+        :param prices: The full price set the new version holds. To move off the previous addPrices, removePrices and replacePrices fields: a replacePrices entry becomes the same key with the new price ID, a removePrices entry becomes an omitted key, and an addPrices entry becomes a new entry.
+        :param based_on_version_id: The ID of the plan version you read the current price set from. Supply it to be told when the plan has moved on: the request is rejected with 409 if the plan's current version is no longer this one, so a set built from a stale read cannot drop a line another caller has just added. Omit it to write the set unconditionally.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1609,11 +1606,8 @@ class Plans(BaseSDK):
         request = models.MintPlanVersionRequestRequest(
             id=id,
             mint_plan_version_request=models.MintPlanVersionRequest(
-                add_prices=add_prices,
-                remove_prices=remove_prices,
-                replace_prices=utils.get_pydantic_model(
-                    replace_prices, Optional[List[models.ReplacePrice]]
-                ),
+                prices=utils.get_pydantic_model(prices, List[models.MintPlanLineRef]),
+                based_on_version_id=based_on_version_id,
             ),
         )
 

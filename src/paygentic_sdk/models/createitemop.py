@@ -10,6 +10,7 @@ from typing_extensions import Annotated, NotRequired, TypedDict
 
 class CreateItemRequestTypedDict(TypedDict):
     merchant_id: str
+    r"""Unique identifier for an organization"""
     name: str
     r"""Canonical sellable name for the Item"""
     catalog_id: NotRequired[str]
@@ -20,6 +21,7 @@ class CreateItemRequestTypedDict(TypedDict):
 
 class CreateItemRequest(BaseModel):
     merchant_id: Annotated[str, pydantic.Field(alias="merchantId")]
+    r"""Unique identifier for an organization"""
 
     name: str
     r"""Canonical sellable name for the Item"""

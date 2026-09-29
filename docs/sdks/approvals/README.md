@@ -49,7 +49,7 @@ with Paygentic(
 
 ### Response
 
-**[models.SchemasApproval](../../models/schemasapproval.md)**
+**[models.Approval](../../models/approval.md)**
 
 ### Errors
 
@@ -137,7 +137,7 @@ with Paygentic(
 
 ### Response
 
-**[models.SchemasApproval](../../models/schemasapproval.md)**
+**[models.Approval](../../models/approval.md)**
 
 ### Errors
 
@@ -182,7 +182,7 @@ with Paygentic(
 
 ### Response
 
-**[models.SchemasApproval](../../models/schemasapproval.md)**
+**[models.Approval](../../models/approval.md)**
 
 ### Errors
 

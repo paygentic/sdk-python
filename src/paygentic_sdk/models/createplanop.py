@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 from .plancreditallocation import PlanCreditAllocation, PlanCreditAllocationTypedDict
+from .planlineref import PlanLineRef, PlanLineRefTypedDict
 from datetime import datetime
 from paygentic_sdk.types import (
     BaseModel,
@@ -68,8 +69,8 @@ class CreatePlanRequestTypedDict(TypedDict):
     r"""Plan details explaining included features and limits. Sample values: 'Claude API access with 500K tokens monthly allowance', 'Unlimited cloud storage plus real-time analytics tools', 'Complete machine learning infrastructure with GPU access', 'Flexible usage-based pricing with no monthly commitment'"""
     invoice_display_name: NotRequired[str]
     r"""Plan name shown on billing statements. Sample values: 'LLM API Basic Plan', 'Data Warehouse Business', 'ML Platform Enterprise', 'Pay-Per-Use Model'"""
-    prices: NotRequired[List[str]]
-    r"""Array of price IDs to associate with this plan"""
+    prices: NotRequired[List[PlanLineRefTypedDict]]
+    r"""The prices this plan starts with. An entry is either a price ID on its own, or an object that names a price ID and the key by which you address that line. A price ID on its own receives a generated key."""
     tax_behavior: NotRequired[CreatePlanTaxBehavior]
     r"""Whether tax is added on top of the price (exclusive) or included in the price (inclusive)"""
     renewal_reminder_enabled: NotRequired[bool]
@@ -127,8 +128,8 @@ class CreatePlanRequest(BaseModel):
     ] = None
     r"""Plan name shown on billing statements. Sample values: 'LLM API Basic Plan', 'Data Warehouse Business', 'ML Platform Enterprise', 'Pay-Per-Use Model'"""
 
-    prices: Optional[List[str]] = None
-    r"""Array of price IDs to associate with this plan"""
+    prices: Optional[List[PlanLineRef]] = None
+    r"""The prices this plan starts with. An entry is either a price ID on its own, or an object that names a price ID and the key by which you address that line. A price ID on its own receives a generated key."""
 
     tax_behavior: Annotated[
         Optional[CreatePlanTaxBehavior], pydantic.Field(alias="taxBehavior")

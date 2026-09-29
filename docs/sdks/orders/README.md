@@ -432,7 +432,7 @@ with Paygentic(
 
 ### Response
 
-**[models.Approval](../../models/approval.md)**
+**[models.OrderApproval](../../models/orderapproval.md)**
 
 ### Errors
 

@@ -103,7 +103,7 @@ with Paygentic(
 
 ### Response
 
-**[models.SchemasBillingSchedule](../../models/schemasbillingschedule.md)**
+**[models.BillingSchedule](../../models/billingschedule.md)**
 
 ### Errors
 
@@ -147,7 +147,7 @@ with Paygentic(
 
 ### Response
 
-**[models.SchemasBillingSchedule](../../models/schemasbillingschedule.md)**
+**[models.BillingSchedule](../../models/billingschedule.md)**
 
 ### Errors
 
@@ -199,7 +199,7 @@ with Paygentic(
 
 ### Response
 
-**[models.SchemasBillingSchedule](../../models/schemasbillingschedule.md)**
+**[models.BillingSchedule](../../models/billingschedule.md)**
 
 ### Errors
 

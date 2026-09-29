@@ -52,7 +52,7 @@ r"""What properties.unitPrice is denominated in. 'amount' (the default) is an am
 
 
 class PlanVersionPriceSlotTypedDict(TypedDict):
-    r"""One price slot on a plan version. Every `Price` field is present, plus `priceDeleted` layered on top."""
+    r"""One price slot on a plan version. Every `Price` field is present, plus `key` and `priceDeleted` layered on top."""
 
     id: str
     r"""Unique identifier for a price"""
@@ -66,6 +66,8 @@ class PlanVersionPriceSlotTypedDict(TypedDict):
     updated_at: datetime
     tax: PriceTaxTypedDict
     r"""A price's tax declaration. Optional on write — a price that declares nothing is `IN_SCOPE`, and is billed and taxed exactly as it was before this object existed. Always present on read. Replaced as a whole on update: send the object to change it, omit it to leave it alone."""
+    key: str
+    r"""The name of this line. Send it as the `key` of a subscription price-interval operation to address this line. A line created before keys could be supplied carries a generated key, which does not match the format that this API accepts for new keys."""
     price_deleted: bool
     r"""True when the underlying price this slot references has been soft-deleted."""
     object: NotRequired[PlanVersionPriceSlotObject]
@@ -94,7 +96,7 @@ class PlanVersionPriceSlotTypedDict(TypedDict):
 
 
 class PlanVersionPriceSlot(BaseModel):
-    r"""One price slot on a plan version. Every `Price` field is present, plus `priceDeleted` layered on top."""
+    r"""One price slot on a plan version. Every `Price` field is present, plus `key` and `priceDeleted` layered on top."""
 
     id: str
     r"""Unique identifier for a price"""
@@ -118,6 +120,9 @@ class PlanVersionPriceSlot(BaseModel):
 
     tax: PriceTax
     r"""A price's tax declaration. Optional on write — a price that declares nothing is `IN_SCOPE`, and is billed and taxed exactly as it was before this object existed. Always present on read. Replaced as a whole on update: send the object to change it, omit it to leave it alone."""
+
+    key: str
+    r"""The name of this line. Send it as the `key` of a subscription price-interval operation to address this line. A line created before keys could be supplied carries a generated key, which does not match the format that this API accepts for new keys."""
 
     price_deleted: Annotated[bool, pydantic.Field(alias="priceDeleted")]
     r"""True when the underlying price this slot references has been soft-deleted."""

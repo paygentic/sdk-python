@@ -1,12 +1,12 @@
-# SchemasBillingScheduleStatus
+# OrderBillingScheduleStatus
 
 ## Example Usage
 
 ```python
-from paygentic_sdk.models import SchemasBillingScheduleStatus
+from paygentic_sdk.models import OrderBillingScheduleStatus
 
 # Open enum: unrecognized values are captured as UnrecognizedStr
-value: SchemasBillingScheduleStatus = "draft"
+value: OrderBillingScheduleStatus = "draft"
 ```
 
 

@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 from .plancreditallocation import PlanCreditAllocation, PlanCreditAllocationTypedDict
-from .price import Price, PriceTypedDict
+from .planprice import PlanPrice, PlanPriceTypedDict
 from datetime import datetime
 from paygentic_sdk.types import (
     BaseModel,
@@ -93,7 +93,7 @@ class PlanTypedDict(TypedDict):
     description: NotRequired[str]
     invoice_display_name: NotRequired[str]
     payment_term: NotRequired[PlanPaymentTermTypedDict]
-    prices: NotRequired[List[PriceTypedDict]]
+    prices: NotRequired[List[PlanPriceTypedDict]]
     tax_behavior: NotRequired[TaxBehavior]
     r"""Whether tax is added on top of the price (exclusive) or included in the price (inclusive)"""
     wallet_namespace_id: NotRequired[str]
@@ -170,7 +170,7 @@ class Plan(BaseModel):
         Optional[PlanPaymentTerm], pydantic.Field(alias="paymentTerm")
     ] = None
 
-    prices: Optional[List[Price]] = None
+    prices: Optional[List[PlanPrice]] = None
 
     tax_behavior: Annotated[
         Optional[TaxBehavior], pydantic.Field(alias="taxBehavior")

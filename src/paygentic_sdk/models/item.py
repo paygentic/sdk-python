@@ -17,6 +17,7 @@ class ItemTypedDict(TypedDict):
     id: str
     r"""Unique identifier for an item"""
     merchant_id: str
+    r"""Unique identifier for an organization"""
     name: str
     metadata: Dict[str, Any]
     external_references: List[ExternalReferenceTypedDict]
@@ -34,6 +35,7 @@ class Item(BaseModel):
     r"""Unique identifier for an item"""
 
     merchant_id: Annotated[str, pydantic.Field(alias="merchantId")]
+    r"""Unique identifier for an organization"""
 
     name: str
 

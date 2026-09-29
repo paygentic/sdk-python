@@ -1,12 +1,12 @@
-# SchemasPricePaymentTerm
+# ApprovalResourceType
 
 ## Example Usage
 
 ```python
-from paygentic_sdk.models import SchemasPricePaymentTerm
+from paygentic_sdk.models import ApprovalResourceType
 
 # Open enum: unrecognized values are captured as UnrecognizedStr
-value: SchemasPricePaymentTerm = "in_arrears"
+value: ApprovalResourceType = "order"
 ```
 
 
@@ -14,5 +14,5 @@ value: SchemasPricePaymentTerm = "in_arrears"
 
 This is an open enum. Unrecognized values will not fail type checks.
 
-- `"in_arrears"`
-- `"in_advance"`
+- `"order"`
+- `"invoice"`

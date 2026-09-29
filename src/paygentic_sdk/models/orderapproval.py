@@ -16,29 +16,10 @@ from typing import Literal, Union
 from typing_extensions import Annotated, NotRequired, TypedDict
 
 
-SchemasApprovalObject = Literal["approval",]
+OrderApprovalObject = Literal["approval",]
 
 
-SchemasApprovalResourceType = Union[
-    Literal[
-        "order",
-        "invoice",
-    ],
-    UnrecognizedStr,
-]
-
-
-SchemasApprovalKind = Union[
-    Literal[
-        "data_review",
-        "financial_review",
-        "push",
-    ],
-    UnrecognizedStr,
-]
-
-
-SchemasApprovalDecision = Union[
+OrderApprovalDecision = Union[
     Literal[
         "pending",
         "approved",
@@ -49,14 +30,14 @@ SchemasApprovalDecision = Union[
 ]
 
 
-class SchemasApprovalTypedDict(TypedDict):
+class OrderApprovalTypedDict(TypedDict):
     id: str
-    object: SchemasApprovalObject
+    object: OrderApprovalObject
     merchant_id: str
-    resource_type: SchemasApprovalResourceType
+    resource_type: str
     resource_id: str
-    kind: SchemasApprovalKind
-    decision: SchemasApprovalDecision
+    kind: str
+    decision: OrderApprovalDecision
     requester: str
     data_snapshot_hash: str
     created_at: datetime
@@ -65,22 +46,20 @@ class SchemasApprovalTypedDict(TypedDict):
     decided_at: NotRequired[Nullable[datetime]]
 
 
-class SchemasApproval(BaseModel):
+class OrderApproval(BaseModel):
     id: str
 
-    object: SchemasApprovalObject
+    object: OrderApprovalObject
 
     merchant_id: Annotated[str, pydantic.Field(alias="merchantId")]
 
-    resource_type: Annotated[
-        SchemasApprovalResourceType, pydantic.Field(alias="resourceType")
-    ]
+    resource_type: Annotated[str, pydantic.Field(alias="resourceType")]
 
     resource_id: Annotated[str, pydantic.Field(alias="resourceId")]
 
-    kind: SchemasApprovalKind
+    kind: str
 
-    decision: SchemasApprovalDecision
+    decision: OrderApprovalDecision
 
     requester: str
 
@@ -123,6 +102,6 @@ class SchemasApproval(BaseModel):
 
 
 try:
-    SchemasApproval.model_rebuild()
+    OrderApproval.model_rebuild()
 except NameError:
     pass

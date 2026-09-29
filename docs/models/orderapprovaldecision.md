@@ -1,12 +1,12 @@
-# SchemasApprovalKind
+# OrderApprovalDecision
 
 ## Example Usage
 
 ```python
-from paygentic_sdk.models import SchemasApprovalKind
+from paygentic_sdk.models import OrderApprovalDecision
 
 # Open enum: unrecognized values are captured as UnrecognizedStr
-value: SchemasApprovalKind = "data_review"
+value: OrderApprovalDecision = "pending"
 ```
 
 
@@ -14,6 +14,7 @@ value: SchemasApprovalKind = "data_review"
 
 This is an open enum. Unrecognized values will not fail type checks.
 
-- `"data_review"`
-- `"financial_review"`
-- `"push"`
+- `"pending"`
+- `"approved"`
+- `"rejected"`
+- `"cancelled"`

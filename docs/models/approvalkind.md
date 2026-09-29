@@ -1,12 +1,12 @@
-# PriceModel1
+# ApprovalKind
 
 ## Example Usage
 
 ```python
-from paygentic_sdk.models import PriceModel1
+from paygentic_sdk.models import ApprovalKind
 
 # Open enum: unrecognized values are captured as UnrecognizedStr
-value: PriceModel1 = "standard"
+value: ApprovalKind = "data_review"
 ```
 
 
@@ -14,7 +14,6 @@ value: PriceModel1 = "standard"
 
 This is an open enum. Unrecognized values will not fail type checks.
 
-- `"standard"`
-- `"dynamic"`
-- `"volume"`
-- `"percentage"`
+- `"data_review"`
+- `"financial_review"`
+- `"push"`

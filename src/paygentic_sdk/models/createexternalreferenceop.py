@@ -11,6 +11,7 @@ from typing_extensions import Annotated, NotRequired, TypedDict
 
 class CreateExternalReferenceRequestTypedDict(TypedDict):
     merchant_id: str
+    r"""Unique identifier for an organization"""
     entity_type: EntityType
     r"""The type of Paygentic entity this external reference points at"""
     entity_id: str
@@ -40,6 +41,7 @@ class CreateExternalReferenceRequestTypedDict(TypedDict):
 
 class CreateExternalReferenceRequest(BaseModel):
     merchant_id: Annotated[str, pydantic.Field(alias="merchantId")]
+    r"""Unique identifier for an organization"""
 
     entity_type: Annotated[EntityType, pydantic.Field(alias="entityType")]
     r"""The type of Paygentic entity this external reference points at"""

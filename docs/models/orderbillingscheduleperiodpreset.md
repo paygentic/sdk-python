@@ -1,12 +1,12 @@
-# SchemasBillingSchedulePeriodPreset
+# OrderBillingSchedulePeriodPreset
 
 ## Example Usage
 
 ```python
-from paygentic_sdk.models import SchemasBillingSchedulePeriodPreset
+from paygentic_sdk.models import OrderBillingSchedulePeriodPreset
 
 # Open enum: unrecognized values are captured as UnrecognizedStr
-value: SchemasBillingSchedulePeriodPreset = "single"
+value: OrderBillingSchedulePeriodPreset = "single"
 ```
 
 

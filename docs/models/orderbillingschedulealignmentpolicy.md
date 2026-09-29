@@ -1,12 +1,12 @@
-# SchemasBillingScheduleAlignmentPolicy
+# OrderBillingScheduleAlignmentPolicy
 
 ## Example Usage
 
 ```python
-from paygentic_sdk.models import SchemasBillingScheduleAlignmentPolicy
+from paygentic_sdk.models import OrderBillingScheduleAlignmentPolicy
 
 # Open enum: unrecognized values are captured as UnrecognizedStr
-value: SchemasBillingScheduleAlignmentPolicy = "anchor"
+value: OrderBillingScheduleAlignmentPolicy = "anchor"
 ```
 
 

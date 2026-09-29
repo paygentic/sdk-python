@@ -19,6 +19,25 @@ from typing_extensions import Annotated, NotRequired, TypedDict
 ApprovalObject = Literal["approval",]
 
 
+ApprovalResourceType = Union[
+    Literal[
+        "order",
+        "invoice",
+    ],
+    UnrecognizedStr,
+]
+
+
+ApprovalKind = Union[
+    Literal[
+        "data_review",
+        "financial_review",
+        "push",
+    ],
+    UnrecognizedStr,
+]
+
+
 ApprovalDecision = Union[
     Literal[
         "pending",
@@ -34,9 +53,9 @@ class ApprovalTypedDict(TypedDict):
     id: str
     object: ApprovalObject
     merchant_id: str
-    resource_type: str
+    resource_type: ApprovalResourceType
     resource_id: str
-    kind: str
+    kind: ApprovalKind
     decision: ApprovalDecision
     requester: str
     data_snapshot_hash: str
@@ -53,11 +72,11 @@ class Approval(BaseModel):
 
     merchant_id: Annotated[str, pydantic.Field(alias="merchantId")]
 
-    resource_type: Annotated[str, pydantic.Field(alias="resourceType")]
+    resource_type: Annotated[ApprovalResourceType, pydantic.Field(alias="resourceType")]
 
     resource_id: Annotated[str, pydantic.Field(alias="resourceId")]
 
-    kind: str
+    kind: ApprovalKind
 
     decision: ApprovalDecision
 

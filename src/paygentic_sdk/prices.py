@@ -36,7 +36,7 @@ class Prices(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.SchemasPrice:
+    ) -> models.Price:
         r"""Create
 
         :param invoice_display_name: Line item label shown on customer invoices. Sample values: 'Claude Token Consumption', 'Storage Usage (GB)', 'Inference API Calls', 'Image Generation Count', 'Training Compute Hours', 'Data Transfer (TB)'
@@ -134,7 +134,7 @@ class Prices(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "201", "application/json"):
-            return unmarshal_json_response(models.SchemasPrice, http_res)
+            return unmarshal_json_response(models.Price, http_res)
         if utils.match_response(http_res, "400", "application/json"):
             response_data = unmarshal_json_response(errors.BadRequestUnion, http_res)
             raise errors.BadRequest(response_data, http_res)
@@ -181,7 +181,7 @@ class Prices(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.SchemasPrice:
+    ) -> models.Price:
         r"""Create
 
         :param invoice_display_name: Line item label shown on customer invoices. Sample values: 'Claude Token Consumption', 'Storage Usage (GB)', 'Inference API Calls', 'Image Generation Count', 'Training Compute Hours', 'Data Transfer (TB)'
@@ -279,7 +279,7 @@ class Prices(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "201", "application/json"):
-            return unmarshal_json_response(models.SchemasPrice, http_res)
+            return unmarshal_json_response(models.Price, http_res)
         if utils.match_response(http_res, "400", "application/json"):
             response_data = unmarshal_json_response(errors.BadRequestUnion, http_res)
             raise errors.BadRequest(response_data, http_res)
@@ -506,7 +506,7 @@ class Prices(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.SchemasPrice:
+    ) -> models.Price:
         r"""Get
 
         :param id: The unique identifier of the price
@@ -571,7 +571,7 @@ class Prices(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.SchemasPrice, http_res)
+            return unmarshal_json_response(models.Price, http_res)
         if utils.match_response(http_res, "400", "application/json"):
             response_data = unmarshal_json_response(errors.BadRequestUnion, http_res)
             raise errors.BadRequest(response_data, http_res)
@@ -602,7 +602,7 @@ class Prices(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.SchemasPrice:
+    ) -> models.Price:
         r"""Get
 
         :param id: The unique identifier of the price
@@ -667,7 +667,7 @@ class Prices(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.SchemasPrice, http_res)
+            return unmarshal_json_response(models.Price, http_res)
         if utils.match_response(http_res, "400", "application/json"):
             response_data = unmarshal_json_response(errors.BadRequestUnion, http_res)
             raise errors.BadRequest(response_data, http_res)
@@ -716,7 +716,7 @@ class Prices(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.SchemasPrice:
+    ) -> models.Price:
         r"""Update
 
         :param id: The unique identifier of the price
@@ -822,7 +822,7 @@ class Prices(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.SchemasPrice, http_res)
+            return unmarshal_json_response(models.Price, http_res)
         if utils.match_response(http_res, "400", "application/json"):
             response_data = unmarshal_json_response(errors.BadRequestUnion, http_res)
             raise errors.BadRequest(response_data, http_res)
@@ -876,7 +876,7 @@ class Prices(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.SchemasPrice:
+    ) -> models.Price:
         r"""Update
 
         :param id: The unique identifier of the price
@@ -982,7 +982,7 @@ class Prices(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.SchemasPrice, http_res)
+            return unmarshal_json_response(models.Price, http_res)
         if utils.match_response(http_res, "400", "application/json"):
             response_data = unmarshal_json_response(errors.BadRequestUnion, http_res)
             raise errors.BadRequest(response_data, http_res)

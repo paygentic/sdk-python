@@ -32,7 +32,7 @@ class ExternalReferences(BaseSDK):
     ) -> models.ExternalReference:
         r"""Create
 
-        :param merchant_id:
+        :param merchant_id: Unique identifier for an organization
         :param entity_type: The type of Paygentic entity this external reference points at
         :param entity_id: Paygentic id of the entity, e.g. `itm_xxx`
         :param provider: Lowercase snake_case provider identifier (e.g. `salesforce`, `netsuite`)
@@ -166,7 +166,7 @@ class ExternalReferences(BaseSDK):
     ) -> models.ExternalReference:
         r"""Create
 
-        :param merchant_id:
+        :param merchant_id: Unique identifier for an organization
         :param entity_type: The type of Paygentic entity this external reference points at
         :param entity_id: Paygentic id of the entity, e.g. `itm_xxx`
         :param provider: Lowercase snake_case provider identifier (e.g. `salesforce`, `netsuite`)

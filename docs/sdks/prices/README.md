@@ -61,7 +61,7 @@ with Paygentic(
 
 ### Response
 
-**[models.SchemasPrice](../../models/schemasprice.md)**
+**[models.Price](../../models/price.md)**
 
 ### Errors
 
@@ -149,7 +149,7 @@ with Paygentic(
 
 ### Response
 
-**[models.SchemasPrice](../../models/schemasprice.md)**
+**[models.Price](../../models/price.md)**
 
 ### Errors
 
@@ -207,7 +207,7 @@ with Paygentic(
 
 ### Response
 
-**[models.SchemasPrice](../../models/schemasprice.md)**
+**[models.Price](../../models/price.md)**
 
 ### Errors
 

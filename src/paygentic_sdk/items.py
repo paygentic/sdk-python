@@ -26,7 +26,7 @@ class Items(BaseSDK):
     ) -> models.Item:
         r"""Create
 
-        :param merchant_id:
+        :param merchant_id: Unique identifier for an organization
         :param name: Canonical sellable name for the Item
         :param catalog_id: Unique identifier for a product
         :param metadata: Optional key-value metadata
@@ -134,7 +134,7 @@ class Items(BaseSDK):
     ) -> models.Item:
         r"""Create
 
-        :param merchant_id:
+        :param merchant_id: Unique identifier for an organization
         :param name: Canonical sellable name for the Item
         :param catalog_id: Unique identifier for a product
         :param metadata: Optional key-value metadata

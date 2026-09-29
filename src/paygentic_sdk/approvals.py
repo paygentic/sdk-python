@@ -26,7 +26,7 @@ class Approvals(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.SchemasApproval:
+    ) -> models.Approval:
         r"""Submit a resource for approval
 
         :param merchant_id: The merchant that owns the resource being approved.
@@ -106,7 +106,7 @@ class Approvals(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "201", "application/json"):
-            return unmarshal_json_response(models.SchemasApproval, http_res)
+            return unmarshal_json_response(models.Approval, http_res)
         if utils.match_response(http_res, "400", "application/json"):
             response_data = unmarshal_json_response(errors.BadRequestUnion, http_res)
             raise errors.BadRequest(response_data, http_res)
@@ -145,7 +145,7 @@ class Approvals(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.SchemasApproval:
+    ) -> models.Approval:
         r"""Submit a resource for approval
 
         :param merchant_id: The merchant that owns the resource being approved.
@@ -225,7 +225,7 @@ class Approvals(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "201", "application/json"):
-            return unmarshal_json_response(models.SchemasApproval, http_res)
+            return unmarshal_json_response(models.Approval, http_res)
         if utils.match_response(http_res, "400", "application/json"):
             response_data = unmarshal_json_response(errors.BadRequestUnion, http_res)
             raise errors.BadRequest(response_data, http_res)
@@ -454,7 +454,7 @@ class Approvals(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.SchemasApproval:
+    ) -> models.Approval:
         r"""Get an approval
 
         :param id:
@@ -519,7 +519,7 @@ class Approvals(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.SchemasApproval, http_res)
+            return unmarshal_json_response(models.Approval, http_res)
         if utils.match_response(http_res, ["401", "403", "404"], "application/json"):
             response_data = unmarshal_json_response(errors.ErrorData, http_res)
             raise errors.Error(response_data, http_res)
@@ -547,7 +547,7 @@ class Approvals(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.SchemasApproval:
+    ) -> models.Approval:
         r"""Get an approval
 
         :param id:
@@ -612,7 +612,7 @@ class Approvals(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.SchemasApproval, http_res)
+            return unmarshal_json_response(models.Approval, http_res)
         if utils.match_response(http_res, ["401", "403", "404"], "application/json"):
             response_data = unmarshal_json_response(errors.ErrorData, http_res)
             raise errors.Error(response_data, http_res)
@@ -643,7 +643,7 @@ class Approvals(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.SchemasApproval:
+    ) -> models.Approval:
         r"""Update an approval (approve, reject, or cancel)
 
         :param id:
@@ -723,7 +723,7 @@ class Approvals(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.SchemasApproval, http_res)
+            return unmarshal_json_response(models.Approval, http_res)
         if utils.match_response(http_res, "400", "application/json"):
             response_data = unmarshal_json_response(errors.BadRequestUnion, http_res)
             raise errors.BadRequest(response_data, http_res)
@@ -759,7 +759,7 @@ class Approvals(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.SchemasApproval:
+    ) -> models.Approval:
         r"""Update an approval (approve, reject, or cancel)
 
         :param id:
@@ -839,7 +839,7 @@ class Approvals(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.SchemasApproval, http_res)
+            return unmarshal_json_response(models.Approval, http_res)
         if utils.match_response(http_res, "400", "application/json"):
             response_data = unmarshal_json_response(errors.BadRequestUnion, http_res)
             raise errors.BadRequest(response_data, http_res)

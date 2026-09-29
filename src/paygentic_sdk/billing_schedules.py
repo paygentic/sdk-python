@@ -237,7 +237,7 @@ class BillingSchedules(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.SchemasBillingSchedule:
+    ) -> models.BillingSchedule:
         r"""Create a billing schedule
 
         :param start_date:
@@ -325,7 +325,7 @@ class BillingSchedules(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "201", "application/json"):
-            return unmarshal_json_response(models.SchemasBillingSchedule, http_res)
+            return unmarshal_json_response(models.BillingSchedule, http_res)
         if utils.match_response(http_res, "400", "application/json"):
             response_data = unmarshal_json_response(errors.BadRequestUnion, http_res)
             raise errors.BadRequest(response_data, http_res)
@@ -372,7 +372,7 @@ class BillingSchedules(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.SchemasBillingSchedule:
+    ) -> models.BillingSchedule:
         r"""Create a billing schedule
 
         :param start_date:
@@ -460,7 +460,7 @@ class BillingSchedules(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "201", "application/json"):
-            return unmarshal_json_response(models.SchemasBillingSchedule, http_res)
+            return unmarshal_json_response(models.BillingSchedule, http_res)
         if utils.match_response(http_res, "400", "application/json"):
             response_data = unmarshal_json_response(errors.BadRequestUnion, http_res)
             raise errors.BadRequest(response_data, http_res)
@@ -493,7 +493,7 @@ class BillingSchedules(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.SchemasBillingSchedule:
+    ) -> models.BillingSchedule:
         r"""Get a billing schedule
 
         :param id:
@@ -558,7 +558,7 @@ class BillingSchedules(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.SchemasBillingSchedule, http_res)
+            return unmarshal_json_response(models.BillingSchedule, http_res)
         if utils.match_response(http_res, ["401", "403", "404"], "application/json"):
             response_data = unmarshal_json_response(errors.ErrorData, http_res)
             raise errors.Error(response_data, http_res)
@@ -586,7 +586,7 @@ class BillingSchedules(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.SchemasBillingSchedule:
+    ) -> models.BillingSchedule:
         r"""Get a billing schedule
 
         :param id:
@@ -651,7 +651,7 @@ class BillingSchedules(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.SchemasBillingSchedule, http_res)
+            return unmarshal_json_response(models.BillingSchedule, http_res)
         if utils.match_response(http_res, ["401", "403", "404"], "application/json"):
             response_data = unmarshal_json_response(errors.ErrorData, http_res)
             raise errors.Error(response_data, http_res)
@@ -693,7 +693,7 @@ class BillingSchedules(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.SchemasBillingSchedule:
+    ) -> models.BillingSchedule:
         r"""Update a billing schedule
 
         :param id:
@@ -787,7 +787,7 @@ class BillingSchedules(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.SchemasBillingSchedule, http_res)
+            return unmarshal_json_response(models.BillingSchedule, http_res)
         if utils.match_response(http_res, "400", "application/json"):
             response_data = unmarshal_json_response(errors.BadRequestUnion, http_res)
             raise errors.BadRequest(response_data, http_res)
@@ -834,7 +834,7 @@ class BillingSchedules(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.SchemasBillingSchedule:
+    ) -> models.BillingSchedule:
         r"""Update a billing schedule
 
         :param id:
@@ -928,7 +928,7 @@ class BillingSchedules(BaseSDK):
 
         response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
-            return unmarshal_json_response(models.SchemasBillingSchedule, http_res)
+            return unmarshal_json_response(models.BillingSchedule, http_res)
         if utils.match_response(http_res, "400", "application/json"):
             response_data = unmarshal_json_response(errors.BadRequestUnion, http_res)
             raise errors.BadRequest(response_data, http_res)

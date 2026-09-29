@@ -12,20 +12,11 @@ from paygentic_sdk.types import (
 )
 import pydantic
 from pydantic import model_serializer
-from typing import Any, Dict, Literal, Optional, Union
+from typing import Literal, Union
 from typing_extensions import Annotated, NotRequired, TypedDict
 
 
-PaymentSessionObject = Literal["paymentSession",]
-
-
-Mode = Union[
-    Literal[
-        "payment",
-        "setup",
-    ],
-    UnrecognizedStr,
-]
+PaymentSessionObject = Literal["payment_session",]
 
 
 PaymentSessionStatus = Union[
@@ -39,62 +30,97 @@ PaymentSessionStatus = Union[
     ],
     UnrecognizedStr,
 ]
+r"""Lifecycle status of the session."""
 
 
 class PaymentSessionTypedDict(TypedDict):
     object: PaymentSessionObject
     id: str
-    r"""Payment session identifier (e.g. `ps_...`)."""
-    mode: Mode
+    r"""Payment session ID (ps_*)."""
+    entity_type: str
+    r"""Type of entity the session pays for (invoice, subscription, payment, topup)."""
+    entity_id: str
+    r"""ID of the entity the session pays for."""
+    amount: str
+    r"""Amount in decimal dollars."""
+    currency: str
+    r"""ISO 4217 currency code."""
     status: PaymentSessionStatus
-    url: str
-    r"""Hosted page URL. Redirect the customer here, or load it inside an iframe — when iframed, the page reports outcomes via `postMessage` (`payment_success` / `payment_error`) to the parent window."""
-    expires_at: datetime
+    r"""Lifecycle status of the session."""
     created_at: datetime
-    success_redirect_url: NotRequired[Nullable[str]]
-    failure_redirect_url: NotRequired[Nullable[str]]
-    metadata: NotRequired[Dict[str, Any]]
+    updated_at: datetime
+    entity_label: NotRequired[Nullable[str]]
+    r"""Display label for the entity — invoice number, payment-link reference, or subscription name. Null when no label is available."""
+    merchant_payment_account_id: NotRequired[Nullable[str]]
+    r"""Stripe Connect account ID (acct_*) when the session is routed to a connected account."""
+    provider_payment_ref: NotRequired[Nullable[str]]
+    r"""Provider payment intent reference — Stripe PaymentIntent ID (pi_*) or Airwallex intent ID (int_*). Null until the intent is created on first checkout load."""
     completed_at: NotRequired[Nullable[datetime]]
+    r"""Timestamp the session reached terminal completion. Null until the session completes."""
 
 
 class PaymentSession(BaseModel):
     object: PaymentSessionObject
 
     id: str
-    r"""Payment session identifier (e.g. `ps_...`)."""
+    r"""Payment session ID (ps_*)."""
 
-    mode: Mode
+    entity_type: Annotated[str, pydantic.Field(alias="entityType")]
+    r"""Type of entity the session pays for (invoice, subscription, payment, topup)."""
+
+    entity_id: Annotated[str, pydantic.Field(alias="entityId")]
+    r"""ID of the entity the session pays for."""
+
+    amount: str
+    r"""Amount in decimal dollars."""
+
+    currency: str
+    r"""ISO 4217 currency code."""
 
     status: PaymentSessionStatus
-
-    url: str
-    r"""Hosted page URL. Redirect the customer here, or load it inside an iframe — when iframed, the page reports outcomes via `postMessage` (`payment_success` / `payment_error`) to the parent window."""
-
-    expires_at: Annotated[datetime, pydantic.Field(alias="expiresAt")]
+    r"""Lifecycle status of the session."""
 
     created_at: Annotated[datetime, pydantic.Field(alias="createdAt")]
 
-    success_redirect_url: Annotated[
-        OptionalNullable[str], pydantic.Field(alias="successRedirectUrl")
-    ] = UNSET
+    updated_at: Annotated[datetime, pydantic.Field(alias="updatedAt")]
 
-    failure_redirect_url: Annotated[
-        OptionalNullable[str], pydantic.Field(alias="failureRedirectUrl")
+    entity_label: Annotated[
+        OptionalNullable[str], pydantic.Field(alias="entityLabel")
     ] = UNSET
+    r"""Display label for the entity — invoice number, payment-link reference, or subscription name. Null when no label is available."""
 
-    metadata: Optional[Dict[str, Any]] = None
+    merchant_payment_account_id: Annotated[
+        OptionalNullable[str], pydantic.Field(alias="merchantPaymentAccountId")
+    ] = UNSET
+    r"""Stripe Connect account ID (acct_*) when the session is routed to a connected account."""
+
+    provider_payment_ref: Annotated[
+        OptionalNullable[str], pydantic.Field(alias="providerPaymentRef")
+    ] = UNSET
+    r"""Provider payment intent reference — Stripe PaymentIntent ID (pi_*) or Airwallex intent ID (int_*). Null until the intent is created on first checkout load."""
 
     completed_at: Annotated[
         OptionalNullable[datetime], pydantic.Field(alias="completedAt")
     ] = UNSET
+    r"""Timestamp the session reached terminal completion. Null until the session completes."""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
-            ["successRedirectUrl", "failureRedirectUrl", "metadata", "completedAt"]
+            [
+                "entityLabel",
+                "merchantPaymentAccountId",
+                "providerPaymentRef",
+                "completedAt",
+            ]
         )
         nullable_fields = set(
-            ["successRedirectUrl", "failureRedirectUrl", "completedAt"]
+            [
+                "entityLabel",
+                "merchantPaymentAccountId",
+                "providerPaymentRef",
+                "completedAt",
+            ]
         )
         serialized = handler(self)
         m = {}
