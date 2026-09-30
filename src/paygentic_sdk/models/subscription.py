@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 from .subscriptionmetadata import SubscriptionMetadata, SubscriptionMetadataTypedDict
+from .subscriptionversionpolicy import SubscriptionVersionPolicy
 from datetime import datetime
 from functools import partial
 from paygentic_sdk.types import (
@@ -283,6 +284,8 @@ class SubscriptionTypedDict(TypedDict):
     customer_id: str
     name: str
     plan_id: str
+    version_policy: SubscriptionVersionPolicy
+    r"""How the subscription follows new versions of its plan. `floating` follows the plan's default version: when the default changes, the subscription bills from the new default from its next billing period. `pinned` keeps the plan version that the subscription holds. A subscription created without a value is `floating`. A change to this value does not change a billing period that has already started."""
     started_at: datetime
     status: SubscriptionStatusEnum
     updated_at: datetime
@@ -341,6 +344,11 @@ class Subscription(BaseModel):
     name: str
 
     plan_id: Annotated[str, pydantic.Field(alias="planId")]
+
+    version_policy: Annotated[
+        SubscriptionVersionPolicy, pydantic.Field(alias="versionPolicy")
+    ]
+    r"""How the subscription follows new versions of its plan. `floating` follows the plan's default version: when the default changes, the subscription bills from the new default from its next billing period. `pinned` keeps the plan version that the subscription holds. A subscription created without a value is `floating`. A change to this value does not change a billing period that has already started."""
 
     started_at: Annotated[datetime, pydantic.Field(alias="startedAt")]
 

@@ -540,6 +540,8 @@ with Paygentic(
 * [create](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/subscriptions/README.md#create) - Create
 * [get](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/subscriptions/README.md#get) - Get
 * [update_subscription](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/subscriptions/README.md#update_subscription) - Update
+* [get_subscription_intervals](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/subscriptions/README.md#get_subscription_intervals) - Get Price Intervals
+* [edit_subscription_intervals](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/subscriptions/README.md#edit_subscription_intervals) - Edit Price Intervals
 * [generate_portal_link](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/subscriptions/README.md#generate_portal_link) - Generate Portal Link
 * [terminate](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/subscriptions/README.md#terminate) - Terminate
 * [reconcile_subscription_features](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/subscriptions/README.md#reconcile_subscription_features) - Reconcile Features
@@ -671,11 +673,11 @@ with Paygentic(
 
 
 **Inherit from [`PaygenticError`](https://github.com/paygentic/sdk-python/blob/master/./src/paygentic_sdk/errors/paygenticerror.py)**:
-* [`ValidationError`](https://github.com/paygentic/sdk-python/blob/master/./src/paygentic_sdk/errors/validationerror.py): Bad Request - The request could not be understood or was missing required parameters. Status code `400`. Applicable to 90 of 139 methods.*
-* [`DeleteCustomerConflictError`](https://github.com/paygentic/sdk-python/blob/master/./src/paygentic_sdk/errors/deletecustomerconflicterror.py): Customer cannot be deleted due to active dependencies. Status code `409`. Applicable to 1 of 139 methods.*
-* [`DeleteFeeConflictError`](https://github.com/paygentic/sdk-python/blob/master/./src/paygentic_sdk/errors/deletefeeconflicterror.py): Fee cannot be deleted because it has associated prices. Status code `409`. Applicable to 1 of 139 methods.*
-* [`UpdatePriceConflictError`](https://github.com/paygentic/sdk-python/blob/master/./src/paygentic_sdk/errors/updatepriceconflicterror.py): Price cannot be restructured because a subscription still bills it directly. Status code `409`. Applicable to 1 of 139 methods.*
-* [`DeletePriceConflictError`](https://github.com/paygentic/sdk-python/blob/master/./src/paygentic_sdk/errors/deletepriceconflicterror.py): Price cannot be deleted because a live plan still references it. Status code `409`. Applicable to 1 of 139 methods.*
+* [`ValidationError`](https://github.com/paygentic/sdk-python/blob/master/./src/paygentic_sdk/errors/validationerror.py): Bad Request - The request could not be understood or was missing required parameters. Status code `400`. Applicable to 91 of 141 methods.*
+* [`DeleteCustomerConflictError`](https://github.com/paygentic/sdk-python/blob/master/./src/paygentic_sdk/errors/deletecustomerconflicterror.py): Customer cannot be deleted due to active dependencies. Status code `409`. Applicable to 1 of 141 methods.*
+* [`DeleteFeeConflictError`](https://github.com/paygentic/sdk-python/blob/master/./src/paygentic_sdk/errors/deletefeeconflicterror.py): Fee cannot be deleted because it has associated prices. Status code `409`. Applicable to 1 of 141 methods.*
+* [`UpdatePriceConflictError`](https://github.com/paygentic/sdk-python/blob/master/./src/paygentic_sdk/errors/updatepriceconflicterror.py): Price cannot be restructured because a subscription still bills it directly. Status code `409`. Applicable to 1 of 141 methods.*
+* [`DeletePriceConflictError`](https://github.com/paygentic/sdk-python/blob/master/./src/paygentic_sdk/errors/deletepriceconflicterror.py): Price cannot be deleted because a live plan still references it. Status code `409`. Applicable to 1 of 141 methods.*
 * [`ResponseValidationError`](https://github.com/paygentic/sdk-python/blob/master/./src/paygentic_sdk/errors/responsevalidationerror.py): Type mismatch between the response data and the expected Pydantic model. Provides access to the Pydantic validation error via the `cause` attribute.
 
 </details>

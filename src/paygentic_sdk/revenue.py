@@ -24,6 +24,7 @@ class Revenue(BaseSDK):
         subscription_ids: Optional[List[str]] = None,
         currency: Optional[str] = None,
         group_by: Optional[models.GroupBy] = None,
+        period_basis: Optional[models.PeriodBasis] = "issued",
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -41,6 +42,7 @@ class Revenue(BaseSDK):
         :param subscription_ids: Filter by subscription IDs. At least one of merchantId, subscriptionIds, or customerId must be provided.
         :param currency: Filter all results to a single ISO 4217 currency code (e.g. 'USD'). When omitted, results include all currencies.
         :param group_by: Group invoice data by dimension. Allowed values: 'plan' (max 5 groups, top 4 + 'other' when exceeding), 'customer' (max 25 groups, top 24 + 'other' when exceeding, sorted by revenue descending), 'currency' (one entry per currency, primary currency first then alphabetical). Note: groupBy values are mutually exclusive — combining them returns a 400 error. When groupBy=currency is active, top-level netRevenue, invoices, and payments fields are omitted; currencyBreakdown is the sole data source.
+        :param period_basis: Which date places revenue inside the window. 'issued' (default) counts whole invoices by their issue date, the basis revenue is recognised on. 'billingPeriod' counts invoice lines by the start of the period each line bills, so a window covering one billing period returns that period's charges, whichever invoices carry them: this month's advance fee and this month's arrears usage. Paid, outstanding and written-off follow each line's invoice; a refund splits across its invoice's lines by subtotal; payments not tied to an invoice are excluded because they bill no period.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -65,6 +67,7 @@ class Revenue(BaseSDK):
             subscription_ids=subscription_ids,
             currency=currency,
             group_by=group_by,
+            period_basis=period_basis,
         )
 
         req = self._build_request(
@@ -143,6 +146,7 @@ class Revenue(BaseSDK):
         subscription_ids: Optional[List[str]] = None,
         currency: Optional[str] = None,
         group_by: Optional[models.GroupBy] = None,
+        period_basis: Optional[models.PeriodBasis] = "issued",
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -160,6 +164,7 @@ class Revenue(BaseSDK):
         :param subscription_ids: Filter by subscription IDs. At least one of merchantId, subscriptionIds, or customerId must be provided.
         :param currency: Filter all results to a single ISO 4217 currency code (e.g. 'USD'). When omitted, results include all currencies.
         :param group_by: Group invoice data by dimension. Allowed values: 'plan' (max 5 groups, top 4 + 'other' when exceeding), 'customer' (max 25 groups, top 24 + 'other' when exceeding, sorted by revenue descending), 'currency' (one entry per currency, primary currency first then alphabetical). Note: groupBy values are mutually exclusive — combining them returns a 400 error. When groupBy=currency is active, top-level netRevenue, invoices, and payments fields are omitted; currencyBreakdown is the sole data source.
+        :param period_basis: Which date places revenue inside the window. 'issued' (default) counts whole invoices by their issue date, the basis revenue is recognised on. 'billingPeriod' counts invoice lines by the start of the period each line bills, so a window covering one billing period returns that period's charges, whichever invoices carry them: this month's advance fee and this month's arrears usage. Paid, outstanding and written-off follow each line's invoice; a refund splits across its invoice's lines by subtotal; payments not tied to an invoice are excluded because they bill no period.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -184,6 +189,7 @@ class Revenue(BaseSDK):
             subscription_ids=subscription_ids,
             currency=currency,
             group_by=group_by,
+            period_basis=period_basis,
         )
 
         req = self._build_request_async(

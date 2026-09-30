@@ -26,6 +26,13 @@ GroupBy = Literal[
 r"""Group invoice data by dimension. Allowed values: 'plan' (max 5 groups, top 4 + 'other' when exceeding), 'customer' (max 25 groups, top 24 + 'other' when exceeding, sorted by revenue descending), 'currency' (one entry per currency, primary currency first then alphabetical). Note: groupBy values are mutually exclusive — combining them returns a 400 error. When groupBy=currency is active, top-level netRevenue, invoices, and payments fields are omitted; currencyBreakdown is the sole data source."""
 
 
+PeriodBasis = Literal[
+    "issued",
+    "billingPeriod",
+]
+r"""Which date places revenue inside the window. 'issued' (default) counts whole invoices by their issue date, the basis revenue is recognised on. 'billingPeriod' counts invoice lines by the start of the period each line bills, so a window covering one billing period returns that period's charges, whichever invoices carry them: this month's advance fee and this month's arrears usage. Paid, outstanding and written-off follow each line's invoice; a refund splits across its invoice's lines by subtotal; payments not tied to an invoice are excluded because they bill no period."""
+
+
 class GetRevenueRequestTypedDict(TypedDict):
     start_time: datetime
     r"""Start of the time range (ISO 8601 format)"""
@@ -43,6 +50,8 @@ class GetRevenueRequestTypedDict(TypedDict):
     r"""Filter all results to a single ISO 4217 currency code (e.g. 'USD'). When omitted, results include all currencies."""
     group_by: NotRequired[GroupBy]
     r"""Group invoice data by dimension. Allowed values: 'plan' (max 5 groups, top 4 + 'other' when exceeding), 'customer' (max 25 groups, top 24 + 'other' when exceeding, sorted by revenue descending), 'currency' (one entry per currency, primary currency first then alphabetical). Note: groupBy values are mutually exclusive — combining them returns a 400 error. When groupBy=currency is active, top-level netRevenue, invoices, and payments fields are omitted; currencyBreakdown is the sole data source."""
+    period_basis: NotRequired[PeriodBasis]
+    r"""Which date places revenue inside the window. 'issued' (default) counts whole invoices by their issue date, the basis revenue is recognised on. 'billingPeriod' counts invoice lines by the start of the period each line bills, so a window covering one billing period returns that period's charges, whichever invoices carry them: this month's advance fee and this month's arrears usage. Paid, outstanding and written-off follow each line's invoice; a refund splits across its invoice's lines by subtotal; payments not tied to an invoice are excluded because they bill no period."""
 
 
 class GetRevenueRequest(BaseModel):
@@ -101,6 +110,13 @@ class GetRevenueRequest(BaseModel):
     ] = None
     r"""Group invoice data by dimension. Allowed values: 'plan' (max 5 groups, top 4 + 'other' when exceeding), 'customer' (max 25 groups, top 24 + 'other' when exceeding, sorted by revenue descending), 'currency' (one entry per currency, primary currency first then alphabetical). Note: groupBy values are mutually exclusive — combining them returns a 400 error. When groupBy=currency is active, top-level netRevenue, invoices, and payments fields are omitted; currencyBreakdown is the sole data source."""
 
+    period_basis: Annotated[
+        Optional[PeriodBasis],
+        pydantic.Field(alias="periodBasis"),
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = "issued"
+    r"""Which date places revenue inside the window. 'issued' (default) counts whole invoices by their issue date, the basis revenue is recognised on. 'billingPeriod' counts invoice lines by the start of the period each line bills, so a window covering one billing period returns that period's charges, whichever invoices carry them: this month's advance fee and this month's arrears usage. Paid, outstanding and written-off follow each line's invoice; a refund splits across its invoice's lines by subtotal; payments not tied to an invoice are excluded because they bill no period."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
@@ -111,6 +127,7 @@ class GetRevenueRequest(BaseModel):
                 "subscriptionIds",
                 "currency",
                 "groupBy",
+                "periodBasis",
             ]
         )
         serialized = handler(self)

@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 from .subscriptionmetadata import SubscriptionMetadata, SubscriptionMetadataTypedDict
+from .subscriptionversionpolicy import SubscriptionVersionPolicy
 from datetime import datetime
 from paygentic_sdk.types import (
     BaseModel,
@@ -173,6 +174,8 @@ class CreateSubscriptionRequestTypedDict(TypedDict):
     r"""Payment term in days (\"Net X\") applied to every invoice the subscription generates: invoice dueAt = invoice issue date + paymentTermDays. Defaults to 0 (\"due on issue\"). A non-zero value is only valid alongside bankTransferOnly=true."""
     session_expiry_minutes: NotRequired[float]
     r"""Number of minutes until the payment session expires. Defaults to 240 minutes (4 hours) if not provided."""
+    version_policy: NotRequired[SubscriptionVersionPolicy]
+    r"""How the subscription follows new versions of its plan. `floating` follows the plan's default version: when the default changes, the subscription bills from the new default from its next billing period. `pinned` keeps the plan version that the subscription holds. A subscription created without a value is `floating`. A change to this value does not change a billing period that has already started."""
     metadata: NotRequired[Dict[str, SubscriptionMetadataTypedDict]]
     r"""Free-form merchant metadata to attach to the subscription. Values must be strings, numbers, or booleans."""
 
@@ -248,6 +251,11 @@ class CreateSubscriptionRequest(BaseModel):
     ] = None
     r"""Number of minutes until the payment session expires. Defaults to 240 minutes (4 hours) if not provided."""
 
+    version_policy: Annotated[
+        Optional[SubscriptionVersionPolicy], pydantic.Field(alias="versionPolicy")
+    ] = None
+    r"""How the subscription follows new versions of its plan. `floating` follows the plan's default version: when the default changes, the subscription bills from the new default from its next billing period. `pinned` keeps the plan version that the subscription holds. A subscription created without a value is `floating`. A change to this value does not change a billing period that has already started."""
+
     metadata: Optional[Dict[str, SubscriptionMetadata]] = None
     r"""Free-form merchant metadata to attach to the subscription. Values must be strings, numbers, or booleans."""
 
@@ -268,6 +276,7 @@ class CreateSubscriptionRequest(BaseModel):
                 "renewalReminderDays",
                 "paymentTermDays",
                 "sessionExpiryMinutes",
+                "versionPolicy",
                 "metadata",
             ]
         )

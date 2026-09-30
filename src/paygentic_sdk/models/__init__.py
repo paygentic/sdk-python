@@ -353,6 +353,20 @@ if TYPE_CHECKING:
         DownloadInvoicePdfRequest,
         DownloadInvoicePdfRequestTypedDict,
     )
+    from .editsubscriptionintervalsop import (
+        EditSubscriptionIntervalsRequestRequest,
+        EditSubscriptionIntervalsRequestRequestTypedDict,
+    )
+    from .editsubscriptionintervalsrequest import (
+        EditSubscriptionIntervalsRequest,
+        EditSubscriptionIntervalsRequestTypedDict,
+    )
+    from .editsubscriptionintervalsresponse import (
+        EditSubscriptionIntervalsResponse,
+        EditSubscriptionIntervalsResponseLineItems,
+        EditSubscriptionIntervalsResponseLineItemsTypedDict,
+        EditSubscriptionIntervalsResponseTypedDict,
+    )
     from .entitlementdetail import (
         EntitlementDetail,
         EntitlementDetailTypedDict,
@@ -467,9 +481,14 @@ if TYPE_CHECKING:
         GetRevenueRequest,
         GetRevenueRequestTypedDict,
         GroupBy,
+        PeriodBasis,
     )
     from .getsourceop import GetSourceRequest, GetSourceRequestTypedDict
     from .getsourceruleop import GetSourceRuleRequest, GetSourceRuleRequestTypedDict
+    from .getsubscriptionintervalsop import (
+        GetSubscriptionIntervalsRequest,
+        GetSubscriptionIntervalsRequestTypedDict,
+    )
     from .getsubscriptionop import (
         GetSubscriptionRequest,
         GetSubscriptionRequestTypedDict,
@@ -1086,6 +1105,36 @@ if TYPE_CHECKING:
         SubscriptionAdjustmentsResponse,
         SubscriptionAdjustmentsResponseTypedDict,
     )
+    from .subscriptioninterval import (
+        SubscriptionInterval,
+        SubscriptionIntervalBillingMode,
+        SubscriptionIntervalKind,
+        SubscriptionIntervalQuantityTransition,
+        SubscriptionIntervalQuantityTransitionTypedDict,
+        SubscriptionIntervalTypedDict,
+    )
+    from .subscriptionintervaladdop import (
+        SubscriptionIntervalAddOp,
+        SubscriptionIntervalAddOpBillingMode,
+        SubscriptionIntervalAddOpQuantityTransition,
+        SubscriptionIntervalAddOpQuantityTransitionTypedDict,
+        SubscriptionIntervalAddOpTypedDict,
+    )
+    from .subscriptionintervaleditop import (
+        SubscriptionIntervalEditOp,
+        SubscriptionIntervalEditOpBillingMode,
+        SubscriptionIntervalEditOpQuantityTransition,
+        SubscriptionIntervalEditOpQuantityTransitionTypedDict,
+        SubscriptionIntervalEditOpTypedDict,
+    )
+    from .subscriptionintervalremoveop import (
+        SubscriptionIntervalRemoveOp,
+        SubscriptionIntervalRemoveOpTypedDict,
+    )
+    from .subscriptionintervalsresponse import (
+        SubscriptionIntervalsResponse,
+        SubscriptionIntervalsResponseTypedDict,
+    )
     from .subscriptionmetadata import (
         SubscriptionMetadata,
         SubscriptionMetadataTypedDict,
@@ -1104,6 +1153,7 @@ if TYPE_CHECKING:
         SubscriptionReconciliationObject,
         SubscriptionReconciliationTypedDict,
     )
+    from .subscriptionversionpolicy import SubscriptionVersionPolicy
     from .terminatesubscriptionop import (
         TerminateSubscriptionRequest,
         TerminateSubscriptionRequestBody,
@@ -1532,6 +1582,14 @@ __all__ = [
     "DownloadInvoicePdfRequestTypedDict",
     "DynamicPriceProperties",
     "DynamicPricePropertiesTypedDict",
+    "EditSubscriptionIntervalsRequest",
+    "EditSubscriptionIntervalsRequestRequest",
+    "EditSubscriptionIntervalsRequestRequestTypedDict",
+    "EditSubscriptionIntervalsRequestTypedDict",
+    "EditSubscriptionIntervalsResponse",
+    "EditSubscriptionIntervalsResponseLineItems",
+    "EditSubscriptionIntervalsResponseLineItemsTypedDict",
+    "EditSubscriptionIntervalsResponseTypedDict",
     "EntitlementDetail",
     "EntitlementDetailTypedDict",
     "EntitlementListItem",
@@ -1636,6 +1694,8 @@ __all__ = [
     "GetSourceRequestTypedDict",
     "GetSourceRuleRequest",
     "GetSourceRuleRequestTypedDict",
+    "GetSubscriptionIntervalsRequest",
+    "GetSubscriptionIntervalsRequestTypedDict",
     "GetSubscriptionRequest",
     "GetSubscriptionRequestTypedDict",
     "GetTestClockRequest",
@@ -1956,6 +2016,7 @@ __all__ = [
     "PercentagePriceProperties",
     "PercentagePricePropertiesTypedDict",
     "Period",
+    "PeriodBasis",
     "PeriodTypedDict",
     "Plan",
     "PlanCreditAllocation",
@@ -2111,6 +2172,26 @@ __all__ = [
     "SubscriptionAdjustmentsResponseTypedDict",
     "SubscriptionCustomer",
     "SubscriptionCustomerTypedDict",
+    "SubscriptionInterval",
+    "SubscriptionIntervalAddOp",
+    "SubscriptionIntervalAddOpBillingMode",
+    "SubscriptionIntervalAddOpQuantityTransition",
+    "SubscriptionIntervalAddOpQuantityTransitionTypedDict",
+    "SubscriptionIntervalAddOpTypedDict",
+    "SubscriptionIntervalBillingMode",
+    "SubscriptionIntervalEditOp",
+    "SubscriptionIntervalEditOpBillingMode",
+    "SubscriptionIntervalEditOpQuantityTransition",
+    "SubscriptionIntervalEditOpQuantityTransitionTypedDict",
+    "SubscriptionIntervalEditOpTypedDict",
+    "SubscriptionIntervalKind",
+    "SubscriptionIntervalQuantityTransition",
+    "SubscriptionIntervalQuantityTransitionTypedDict",
+    "SubscriptionIntervalRemoveOp",
+    "SubscriptionIntervalRemoveOpTypedDict",
+    "SubscriptionIntervalTypedDict",
+    "SubscriptionIntervalsResponse",
+    "SubscriptionIntervalsResponseTypedDict",
     "SubscriptionMetadata",
     "SubscriptionMetadataTypedDict",
     "SubscriptionObject",
@@ -2124,6 +2205,7 @@ __all__ = [
     "SubscriptionReconciliationTypedDict",
     "SubscriptionStatusEnum",
     "SubscriptionTypedDict",
+    "SubscriptionVersionPolicy",
     "SupplyScope",
     "Tax",
     "TaxBehavior",
@@ -2524,6 +2606,14 @@ _dynamic_imports: dict[str, str] = {
     "DisconnectMerchantIntegrationRequestTypedDict": ".disconnectmerchantintegrationop",
     "DownloadInvoicePdfRequest": ".downloadinvoicepdfop",
     "DownloadInvoicePdfRequestTypedDict": ".downloadinvoicepdfop",
+    "EditSubscriptionIntervalsRequestRequest": ".editsubscriptionintervalsop",
+    "EditSubscriptionIntervalsRequestRequestTypedDict": ".editsubscriptionintervalsop",
+    "EditSubscriptionIntervalsRequest": ".editsubscriptionintervalsrequest",
+    "EditSubscriptionIntervalsRequestTypedDict": ".editsubscriptionintervalsrequest",
+    "EditSubscriptionIntervalsResponse": ".editsubscriptionintervalsresponse",
+    "EditSubscriptionIntervalsResponseLineItems": ".editsubscriptionintervalsresponse",
+    "EditSubscriptionIntervalsResponseLineItemsTypedDict": ".editsubscriptionintervalsresponse",
+    "EditSubscriptionIntervalsResponseTypedDict": ".editsubscriptionintervalsresponse",
     "EntitlementDetail": ".entitlementdetail",
     "EntitlementDetailTypedDict": ".entitlementdetail",
     "UnknownEntitlementDetail": ".entitlementdetail",
@@ -2622,10 +2712,13 @@ _dynamic_imports: dict[str, str] = {
     "GetRevenueRequest": ".getrevenueop",
     "GetRevenueRequestTypedDict": ".getrevenueop",
     "GroupBy": ".getrevenueop",
+    "PeriodBasis": ".getrevenueop",
     "GetSourceRequest": ".getsourceop",
     "GetSourceRequestTypedDict": ".getsourceop",
     "GetSourceRuleRequest": ".getsourceruleop",
     "GetSourceRuleRequestTypedDict": ".getsourceruleop",
+    "GetSubscriptionIntervalsRequest": ".getsubscriptionintervalsop",
+    "GetSubscriptionIntervalsRequestTypedDict": ".getsubscriptionintervalsop",
     "GetSubscriptionRequest": ".getsubscriptionop",
     "GetSubscriptionRequestTypedDict": ".getsubscriptionop",
     "GetTestClockRequest": ".gettestclockop",
@@ -3110,6 +3203,26 @@ _dynamic_imports: dict[str, str] = {
     "SubscriptionAdjustmentTypedDict": ".subscriptionadjustment",
     "SubscriptionAdjustmentsResponse": ".subscriptionadjustmentsresponse",
     "SubscriptionAdjustmentsResponseTypedDict": ".subscriptionadjustmentsresponse",
+    "SubscriptionInterval": ".subscriptioninterval",
+    "SubscriptionIntervalBillingMode": ".subscriptioninterval",
+    "SubscriptionIntervalKind": ".subscriptioninterval",
+    "SubscriptionIntervalQuantityTransition": ".subscriptioninterval",
+    "SubscriptionIntervalQuantityTransitionTypedDict": ".subscriptioninterval",
+    "SubscriptionIntervalTypedDict": ".subscriptioninterval",
+    "SubscriptionIntervalAddOp": ".subscriptionintervaladdop",
+    "SubscriptionIntervalAddOpBillingMode": ".subscriptionintervaladdop",
+    "SubscriptionIntervalAddOpQuantityTransition": ".subscriptionintervaladdop",
+    "SubscriptionIntervalAddOpQuantityTransitionTypedDict": ".subscriptionintervaladdop",
+    "SubscriptionIntervalAddOpTypedDict": ".subscriptionintervaladdop",
+    "SubscriptionIntervalEditOp": ".subscriptionintervaleditop",
+    "SubscriptionIntervalEditOpBillingMode": ".subscriptionintervaleditop",
+    "SubscriptionIntervalEditOpQuantityTransition": ".subscriptionintervaleditop",
+    "SubscriptionIntervalEditOpQuantityTransitionTypedDict": ".subscriptionintervaleditop",
+    "SubscriptionIntervalEditOpTypedDict": ".subscriptionintervaleditop",
+    "SubscriptionIntervalRemoveOp": ".subscriptionintervalremoveop",
+    "SubscriptionIntervalRemoveOpTypedDict": ".subscriptionintervalremoveop",
+    "SubscriptionIntervalsResponse": ".subscriptionintervalsresponse",
+    "SubscriptionIntervalsResponseTypedDict": ".subscriptionintervalsresponse",
     "SubscriptionMetadata": ".subscriptionmetadata",
     "SubscriptionMetadataTypedDict": ".subscriptionmetadata",
     "SubscriptionPortal": ".subscriptionportal",
@@ -3122,6 +3235,7 @@ _dynamic_imports: dict[str, str] = {
     "SubscriptionReconciliationLineItemsTypedDict": ".subscriptionreconciliation",
     "SubscriptionReconciliationObject": ".subscriptionreconciliation",
     "SubscriptionReconciliationTypedDict": ".subscriptionreconciliation",
+    "SubscriptionVersionPolicy": ".subscriptionversionpolicy",
     "TerminateSubscriptionRequest": ".terminatesubscriptionop",
     "TerminateSubscriptionRequestBody": ".terminatesubscriptionop",
     "TerminateSubscriptionRequestBodyTypedDict": ".terminatesubscriptionop",
