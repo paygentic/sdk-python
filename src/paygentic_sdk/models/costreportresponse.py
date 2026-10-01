@@ -84,6 +84,10 @@ class CostReportResponseTypedDict(TypedDict):
     object: NotRequired[CostReportResponseObject]
     warnings: NotRequired[List[str]]
     r"""Non-fatal warnings, e.g. costs that could not be queried."""
+    group_count: NotRequired[int]
+    r"""Every group the report found, empty groups included, before top-N folding into 'Other' and before pagination."""
+    empty_group_count: NotRequired[Nullable[int]]
+    r"""Groups with neither cost nor usage in the period, counted over the whole report and reported whether or not `excludeEmpty` is set. Null when a cost read failed (see `warnings`): a group empty in the costs that loaded may have usage in the one that failed, so none is counted and `excludeEmpty` leaves nobody out."""
     cost_range: NotRequired[Nullable[CostReportResponseCostRangeTypedDict]]
     r"""Where the caller's cost data actually lies in time. Present only when the selected range returned no cost. An object carries the bounds of the real cost events; null means the caller has no cost event at any time; an absent field means the extent was not resolved, because the result was not empty, because the lookup failed, or because the metering service does not serve the bounds method. An absent field must never be read as an absence."""
 
@@ -123,6 +127,14 @@ class CostReportResponse(BaseModel):
     warnings: Optional[List[str]] = None
     r"""Non-fatal warnings, e.g. costs that could not be queried."""
 
+    group_count: Annotated[Optional[int], pydantic.Field(alias="groupCount")] = None
+    r"""Every group the report found, empty groups included, before top-N folding into 'Other' and before pagination."""
+
+    empty_group_count: Annotated[
+        OptionalNullable[int], pydantic.Field(alias="emptyGroupCount")
+    ] = UNSET
+    r"""Groups with neither cost nor usage in the period, counted over the whole report and reported whether or not `excludeEmpty` is set. Null when a cost read failed (see `warnings`): a group empty in the costs that loaded may have usage in the one that failed, so none is counted and `excludeEmpty` leaves nobody out."""
+
     cost_range: Annotated[
         OptionalNullable[CostReportResponseCostRange], pydantic.Field(alias="costRange")
     ] = UNSET
@@ -130,8 +142,10 @@ class CostReportResponse(BaseModel):
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["object", "warnings", "costRange"])
-        nullable_fields = set(["costRange"])
+        optional_fields = set(
+            ["object", "warnings", "groupCount", "emptyGroupCount", "costRange"]
+        )
+        nullable_fields = set(["emptyGroupCount", "costRange"])
         serialized = handler(self)
         m = {}
 

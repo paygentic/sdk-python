@@ -1331,6 +1331,7 @@ class Costs(BaseSDK):
         filter_group_by: Optional[str] = None,
         top_n: Optional[int] = 9,
         compare_prior_period: Optional[bool] = False,
+        exclude_empty: Optional[bool] = False,
         window_size: Optional[models.GetCostReportWindowSize] = None,
         sort: Optional[models.Sort] = "totalCost",
         sort_dir: Optional[models.SortDir] = "desc",
@@ -1355,6 +1356,7 @@ class Costs(BaseSDK):
         :param filter_group_by: JSON-encoded dimension filters (e.g. {\"region\":\"us-east-1\"}). Max 4KB, max 5 keys.
         :param top_n: Number of top groups to return. An 'Other' bucket aggregates remaining groups.
         :param compare_prior_period: When true, include prior-period comparison data in each group.
+        :param exclude_empty: When true, leave out groups with neither cost nor usage in the period. They are dropped before ranking, so they take no top-N slot, do not appear in the 'Other' bucket and are not counted in `pagination.total`. `emptyGroupCount` says how many were left out.
         :param window_size: Time window granularity for the time-series breakdown.
         :param sort: Field to sort groups by.
         :param sort_dir: Sort direction.
@@ -1386,6 +1388,7 @@ class Costs(BaseSDK):
             filter_group_by=filter_group_by,
             top_n=top_n,
             compare_prior_period=compare_prior_period,
+            exclude_empty=exclude_empty,
             window_size=window_size,
             sort=sort,
             sort_dir=sort_dir,
@@ -1471,6 +1474,7 @@ class Costs(BaseSDK):
         filter_group_by: Optional[str] = None,
         top_n: Optional[int] = 9,
         compare_prior_period: Optional[bool] = False,
+        exclude_empty: Optional[bool] = False,
         window_size: Optional[models.GetCostReportWindowSize] = None,
         sort: Optional[models.Sort] = "totalCost",
         sort_dir: Optional[models.SortDir] = "desc",
@@ -1495,6 +1499,7 @@ class Costs(BaseSDK):
         :param filter_group_by: JSON-encoded dimension filters (e.g. {\"region\":\"us-east-1\"}). Max 4KB, max 5 keys.
         :param top_n: Number of top groups to return. An 'Other' bucket aggregates remaining groups.
         :param compare_prior_period: When true, include prior-period comparison data in each group.
+        :param exclude_empty: When true, leave out groups with neither cost nor usage in the period. They are dropped before ranking, so they take no top-N slot, do not appear in the 'Other' bucket and are not counted in `pagination.total`. `emptyGroupCount` says how many were left out.
         :param window_size: Time window granularity for the time-series breakdown.
         :param sort: Field to sort groups by.
         :param sort_dir: Sort direction.
@@ -1526,6 +1531,7 @@ class Costs(BaseSDK):
             filter_group_by=filter_group_by,
             top_n=top_n,
             compare_prior_period=compare_prior_period,
+            exclude_empty=exclude_empty,
             window_size=window_size,
             sort=sort,
             sort_dir=sort_dir,

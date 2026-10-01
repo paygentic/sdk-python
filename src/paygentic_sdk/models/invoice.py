@@ -260,6 +260,8 @@ class InvoiceTypedDict(TypedDict):
     r"""When the next scheduled action should occur"""
     paid_at: NotRequired[Nullable[datetime]]
     r"""When the invoice was paid (null if not yet paid)"""
+    issued_at: NotRequired[Nullable[datetime]]
+    r"""When the invoice was issued, in the subscription's effective time (test-clock time on a test clock). Revenue and profitability windows count the invoice by this instant. Null until the invoice is issued."""
     due_at: NotRequired[Nullable[datetime]]
     r"""Payment due date snapshotted at invoice-create time as the issue date + subscription.paymentTermDays, anchored to midnight UTC. Null only for invoices created before this feature shipped (no backfill)."""
     payment_url: NotRequired[Nullable[str]]
@@ -376,6 +378,11 @@ class Invoice(BaseModel):
     )
     r"""When the invoice was paid (null if not yet paid)"""
 
+    issued_at: Annotated[
+        OptionalNullable[datetime], pydantic.Field(alias="issuedAt")
+    ] = UNSET
+    r"""When the invoice was issued, in the subscription's effective time (test-clock time on a test clock). Revenue and profitability windows count the invoice by this instant. Null until the invoice is issued."""
+
     due_at: Annotated[OptionalNullable[datetime], pydantic.Field(alias="dueAt")] = UNSET
     r"""Payment due date snapshotted at invoice-create time as the issue date + subscription.paymentTermDays, anchored to midnight UTC. Null only for invoices created before this feature shipped (no backfill)."""
 
@@ -415,6 +422,7 @@ class Invoice(BaseModel):
                 "metadata",
                 "nextActionAt",
                 "paidAt",
+                "issuedAt",
                 "dueAt",
                 "paymentUrl",
                 "pdfUrl",
@@ -430,6 +438,7 @@ class Invoice(BaseModel):
                 "lineItems",
                 "nextActionAt",
                 "paidAt",
+                "issuedAt",
                 "dueAt",
                 "paymentUrl",
                 "pdfUrl",

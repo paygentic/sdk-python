@@ -12,6 +12,8 @@ A `Subscription` is a customer's commitment to purchase a `Product` following th
 * [update_subscription](#update_subscription) - Update
 * [get_subscription_intervals](#get_subscription_intervals) - Get Price Intervals
 * [edit_subscription_intervals](#edit_subscription_intervals) - Edit Price Intervals
+* [list_subscription_interval_changes](#list_subscription_interval_changes) - List Interval Changes
+* [list_interval_changes](#list_interval_changes) - List Merchant Interval Changes
 * [generate_portal_link](#generate_portal_link) - Generate Portal Link
 * [terminate](#terminate) - Terminate
 * [reconcile_subscription_features](#reconcile_subscription_features) - Reconcile Features
@@ -109,6 +111,9 @@ with Paygentic(
 | `session_expiry_minutes`                                                                                                                                                                                                                                                                                                                                                                                       | *Optional[float]*                                                                                                                                                                                                                                                                                                                                                                                              | :heavy_minus_sign:                                                                                                                                                                                                                                                                                                                                                                                             | Number of minutes until the payment session expires. Defaults to 240 minutes (4 hours) if not provided.                                                                                                                                                                                                                                                                                                        |                                                                                                                                                                                                                                                                                                                                                                                                                |
 | `version_policy`                                                                                                                                                                                                                                                                                                                                                                                               | [Optional[models.SubscriptionVersionPolicy]](../../models/subscriptionversionpolicy.md)                                                                                                                                                                                                                                                                                                                        | :heavy_minus_sign:                                                                                                                                                                                                                                                                                                                                                                                             | How the subscription follows new versions of its plan. `floating` follows the plan's default version: when the default changes, the subscription bills from the new default from its next billing period. `pinned` keeps the plan version that the subscription holds. A subscription created without a value is `floating`. A change to this value does not change a billing period that has already started. |                                                                                                                                                                                                                                                                                                                                                                                                                |
 | `metadata`                                                                                                                                                                                                                                                                                                                                                                                                     | Dict[str, [models.SubscriptionMetadata](../../models/subscriptionmetadata.md)]                                                                                                                                                                                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                                                                                                                                                                                                                                                             | Free-form merchant metadata to attach to the subscription. Values must be strings, numbers, or booleans.                                                                                                                                                                                                                                                                                                       |                                                                                                                                                                                                                                                                                                                                                                                                                |
+| `change_reason`                                                                                                                                                                                                                                                                                                                                                                                                | [Optional[models.ChangeReason]](../../models/changereason.md)                                                                                                                                                                                                                                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                                                                                                                                                                                                                                                             | Why a change was made. `correction` fixes data to match what was agreed; `migration` moves a contract from another system; `commercial` is a real change to the deal. Defaults to `unspecified`.                                                                                                                                                                                                               |                                                                                                                                                                                                                                                                                                                                                                                                                |
+| `change_description`                                                                                                                                                                                                                                                                                                                                                                                           | *Optional[str]*                                                                                                                                                                                                                                                                                                                                                                                                | :heavy_minus_sign:                                                                                                                                                                                                                                                                                                                                                                                             | A free-text note on why these intervals are changing.                                                                                                                                                                                                                                                                                                                                                          |                                                                                                                                                                                                                                                                                                                                                                                                                |
+| `change_metadata`                                                                                                                                                                                                                                                                                                                                                                                              | Dict[str, [models.IntervalChangeMetadata](../../models/intervalchangemetadata.md)]                                                                                                                                                                                                                                                                                                                             | :heavy_minus_sign:                                                                                                                                                                                                                                                                                                                                                                                             | Your own key-value data about the change, such as a CRM deal ID.                                                                                                                                                                                                                                                                                                                                               |                                                                                                                                                                                                                                                                                                                                                                                                                |
 | `retries`                                                                                                                                                                                                                                                                                                                                                                                                      | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                                                                                                                                                                                                                                                                                                               | :heavy_minus_sign:                                                                                                                                                                                                                                                                                                                                                                                             | Configuration to override the default retry behavior of the client.                                                                                                                                                                                                                                                                                                                                            |                                                                                                                                                                                                                                                                                                                                                                                                                |
 
 ### Response
@@ -281,12 +286,14 @@ with Paygentic(
     bearer_auth=os.getenv("PAYGENTIC_BEARER_AUTH", ""),
 ) as paygentic:
 
-    res = paygentic.subscriptions.edit_subscription_intervals(id="<id>", edit=[
-        {
-            "id": "spi_p9q0r1s2t3u4v5w6",
-            "unit_price": "9.00",
-        },
-    ])
+    res = paygentic.subscriptions.edit_subscription_intervals(id="<id>", edit_subscription_intervals_request={
+        "edit": [
+            {
+                "id": "spi_p9q0r1s2t3u4v5w6",
+                "unit_price": "9.00",
+            },
+        ],
+    })
 
     # Handle response
     print(res)
@@ -295,13 +302,11 @@ with Paygentic(
 
 ### Parameters
 
-| Parameter                                                                                 | Type                                                                                      | Required                                                                                  | Description                                                                               |
-| ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
-| `id`                                                                                      | *str*                                                                                     | :heavy_check_mark:                                                                        | The subscription ID                                                                       |
-| `add`                                                                                     | List[[models.SubscriptionIntervalAddOp](../../models/subscriptionintervaladdop.md)]       | :heavy_minus_sign:                                                                        | New override segments to add.                                                             |
-| `edit`                                                                                    | List[[models.SubscriptionIntervalEditOp](../../models/subscriptionintervaleditop.md)]     | :heavy_minus_sign:                                                                        | Changes to existing intervals.                                                            |
-| `remove`                                                                                  | List[[models.SubscriptionIntervalRemoveOp](../../models/subscriptionintervalremoveop.md)] | :heavy_minus_sign:                                                                        | Intervals to remove outright.                                                             |
-| `retries`                                                                                 | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                          | :heavy_minus_sign:                                                                        | Configuration to override the default retry behavior of the client.                       |
+| Parameter                                                                                   | Type                                                                                        | Required                                                                                    | Description                                                                                 |
+| ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
+| `id`                                                                                        | *str*                                                                                       | :heavy_check_mark:                                                                          | The subscription ID                                                                         |
+| `edit_subscription_intervals_request`                                                       | [models.EditSubscriptionIntervalsRequest](../../models/editsubscriptionintervalsrequest.md) | :heavy_check_mark:                                                                          | N/A                                                                                         |
+| `retries`                                                                                   | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                            | :heavy_minus_sign:                                                                          | Configuration to override the default retry behavior of the client.                         |
 
 ### Response
 
@@ -314,6 +319,94 @@ with Paygentic(
 | errors.Error                 | 400                          | application/json             |
 | errors.ValidationError       | 400                          | application/json             |
 | errors.Error                 | 401, 403, 404, 409, 429      | application/json             |
+| errors.Error                 | 500                          | application/json             |
+| errors.PaygenticDefaultError | 4XX, 5XX                     | \*/\*                        |
+
+## list_subscription_interval_changes
+
+Lists the subscription's interval changes, oldest first. Each shows why it was made and each interval before and after.
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="listSubscriptionIntervalChanges" method="get" path="/v0/subscriptions/{id}/intervalChanges" -->
+```python
+import os
+from paygentic_sdk import Paygentic
+
+
+with Paygentic(
+    bearer_auth=os.getenv("PAYGENTIC_BEARER_AUTH", ""),
+) as paygentic:
+
+    res = paygentic.subscriptions.list_subscription_interval_changes(id="<id>", limit="10", offset="0")
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `id`                                                                | *str*                                                               | :heavy_check_mark:                                                  | The subscription ID                                                 |
+| `limit`                                                             | *Optional[str]*                                                     | :heavy_minus_sign:                                                  | Number of interval changes to return                                |
+| `offset`                                                            | *Optional[str]*                                                     | :heavy_minus_sign:                                                  | Number of interval changes to skip                                  |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+
+### Response
+
+**[models.SubscriptionIntervalChangesResponse](../../models/subscriptionintervalchangesresponse.md)**
+
+### Errors
+
+| Error Type                   | Status Code                  | Content Type                 |
+| ---------------------------- | ---------------------------- | ---------------------------- |
+| errors.Error                 | 401, 403, 404                | application/json             |
+| errors.Error                 | 500                          | application/json             |
+| errors.PaygenticDefaultError | 4XX, 5XX                     | \*/\*                        |
+
+## list_interval_changes
+
+Lists the interval changes of all your subscriptions, oldest first. `from` is included and `to` is excluded.
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="listIntervalChanges" method="get" path="/v0/intervalChanges" -->
+```python
+import os
+from paygentic_sdk import Paygentic
+
+
+with Paygentic(
+    bearer_auth=os.getenv("PAYGENTIC_BEARER_AUTH", ""),
+) as paygentic:
+
+    res = paygentic.subscriptions.list_interval_changes(request={})
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                                       | Type                                                                            | Required                                                                        | Description                                                                     |
+| ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| `request`                                                                       | [models.ListIntervalChangesRequest](../../models/listintervalchangesrequest.md) | :heavy_check_mark:                                                              | The request object to use for the request.                                      |
+| `retries`                                                                       | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                | :heavy_minus_sign:                                                              | Configuration to override the default retry behavior of the client.             |
+
+### Response
+
+**[models.SubscriptionIntervalChangesResponse](../../models/subscriptionintervalchangesresponse.md)**
+
+### Errors
+
+| Error Type                   | Status Code                  | Content Type                 |
+| ---------------------------- | ---------------------------- | ---------------------------- |
+| errors.Error                 | 400                          | application/json             |
+| errors.ValidationError       | 400                          | application/json             |
+| errors.Error                 | 401, 403                     | application/json             |
 | errors.Error                 | 500                          | application/json             |
 | errors.PaygenticDefaultError | 4XX, 5XX                     | \*/\*                        |
 
@@ -385,11 +478,12 @@ with Paygentic(
 
 ### Parameters
 
-| Parameter                                                                                                                                      | Type                                                                                                                                           | Required                                                                                                                                       | Description                                                                                                                                    |
-| ---------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
-| `id`                                                                                                                                           | *str*                                                                                                                                          | :heavy_check_mark:                                                                                                                             | The subscription ID                                                                                                                            |
-| `reason`                                                                                                                                       | *str*                                                                                                                                          | :heavy_check_mark:                                                                                                                             | Cancellation explanation text. Sample values: 'Customer requested cancellation', 'Payment failure', 'Service migration', 'Contract expiration' |
-| `retries`                                                                                                                                      | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                                               | :heavy_minus_sign:                                                                                                                             | Configuration to override the default retry behavior of the client.                                                                            |
+| Parameter                                                                                                                                                                                        | Type                                                                                                                                                                                             | Required                                                                                                                                                                                         | Description                                                                                                                                                                                      |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `id`                                                                                                                                                                                             | *str*                                                                                                                                                                                            | :heavy_check_mark:                                                                                                                                                                               | The subscription ID                                                                                                                                                                              |
+| `reason`                                                                                                                                                                                         | *str*                                                                                                                                                                                            | :heavy_check_mark:                                                                                                                                                                               | Cancellation explanation text. Sample values: 'Customer requested cancellation', 'Payment failure', 'Service migration', 'Contract expiration'                                                   |
+| `change_reason`                                                                                                                                                                                  | [Optional[models.ChangeReason]](../../models/changereason.md)                                                                                                                                    | :heavy_minus_sign:                                                                                                                                                                               | Why a change was made. `correction` fixes data to match what was agreed; `migration` moves a contract from another system; `commercial` is a real change to the deal. Defaults to `unspecified`. |
+| `retries`                                                                                                                                                                                        | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                                               | Configuration to override the default retry behavior of the client.                                                                                                                              |
 
 ### Response
 

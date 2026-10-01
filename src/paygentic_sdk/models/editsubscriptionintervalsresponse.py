@@ -2,7 +2,11 @@
 
 from __future__ import annotations
 from .subscriptioninterval import SubscriptionInterval, SubscriptionIntervalTypedDict
-from paygentic_sdk.types import BaseModel, UNSET_SENTINEL
+from .subscriptionintervalchange import (
+    SubscriptionIntervalChange,
+    SubscriptionIntervalChangeTypedDict,
+)
+from paygentic_sdk.types import BaseModel, Nullable, UNSET_SENTINEL
 import pydantic
 from pydantic import model_serializer
 from typing import List, Optional
@@ -51,6 +55,8 @@ class EditSubscriptionIntervalsResponseTypedDict(TypedDict):
     unchanged: bool
     r"""True when the op set resolved to no change and nothing was written."""
     line_items: EditSubscriptionIntervalsResponseLineItemsTypedDict
+    interval_change: Nullable[SubscriptionIntervalChangeTypedDict]
+    r"""The record this edit wrote. Null when the edit changed nothing."""
 
 
 class EditSubscriptionIntervalsResponse(BaseModel):
@@ -63,6 +69,25 @@ class EditSubscriptionIntervalsResponse(BaseModel):
     line_items: Annotated[
         EditSubscriptionIntervalsResponseLineItems, pydantic.Field(alias="lineItems")
     ]
+
+    interval_change: Annotated[
+        Nullable[SubscriptionIntervalChange], pydantic.Field(alias="intervalChange")
+    ]
+    r"""The record this edit wrote. Null when the edit changed nothing."""
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k, serialized.get(n))
+
+            if val != UNSET_SENTINEL:
+                m[k] = val
+
+        return m
 
 
 try:

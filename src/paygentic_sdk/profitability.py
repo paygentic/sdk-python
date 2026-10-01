@@ -21,7 +21,8 @@ class Profitability(BaseSDK):
         to: datetime,
         top_n: Optional[int] = 10,
         currency: Optional[str] = None,
-        bucket_width: Optional[models.GetProfitabilityBucketWidth] = "day",
+        exclude_empty: Optional[bool] = False,
+        include_empty: Optional[bool] = False,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -36,7 +37,8 @@ class Profitability(BaseSDK):
         :param to: End of the time range (ISO 8601 format)
         :param top_n: Number of top customers (by profit) to return individually. The rest are rolled into a single 'Other' row.
         :param currency: ISO 4217 currency code to scope the summary. Defaults to the merchant's primary currency.
-        :param bucket_width: Time bucket granularity for the per-customer revenue trend. When omitted, the server picks a reasonable bucket from the window length.
+        :param exclude_empty: When true, leave customers with neither revenue nor cost in the period out of `rows`. They are dropped before ranking, so they take no top-N slot and are not folded into the 'Other' row. `emptyCustomerCount` says how many there are either way.
+        :param include_empty: When true, also return in `emptyCustomers` the customers counted in `emptyCustomerCount` that `rows` does not carry, so a caller can show the complete customer list.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -58,7 +60,8 @@ class Profitability(BaseSDK):
             to=to,
             top_n=top_n,
             currency=currency,
-            bucket_width=bucket_width,
+            exclude_empty=exclude_empty,
+            include_empty=include_empty,
         )
 
         req = self._build_request(
@@ -136,7 +139,8 @@ class Profitability(BaseSDK):
         to: datetime,
         top_n: Optional[int] = 10,
         currency: Optional[str] = None,
-        bucket_width: Optional[models.GetProfitabilityBucketWidth] = "day",
+        exclude_empty: Optional[bool] = False,
+        include_empty: Optional[bool] = False,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -151,7 +155,8 @@ class Profitability(BaseSDK):
         :param to: End of the time range (ISO 8601 format)
         :param top_n: Number of top customers (by profit) to return individually. The rest are rolled into a single 'Other' row.
         :param currency: ISO 4217 currency code to scope the summary. Defaults to the merchant's primary currency.
-        :param bucket_width: Time bucket granularity for the per-customer revenue trend. When omitted, the server picks a reasonable bucket from the window length.
+        :param exclude_empty: When true, leave customers with neither revenue nor cost in the period out of `rows`. They are dropped before ranking, so they take no top-N slot and are not folded into the 'Other' row. `emptyCustomerCount` says how many there are either way.
+        :param include_empty: When true, also return in `emptyCustomers` the customers counted in `emptyCustomerCount` that `rows` does not carry, so a caller can show the complete customer list.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -173,7 +178,8 @@ class Profitability(BaseSDK):
             to=to,
             top_n=top_n,
             currency=currency,
-            bucket_width=bucket_width,
+            exclude_empty=exclude_empty,
+            include_empty=include_empty,
         )
 
         req = self._build_request_async(

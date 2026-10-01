@@ -206,6 +206,18 @@ SubscriptionStatusEnum = Union[
 ]
 
 
+TerminationChangeReason = Union[
+    Literal[
+        "commercial",
+        "correction",
+        "migration",
+        "unspecified",
+    ],
+    UnrecognizedStr,
+]
+r"""Why the subscription was terminated. Null while it is not terminated."""
+
+
 class MerchantTypedDict(TypedDict):
     id: str
     name: str
@@ -313,6 +325,8 @@ class SubscriptionTypedDict(TypedDict):
     r"""ID of who terminated the subscription (customer ID or merchant ID)"""
     termination_reason: NotRequired[str]
     r"""Reason for termination"""
+    termination_change_reason: NotRequired[Nullable[TerminationChangeReason]]
+    r"""Why the subscription was terminated. Null while it is not terminated."""
     test_clock_id: NotRequired[str]
     r"""Test clock ID if this subscription is attached to a test clock. Only present in non-production environments."""
     wallet_id: NotRequired[str]
@@ -415,6 +429,12 @@ class Subscription(BaseModel):
     ] = None
     r"""Reason for termination"""
 
+    termination_change_reason: Annotated[
+        OptionalNullable[TerminationChangeReason],
+        pydantic.Field(alias="terminationChangeReason"),
+    ] = UNSET
+    r"""Why the subscription was terminated. Null while it is not terminated."""
+
     test_clock_id: Annotated[Optional[str], pydantic.Field(alias="testClockId")] = None
     r"""Test clock ID if this subscription is attached to a test clock. Only present in non-production environments."""
 
@@ -464,6 +484,7 @@ class Subscription(BaseModel):
                 "terminatedAt",
                 "terminatedBy",
                 "terminationReason",
+                "terminationChangeReason",
                 "testClockId",
                 "walletId",
                 "renewalReminderEnabled",
@@ -474,7 +495,12 @@ class Subscription(BaseModel):
             ]
         )
         nullable_fields = set(
-            ["renewalReminderEnabled", "renewalReminderDays", "autoApprove"]
+            [
+                "terminationChangeReason",
+                "renewalReminderEnabled",
+                "renewalReminderDays",
+                "autoApprove",
+            ]
         )
         serialized = handler(self)
         m = {}

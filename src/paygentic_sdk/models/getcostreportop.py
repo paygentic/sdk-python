@@ -51,6 +51,8 @@ class GetCostReportRequestTypedDict(TypedDict):
     r"""Number of top groups to return. An 'Other' bucket aggregates remaining groups."""
     compare_prior_period: NotRequired[bool]
     r"""When true, include prior-period comparison data in each group."""
+    exclude_empty: NotRequired[bool]
+    r"""When true, leave out groups with neither cost nor usage in the period. They are dropped before ranking, so they take no top-N slot, do not appear in the 'Other' bucket and are not counted in `pagination.total`. `emptyGroupCount` says how many were left out."""
     window_size: NotRequired[GetCostReportWindowSize]
     r"""Time window granularity for the time-series breakdown."""
     sort: NotRequired[Sort]
@@ -126,6 +128,13 @@ class GetCostReportRequest(BaseModel):
     ] = False
     r"""When true, include prior-period comparison data in each group."""
 
+    exclude_empty: Annotated[
+        Optional[bool],
+        pydantic.Field(alias="excludeEmpty"),
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = False
+    r"""When true, leave out groups with neither cost nor usage in the period. They are dropped before ranking, so they take no top-N slot, do not appear in the 'Other' bucket and are not counted in `pagination.total`. `emptyGroupCount` says how many were left out."""
+
     window_size: Annotated[
         Optional[GetCostReportWindowSize],
         pydantic.Field(alias="windowSize"),
@@ -174,6 +183,7 @@ class GetCostReportRequest(BaseModel):
                 "filterGroupBy",
                 "topN",
                 "comparePriorPeriod",
+                "excludeEmpty",
                 "windowSize",
                 "sort",
                 "sortDir",

@@ -6,16 +6,8 @@ from paygentic_sdk.types import BaseModel, UNSET_SENTINEL
 from paygentic_sdk.utils import FieldMetadata, QueryParamMetadata
 import pydantic
 from pydantic import model_serializer
-from typing import Literal, Optional
+from typing import Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
-
-
-GetProfitabilityBucketWidth = Literal[
-    "hour",
-    "day",
-    "week",
-]
-r"""Time bucket granularity for the per-customer revenue trend. When omitted, the server picks a reasonable bucket from the window length."""
 
 
 class GetProfitabilityRequestTypedDict(TypedDict):
@@ -29,8 +21,10 @@ class GetProfitabilityRequestTypedDict(TypedDict):
     r"""Number of top customers (by profit) to return individually. The rest are rolled into a single 'Other' row."""
     currency: NotRequired[str]
     r"""ISO 4217 currency code to scope the summary. Defaults to the merchant's primary currency."""
-    bucket_width: NotRequired[GetProfitabilityBucketWidth]
-    r"""Time bucket granularity for the per-customer revenue trend. When omitted, the server picks a reasonable bucket from the window length."""
+    exclude_empty: NotRequired[bool]
+    r"""When true, leave customers with neither revenue nor cost in the period out of `rows`. They are dropped before ranking, so they take no top-N slot and are not folded into the 'Other' row. `emptyCustomerCount` says how many there are either way."""
+    include_empty: NotRequired[bool]
+    r"""When true, also return in `emptyCustomers` the customers counted in `emptyCustomerCount` that `rows` does not carry, so a caller can show the complete customer list."""
 
 
 class GetProfitabilityRequest(BaseModel):
@@ -66,16 +60,23 @@ class GetProfitabilityRequest(BaseModel):
     ] = None
     r"""ISO 4217 currency code to scope the summary. Defaults to the merchant's primary currency."""
 
-    bucket_width: Annotated[
-        Optional[GetProfitabilityBucketWidth],
-        pydantic.Field(alias="bucketWidth"),
+    exclude_empty: Annotated[
+        Optional[bool],
+        pydantic.Field(alias="excludeEmpty"),
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
-    ] = "day"
-    r"""Time bucket granularity for the per-customer revenue trend. When omitted, the server picks a reasonable bucket from the window length."""
+    ] = False
+    r"""When true, leave customers with neither revenue nor cost in the period out of `rows`. They are dropped before ranking, so they take no top-N slot and are not folded into the 'Other' row. `emptyCustomerCount` says how many there are either way."""
+
+    include_empty: Annotated[
+        Optional[bool],
+        pydantic.Field(alias="includeEmpty"),
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = False
+    r"""When true, also return in `emptyCustomers` the customers counted in `emptyCustomerCount` that `rows` does not carry, so a caller can show the complete customer list."""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["topN", "currency", "bucketWidth"])
+        optional_fields = set(["topN", "currency", "excludeEmpty", "includeEmpty"])
         serialized = handler(self)
         m = {}
 

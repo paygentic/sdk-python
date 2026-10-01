@@ -60,9 +60,17 @@ class ProfitabilitySummaryResponseTypedDict(TypedDict):
     currency: str
     r"""ISO 4217 currency code applied to revenue and cost values"""
     rows: List[ProfitabilityRowTypedDict]
-    r"""Top-N customer rows by profit descending, optionally followed by a single 'Other' row when more than topN customers contributed."""
+    r"""Top-N customer rows by profit descending, optionally followed by a single 'Other' row when more than topN customers contributed. With `excludeEmpty=true`, customers with neither revenue nor cost in the period are left out."""
     object: Literal["profitability_summary"]
     r"""Object type identifier"""
+    customer_count: NotRequired[int]
+    r"""The merchant's customers this summary scored, whether or not they made a row."""
+    empty_customer_count: NotRequired[Nullable[int]]
+    r"""Customers with neither revenue nor cost in the period, counted whether or not `excludeEmpty` left them out of `rows`. Null when a cost read failed: their cost was never established, so none is counted and `excludeEmpty` leaves nobody out."""
+    unloaded_customer_count: NotRequired[Nullable[int]]
+    r"""Customers `rows` does not carry because a cost read failed (see `warnings`) and they had no revenue in the period. Null when every cost read settled."""
+    empty_customers: NotRequired[List[ProfitabilityRowTypedDict]]
+    r"""The customers `emptyCustomerCount` counts that `rows` does not carry, either as a row or folded into the 'Other' row, sorted by name, each reading zero with a null margin. Present only when `includeEmpty=true` and the count is answered. They are never ranked, never part of the top-N and never folded into the 'Other' row."""
     warnings: NotRequired[List[str]]
     r"""Non-fatal warnings collected during cost discovery (e.g. an individual cost query failed). Empty array on a clean run."""
     revenue_range: NotRequired[
@@ -78,7 +86,7 @@ class ProfitabilitySummaryResponse(BaseModel):
     r"""ISO 4217 currency code applied to revenue and cost values"""
 
     rows: List[ProfitabilityRow]
-    r"""Top-N customer rows by profit descending, optionally followed by a single 'Other' row when more than topN customers contributed."""
+    r"""Top-N customer rows by profit descending, optionally followed by a single 'Other' row when more than topN customers contributed. With `excludeEmpty=true`, customers with neither revenue nor cost in the period are left out."""
 
     object: Annotated[
         Annotated[
@@ -88,6 +96,26 @@ class ProfitabilitySummaryResponse(BaseModel):
         pydantic.Field(alias="object"),
     ] = "profitability_summary"
     r"""Object type identifier"""
+
+    customer_count: Annotated[Optional[int], pydantic.Field(alias="customerCount")] = (
+        None
+    )
+    r"""The merchant's customers this summary scored, whether or not they made a row."""
+
+    empty_customer_count: Annotated[
+        OptionalNullable[int], pydantic.Field(alias="emptyCustomerCount")
+    ] = UNSET
+    r"""Customers with neither revenue nor cost in the period, counted whether or not `excludeEmpty` left them out of `rows`. Null when a cost read failed: their cost was never established, so none is counted and `excludeEmpty` leaves nobody out."""
+
+    unloaded_customer_count: Annotated[
+        OptionalNullable[int], pydantic.Field(alias="unloadedCustomerCount")
+    ] = UNSET
+    r"""Customers `rows` does not carry because a cost read failed (see `warnings`) and they had no revenue in the period. Null when every cost read settled."""
+
+    empty_customers: Annotated[
+        Optional[List[ProfitabilityRow]], pydantic.Field(alias="emptyCustomers")
+    ] = None
+    r"""The customers `emptyCustomerCount` counts that `rows` does not carry, either as a row or folded into the 'Other' row, sorted by name, each reading zero with a null margin. Present only when `includeEmpty=true` and the count is answered. They are never ranked, never part of the top-N and never folded into the 'Other' row."""
 
     warnings: Optional[List[str]] = None
     r"""Non-fatal warnings collected during cost discovery (e.g. an individual cost query failed). Empty array on a clean run."""
@@ -106,8 +134,20 @@ class ProfitabilitySummaryResponse(BaseModel):
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["warnings", "revenueRange", "costRange"])
-        nullable_fields = set(["revenueRange", "costRange"])
+        optional_fields = set(
+            [
+                "customerCount",
+                "emptyCustomerCount",
+                "unloadedCustomerCount",
+                "emptyCustomers",
+                "warnings",
+                "revenueRange",
+                "costRange",
+            ]
+        )
+        nullable_fields = set(
+            ["emptyCustomerCount", "unloadedCustomerCount", "revenueRange", "costRange"]
+        )
         serialized = handler(self)
         m = {}
 

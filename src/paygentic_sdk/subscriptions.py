@@ -7,7 +7,7 @@ from paygentic_sdk._hooks import HookContext
 from paygentic_sdk.types import BaseModel, OptionalNullable, UNSET
 from paygentic_sdk.utils import get_security_from_env
 from paygentic_sdk.utils.unmarshal_json_response import unmarshal_json_response
-from typing import Any, Dict, List, Mapping, Optional, Union, cast
+from typing import Any, Dict, Mapping, Optional, Union, cast
 
 
 class Subscriptions(BaseSDK):
@@ -242,6 +242,14 @@ class Subscriptions(BaseSDK):
                 Dict[str, models.SubscriptionMetadataTypedDict],
             ]
         ] = None,
+        change_reason: Optional[models.ChangeReason] = None,
+        change_description: Optional[str] = None,
+        change_metadata: Optional[
+            Union[
+                Dict[str, models.IntervalChangeMetadata],
+                Dict[str, models.IntervalChangeMetadataTypedDict],
+            ]
+        ] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -269,6 +277,9 @@ class Subscriptions(BaseSDK):
         :param session_expiry_minutes: Number of minutes until the payment session expires. Defaults to 240 minutes (4 hours) if not provided.
         :param version_policy: How the subscription follows new versions of its plan. `floating` follows the plan's default version: when the default changes, the subscription bills from the new default from its next billing period. `pinned` keeps the plan version that the subscription holds. A subscription created without a value is `floating`. A change to this value does not change a billing period that has already started.
         :param metadata: Free-form merchant metadata to attach to the subscription. Values must be strings, numbers, or booleans.
+        :param change_reason: Why a change was made. `correction` fixes data to match what was agreed; `migration` moves a contract from another system; `commercial` is a real change to the deal. Defaults to `unspecified`.
+        :param change_description: A free-text note on why these intervals are changing.
+        :param change_metadata: Your own key-value data about the change, such as a CRM deal ID.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -307,6 +318,9 @@ class Subscriptions(BaseSDK):
             session_expiry_minutes=session_expiry_minutes,
             version_policy=version_policy,
             metadata=metadata,
+            change_reason=change_reason,
+            change_description=change_description,
+            change_metadata=change_metadata,
         )
 
         req = self._build_request(
@@ -412,6 +426,14 @@ class Subscriptions(BaseSDK):
                 Dict[str, models.SubscriptionMetadataTypedDict],
             ]
         ] = None,
+        change_reason: Optional[models.ChangeReason] = None,
+        change_description: Optional[str] = None,
+        change_metadata: Optional[
+            Union[
+                Dict[str, models.IntervalChangeMetadata],
+                Dict[str, models.IntervalChangeMetadataTypedDict],
+            ]
+        ] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -439,6 +461,9 @@ class Subscriptions(BaseSDK):
         :param session_expiry_minutes: Number of minutes until the payment session expires. Defaults to 240 minutes (4 hours) if not provided.
         :param version_policy: How the subscription follows new versions of its plan. `floating` follows the plan's default version: when the default changes, the subscription bills from the new default from its next billing period. `pinned` keeps the plan version that the subscription holds. A subscription created without a value is `floating`. A change to this value does not change a billing period that has already started.
         :param metadata: Free-form merchant metadata to attach to the subscription. Values must be strings, numbers, or booleans.
+        :param change_reason: Why a change was made. `correction` fixes data to match what was agreed; `migration` moves a contract from another system; `commercial` is a real change to the deal. Defaults to `unspecified`.
+        :param change_description: A free-text note on why these intervals are changing.
+        :param change_metadata: Your own key-value data about the change, such as a CRM deal ID.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -477,6 +502,9 @@ class Subscriptions(BaseSDK):
             session_expiry_minutes=session_expiry_minutes,
             version_policy=version_policy,
             metadata=metadata,
+            change_reason=change_reason,
+            change_description=change_description,
+            change_metadata=change_metadata,
         )
 
         req = self._build_request_async(
@@ -1215,24 +1243,10 @@ class Subscriptions(BaseSDK):
         self,
         *,
         id: str,
-        add: Optional[
-            Union[
-                List[models.SubscriptionIntervalAddOp],
-                List[models.SubscriptionIntervalAddOpTypedDict],
-            ]
-        ] = None,
-        edit: Optional[
-            Union[
-                List[models.SubscriptionIntervalEditOp],
-                List[models.SubscriptionIntervalEditOpTypedDict],
-            ]
-        ] = None,
-        remove: Optional[
-            Union[
-                List[models.SubscriptionIntervalRemoveOp],
-                List[models.SubscriptionIntervalRemoveOpTypedDict],
-            ]
-        ] = None,
+        edit_subscription_intervals_request: Union[
+            models.EditSubscriptionIntervalsRequest,
+            models.EditSubscriptionIntervalsRequestTypedDict,
+        ],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -1243,9 +1257,7 @@ class Subscriptions(BaseSDK):
         Adds, edits, or removes price intervals on the subscription. Use an add to override a plan price for a period. Use an edit to change unitPrice, baseQuantity, quantityTransitions, or endDate. Use a remove to delete an interval. To close a price, set endDate. To re-open it, set endDate to null. To send an interval from a GET response as an edit, remove kind from it. An edit with no changed field changes nothing. If you send an add again after a timeout, it fails with 409 because it overlaps the first add. Use GET to check the result. The request is rejected if it changes a billing period that already exists, leaves a gap or an overlap, or bills a one-off price more than once.
 
         :param id: The subscription ID
-        :param add: New override segments to add.
-        :param edit: Changes to existing intervals.
-        :param remove: Intervals to remove outright.
+        :param edit_subscription_intervals_request:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1263,16 +1275,9 @@ class Subscriptions(BaseSDK):
 
         request = models.EditSubscriptionIntervalsRequestRequest(
             id=id,
-            edit_subscription_intervals_request=models.EditSubscriptionIntervalsRequest(
-                add=utils.get_pydantic_model(
-                    add, Optional[List[models.SubscriptionIntervalAddOp]]
-                ),
-                edit=utils.get_pydantic_model(
-                    edit, Optional[List[models.SubscriptionIntervalEditOp]]
-                ),
-                remove=utils.get_pydantic_model(
-                    remove, Optional[List[models.SubscriptionIntervalRemoveOp]]
-                ),
+            edit_subscription_intervals_request=utils.get_pydantic_model(
+                edit_subscription_intervals_request,
+                models.EditSubscriptionIntervalsRequest,
             ),
         )
 
@@ -1366,24 +1371,10 @@ class Subscriptions(BaseSDK):
         self,
         *,
         id: str,
-        add: Optional[
-            Union[
-                List[models.SubscriptionIntervalAddOp],
-                List[models.SubscriptionIntervalAddOpTypedDict],
-            ]
-        ] = None,
-        edit: Optional[
-            Union[
-                List[models.SubscriptionIntervalEditOp],
-                List[models.SubscriptionIntervalEditOpTypedDict],
-            ]
-        ] = None,
-        remove: Optional[
-            Union[
-                List[models.SubscriptionIntervalRemoveOp],
-                List[models.SubscriptionIntervalRemoveOpTypedDict],
-            ]
-        ] = None,
+        edit_subscription_intervals_request: Union[
+            models.EditSubscriptionIntervalsRequest,
+            models.EditSubscriptionIntervalsRequestTypedDict,
+        ],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -1394,9 +1385,7 @@ class Subscriptions(BaseSDK):
         Adds, edits, or removes price intervals on the subscription. Use an add to override a plan price for a period. Use an edit to change unitPrice, baseQuantity, quantityTransitions, or endDate. Use a remove to delete an interval. To close a price, set endDate. To re-open it, set endDate to null. To send an interval from a GET response as an edit, remove kind from it. An edit with no changed field changes nothing. If you send an add again after a timeout, it fails with 409 because it overlaps the first add. Use GET to check the result. The request is rejected if it changes a billing period that already exists, leaves a gap or an overlap, or bills a one-off price more than once.
 
         :param id: The subscription ID
-        :param add: New override segments to add.
-        :param edit: Changes to existing intervals.
-        :param remove: Intervals to remove outright.
+        :param edit_subscription_intervals_request:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1414,16 +1403,9 @@ class Subscriptions(BaseSDK):
 
         request = models.EditSubscriptionIntervalsRequestRequest(
             id=id,
-            edit_subscription_intervals_request=models.EditSubscriptionIntervalsRequest(
-                add=utils.get_pydantic_model(
-                    add, Optional[List[models.SubscriptionIntervalAddOp]]
-                ),
-                edit=utils.get_pydantic_model(
-                    edit, Optional[List[models.SubscriptionIntervalEditOp]]
-                ),
-                remove=utils.get_pydantic_model(
-                    remove, Optional[List[models.SubscriptionIntervalRemoveOp]]
-                ),
+            edit_subscription_intervals_request=utils.get_pydantic_model(
+                edit_subscription_intervals_request,
+                models.EditSubscriptionIntervalsRequest,
             ),
         )
 
@@ -1495,6 +1477,418 @@ class Subscriptions(BaseSDK):
         if utils.match_response(
             http_res, ["401", "403", "404", "409", "429"], "application/json"
         ):
+            response_data = unmarshal_json_response(errors.ErrorData, http_res)
+            raise errors.Error(response_data, http_res)
+        if utils.match_response(http_res, "500", "application/json"):
+            response_data = unmarshal_json_response(errors.ErrorData, http_res)
+            raise errors.Error(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.PaygenticDefaultError(
+                "API error occurred", http_res, http_res_text
+            )
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.PaygenticDefaultError(
+                "API error occurred", http_res, http_res_text
+            )
+
+        raise errors.PaygenticDefaultError("Unexpected response received", http_res)
+
+    def list_subscription_interval_changes(
+        self,
+        *,
+        id: str,
+        limit: Optional[str] = "10",
+        offset: Optional[str] = "0",
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.SubscriptionIntervalChangesResponse:
+        r"""List Interval Changes
+
+        Lists the subscription's interval changes, oldest first. Each shows why it was made and each interval before and after.
+
+        :param id: The subscription ID
+        :param limit: Number of interval changes to return
+        :param offset: Number of interval changes to skip
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.ListSubscriptionIntervalChangesRequest(
+            id=id,
+            limit=limit,
+            offset=offset,
+        )
+
+        req = self._build_request(
+            method="GET",
+            path="/v0/subscriptions/{id}/intervalChanges",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = self.do_request(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="listSubscriptionIntervalChanges",
+                oauth2_scopes=None,
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+            ),
+            request=req,
+            error_status_codes=["401", "403", "404", "4XX", "500", "5XX"],
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(
+                models.SubscriptionIntervalChangesResponse, http_res
+            )
+        if utils.match_response(http_res, ["401", "403", "404"], "application/json"):
+            response_data = unmarshal_json_response(errors.ErrorData, http_res)
+            raise errors.Error(response_data, http_res)
+        if utils.match_response(http_res, "500", "application/json"):
+            response_data = unmarshal_json_response(errors.ErrorData, http_res)
+            raise errors.Error(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.PaygenticDefaultError(
+                "API error occurred", http_res, http_res_text
+            )
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.PaygenticDefaultError(
+                "API error occurred", http_res, http_res_text
+            )
+
+        raise errors.PaygenticDefaultError("Unexpected response received", http_res)
+
+    async def list_subscription_interval_changes_async(
+        self,
+        *,
+        id: str,
+        limit: Optional[str] = "10",
+        offset: Optional[str] = "0",
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.SubscriptionIntervalChangesResponse:
+        r"""List Interval Changes
+
+        Lists the subscription's interval changes, oldest first. Each shows why it was made and each interval before and after.
+
+        :param id: The subscription ID
+        :param limit: Number of interval changes to return
+        :param offset: Number of interval changes to skip
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.ListSubscriptionIntervalChangesRequest(
+            id=id,
+            limit=limit,
+            offset=offset,
+        )
+
+        req = self._build_request_async(
+            method="GET",
+            path="/v0/subscriptions/{id}/intervalChanges",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = await self.do_request_async(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="listSubscriptionIntervalChanges",
+                oauth2_scopes=None,
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+            ),
+            request=req,
+            error_status_codes=["401", "403", "404", "4XX", "500", "5XX"],
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(
+                models.SubscriptionIntervalChangesResponse, http_res
+            )
+        if utils.match_response(http_res, ["401", "403", "404"], "application/json"):
+            response_data = unmarshal_json_response(errors.ErrorData, http_res)
+            raise errors.Error(response_data, http_res)
+        if utils.match_response(http_res, "500", "application/json"):
+            response_data = unmarshal_json_response(errors.ErrorData, http_res)
+            raise errors.Error(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.PaygenticDefaultError(
+                "API error occurred", http_res, http_res_text
+            )
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.PaygenticDefaultError(
+                "API error occurred", http_res, http_res_text
+            )
+
+        raise errors.PaygenticDefaultError("Unexpected response received", http_res)
+
+    def list_interval_changes(
+        self,
+        *,
+        request: Union[
+            models.ListIntervalChangesRequest,
+            models.ListIntervalChangesRequestTypedDict,
+        ] = models.ListIntervalChangesRequest(),
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.SubscriptionIntervalChangesResponse:
+        r"""List Merchant Interval Changes
+
+        Lists the interval changes of all your subscriptions, oldest first. `from` is included and `to` is excluded.
+
+        :param request: The request object to send.
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        if not isinstance(request, BaseModel):
+            request = utils.unmarshal(request, models.ListIntervalChangesRequest)
+        request = cast(models.ListIntervalChangesRequest, request)
+
+        req = self._build_request(
+            method="GET",
+            path="/v0/intervalChanges",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=False,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = self.do_request(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="listIntervalChanges",
+                oauth2_scopes=None,
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+            ),
+            request=req,
+            error_status_codes=["400", "401", "403", "4XX", "500", "5XX"],
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(
+                models.SubscriptionIntervalChangesResponse, http_res
+            )
+        if utils.match_response(http_res, "400", "application/json"):
+            response_data = unmarshal_json_response(errors.BadRequestUnion, http_res)
+            raise errors.BadRequest(response_data, http_res)
+        if utils.match_response(http_res, ["401", "403"], "application/json"):
+            response_data = unmarshal_json_response(errors.ErrorData, http_res)
+            raise errors.Error(response_data, http_res)
+        if utils.match_response(http_res, "500", "application/json"):
+            response_data = unmarshal_json_response(errors.ErrorData, http_res)
+            raise errors.Error(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.PaygenticDefaultError(
+                "API error occurred", http_res, http_res_text
+            )
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.PaygenticDefaultError(
+                "API error occurred", http_res, http_res_text
+            )
+
+        raise errors.PaygenticDefaultError("Unexpected response received", http_res)
+
+    async def list_interval_changes_async(
+        self,
+        *,
+        request: Union[
+            models.ListIntervalChangesRequest,
+            models.ListIntervalChangesRequestTypedDict,
+        ] = models.ListIntervalChangesRequest(),
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.SubscriptionIntervalChangesResponse:
+        r"""List Merchant Interval Changes
+
+        Lists the interval changes of all your subscriptions, oldest first. `from` is included and `to` is excluded.
+
+        :param request: The request object to send.
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        if not isinstance(request, BaseModel):
+            request = utils.unmarshal(request, models.ListIntervalChangesRequest)
+        request = cast(models.ListIntervalChangesRequest, request)
+
+        req = self._build_request_async(
+            method="GET",
+            path="/v0/intervalChanges",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=False,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = await self.do_request_async(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="listIntervalChanges",
+                oauth2_scopes=None,
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+            ),
+            request=req,
+            error_status_codes=["400", "401", "403", "4XX", "500", "5XX"],
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(
+                models.SubscriptionIntervalChangesResponse, http_res
+            )
+        if utils.match_response(http_res, "400", "application/json"):
+            response_data = unmarshal_json_response(errors.BadRequestUnion, http_res)
+            raise errors.BadRequest(response_data, http_res)
+        if utils.match_response(http_res, ["401", "403"], "application/json"):
             response_data = unmarshal_json_response(errors.ErrorData, http_res)
             raise errors.Error(response_data, http_res)
         if utils.match_response(http_res, "500", "application/json"):
@@ -1736,6 +2130,7 @@ class Subscriptions(BaseSDK):
         *,
         id: str,
         reason: str,
+        change_reason: Optional[models.ChangeReason] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -1747,6 +2142,7 @@ class Subscriptions(BaseSDK):
 
         :param id: The subscription ID
         :param reason: Cancellation explanation text. Sample values: 'Customer requested cancellation', 'Payment failure', 'Service migration', 'Contract expiration'
+        :param change_reason: Why a change was made. `correction` fixes data to match what was agreed; `migration` moves a contract from another system; `commercial` is a real change to the deal. Defaults to `unspecified`.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1766,6 +2162,7 @@ class Subscriptions(BaseSDK):
             id=id,
             request_body=models.TerminateSubscriptionRequestBody(
                 reason=reason,
+                change_reason=change_reason,
             ),
         )
 
@@ -1848,6 +2245,7 @@ class Subscriptions(BaseSDK):
         *,
         id: str,
         reason: str,
+        change_reason: Optional[models.ChangeReason] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -1859,6 +2257,7 @@ class Subscriptions(BaseSDK):
 
         :param id: The subscription ID
         :param reason: Cancellation explanation text. Sample values: 'Customer requested cancellation', 'Payment failure', 'Service migration', 'Contract expiration'
+        :param change_reason: Why a change was made. `correction` fixes data to match what was agreed; `migration` moves a contract from another system; `commercial` is a real change to the deal. Defaults to `unspecified`.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1878,6 +2277,7 @@ class Subscriptions(BaseSDK):
             id=id,
             request_body=models.TerminateSubscriptionRequestBody(
                 reason=reason,
+                change_reason=change_reason,
             ),
         )
 
