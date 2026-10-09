@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 from .changereason import ChangeReason
+from .elapsedperiodbilling import ElapsedPeriodBilling
 from .intervalchangemetadata import (
     IntervalChangeMetadata,
     IntervalChangeMetadataTypedDict,
@@ -169,6 +170,8 @@ class CreateSubscriptionRequestTypedDict(TypedDict):
     r"""Deprecated. This field is ignored and has no effect."""
     redirect_urls: NotRequired[RedirectUrlsTypedDict]
     r"""Optional redirect URLs after payment completion or failure. If not provided, uses default platform behavior."""
+    elapsed_period_billing: NotRequired[ElapsedPeriodBilling]
+    r"""Whether a backdated start bills its elapsed periods. A start is backdated when `startedAt` is more than 24 hours before the subscription is created. `none` bills only charges that fall due from the moment of creation, for a customer whose earlier periods another system already billed. `per_period` bills every charge that fell due from `startedAt`, on one first invoice; it refuses a `startedAt` more than 12 months back. Has no effect on a start that is not backdated. Defaults to `none`."""
     test_clock_id: NotRequired[str]
     r"""Test clock identifier for simulating time-based billing scenarios. Sample values: 'tc_abc123xyz', 'tc_789def456'. Restricted to non-production environments (local, dev, sandbox). Must belong to the same merchant organization."""
     renewal_reminder_enabled: NotRequired[Nullable[bool]]
@@ -239,6 +242,11 @@ class CreateSubscriptionRequest(BaseModel):
     ] = None
     r"""Optional redirect URLs after payment completion or failure. If not provided, uses default platform behavior."""
 
+    elapsed_period_billing: Annotated[
+        Optional[ElapsedPeriodBilling], pydantic.Field(alias="elapsedPeriodBilling")
+    ] = "none"
+    r"""Whether a backdated start bills its elapsed periods. A start is backdated when `startedAt` is more than 24 hours before the subscription is created. `none` bills only charges that fall due from the moment of creation, for a customer whose earlier periods another system already billed. `per_period` bills every charge that fell due from `startedAt`, on one first invoice; it refuses a `startedAt` more than 12 months back. Has no effect on a start that is not backdated. Defaults to `none`."""
+
     test_clock_id: Annotated[Optional[str], pydantic.Field(alias="testClockId")] = None
     r"""Test clock identifier for simulating time-based billing scenarios. Sample values: 'tc_abc123xyz', 'tc_789def456'. Restricted to non-production environments (local, dev, sandbox). Must belong to the same merchant organization."""
 
@@ -298,6 +306,7 @@ class CreateSubscriptionRequest(BaseModel):
                 "prefundAmount",
                 "minimumAccountBalance",
                 "redirectUrls",
+                "elapsedPeriodBilling",
                 "testClockId",
                 "renewalReminderEnabled",
                 "renewalReminderDays",

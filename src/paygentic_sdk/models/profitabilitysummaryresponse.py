@@ -60,7 +60,7 @@ class ProfitabilitySummaryResponseTypedDict(TypedDict):
     currency: str
     r"""ISO 4217 currency code applied to revenue and cost values"""
     rows: List[ProfitabilityRowTypedDict]
-    r"""Top-N customer rows by profit descending, optionally followed by a single 'Other' row when more than topN customers contributed. With `excludeEmpty=true`, customers with neither revenue nor cost in the period are left out."""
+    r"""Top-N customer rows by profit descending, optionally followed by a single 'Other' row when more than topN customers contributed. Soft-deleted customers appear only through the 'deleted' row, which comes last, never by name. With `excludeEmpty=true`, customers with neither revenue nor cost in the period are left out."""
     object: Literal["profitability_summary"]
     r"""Object type identifier"""
     customer_count: NotRequired[int]
@@ -86,7 +86,7 @@ class ProfitabilitySummaryResponse(BaseModel):
     r"""ISO 4217 currency code applied to revenue and cost values"""
 
     rows: List[ProfitabilityRow]
-    r"""Top-N customer rows by profit descending, optionally followed by a single 'Other' row when more than topN customers contributed. With `excludeEmpty=true`, customers with neither revenue nor cost in the period are left out."""
+    r"""Top-N customer rows by profit descending, optionally followed by a single 'Other' row when more than topN customers contributed. Soft-deleted customers appear only through the 'deleted' row, which comes last, never by name. With `excludeEmpty=true`, customers with neither revenue nor cost in the period are left out."""
 
     object: Annotated[
         Annotated[

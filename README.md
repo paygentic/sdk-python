@@ -207,7 +207,7 @@ with Paygentic(
     bearer_auth=os.getenv("PAYGENTIC_BEARER_AUTH", ""),
 ) as paygentic:
 
-    res = paygentic.subscriptions.create(name="Monthly API Service", plan_id="plan_abc123", started_at=parse_datetime("2024-01-15T00:00:00Z"), auto_charge=False, tax_exempt=False, customer_id="cus_abc123")
+    res = paygentic.subscriptions.create(name="Monthly API Service", plan_id="plan_abc123", started_at=parse_datetime("2024-01-15T00:00:00Z"), auto_charge=False, tax_exempt=False, customer_id="cus_abc123", elapsed_period_billing="none")
 
     # Handle response
     print(res)
@@ -230,7 +230,7 @@ async def main():
         bearer_auth=os.getenv("PAYGENTIC_BEARER_AUTH", ""),
     ) as paygentic:
 
-        res = await paygentic.subscriptions.create_async(name="Monthly API Service", plan_id="plan_abc123", started_at=parse_datetime("2024-01-15T00:00:00Z"), auto_charge=False, tax_exempt=False, customer_id="cus_abc123")
+        res = await paygentic.subscriptions.create_async(name="Monthly API Service", plan_id="plan_abc123", started_at=parse_datetime("2024-01-15T00:00:00Z"), auto_charge=False, tax_exempt=False, customer_id="cus_abc123", elapsed_period_billing="none")
 
         # Handle response
         print(res)
@@ -429,12 +429,15 @@ with Paygentic(
 * [list](docs/sdks/invoicesv2/README.md#list) - List
 * [list_line_items](docs/sdks/invoicesv2/README.md#list_line_items) - List Line Items
 * [create_line_item](docs/sdks/invoicesv2/README.md#create_line_item) - Create Manual Line Item
+* [list_projected_invoices](docs/sdks/invoicesv2/README.md#list_projected_invoices) - List projected
 * [get](docs/sdks/invoicesv2/README.md#get) - Get
 * [get_line_items](docs/sdks/invoicesv2/README.md#get_line_items) - Get Line Items
 * [download_invoice_pdf](docs/sdks/invoicesv2/README.md#download_invoice_pdf) - Download Invoice PDF
+* [record_invoice_payment](docs/sdks/invoicesv2/README.md#record_invoice_payment) - Settle Invoice Payment
 * [create_invoice_refund](docs/sdks/invoicesv2/README.md#create_invoice_refund) - Refund Invoice
 * [list_invoice_refunds](docs/sdks/invoicesv2/README.md#list_invoice_refunds) - List Invoice Refunds
 * [void_invoice_refund](docs/sdks/invoicesv2/README.md#void_invoice_refund) - Void Invoice Refund
+* [retry_invoice_payment](docs/sdks/invoicesv2/README.md#retry_invoice_payment) - Retry Payment
 
 ### [Items](docs/sdks/items/README.md)
 
@@ -449,6 +452,10 @@ with Paygentic(
 * [upsert_merchant_integration](docs/sdks/merchantintegrations/README.md#upsert_merchant_integration) - Upsert
 * [get_merchant_integration](docs/sdks/merchantintegrations/README.md#get_merchant_integration) - Get
 * [disconnect_merchant_integration](docs/sdks/merchantintegrations/README.md#disconnect_merchant_integration) - Disconnect
+
+### [Merchants](docs/sdks/merchants/README.md)
+
+* [reset](docs/sdks/merchants/README.md#reset) - Reset a merchant's data
 
 ### [Orders](docs/sdks/orders/README.md)
 
@@ -542,6 +549,7 @@ with Paygentic(
 * [update_subscription](docs/sdks/subscriptions/README.md#update_subscription) - Update
 * [get_subscription_intervals](docs/sdks/subscriptions/README.md#get_subscription_intervals) - Get Price Intervals
 * [edit_subscription_intervals](docs/sdks/subscriptions/README.md#edit_subscription_intervals) - Edit Price Intervals
+* [migrate_subscription_version](docs/sdks/subscriptions/README.md#migrate_subscription_version) - Migrate To A Plan Version
 * [list_subscription_interval_changes](docs/sdks/subscriptions/README.md#list_subscription_interval_changes) - List Interval Changes
 * [list_interval_changes](docs/sdks/subscriptions/README.md#list_interval_changes) - List Merchant Interval Changes
 * [generate_portal_link](docs/sdks/subscriptions/README.md#generate_portal_link) - Generate Portal Link
@@ -563,6 +571,14 @@ with Paygentic(
 
 * [get](docs/sdks/users/README.md#get) - Get
 * [update](docs/sdks/users/README.md#update) - Update
+
+### [Webhooks](docs/sdks/webhookssdk/README.md)
+
+* [get](docs/sdks/webhookssdk/README.md#get) - Get
+* [enable](docs/sdks/webhookssdk/README.md#enable) - Enable
+* [update](docs/sdks/webhookssdk/README.md#update) - Update
+* [disable](docs/sdks/webhookssdk/README.md#disable) - Disable
+* [get_portal](docs/sdks/webhookssdk/README.md#get_portal) - Get Portal Access
 
 </details>
 <!-- End Available Resources and Operations [operations] -->
@@ -664,7 +680,7 @@ with Paygentic(
 * [`PaygenticError`](./src/paygentic_sdk/errors/paygenticerror.py): The base class for HTTP error responses.
   * [`Error`](./src/paygentic_sdk/errors/error.py): *
 
-<details><summary>Less common errors (10)</summary>
+<details><summary>Less common errors (12)</summary>
 
 <br />
 
@@ -675,11 +691,13 @@ with Paygentic(
 
 
 **Inherit from [`PaygenticError`](./src/paygentic_sdk/errors/paygenticerror.py)**:
-* [`ValidationError`](./src/paygentic_sdk/errors/validationerror.py): Bad Request - The request could not be understood or was missing required parameters. Status code `400`. Applicable to 92 of 143 methods.*
-* [`DeleteCustomerConflictError`](./src/paygentic_sdk/errors/deletecustomerconflicterror.py): Customer cannot be deleted due to active dependencies. Status code `409`. Applicable to 1 of 143 methods.*
-* [`DeleteFeeConflictError`](./src/paygentic_sdk/errors/deletefeeconflicterror.py): Fee cannot be deleted because it has associated prices. Status code `409`. Applicable to 1 of 143 methods.*
-* [`UpdatePriceConflictError`](./src/paygentic_sdk/errors/updatepriceconflicterror.py): Price cannot be restructured because a subscription still bills it directly. Status code `409`. Applicable to 1 of 143 methods.*
-* [`DeletePriceConflictError`](./src/paygentic_sdk/errors/deletepriceconflicterror.py): Price cannot be deleted because a live plan still references it. Status code `409`. Applicable to 1 of 143 methods.*
+* [`ValidationError`](./src/paygentic_sdk/errors/validationerror.py): Bad Request - The request could not be understood or was missing required parameters. Status code `400`. Applicable to 99 of 153 methods.*
+* [`RetryPaymentResponseError`](./src/paygentic_sdk/errors/retrypaymentresponseerror.py): The result of a payment retry. Every response status of the retry operation that is not an error envelope uses this shape. Applicable to 1 of 153 methods.*
+* [`DeleteCustomerConflictError`](./src/paygentic_sdk/errors/deletecustomerconflicterror.py): Customer cannot be deleted due to active dependencies. Status code `409`. Applicable to 1 of 153 methods.*
+* [`DeleteFeeConflictError`](./src/paygentic_sdk/errors/deletefeeconflicterror.py): Fee cannot be deleted because it has associated prices. Status code `409`. Applicable to 1 of 153 methods.*
+* [`UpdatePriceConflictError`](./src/paygentic_sdk/errors/updatepriceconflicterror.py): Price cannot be restructured because a subscription still bills it directly. Status code `409`. Applicable to 1 of 153 methods.*
+* [`DeletePriceConflictError`](./src/paygentic_sdk/errors/deletepriceconflicterror.py): Price cannot be deleted because a live plan still references it. Status code `409`. Applicable to 1 of 153 methods.*
+* [`UnprocessableEntityError`](./src/paygentic_sdk/errors/unprocessableentityerror.py): `hosted_link` only: Paygentic cannot create a payment link. The `code` field gives the cause: `INVOICE_NOT_LINKABLE_STATUS` (the invoice is not `ISSUED` or `PAYMENT_FAILED`; do not retry), `INVOICE_NO_BALANCE` (no amount is unpaid; treat the invoice as paid), or `MERCHANT_NO_PAYMENT_ACCOUNT` (the merchant has no connected payment account; retry after onboarding is complete). Status code `422`. Applicable to 1 of 153 methods.*
 * [`ResponseValidationError`](./src/paygentic_sdk/errors/responsevalidationerror.py): Type mismatch between the response data and the expected Pydantic model. Provides access to the Pydantic validation error via the `cause` attribute.
 
 </details>

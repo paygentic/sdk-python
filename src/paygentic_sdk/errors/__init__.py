@@ -16,7 +16,15 @@ if TYPE_CHECKING:
     from .error import Error, ErrorData
     from .no_response_error import NoResponseError
     from .paygenticdefaulterror import PaygenticDefaultError
+    from .recordinvoicepaymentop import (
+        UnprocessableEntityError,
+        UnprocessableEntityErrorData,
+    )
     from .responsevalidationerror import ResponseValidationError
+    from .retrypaymentresponse_error import (
+        RetryPaymentResponseError,
+        RetryPaymentResponseErrorData,
+    )
     from .updatepriceop import UpdatePriceConflictError, UpdatePriceConflictErrorData
     from .validationerror import ValidationError, ValidationErrorData
 
@@ -35,6 +43,10 @@ __all__ = [
     "PaygenticDefaultError",
     "PaygenticError",
     "ResponseValidationError",
+    "RetryPaymentResponseError",
+    "RetryPaymentResponseErrorData",
+    "UnprocessableEntityError",
+    "UnprocessableEntityErrorData",
     "UpdatePriceConflictError",
     "UpdatePriceConflictErrorData",
     "ValidationError",
@@ -54,7 +66,11 @@ _dynamic_imports: dict[str, str] = {
     "ErrorData": ".error",
     "NoResponseError": ".no_response_error",
     "PaygenticDefaultError": ".paygenticdefaulterror",
+    "UnprocessableEntityError": ".recordinvoicepaymentop",
+    "UnprocessableEntityErrorData": ".recordinvoicepaymentop",
     "ResponseValidationError": ".responsevalidationerror",
+    "RetryPaymentResponseError": ".retrypaymentresponse_error",
+    "RetryPaymentResponseErrorData": ".retrypaymentresponse_error",
     "UpdatePriceConflictError": ".updatepriceop",
     "UpdatePriceConflictErrorData": ".updatepriceop",
     "ValidationError": ".validationerror",

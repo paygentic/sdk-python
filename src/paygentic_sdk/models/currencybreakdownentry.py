@@ -14,7 +14,7 @@ class CurrencyBreakdownEntryTypedDict(TypedDict):
     currency: str
     r"""ISO 4217 currency code (uppercase, e.g. USD, EUR, GBP)"""
     net_revenue: str
-    r"""Revenue in dollars for this currency, excluding tax: invoices issued in the period plus completed payments"""
+    r"""Revenue for this currency: what was billed in the period, excluding tax, in units of this currency. On the default issue-date basis it is recognised when each invoice is issued; with periodBasis=billingPeriod, each invoice line counts in the period it bills, and a refund splits across its invoice's lines. An invoice counts whether it was since paid, is still outstanding, failed payment or was written off, less non-voided refunds, the same way as the ungrouped netRevenue. It is billings, not cash collected: what customers still owe is invoices.outstanding, including tax, and payment-link collections are under payments."""
     invoices: InvoiceSummaryTypedDict
     payments: PaymentSummaryTypedDict
     trend: List[RevenueTrendBucketTypedDict]
@@ -26,7 +26,7 @@ class CurrencyBreakdownEntry(BaseModel):
     r"""ISO 4217 currency code (uppercase, e.g. USD, EUR, GBP)"""
 
     net_revenue: Annotated[str, pydantic.Field(alias="netRevenue")]
-    r"""Revenue in dollars for this currency, excluding tax: invoices issued in the period plus completed payments"""
+    r"""Revenue for this currency: what was billed in the period, excluding tax, in units of this currency. On the default issue-date basis it is recognised when each invoice is issued; with periodBasis=billingPeriod, each invoice line counts in the period it bills, and a refund splits across its invoice's lines. An invoice counts whether it was since paid, is still outstanding, failed payment or was written off, less non-voided refunds, the same way as the ungrouped netRevenue. It is billings, not cash collected: what customers still owe is invoices.outstanding, including tax, and payment-link collections are under payments."""
 
     invoices: InvoiceSummary
 

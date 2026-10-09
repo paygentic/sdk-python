@@ -267,6 +267,7 @@ if TYPE_CHECKING:
         CreateUsageDiscountAdjustment,
         CreateUsageDiscountAdjustmentTypedDict,
     )
+    from .createwebhooksop import CreateWebhooksRequest, CreateWebhooksRequestTypedDict
     from .currencybreakdownentry import (
         CurrencyBreakdownEntry,
         CurrencyBreakdownEntryTypedDict,
@@ -346,6 +347,7 @@ if TYPE_CHECKING:
         DeleteTestClockRequest,
         DeleteTestClockRequestTypedDict,
     )
+    from .deletewebhooksop import DeleteWebhooksRequest, DeleteWebhooksRequestTypedDict
     from .disconnectmerchantintegrationop import (
         DisconnectMerchantIntegrationRequest,
         DisconnectMerchantIntegrationRequestTypedDict,
@@ -374,6 +376,7 @@ if TYPE_CHECKING:
         EditSubscriptionIntervalsResponseLineItemsTypedDict,
         EditSubscriptionIntervalsResponseTypedDict,
     )
+    from .elapsedperiodbilling import ElapsedPeriodBilling
     from .entitlementdetail import (
         EntitlementDetail,
         EntitlementDetailTypedDict,
@@ -501,9 +504,18 @@ if TYPE_CHECKING:
     )
     from .gettestclockop import GetTestClockRequest, GetTestClockRequestTypedDict
     from .getuserop import GetUserRequest, GetUserRequestTypedDict
+    from .getwebhookportalop import (
+        GetWebhookPortalRequest,
+        GetWebhookPortalRequestTypedDict,
+    )
+    from .getwebhooksop import GetWebhooksRequest, GetWebhooksRequestTypedDict
     from .grant import Grant, GrantObject, GrantTypedDict
     from .groupinvoicesummary import GroupInvoiceSummary, GroupInvoiceSummaryTypedDict
     from .grouptrendentry import GroupTrendEntry, GroupTrendEntryTypedDict
+    from .hostedlinkpaymentresult import (
+        HostedLinkPaymentResult,
+        HostedLinkPaymentResultTypedDict,
+    )
     from .ingesteventop import (
         IngestEventRequest,
         IngestEventRequestBody1,
@@ -543,6 +555,9 @@ if TYPE_CHECKING:
         InvoiceLineItemsResponse,
         InvoiceLineItemsResponseTypedDict,
     )
+    from .invoicepaymentlinkerrorcode import InvoicePaymentLinkErrorCode
+    from .invoicepaymentmethod import InvoicePaymentMethod
+    from .invoicepaymentprovider import InvoicePaymentProvider
     from .invoicerefund import (
         InvoiceRefund,
         InvoiceRefundObject,
@@ -755,6 +770,13 @@ if TYPE_CHECKING:
         ListProductsResponse,
         ListProductsResponseTypedDict,
     )
+    from .listprojectedinvoicesop import (
+        ListProjectedInvoicesObject,
+        ListProjectedInvoicesRequest,
+        ListProjectedInvoicesRequestTypedDict,
+        ListProjectedInvoicesResponse,
+        ListProjectedInvoicesResponseTypedDict,
+    )
     from .listsalesforceaccountsop import (
         ListSalesforceAccountsRequest,
         ListSalesforceAccountsRequestTypedDict,
@@ -826,6 +848,14 @@ if TYPE_CHECKING:
     )
     from .merchantintegrationprovider import MerchantIntegrationProvider
     from .merchantintegrationstatus import MerchantIntegrationStatus
+    from .merchantreset import (
+        CustomerScope,
+        CustomerScopeTypedDict,
+        MerchantReset,
+        MerchantResetTypedDict,
+        MerchantScope,
+        MerchantScopeTypedDict,
+    )
     from .meteredentitlementdetail import (
         MeteredEntitlementDetail,
         MeteredEntitlementDetailObject,
@@ -840,6 +870,23 @@ if TYPE_CHECKING:
         MeterEventList,
         MeterEventListObject,
         MeterEventListTypedDict,
+    )
+    from .migratesubscriptionversionop import (
+        MigrateSubscriptionVersionRequestRequest,
+        MigrateSubscriptionVersionRequestRequestTypedDict,
+    )
+    from .migratesubscriptionversionrequest import (
+        MigrateSubscriptionVersionRequest,
+        MigrateSubscriptionVersionRequestTypedDict,
+        Timing,
+    )
+    from .migratesubscriptionversionresponse import (
+        MigrateSubscriptionVersionResponse,
+        MigrateSubscriptionVersionResponseLineItems,
+        MigrateSubscriptionVersionResponseLineItemsTypedDict,
+        MigrateSubscriptionVersionResponseTypedDict,
+        Migration,
+        MigrationTypedDict,
     )
     from .mintplanlineinput import MintPlanLineInput, MintPlanLineInputTypedDict
     from .mintplanlineref import MintPlanLineRef, MintPlanLineRefTypedDict
@@ -874,6 +921,10 @@ if TYPE_CHECKING:
         OrderLineItemTypedDict,
     )
     from .orderlist import OrderList, OrderListObject, OrderListTypedDict
+    from .outofbandpaymentresult import (
+        OutOfBandPaymentResult,
+        OutOfBandPaymentResultTypedDict,
+    )
     from .payment import (
         Payment,
         PaymentLineItem,
@@ -964,7 +1015,7 @@ if TYPE_CHECKING:
     )
     from .pricetax import OutsideScopeLabel, PriceTax, PriceTaxTypedDict, SupplyScope
     from .product import Product, ProductObject, ProductTypedDict
-    from .profitabilityrow import ProfitabilityRow, ProfitabilityRowTypedDict
+    from .profitabilityrow import CostData, ProfitabilityRow, ProfitabilityRowTypedDict
     from .profitabilitysummaryresponse import (
         ProfitabilitySummaryResponse,
         ProfitabilitySummaryResponseCostRange,
@@ -1012,6 +1063,15 @@ if TYPE_CHECKING:
         ReconcileSubscriptionFeaturesRequestBodyTypedDict,
         ReconcileSubscriptionFeaturesRequestTypedDict,
     )
+    from .recordinvoicepaymentop import (
+        RecordInvoicePaymentRequest,
+        RecordInvoicePaymentRequestBody,
+        RecordInvoicePaymentRequestBodyTypedDict,
+        RecordInvoicePaymentRequestTypedDict,
+        RecordInvoicePaymentResponse,
+        RecordInvoicePaymentResponseTypedDict,
+        UnknownRecordInvoicePaymentResponse,
+    )
     from .rejectsourceeventop import (
         RejectSourceEventRequest,
         RejectSourceEventRequestTypedDict,
@@ -1032,7 +1092,20 @@ if TYPE_CHECKING:
         ReplaceScheduleIntervalsRequestQuantityTransitionTypedDict,
         ReplaceScheduleIntervalsRequestTypedDict,
     )
+    from .resetmerchantop import ResetMerchantRequest, ResetMerchantRequestTypedDict
     from .resolveditem import ResolvedItem, ResolvedItemTypedDict
+    from .retryinvoicepaymentop import (
+        RetryInvoicePaymentRequest,
+        RetryInvoicePaymentRequestBody,
+        RetryInvoicePaymentRequestBodyTypedDict,
+        RetryInvoicePaymentRequestTypedDict,
+    )
+    from .retrypaymenterror import RetryPaymentError, RetryPaymentErrorTypedDict
+    from .retrypaymentresponse import (
+        RetryPaymentResponse,
+        RetryPaymentResponseObject,
+        RetryPaymentResponseTypedDict,
+    )
     from .revenuesummaryresponse import (
         RevenueSummaryResponse,
         RevenueSummaryResponseRevenueRange,
@@ -1107,6 +1180,7 @@ if TYPE_CHECKING:
         Subscription,
         SubscriptionCustomer,
         SubscriptionCustomerTypedDict,
+        SubscriptionElapsedPeriodBilling,
         SubscriptionObject,
         SubscriptionStatusEnum,
         SubscriptionTypedDict,
@@ -1342,6 +1416,12 @@ if TYPE_CHECKING:
         UpdateUserRequestTypedDict,
         UpdateUserType,
     )
+    from .updatewebhooksop import (
+        UpdateWebhooksRequest,
+        UpdateWebhooksRequestBody,
+        UpdateWebhooksRequestBodyTypedDict,
+        UpdateWebhooksRequestTypedDict,
+    )
     from .upsertmerchantintegrationop import (
         UpsertMerchantIntegrationRequest,
         UpsertMerchantIntegrationRequestTypedDict,
@@ -1366,6 +1446,12 @@ if TYPE_CHECKING:
     )
     from .validationerror import Error, ErrorEnum, ErrorTypedDict
     from .validtaxaddress import ValidTaxAddress, ValidTaxAddressTypedDict
+    from .versiontransition import (
+        EffectiveDate,
+        Proration,
+        VersionTransition,
+        VersionTransitionTypedDict,
+    )
     from .voidentitlementgrantop import (
         VoidEntitlementGrantRequest,
         VoidEntitlementGrantRequestTypedDict,
@@ -1376,6 +1462,12 @@ if TYPE_CHECKING:
         VoidInvoiceRefundRequestBodyTypedDict,
         VoidInvoiceRefundRequestTypedDict,
     )
+    from .webhookportal import (
+        WebhookPortal,
+        WebhookPortalObject,
+        WebhookPortalTypedDict,
+    )
+    from .webhooks import Webhooks, WebhooksObject, WebhooksTypedDict
 
 __all__ = [
     "Address",
@@ -1439,6 +1531,7 @@ __all__ = [
     "ConsumerTypedDict",
     "Cost",
     "CostAggregation",
+    "CostData",
     "CostObject",
     "CostReportGroup",
     "CostReportGroupTypedDict",
@@ -1557,6 +1650,8 @@ __all__ = [
     "CreateTestClockRequestTypedDict",
     "CreateUsageDiscountAdjustment",
     "CreateUsageDiscountAdjustmentTypedDict",
+    "CreateWebhooksRequest",
+    "CreateWebhooksRequestTypedDict",
     "Currency",
     "CurrencyBreakdownEntry",
     "CurrencyBreakdownEntryTypedDict",
@@ -1568,6 +1663,8 @@ __all__ = [
     "CustomerPaymentSessionObject",
     "CustomerPaymentSessionStatus",
     "CustomerPaymentSessionTypedDict",
+    "CustomerScope",
+    "CustomerScopeTypedDict",
     "CustomerTypedDict",
     "DeleteBillingScheduleRequest",
     "DeleteBillingScheduleRequestTypedDict",
@@ -1613,6 +1710,8 @@ __all__ = [
     "DeleteSubscriptionAdjustmentRequestTypedDict",
     "DeleteTestClockRequest",
     "DeleteTestClockRequestTypedDict",
+    "DeleteWebhooksRequest",
+    "DeleteWebhooksRequestTypedDict",
     "DisconnectMerchantIntegrationRequest",
     "DisconnectMerchantIntegrationRequestTypedDict",
     "DocumentWithheldReason",
@@ -1634,6 +1733,8 @@ __all__ = [
     "EditSubscriptionIntervalsResponseLineItems",
     "EditSubscriptionIntervalsResponseLineItemsTypedDict",
     "EditSubscriptionIntervalsResponseTypedDict",
+    "EffectiveDate",
+    "ElapsedPeriodBilling",
     "EntitlementDetail",
     "EntitlementDetailTypedDict",
     "EntitlementListItem",
@@ -1745,6 +1846,10 @@ __all__ = [
     "GetTestClockRequestTypedDict",
     "GetUserRequest",
     "GetUserRequestTypedDict",
+    "GetWebhookPortalRequest",
+    "GetWebhookPortalRequestTypedDict",
+    "GetWebhooksRequest",
+    "GetWebhooksRequestTypedDict",
     "Grant",
     "GrantObject",
     "GrantTypedDict",
@@ -1757,6 +1862,8 @@ __all__ = [
     "GroupTypedDict",
     "GroupedValue",
     "GroupedValueTypedDict",
+    "HostedLinkPaymentResult",
+    "HostedLinkPaymentResultTypedDict",
     "Include",
     "IngestEventRequest",
     "IngestEventRequestBody1",
@@ -1780,6 +1887,9 @@ __all__ = [
     "InvoiceLineItemsResponseTypedDict",
     "InvoiceLineItemsTypedDict",
     "InvoiceObject",
+    "InvoicePaymentLinkErrorCode",
+    "InvoicePaymentMethod",
+    "InvoicePaymentProvider",
     "InvoiceRefund",
     "InvoiceRefundList",
     "InvoiceRefundListObject",
@@ -1935,6 +2045,11 @@ __all__ = [
     "ListProductsRequestTypedDict",
     "ListProductsResponse",
     "ListProductsResponseTypedDict",
+    "ListProjectedInvoicesObject",
+    "ListProjectedInvoicesRequest",
+    "ListProjectedInvoicesRequestTypedDict",
+    "ListProjectedInvoicesResponse",
+    "ListProjectedInvoicesResponseTypedDict",
     "ListSalesforceAccountsRequest",
     "ListSalesforceAccountsRequestTypedDict",
     "ListSalesforceAccountsResponse",
@@ -1985,6 +2100,10 @@ __all__ = [
     "MerchantIntegrationProvider",
     "MerchantIntegrationStatus",
     "MerchantIntegrationTypedDict",
+    "MerchantReset",
+    "MerchantResetTypedDict",
+    "MerchantScope",
+    "MerchantScopeTypedDict",
     "MerchantTypedDict",
     "Metadata",
     "MetadataTypedDict",
@@ -1999,6 +2118,16 @@ __all__ = [
     "MeteredEntitlementDetailTypedDict",
     "MeteredEntitlementListItem",
     "MeteredEntitlementListItemTypedDict",
+    "MigrateSubscriptionVersionRequest",
+    "MigrateSubscriptionVersionRequestRequest",
+    "MigrateSubscriptionVersionRequestRequestTypedDict",
+    "MigrateSubscriptionVersionRequestTypedDict",
+    "MigrateSubscriptionVersionResponse",
+    "MigrateSubscriptionVersionResponseLineItems",
+    "MigrateSubscriptionVersionResponseLineItemsTypedDict",
+    "MigrateSubscriptionVersionResponseTypedDict",
+    "Migration",
+    "MigrationTypedDict",
     "MintPlanLineInput",
     "MintPlanLineInputTypedDict",
     "MintPlanLineRef",
@@ -2035,6 +2164,8 @@ __all__ = [
     "OrderObject",
     "OrderType",
     "OrderTypedDict",
+    "OutOfBandPaymentResult",
+    "OutOfBandPaymentResultTypedDict",
     "OutsideScopeLabel",
     "Pagination",
     "PaginationTypedDict",
@@ -2129,6 +2260,7 @@ __all__ = [
     "ProfitabilitySummaryResponseRevenueRange",
     "ProfitabilitySummaryResponseRevenueRangeTypedDict",
     "ProfitabilitySummaryResponseTypedDict",
+    "Proration",
     "PurchaseEntitlementGrantRequest",
     "PurchaseEntitlementGrantRequestTypedDict",
     "PurchaseGrantRequest",
@@ -2152,6 +2284,12 @@ __all__ = [
     "ReconciledFeatureRemovedTypedDict",
     "ReconciledFeatureSkipped",
     "ReconciledFeatureSkippedTypedDict",
+    "RecordInvoicePaymentRequest",
+    "RecordInvoicePaymentRequestBody",
+    "RecordInvoicePaymentRequestBodyTypedDict",
+    "RecordInvoicePaymentRequestTypedDict",
+    "RecordInvoicePaymentResponse",
+    "RecordInvoicePaymentResponseTypedDict",
     "RedirectUrls",
     "RedirectUrlsTypedDict",
     "RejectSourceEventRequest",
@@ -2166,8 +2304,19 @@ __all__ = [
     "ReplaceScheduleIntervalsRequestTypedDict",
     "ReplaceScheduleIntervalsResponse",
     "ReplaceScheduleIntervalsResponseTypedDict",
+    "ResetMerchantRequest",
+    "ResetMerchantRequestTypedDict",
     "ResolvedItem",
     "ResolvedItemTypedDict",
+    "RetryInvoicePaymentRequest",
+    "RetryInvoicePaymentRequestBody",
+    "RetryInvoicePaymentRequestBodyTypedDict",
+    "RetryInvoicePaymentRequestTypedDict",
+    "RetryPaymentError",
+    "RetryPaymentErrorTypedDict",
+    "RetryPaymentResponse",
+    "RetryPaymentResponseObject",
+    "RetryPaymentResponseTypedDict",
     "RevenueSummaryResponse",
     "RevenueSummaryResponseRevenueRange",
     "RevenueSummaryResponseRevenueRangeTypedDict",
@@ -2219,6 +2368,7 @@ __all__ = [
     "SubscriptionAdjustmentsResponseTypedDict",
     "SubscriptionCustomer",
     "SubscriptionCustomerTypedDict",
+    "SubscriptionElapsedPeriodBilling",
     "SubscriptionInterval",
     "SubscriptionIntervalAddOp",
     "SubscriptionIntervalAddOpBillingMode",
@@ -2279,6 +2429,7 @@ __all__ = [
     "TestClockTypedDict",
     "TimeSery",
     "TimeSeryTypedDict",
+    "Timing",
     "To",
     "ToTypedDict",
     "TransitionPlanVersionRequest",
@@ -2288,6 +2439,7 @@ __all__ = [
     "UnknownEntitlementDetail",
     "UnknownEntitlementListItem",
     "UnknownPaymentUnion",
+    "UnknownRecordInvoicePaymentResponse",
     "UpdateApprovalRequest",
     "UpdateApprovalRequestDecision",
     "UpdateApprovalRequestRequest",
@@ -2379,6 +2531,10 @@ __all__ = [
     "UpdateUserRequestBodyTypedDict",
     "UpdateUserRequestTypedDict",
     "UpdateUserType",
+    "UpdateWebhooksRequest",
+    "UpdateWebhooksRequestBody",
+    "UpdateWebhooksRequestBodyTypedDict",
+    "UpdateWebhooksRequestTypedDict",
     "UpsertMerchantIntegrationRequest",
     "UpsertMerchantIntegrationRequestTypedDict",
     "UsagePeriod",
@@ -2398,6 +2554,8 @@ __all__ = [
     "ValueTypedDict",
     "ValueUnion",
     "ValueUnionTypedDict",
+    "VersionTransition",
+    "VersionTransitionTypedDict",
     "VoidEntitlementGrantRequest",
     "VoidEntitlementGrantRequestTypedDict",
     "VoidInvoiceRefundRequest",
@@ -2408,6 +2566,12 @@ __all__ = [
     "VolumePricePropertiesTypedDict",
     "VolumeTier",
     "VolumeTierTypedDict",
+    "WebhookPortal",
+    "WebhookPortalObject",
+    "WebhookPortalTypedDict",
+    "Webhooks",
+    "WebhooksObject",
+    "WebhooksTypedDict",
     "Window",
     "WindowedValue",
     "WindowedValueTypedDict",
@@ -2604,6 +2768,8 @@ _dynamic_imports: dict[str, str] = {
     "CreateTestClockRequestTypedDict": ".createtestclockop",
     "CreateUsageDiscountAdjustment": ".createusagediscountadjustment",
     "CreateUsageDiscountAdjustmentTypedDict": ".createusagediscountadjustment",
+    "CreateWebhooksRequest": ".createwebhooksop",
+    "CreateWebhooksRequestTypedDict": ".createwebhooksop",
     "CurrencyBreakdownEntry": ".currencybreakdownentry",
     "CurrencyBreakdownEntryTypedDict": ".currencybreakdownentry",
     "Customer": ".customer",
@@ -2662,6 +2828,8 @@ _dynamic_imports: dict[str, str] = {
     "DeleteSubscriptionAdjustmentRequestTypedDict": ".deletesubscriptionadjustmentop",
     "DeleteTestClockRequest": ".deletetestclockop",
     "DeleteTestClockRequestTypedDict": ".deletetestclockop",
+    "DeleteWebhooksRequest": ".deletewebhooksop",
+    "DeleteWebhooksRequestTypedDict": ".deletewebhooksop",
     "DisconnectMerchantIntegrationRequest": ".disconnectmerchantintegrationop",
     "DisconnectMerchantIntegrationRequestTypedDict": ".disconnectmerchantintegrationop",
     "DownloadInvoicePdfRequest": ".downloadinvoicepdfop",
@@ -2680,6 +2848,7 @@ _dynamic_imports: dict[str, str] = {
     "EditSubscriptionIntervalsResponseLineItems": ".editsubscriptionintervalsresponse",
     "EditSubscriptionIntervalsResponseLineItemsTypedDict": ".editsubscriptionintervalsresponse",
     "EditSubscriptionIntervalsResponseTypedDict": ".editsubscriptionintervalsresponse",
+    "ElapsedPeriodBilling": ".elapsedperiodbilling",
     "EntitlementDetail": ".entitlementdetail",
     "EntitlementDetailTypedDict": ".entitlementdetail",
     "UnknownEntitlementDetail": ".entitlementdetail",
@@ -2790,6 +2959,10 @@ _dynamic_imports: dict[str, str] = {
     "GetTestClockRequestTypedDict": ".gettestclockop",
     "GetUserRequest": ".getuserop",
     "GetUserRequestTypedDict": ".getuserop",
+    "GetWebhookPortalRequest": ".getwebhookportalop",
+    "GetWebhookPortalRequestTypedDict": ".getwebhookportalop",
+    "GetWebhooksRequest": ".getwebhooksop",
+    "GetWebhooksRequestTypedDict": ".getwebhooksop",
     "Grant": ".grant",
     "GrantObject": ".grant",
     "GrantTypedDict": ".grant",
@@ -2797,6 +2970,8 @@ _dynamic_imports: dict[str, str] = {
     "GroupInvoiceSummaryTypedDict": ".groupinvoicesummary",
     "GroupTrendEntry": ".grouptrendentry",
     "GroupTrendEntryTypedDict": ".grouptrendentry",
+    "HostedLinkPaymentResult": ".hostedlinkpaymentresult",
+    "HostedLinkPaymentResultTypedDict": ".hostedlinkpaymentresult",
     "IngestEventRequest": ".ingesteventop",
     "IngestEventRequestBody1": ".ingesteventop",
     "IngestEventRequestBody1TypedDict": ".ingesteventop",
@@ -2824,6 +2999,9 @@ _dynamic_imports: dict[str, str] = {
     "InvoiceLineItemTypedDict": ".invoicelineitem",
     "InvoiceLineItemsResponse": ".invoicelineitemsresponse",
     "InvoiceLineItemsResponseTypedDict": ".invoicelineitemsresponse",
+    "InvoicePaymentLinkErrorCode": ".invoicepaymentlinkerrorcode",
+    "InvoicePaymentMethod": ".invoicepaymentmethod",
+    "InvoicePaymentProvider": ".invoicepaymentprovider",
     "InvoiceRefund": ".invoicerefund",
     "InvoiceRefundObject": ".invoicerefund",
     "InvoiceRefundStatus": ".invoicerefund",
@@ -2978,6 +3156,11 @@ _dynamic_imports: dict[str, str] = {
     "ListProductsRequestTypedDict": ".listproductsop",
     "ListProductsResponse": ".listproductsop",
     "ListProductsResponseTypedDict": ".listproductsop",
+    "ListProjectedInvoicesObject": ".listprojectedinvoicesop",
+    "ListProjectedInvoicesRequest": ".listprojectedinvoicesop",
+    "ListProjectedInvoicesRequestTypedDict": ".listprojectedinvoicesop",
+    "ListProjectedInvoicesResponse": ".listprojectedinvoicesop",
+    "ListProjectedInvoicesResponseTypedDict": ".listprojectedinvoicesop",
     "ListSalesforceAccountsRequest": ".listsalesforceaccountsop",
     "ListSalesforceAccountsRequestTypedDict": ".listsalesforceaccountsop",
     "ListSalesforceAccountsResponse": ".listsalesforceaccountsop",
@@ -3028,6 +3211,12 @@ _dynamic_imports: dict[str, str] = {
     "MerchantIntegrationTypedDict": ".merchantintegration",
     "MerchantIntegrationProvider": ".merchantintegrationprovider",
     "MerchantIntegrationStatus": ".merchantintegrationstatus",
+    "CustomerScope": ".merchantreset",
+    "CustomerScopeTypedDict": ".merchantreset",
+    "MerchantReset": ".merchantreset",
+    "MerchantResetTypedDict": ".merchantreset",
+    "MerchantScope": ".merchantreset",
+    "MerchantScopeTypedDict": ".merchantreset",
     "MeteredEntitlementDetail": ".meteredentitlementdetail",
     "MeteredEntitlementDetailObject": ".meteredentitlementdetail",
     "MeteredEntitlementDetailTypedDict": ".meteredentitlementdetail",
@@ -3039,6 +3228,17 @@ _dynamic_imports: dict[str, str] = {
     "MeterEventList": ".metereventlist",
     "MeterEventListObject": ".metereventlist",
     "MeterEventListTypedDict": ".metereventlist",
+    "MigrateSubscriptionVersionRequestRequest": ".migratesubscriptionversionop",
+    "MigrateSubscriptionVersionRequestRequestTypedDict": ".migratesubscriptionversionop",
+    "MigrateSubscriptionVersionRequest": ".migratesubscriptionversionrequest",
+    "MigrateSubscriptionVersionRequestTypedDict": ".migratesubscriptionversionrequest",
+    "Timing": ".migratesubscriptionversionrequest",
+    "MigrateSubscriptionVersionResponse": ".migratesubscriptionversionresponse",
+    "MigrateSubscriptionVersionResponseLineItems": ".migratesubscriptionversionresponse",
+    "MigrateSubscriptionVersionResponseLineItemsTypedDict": ".migratesubscriptionversionresponse",
+    "MigrateSubscriptionVersionResponseTypedDict": ".migratesubscriptionversionresponse",
+    "Migration": ".migratesubscriptionversionresponse",
+    "MigrationTypedDict": ".migratesubscriptionversionresponse",
     "MintPlanLineInput": ".mintplanlineinput",
     "MintPlanLineInputTypedDict": ".mintplanlineinput",
     "MintPlanLineRef": ".mintplanlineref",
@@ -3071,6 +3271,8 @@ _dynamic_imports: dict[str, str] = {
     "OrderList": ".orderlist",
     "OrderListObject": ".orderlist",
     "OrderListTypedDict": ".orderlist",
+    "OutOfBandPaymentResult": ".outofbandpaymentresult",
+    "OutOfBandPaymentResultTypedDict": ".outofbandpaymentresult",
     "Payment": ".payment",
     "PaymentLineItem": ".payment",
     "PaymentLineItemTypedDict": ".payment",
@@ -3151,6 +3353,7 @@ _dynamic_imports: dict[str, str] = {
     "Product": ".product",
     "ProductObject": ".product",
     "ProductTypedDict": ".product",
+    "CostData": ".profitabilityrow",
     "ProfitabilityRow": ".profitabilityrow",
     "ProfitabilityRowTypedDict": ".profitabilityrow",
     "ProfitabilitySummaryResponse": ".profitabilitysummaryresponse",
@@ -3182,6 +3385,13 @@ _dynamic_imports: dict[str, str] = {
     "ReconcileSubscriptionFeaturesRequestBody": ".reconcilesubscriptionfeaturesop",
     "ReconcileSubscriptionFeaturesRequestBodyTypedDict": ".reconcilesubscriptionfeaturesop",
     "ReconcileSubscriptionFeaturesRequestTypedDict": ".reconcilesubscriptionfeaturesop",
+    "RecordInvoicePaymentRequest": ".recordinvoicepaymentop",
+    "RecordInvoicePaymentRequestBody": ".recordinvoicepaymentop",
+    "RecordInvoicePaymentRequestBodyTypedDict": ".recordinvoicepaymentop",
+    "RecordInvoicePaymentRequestTypedDict": ".recordinvoicepaymentop",
+    "RecordInvoicePaymentResponse": ".recordinvoicepaymentop",
+    "RecordInvoicePaymentResponseTypedDict": ".recordinvoicepaymentop",
+    "UnknownRecordInvoicePaymentResponse": ".recordinvoicepaymentop",
     "RejectSourceEventRequest": ".rejectsourceeventop",
     "RejectSourceEventRequestTypedDict": ".rejectsourceeventop",
     "ReplaceScheduleIntervalsObject": ".replacescheduleintervalsop",
@@ -3196,8 +3406,19 @@ _dynamic_imports: dict[str, str] = {
     "ReplaceScheduleIntervalsRequestQuantityTransition": ".replacescheduleintervalsrequest",
     "ReplaceScheduleIntervalsRequestQuantityTransitionTypedDict": ".replacescheduleintervalsrequest",
     "ReplaceScheduleIntervalsRequestTypedDict": ".replacescheduleintervalsrequest",
+    "ResetMerchantRequest": ".resetmerchantop",
+    "ResetMerchantRequestTypedDict": ".resetmerchantop",
     "ResolvedItem": ".resolveditem",
     "ResolvedItemTypedDict": ".resolveditem",
+    "RetryInvoicePaymentRequest": ".retryinvoicepaymentop",
+    "RetryInvoicePaymentRequestBody": ".retryinvoicepaymentop",
+    "RetryInvoicePaymentRequestBodyTypedDict": ".retryinvoicepaymentop",
+    "RetryInvoicePaymentRequestTypedDict": ".retryinvoicepaymentop",
+    "RetryPaymentError": ".retrypaymenterror",
+    "RetryPaymentErrorTypedDict": ".retrypaymenterror",
+    "RetryPaymentResponse": ".retrypaymentresponse",
+    "RetryPaymentResponseObject": ".retrypaymentresponse",
+    "RetryPaymentResponseTypedDict": ".retrypaymentresponse",
     "RevenueSummaryResponse": ".revenuesummaryresponse",
     "RevenueSummaryResponseRevenueRange": ".revenuesummaryresponse",
     "RevenueSummaryResponseRevenueRangeTypedDict": ".revenuesummaryresponse",
@@ -3262,6 +3483,7 @@ _dynamic_imports: dict[str, str] = {
     "Subscription": ".subscription",
     "SubscriptionCustomer": ".subscription",
     "SubscriptionCustomerTypedDict": ".subscription",
+    "SubscriptionElapsedPeriodBilling": ".subscription",
     "SubscriptionObject": ".subscription",
     "SubscriptionStatusEnum": ".subscription",
     "SubscriptionTypedDict": ".subscription",
@@ -3420,6 +3642,10 @@ _dynamic_imports: dict[str, str] = {
     "UpdateUserRequestBodyTypedDict": ".updateuserop",
     "UpdateUserRequestTypedDict": ".updateuserop",
     "UpdateUserType": ".updateuserop",
+    "UpdateWebhooksRequest": ".updatewebhooksop",
+    "UpdateWebhooksRequestBody": ".updatewebhooksop",
+    "UpdateWebhooksRequestBodyTypedDict": ".updatewebhooksop",
+    "UpdateWebhooksRequestTypedDict": ".updatewebhooksop",
     "UpsertMerchantIntegrationRequest": ".upsertmerchantintegrationop",
     "UpsertMerchantIntegrationRequestTypedDict": ".upsertmerchantintegrationop",
     "GroupedValue": ".usageresponse",
@@ -3441,12 +3667,22 @@ _dynamic_imports: dict[str, str] = {
     "ErrorTypedDict": ".validationerror",
     "ValidTaxAddress": ".validtaxaddress",
     "ValidTaxAddressTypedDict": ".validtaxaddress",
+    "EffectiveDate": ".versiontransition",
+    "Proration": ".versiontransition",
+    "VersionTransition": ".versiontransition",
+    "VersionTransitionTypedDict": ".versiontransition",
     "VoidEntitlementGrantRequest": ".voidentitlementgrantop",
     "VoidEntitlementGrantRequestTypedDict": ".voidentitlementgrantop",
     "VoidInvoiceRefundRequest": ".voidinvoicerefundop",
     "VoidInvoiceRefundRequestBody": ".voidinvoicerefundop",
     "VoidInvoiceRefundRequestBodyTypedDict": ".voidinvoicerefundop",
     "VoidInvoiceRefundRequestTypedDict": ".voidinvoicerefundop",
+    "WebhookPortal": ".webhookportal",
+    "WebhookPortalObject": ".webhookportal",
+    "WebhookPortalTypedDict": ".webhookportal",
+    "Webhooks": ".webhooks",
+    "WebhooksObject": ".webhooks",
+    "WebhooksTypedDict": ".webhooks",
 }
 
 

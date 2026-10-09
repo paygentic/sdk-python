@@ -32,7 +32,7 @@ class Revenue(BaseSDK):
     ) -> models.RevenueSummaryResponse:
         r"""Get revenue summary
 
-        Returns revenue summary with invoice and payment breakdowns (outstanding/paid/writtenOff), plus a time-series trend. Revenue is sourced from all issued invoices (v0 + v1) and completed payments.
+        Returns revenue summary with invoice and payment breakdowns (outstanding/paid/writtenOff), plus a time-series trend. Revenue is what was billed in the period (by default, invoices issued in it; see periodBasis), whatever their status since, less refunds, both excluding tax; completed payments are reported under payments, never in revenue.
 
         :param start_time: Start of the time range (ISO 8601 format)
         :param end_time: End of the time range (ISO 8601 format)
@@ -154,7 +154,7 @@ class Revenue(BaseSDK):
     ) -> models.RevenueSummaryResponse:
         r"""Get revenue summary
 
-        Returns revenue summary with invoice and payment breakdowns (outstanding/paid/writtenOff), plus a time-series trend. Revenue is sourced from all issued invoices (v0 + v1) and completed payments.
+        Returns revenue summary with invoice and payment breakdowns (outstanding/paid/writtenOff), plus a time-series trend. Revenue is what was billed in the period (by default, invoices issued in it; see periodBasis), whatever their status since, less refunds, both excluding tax; completed payments are reported under payments, never in revenue.
 
         :param start_time: Start of the time range (ISO 8601 format)
         :param end_time: End of the time range (ISO 8601 format)

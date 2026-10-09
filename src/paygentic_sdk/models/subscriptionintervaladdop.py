@@ -35,7 +35,7 @@ SubscriptionIntervalAddOpBillingMode = Literal[
 
 
 class SubscriptionIntervalAddOpTypedDict(TypedDict):
-    r"""Adds an interval. If the plan version has a line with this priceKey, the interval overrides that line. If not, send priceId. The interval then belongs to this subscription only and keeps the rate that you write. A plan version change does not carry it forward, so it stops billing at the version boundary. If a later plan version adds the same priceKey, the change is refused until the plan drops the key or the interval ends on or before the boundary."""
+    r"""Adds an interval. If the plan version has a line with this priceKey, the interval overrides that line. If not, send priceId. The interval then belongs to this subscription only and keeps the rate that you write. A plan version change keeps it: it continues to bill after the subscription moves to another plan version. If a later plan version adds the same priceKey, the change is refused until the plan drops the key or the interval ends on or before the boundary."""
 
     price_key: str
     r"""The price line that this interval bills. Use a priceKey from the plan version. A new key must start with a lowercase letter or a digit, use only lowercase letters, digits, hyphens, and underscores, and have 64 characters or fewer."""
@@ -62,7 +62,7 @@ class SubscriptionIntervalAddOpTypedDict(TypedDict):
 
 
 class SubscriptionIntervalAddOp(BaseModel):
-    r"""Adds an interval. If the plan version has a line with this priceKey, the interval overrides that line. If not, send priceId. The interval then belongs to this subscription only and keeps the rate that you write. A plan version change does not carry it forward, so it stops billing at the version boundary. If a later plan version adds the same priceKey, the change is refused until the plan drops the key or the interval ends on or before the boundary."""
+    r"""Adds an interval. If the plan version has a line with this priceKey, the interval overrides that line. If not, send priceId. The interval then belongs to this subscription only and keeps the rate that you write. A plan version change keeps it: it continues to bill after the subscription moves to another plan version. If a later plan version adds the same priceKey, the change is refused until the plan drops the key or the interval ends on or before the boundary."""
 
     price_key: Annotated[str, pydantic.Field(alias="priceKey")]
     r"""The price line that this interval bills. Use a priceKey from the plan version. A new key must start with a lowercase letter or a digit, use only lowercase letters, digits, hyphens, and underscores, and have 64 characters or fewer."""

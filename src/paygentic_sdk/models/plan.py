@@ -3,6 +3,7 @@
 from __future__ import annotations
 from .plancreditallocation import PlanCreditAllocation, PlanCreditAllocationTypedDict
 from .planprice import PlanPrice, PlanPriceTypedDict
+from .versiontransition import VersionTransition, VersionTransitionTypedDict
 from datetime import datetime
 from paygentic_sdk.types import (
     BaseModel,
@@ -83,6 +84,8 @@ class PlanTypedDict(TypedDict):
     product_id: str
     r"""Unique identifier for a product"""
     updated_at: datetime
+    version_transition: VersionTransitionTypedDict
+    r"""When a move to a new plan version takes effect for this plan's subscriptions. `end_of_current_period` (the default) moves everything at the end of the current billing period. `immediate` changes entitlements at the move, in-arrears prices for the whole current period, and in-advance prices from the next period. Neither prorates."""
     billing_cadence: NotRequired[BillingCadence]
     r"""ISO 8601 duration for the billing period."""
     default_tax_code: NotRequired[str]
@@ -142,6 +145,11 @@ class Plan(BaseModel):
     r"""Unique identifier for a product"""
 
     updated_at: Annotated[datetime, pydantic.Field(alias="updatedAt")]
+
+    version_transition: Annotated[
+        VersionTransition, pydantic.Field(alias="versionTransition")
+    ]
+    r"""When a move to a new plan version takes effect for this plan's subscriptions. `end_of_current_period` (the default) moves everything at the end of the current billing period. `immediate` changes entitlements at the move, in-arrears prices for the whole current period, and in-advance prices from the next period. Neither prorates."""
 
     billing_cadence: Annotated[
         Optional[BillingCadence], pydantic.Field(alias="billingCadence")

@@ -74,7 +74,7 @@ with Paygentic(
     bearer_auth=os.getenv("PAYGENTIC_BEARER_AUTH", ""),
 ) as paygentic:
 
-    res = paygentic.subscriptions.create(name="Monthly API Service", plan_id="plan_abc123", started_at=parse_datetime("2024-01-15T00:00:00Z"), auto_charge=False, tax_exempt=False, customer_id="cus_abc123")
+    res = paygentic.subscriptions.create(name="Monthly API Service", plan_id="plan_abc123", started_at=parse_datetime("2024-01-15T00:00:00Z"), auto_charge=False, tax_exempt=False, customer_id="cus_abc123", elapsed_period_billing="none")
 
     # Handle response
     print(res)
@@ -97,7 +97,7 @@ async def main():
         bearer_auth=os.getenv("PAYGENTIC_BEARER_AUTH", ""),
     ) as paygentic:
 
-        res = await paygentic.subscriptions.create_async(name="Monthly API Service", plan_id="plan_abc123", started_at=parse_datetime("2024-01-15T00:00:00Z"), auto_charge=False, tax_exempt=False, customer_id="cus_abc123")
+        res = await paygentic.subscriptions.create_async(name="Monthly API Service", plan_id="plan_abc123", started_at=parse_datetime("2024-01-15T00:00:00Z"), auto_charge=False, tax_exempt=False, customer_id="cus_abc123", elapsed_period_billing="none")
 
         # Handle response
         print(res)

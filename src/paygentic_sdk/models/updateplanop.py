@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 from .plancreditallocation import PlanCreditAllocation, PlanCreditAllocationTypedDict
+from .versiontransition import VersionTransition, VersionTransitionTypedDict
 from datetime import datetime
 from paygentic_sdk.types import (
     BaseModel,
@@ -70,6 +71,8 @@ class UpdatePlanRequestBodyTypedDict(TypedDict):
     r"""Credit-pool funding declarations for this plan. Each entry funds a distinct pricing unit's credit pool when a subscription to this plan activates: the allocated amount is minted as a credit grant on the customer's pool for that pricing unit, once at activation, or on a recurring basis only when that allocation explicitly sets recurrencePeriod. A plan may declare zero or more allocations; no two allocations on the same plan may target the same pricingUnitId."""
     stable_price_ids: NotRequired[bool]
     r"""Governs price identity when a price is replaced by minting a new plan version and making it default. When true (default), replacing a price at make-default keeps the original price id live (its value changes) and the superseded value is preserved under a new id. When false, the replacement price's id goes live instead and the superseded value stays under the original id. Has no effect on this request's own prices field: prices carried over keep their ids, but swapping one price for another there moves the plan to the new price's id rather than keeping the original live."""
+    version_transition: NotRequired[VersionTransitionTypedDict]
+    r"""When a move to a new plan version takes effect for this plan's subscriptions. `end_of_current_period` (the default) moves everything at the end of the current billing period. `immediate` changes entitlements at the move, in-arrears prices for the whole current period, and in-advance prices from the next period. Neither prorates."""
 
 
 class UpdatePlanRequestBody(BaseModel):
@@ -137,6 +140,11 @@ class UpdatePlanRequestBody(BaseModel):
     ] = None
     r"""Governs price identity when a price is replaced by minting a new plan version and making it default. When true (default), replacing a price at make-default keeps the original price id live (its value changes) and the superseded value is preserved under a new id. When false, the replacement price's id goes live instead and the superseded value stays under the original id. Has no effect on this request's own prices field: prices carried over keep their ids, but swapping one price for another there moves the plan to the new price's id rather than keeping the original live."""
 
+    version_transition: Annotated[
+        Optional[VersionTransition], pydantic.Field(alias="versionTransition")
+    ] = None
+    r"""When a move to a new plan version takes effect for this plan's subscriptions. `end_of_current_period` (the default) moves everything at the end of the current billing period. `immediate` changes entitlements at the move, in-arrears prices for the whole current period, and in-advance prices from the next period. Neither prorates."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
@@ -155,6 +163,7 @@ class UpdatePlanRequestBody(BaseModel):
                 "billingAnchor",
                 "creditAllocations",
                 "stablePriceIds",
+                "versionTransition",
             ]
         )
         nullable_fields = set(["billingAnchor"])

@@ -41,6 +41,9 @@ class Plans(BaseSDK):
             ]
         ] = None,
         stable_price_ids: Optional[bool] = True,
+        version_transition: Optional[
+            Union[models.VersionTransition, models.VersionTransitionTypedDict]
+        ] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -66,6 +69,7 @@ class Plans(BaseSDK):
         :param billing_anchor: ISO 8601 datetime reference point for billing period alignment. Must be in the past or present. When set, subscriptions created under this plan align their first billing period to the next recurrence of this anchor.
         :param credit_allocations: Credit-pool funding declarations for this plan. Each entry funds a distinct pricing unit's credit pool when a subscription to this plan activates: the allocated amount is minted as a credit grant on the customer's pool for that pricing unit, once at activation, or on a recurring basis only when that allocation explicitly sets recurrencePeriod. A plan may declare zero or more allocations; no two allocations on the same plan may target the same pricingUnitId.
         :param stable_price_ids: Governs price identity when a price on this plan's default version is replaced. When true (default), replacing a price at make-default keeps the original price id live (its value changes) and the superseded value is preserved under a new id. When false, the replacement price's id goes live instead and the superseded value stays under the original id.
+        :param version_transition: When a move to a new plan version takes effect for this plan's subscriptions. `end_of_current_period` (the default) moves everything at the end of the current billing period. `immediate` changes entitlements at the move, in-arrears prices for the whole current period, and in-advance prices from the next period. Neither prorates.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -102,6 +106,9 @@ class Plans(BaseSDK):
                 credit_allocations, Optional[List[models.PlanCreditAllocation]]
             ),
             stable_price_ids=stable_price_ids,
+            version_transition=utils.get_pydantic_model(
+                version_transition, Optional[models.VersionTransition]
+            ),
         )
 
         req = self._build_request(
@@ -200,6 +207,9 @@ class Plans(BaseSDK):
             ]
         ] = None,
         stable_price_ids: Optional[bool] = True,
+        version_transition: Optional[
+            Union[models.VersionTransition, models.VersionTransitionTypedDict]
+        ] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -225,6 +235,7 @@ class Plans(BaseSDK):
         :param billing_anchor: ISO 8601 datetime reference point for billing period alignment. Must be in the past or present. When set, subscriptions created under this plan align their first billing period to the next recurrence of this anchor.
         :param credit_allocations: Credit-pool funding declarations for this plan. Each entry funds a distinct pricing unit's credit pool when a subscription to this plan activates: the allocated amount is minted as a credit grant on the customer's pool for that pricing unit, once at activation, or on a recurring basis only when that allocation explicitly sets recurrencePeriod. A plan may declare zero or more allocations; no two allocations on the same plan may target the same pricingUnitId.
         :param stable_price_ids: Governs price identity when a price on this plan's default version is replaced. When true (default), replacing a price at make-default keeps the original price id live (its value changes) and the superseded value is preserved under a new id. When false, the replacement price's id goes live instead and the superseded value stays under the original id.
+        :param version_transition: When a move to a new plan version takes effect for this plan's subscriptions. `end_of_current_period` (the default) moves everything at the end of the current billing period. `immediate` changes entitlements at the move, in-arrears prices for the whole current period, and in-advance prices from the next period. Neither prorates.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -261,6 +272,9 @@ class Plans(BaseSDK):
                 credit_allocations, Optional[List[models.PlanCreditAllocation]]
             ),
             stable_price_ids=stable_price_ids,
+            version_transition=utils.get_pydantic_model(
+                version_transition, Optional[models.VersionTransition]
+            ),
         )
 
         req = self._build_request_async(
@@ -962,6 +976,9 @@ class Plans(BaseSDK):
             ]
         ] = None,
         stable_price_ids: Optional[bool] = None,
+        version_transition: Optional[
+            Union[models.VersionTransition, models.VersionTransitionTypedDict]
+        ] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -984,6 +1001,7 @@ class Plans(BaseSDK):
         :param billing_anchor: ISO 8601 datetime reference point for billing period alignment. Must be in the past or present. Set to null to clear the anchor and revert to start-time-based anchoring.
         :param credit_allocations: Credit-pool funding declarations for this plan. Each entry funds a distinct pricing unit's credit pool when a subscription to this plan activates: the allocated amount is minted as a credit grant on the customer's pool for that pricing unit, once at activation, or on a recurring basis only when that allocation explicitly sets recurrencePeriod. A plan may declare zero or more allocations; no two allocations on the same plan may target the same pricingUnitId.
         :param stable_price_ids: Governs price identity when a price is replaced by minting a new plan version and making it default. When true (default), replacing a price at make-default keeps the original price id live (its value changes) and the superseded value is preserved under a new id. When false, the replacement price's id goes live instead and the superseded value stays under the original id. Has no effect on this request's own prices field: prices carried over keep their ids, but swapping one price for another there moves the plan to the new price's id rather than keeping the original live.
+        :param version_transition: When a move to a new plan version takes effect for this plan's subscriptions. `end_of_current_period` (the default) moves everything at the end of the current billing period. `immediate` changes entitlements at the move, in-arrears prices for the whole current period, and in-advance prices from the next period. Neither prorates.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1018,6 +1036,9 @@ class Plans(BaseSDK):
                     credit_allocations, Optional[List[models.PlanCreditAllocation]]
                 ),
                 stable_price_ids=stable_price_ids,
+                version_transition=utils.get_pydantic_model(
+                    version_transition, Optional[models.VersionTransition]
+                ),
             ),
         )
 
@@ -1114,6 +1135,9 @@ class Plans(BaseSDK):
             ]
         ] = None,
         stable_price_ids: Optional[bool] = None,
+        version_transition: Optional[
+            Union[models.VersionTransition, models.VersionTransitionTypedDict]
+        ] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -1136,6 +1160,7 @@ class Plans(BaseSDK):
         :param billing_anchor: ISO 8601 datetime reference point for billing period alignment. Must be in the past or present. Set to null to clear the anchor and revert to start-time-based anchoring.
         :param credit_allocations: Credit-pool funding declarations for this plan. Each entry funds a distinct pricing unit's credit pool when a subscription to this plan activates: the allocated amount is minted as a credit grant on the customer's pool for that pricing unit, once at activation, or on a recurring basis only when that allocation explicitly sets recurrencePeriod. A plan may declare zero or more allocations; no two allocations on the same plan may target the same pricingUnitId.
         :param stable_price_ids: Governs price identity when a price is replaced by minting a new plan version and making it default. When true (default), replacing a price at make-default keeps the original price id live (its value changes) and the superseded value is preserved under a new id. When false, the replacement price's id goes live instead and the superseded value stays under the original id. Has no effect on this request's own prices field: prices carried over keep their ids, but swapping one price for another there moves the plan to the new price's id rather than keeping the original live.
+        :param version_transition: When a move to a new plan version takes effect for this plan's subscriptions. `end_of_current_period` (the default) moves everything at the end of the current billing period. `immediate` changes entitlements at the move, in-arrears prices for the whole current period, and in-advance prices from the next period. Neither prorates.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1170,6 +1195,9 @@ class Plans(BaseSDK):
                     credit_allocations, Optional[List[models.PlanCreditAllocation]]
                 ),
                 stable_price_ids=stable_price_ids,
+                version_transition=utils.get_pydantic_model(
+                    version_transition, Optional[models.VersionTransition]
+                ),
             ),
         )
 

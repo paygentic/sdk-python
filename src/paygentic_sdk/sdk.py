@@ -28,6 +28,7 @@ if TYPE_CHECKING:
     from paygentic_sdk.invoices_v2 import InvoicesV2
     from paygentic_sdk.items import Items
     from paygentic_sdk.merchantintegrations import MerchantIntegrations
+    from paygentic_sdk.merchants import Merchants
     from paygentic_sdk.orders import Orders
     from paygentic_sdk.payment_sessions import PaymentSessions
     from paygentic_sdk.payments import Payments
@@ -41,6 +42,7 @@ if TYPE_CHECKING:
     from paygentic_sdk.subscriptions import Subscriptions
     from paygentic_sdk.test_clocks import TestClocks
     from paygentic_sdk.users import Users
+    from paygentic_sdk.webhooks_sdk import WebhooksSDK
 
 
 class Paygentic(BaseSDK):
@@ -85,6 +87,7 @@ class Paygentic(BaseSDK):
     r"""Per-customer profitability summaries"""
     test_clocks: "TestClocks"
     r"""Test clocks provide programmable time control to simulate subscription and billing scenarios during testing."""
+    merchants: "Merchants"
     external_references: "ExternalReferences"
     r"""An `ExternalReference` links a Paygentic entity (e.g. an `Item`) to a record in an external system such as Salesforce or NetSuite. Multiple external records may map to the same Paygentic entity, but each external id is the *primary* reference of at most one entity per merchant."""
     items: "Items"
@@ -98,6 +101,8 @@ class Paygentic(BaseSDK):
     r"""A `MerchantIntegration` records a merchant's connection to an external provider. One connection per `(merchant, provider)` — re-connecting upserts in place."""
     approvals: "Approvals"
     r"""Submit, decide, cancel, and read maker-checker approvals."""
+    webhooks: "WebhooksSDK"
+    r"""Endpoints for setting up webhook integrations and administering webhook settings"""
     _sub_sdk_map = {
         "billable_metrics": ("paygentic_sdk.billablemetrics", "BillableMetrics"),
         "customers": ("paygentic_sdk.customers", "Customers"),
@@ -118,6 +123,7 @@ class Paygentic(BaseSDK):
         "revenue": ("paygentic_sdk.revenue", "Revenue"),
         "profitability": ("paygentic_sdk.profitability", "Profitability"),
         "test_clocks": ("paygentic_sdk.test_clocks", "TestClocks"),
+        "merchants": ("paygentic_sdk.merchants", "Merchants"),
         "external_references": (
             "paygentic_sdk.externalreferences",
             "ExternalReferences",
@@ -131,6 +137,7 @@ class Paygentic(BaseSDK):
             "MerchantIntegrations",
         ),
         "approvals": ("paygentic_sdk.approvals", "Approvals"),
+        "webhooks": ("paygentic_sdk.webhooks_sdk", "WebhooksSDK"),
     }
 
     def __init__(

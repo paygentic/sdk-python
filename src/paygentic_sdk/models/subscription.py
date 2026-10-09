@@ -196,6 +196,16 @@ PaymentUnion = Annotated[
 r"""Payment session details when upfront payment is required, or confirmation of a zero-amount paid invoice"""
 
 
+SubscriptionElapsedPeriodBilling = Union[
+    Literal[
+        "none",
+        "per_period",
+    ],
+    UnrecognizedStr,
+]
+r"""Whether this subscription's backdated start bills its elapsed periods, as chosen at creation. `null` for a subscription created before the choice existed. `null` is listed in the enum as well as via `nullable` because the response validator checks the enum independently."""
+
+
 SubscriptionStatusEnum = Union[
     Literal[
         "pending_payment",
@@ -299,6 +309,14 @@ class SubscriptionTypedDict(TypedDict):
     version_policy: SubscriptionVersionPolicy
     r"""How the subscription follows new versions of its plan. `floating` follows the plan's default version: when the default changes, the subscription bills from the new default from its next billing period. `pinned` keeps the plan version that the subscription holds. A subscription created without a value is `floating`. A change to this value does not change a billing period that has already started."""
     started_at: datetime
+    elapsed_period_billing: Nullable[SubscriptionElapsedPeriodBilling]
+    r"""Whether this subscription's backdated start bills its elapsed periods, as chosen at creation. `null` for a subscription created before the choice existed. `null` is listed in the enum as well as via `nullable` because the response validator checks the enum independently."""
+    billing_starts_at: Nullable[datetime]
+    r"""The billing start: a charge is billed only if it falls due at or after this moment. Fixed at creation and never changed. It is `startedAt`, unless the start was backdated with `elapsedPeriodBilling` of `none`, in which case it is the moment of creation."""
+    billing_anchor: datetime
+    r"""The instant the subscription's billing periods are anchored on: its billing anchor, else its start. Every recurring period boundary is this instant plus a whole number of cadences."""
+    billing_cadence: str
+    r"""The ISO-8601 duration the subscription's billing periods step by where no price sets its own: the subscription's cadence, else its plan's."""
     status: SubscriptionStatusEnum
     updated_at: datetime
     payment_term_days: int
@@ -365,6 +383,23 @@ class Subscription(BaseModel):
     r"""How the subscription follows new versions of its plan. `floating` follows the plan's default version: when the default changes, the subscription bills from the new default from its next billing period. `pinned` keeps the plan version that the subscription holds. A subscription created without a value is `floating`. A change to this value does not change a billing period that has already started."""
 
     started_at: Annotated[datetime, pydantic.Field(alias="startedAt")]
+
+    elapsed_period_billing: Annotated[
+        Nullable[SubscriptionElapsedPeriodBilling],
+        pydantic.Field(alias="elapsedPeriodBilling"),
+    ]
+    r"""Whether this subscription's backdated start bills its elapsed periods, as chosen at creation. `null` for a subscription created before the choice existed. `null` is listed in the enum as well as via `nullable` because the response validator checks the enum independently."""
+
+    billing_starts_at: Annotated[
+        Nullable[datetime], pydantic.Field(alias="billingStartsAt")
+    ]
+    r"""The billing start: a charge is billed only if it falls due at or after this moment. Fixed at creation and never changed. It is `startedAt`, unless the start was backdated with `elapsedPeriodBilling` of `none`, in which case it is the moment of creation."""
+
+    billing_anchor: Annotated[datetime, pydantic.Field(alias="billingAnchor")]
+    r"""The instant the subscription's billing periods are anchored on: its billing anchor, else its start. Every recurring period boundary is this instant plus a whole number of cadences."""
+
+    billing_cadence: Annotated[str, pydantic.Field(alias="billingCadence")]
+    r"""The ISO-8601 duration the subscription's billing periods step by where no price sets its own: the subscription's cadence, else its plan's."""
 
     status: SubscriptionStatusEnum
 
@@ -496,6 +531,8 @@ class Subscription(BaseModel):
         )
         nullable_fields = set(
             [
+                "elapsedPeriodBilling",
+                "billingStartsAt",
                 "terminationChangeReason",
                 "renewalReminderEnabled",
                 "renewalReminderDays",

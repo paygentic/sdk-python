@@ -718,6 +718,230 @@ class InvoicesV2(BaseSDK):
 
         raise errors.PaygenticDefaultError("Unexpected response received", http_res)
 
+    def list_projected_invoices(
+        self,
+        *,
+        subscription_id: str,
+        from_: Optional[datetime] = None,
+        to: Optional[datetime] = None,
+        limit: Optional[int] = 10,
+        offset: Optional[int] = 0,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.ListProjectedInvoicesResponse:
+        r"""List projected
+
+        List the invoices a subscription will issue in a range of invoice moments, one projected invoice for each distinct invoice moment. Projected invoices are derived on each read and never stored. Each has status PROJECTED, and its id is stable between reads, but GET /v2/invoices/{id} returns 404 for it. Totals EXCLUDE usage: metered charges are not projected, and an invoice moment that has only metered charges is omitted. Tax and sequenceNumber are estimates. The range filters on the invoice moment (invoiceAt) in [from, to). A from before now is treated as now. to must be after from and at most one year after now; now is the subscription's test-clock time when it has a test clock. A terminated subscription returns an empty list. Each invoice carries its lines in lineItems. Authorization is the same as listing invoices.
+
+        :param subscription_id: The subscription to project invoices for
+        :param from_: Start of the range of invoice moments, inclusive. Defaults to now. A value before now is treated as now.
+        :param to: End of the range of invoice moments, exclusive. Defaults to one month after from. Must be after from and at most one year after now.
+        :param limit: Maximum number of invoices to return
+        :param offset: Number of invoices to skip for pagination
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.ListProjectedInvoicesRequest(
+            subscription_id=subscription_id,
+            from_=from_,
+            to=to,
+            limit=limit,
+            offset=offset,
+        )
+
+        req = self._build_request(
+            method="GET",
+            path="/v2/invoices/projected",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=False,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = self.do_request(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="listProjectedInvoices",
+                oauth2_scopes=None,
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+            ),
+            request=req,
+            error_status_codes=["400", "403", "404", "4XX", "500", "5XX"],
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(
+                models.ListProjectedInvoicesResponse, http_res
+            )
+        if utils.match_response(http_res, "400", "application/json"):
+            response_data = unmarshal_json_response(errors.BadRequestUnion, http_res)
+            raise errors.BadRequest(response_data, http_res)
+        if utils.match_response(http_res, ["403", "404"], "application/json"):
+            response_data = unmarshal_json_response(errors.ErrorData, http_res)
+            raise errors.Error(response_data, http_res)
+        if utils.match_response(http_res, "500", "application/json"):
+            response_data = unmarshal_json_response(errors.ErrorData, http_res)
+            raise errors.Error(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.PaygenticDefaultError(
+                "API error occurred", http_res, http_res_text
+            )
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.PaygenticDefaultError(
+                "API error occurred", http_res, http_res_text
+            )
+
+        raise errors.PaygenticDefaultError("Unexpected response received", http_res)
+
+    async def list_projected_invoices_async(
+        self,
+        *,
+        subscription_id: str,
+        from_: Optional[datetime] = None,
+        to: Optional[datetime] = None,
+        limit: Optional[int] = 10,
+        offset: Optional[int] = 0,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.ListProjectedInvoicesResponse:
+        r"""List projected
+
+        List the invoices a subscription will issue in a range of invoice moments, one projected invoice for each distinct invoice moment. Projected invoices are derived on each read and never stored. Each has status PROJECTED, and its id is stable between reads, but GET /v2/invoices/{id} returns 404 for it. Totals EXCLUDE usage: metered charges are not projected, and an invoice moment that has only metered charges is omitted. Tax and sequenceNumber are estimates. The range filters on the invoice moment (invoiceAt) in [from, to). A from before now is treated as now. to must be after from and at most one year after now; now is the subscription's test-clock time when it has a test clock. A terminated subscription returns an empty list. Each invoice carries its lines in lineItems. Authorization is the same as listing invoices.
+
+        :param subscription_id: The subscription to project invoices for
+        :param from_: Start of the range of invoice moments, inclusive. Defaults to now. A value before now is treated as now.
+        :param to: End of the range of invoice moments, exclusive. Defaults to one month after from. Must be after from and at most one year after now.
+        :param limit: Maximum number of invoices to return
+        :param offset: Number of invoices to skip for pagination
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.ListProjectedInvoicesRequest(
+            subscription_id=subscription_id,
+            from_=from_,
+            to=to,
+            limit=limit,
+            offset=offset,
+        )
+
+        req = self._build_request_async(
+            method="GET",
+            path="/v2/invoices/projected",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=False,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = await self.do_request_async(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="listProjectedInvoices",
+                oauth2_scopes=None,
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+            ),
+            request=req,
+            error_status_codes=["400", "403", "404", "4XX", "500", "5XX"],
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(
+                models.ListProjectedInvoicesResponse, http_res
+            )
+        if utils.match_response(http_res, "400", "application/json"):
+            response_data = unmarshal_json_response(errors.BadRequestUnion, http_res)
+            raise errors.BadRequest(response_data, http_res)
+        if utils.match_response(http_res, ["403", "404"], "application/json"):
+            response_data = unmarshal_json_response(errors.ErrorData, http_res)
+            raise errors.Error(response_data, http_res)
+        if utils.match_response(http_res, "500", "application/json"):
+            response_data = unmarshal_json_response(errors.ErrorData, http_res)
+            raise errors.Error(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.PaygenticDefaultError(
+                "API error occurred", http_res, http_res_text
+            )
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.PaygenticDefaultError(
+                "API error occurred", http_res, http_res_text
+            )
+
+        raise errors.PaygenticDefaultError("Unexpected response received", http_res)
+
     def get(
         self,
         *,
@@ -1368,6 +1592,264 @@ class InvoicesV2(BaseSDK):
             "Unexpected response received", http_res, http_res_text
         )
 
+    def record_invoice_payment(
+        self,
+        *,
+        id: str,
+        method: models.InvoicePaymentMethod,
+        reason: Optional[str] = None,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.RecordInvoicePaymentResponse:
+        r"""Settle Invoice Payment
+
+        Settle an unpaid invoice in status `ISSUED` or `PAYMENT_FAILED`. The `method` field selects how.
+
+        - `hosted_link`: create a new hosted payment link and email it to the customer. The invoice stays unpaid until the customer pays on the link. Each call replaces the previous link. A payment link expires after 30 days; to collect an invoice whose link has expired, call this method again.
+        - `out_of_band`: record a payment that you collected outside Paygentic. The invoice changes to `PAID` immediately. A second call returns 409.
+
+        For `hosted_link`, an invoice that does not exist returns 403, the same as an invoice of another merchant.
+
+        Paygentic selects the payment provider from your connected payment account. The response reports the provider.
+
+        **Warning:** each `hosted_link` call creates a new link and sends the customer a new email. Do not retry a `hosted_link` call after a timeout: first read the invoice to see if a new link exists.
+
+        :param id: The invoice ID
+        :param method: How an invoice payment is settled.
+        :param reason: Optional note for `out_of_band` that describes how you received the payment (for example, 'Wire transfer received 2026-03-25'). Ignored for `hosted_link`.
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.RecordInvoicePaymentRequest(
+            id=id,
+            request_body=models.RecordInvoicePaymentRequestBody(
+                method=method,
+                reason=reason,
+            ),
+        )
+
+        req = self._build_request(
+            method="POST",
+            path="/v2/invoices/{id}/payment",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=True,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request.request_body,
+                False,
+                False,
+                "json",
+                models.RecordInvoicePaymentRequestBody,
+            ),
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = self.do_request(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="recordInvoicePayment",
+                oauth2_scopes=None,
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+            ),
+            request=req,
+            error_status_codes=["400", "403", "404", "409", "422", "4XX", "500", "5XX"],
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(
+                models.RecordInvoicePaymentResponse, http_res
+            )
+        if utils.match_response(http_res, "400", "application/json"):
+            response_data = unmarshal_json_response(errors.BadRequestUnion, http_res)
+            raise errors.BadRequest(response_data, http_res)
+        if utils.match_response(http_res, ["403", "404", "409"], "application/json"):
+            response_data = unmarshal_json_response(errors.ErrorData, http_res)
+            raise errors.Error(response_data, http_res)
+        if utils.match_response(http_res, "422", "application/json"):
+            response_data = unmarshal_json_response(
+                errors.UnprocessableEntityErrorData, http_res
+            )
+            raise errors.UnprocessableEntityError(response_data, http_res)
+        if utils.match_response(http_res, "500", "application/json"):
+            response_data = unmarshal_json_response(errors.ErrorData, http_res)
+            raise errors.Error(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.PaygenticDefaultError(
+                "API error occurred", http_res, http_res_text
+            )
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.PaygenticDefaultError(
+                "API error occurred", http_res, http_res_text
+            )
+
+        raise errors.PaygenticDefaultError("Unexpected response received", http_res)
+
+    async def record_invoice_payment_async(
+        self,
+        *,
+        id: str,
+        method: models.InvoicePaymentMethod,
+        reason: Optional[str] = None,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.RecordInvoicePaymentResponse:
+        r"""Settle Invoice Payment
+
+        Settle an unpaid invoice in status `ISSUED` or `PAYMENT_FAILED`. The `method` field selects how.
+
+        - `hosted_link`: create a new hosted payment link and email it to the customer. The invoice stays unpaid until the customer pays on the link. Each call replaces the previous link. A payment link expires after 30 days; to collect an invoice whose link has expired, call this method again.
+        - `out_of_band`: record a payment that you collected outside Paygentic. The invoice changes to `PAID` immediately. A second call returns 409.
+
+        For `hosted_link`, an invoice that does not exist returns 403, the same as an invoice of another merchant.
+
+        Paygentic selects the payment provider from your connected payment account. The response reports the provider.
+
+        **Warning:** each `hosted_link` call creates a new link and sends the customer a new email. Do not retry a `hosted_link` call after a timeout: first read the invoice to see if a new link exists.
+
+        :param id: The invoice ID
+        :param method: How an invoice payment is settled.
+        :param reason: Optional note for `out_of_band` that describes how you received the payment (for example, 'Wire transfer received 2026-03-25'). Ignored for `hosted_link`.
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.RecordInvoicePaymentRequest(
+            id=id,
+            request_body=models.RecordInvoicePaymentRequestBody(
+                method=method,
+                reason=reason,
+            ),
+        )
+
+        req = self._build_request_async(
+            method="POST",
+            path="/v2/invoices/{id}/payment",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=True,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request.request_body,
+                False,
+                False,
+                "json",
+                models.RecordInvoicePaymentRequestBody,
+            ),
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = await self.do_request_async(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="recordInvoicePayment",
+                oauth2_scopes=None,
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+            ),
+            request=req,
+            error_status_codes=["400", "403", "404", "409", "422", "4XX", "500", "5XX"],
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(
+                models.RecordInvoicePaymentResponse, http_res
+            )
+        if utils.match_response(http_res, "400", "application/json"):
+            response_data = unmarshal_json_response(errors.BadRequestUnion, http_res)
+            raise errors.BadRequest(response_data, http_res)
+        if utils.match_response(http_res, ["403", "404", "409"], "application/json"):
+            response_data = unmarshal_json_response(errors.ErrorData, http_res)
+            raise errors.Error(response_data, http_res)
+        if utils.match_response(http_res, "422", "application/json"):
+            response_data = unmarshal_json_response(
+                errors.UnprocessableEntityErrorData, http_res
+            )
+            raise errors.UnprocessableEntityError(response_data, http_res)
+        if utils.match_response(http_res, "500", "application/json"):
+            response_data = unmarshal_json_response(errors.ErrorData, http_res)
+            raise errors.Error(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.PaygenticDefaultError(
+                "API error occurred", http_res, http_res_text
+            )
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.PaygenticDefaultError(
+                "API error occurred", http_res, http_res_text
+            )
+
+        raise errors.PaygenticDefaultError("Unexpected response received", http_res)
+
     def create_invoice_refund(
         self,
         *,
@@ -1991,6 +2473,310 @@ class InvoicesV2(BaseSDK):
         if utils.match_response(http_res, "500", "application/json"):
             response_data = unmarshal_json_response(errors.ErrorData, http_res)
             raise errors.Error(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.PaygenticDefaultError(
+                "API error occurred", http_res, http_res_text
+            )
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.PaygenticDefaultError(
+                "API error occurred", http_res, http_res_text
+            )
+
+        raise errors.PaygenticDefaultError("Unexpected response received", http_res)
+
+    def retry_invoice_payment(
+        self,
+        *,
+        id: str,
+        reason: Optional[str] = None,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.RetryPaymentResponse:
+        r"""Retry Payment
+
+        Charge the customer's saved payment method again for an unpaid invoice.
+
+        The invoice must be in status `ISSUED` or `PAYMENT_FAILED`, auto-charge must be on for its subscription, and the invoice must have a payment session. If not, the response is 400.
+
+        The response status tells you the result. Only 200 means that the charge succeeded. Every other response from this operation that has a `retry_payment_result` body has `success: false`, and `error.code` gives the reason:
+
+        | Status | `error.code` | Meaning |
+        | --- | --- | --- |
+        | 200 | — | The charge succeeded, the provider had already collected it, or no amount is unpaid. |
+        | 202 | `processing` | The provider accepted the charge. It settles later (for example, a bank debit). |
+        | 402 | a decline code, for example `card_declined`, `insufficient_funds`, `do_not_honor`, `authentication_required` | The provider declined the payment method. |
+        | 409 | `concurrent_attempt` | Another payment attempt for this invoice is in progress. |
+        | 409 | `PAYMENT_SESSION_EXPIRED` | The payment link expired (after 30 days). Create a new link with `POST /v2/invoices/{id}/payment` and `method: hosted_link`, then retry. If the customer also has no usable saved payment method, the response is 422 instead. |
+        | 409 | another value, or no `code` | The payment session cannot be charged in its current state (for example `session_unusable`, `non_confirmable`, `PAYMENT_PROCESSING`, `PAYMENT_ALREADY_COMPLETED`). Read `error.message` for the cause. |
+        | 422 | `no_payment_method` | The customer has no usable saved payment method. Send a payment link instead. |
+        | 502 | `provider_unavailable` or none | The payment provider did not answer, or the provider failed the charge for a reason that is not known. Retry later. |
+
+        A 500 response has the standard error body, not `retry_payment_result`. It is an internal error, and a retry does not fix it.
+
+        An invoice that does not exist returns 403, the same as an invoice of another merchant.
+
+        This operation is rate limited to one call each minute for each invoice.
+
+        :param id: The invoice ID
+        :param reason: Optional reason for the manual retry (for audit logging)
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.RetryInvoicePaymentRequest(
+            id=id,
+            request_body=models.RetryInvoicePaymentRequestBody(
+                reason=reason,
+            ),
+        )
+
+        req = self._build_request(
+            method="POST",
+            path="/v2/invoices/{id}/retryPayment",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request.request_body if request is not None else None,
+                False,
+                True,
+                "json",
+                Optional[models.RetryInvoicePaymentRequestBody],
+            ),
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = self.do_request(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="retryInvoicePayment",
+                oauth2_scopes=None,
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+            ),
+            request=req,
+            error_status_codes=[
+                "400",
+                "402",
+                "403",
+                "409",
+                "422",
+                "429",
+                "4XX",
+                "500",
+                "502",
+                "5XX",
+            ],
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, ["200", "202"], "application/json"):
+            return unmarshal_json_response(models.RetryPaymentResponse, http_res)
+        if utils.match_response(http_res, "400", "application/json"):
+            response_data = unmarshal_json_response(errors.BadRequestUnion, http_res)
+            raise errors.BadRequest(response_data, http_res)
+        if utils.match_response(http_res, ["402", "409", "422"], "application/json"):
+            response_data = unmarshal_json_response(
+                errors.RetryPaymentResponseErrorData, http_res
+            )
+            raise errors.RetryPaymentResponseError(response_data, http_res)
+        if utils.match_response(http_res, ["403", "429"], "application/json"):
+            response_data = unmarshal_json_response(errors.ErrorData, http_res)
+            raise errors.Error(response_data, http_res)
+        if utils.match_response(http_res, "500", "application/json"):
+            response_data = unmarshal_json_response(errors.ErrorData, http_res)
+            raise errors.Error(response_data, http_res)
+        if utils.match_response(http_res, "502", "application/json"):
+            response_data = unmarshal_json_response(
+                errors.RetryPaymentResponseErrorData, http_res
+            )
+            raise errors.RetryPaymentResponseError(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.PaygenticDefaultError(
+                "API error occurred", http_res, http_res_text
+            )
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.PaygenticDefaultError(
+                "API error occurred", http_res, http_res_text
+            )
+
+        raise errors.PaygenticDefaultError("Unexpected response received", http_res)
+
+    async def retry_invoice_payment_async(
+        self,
+        *,
+        id: str,
+        reason: Optional[str] = None,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.RetryPaymentResponse:
+        r"""Retry Payment
+
+        Charge the customer's saved payment method again for an unpaid invoice.
+
+        The invoice must be in status `ISSUED` or `PAYMENT_FAILED`, auto-charge must be on for its subscription, and the invoice must have a payment session. If not, the response is 400.
+
+        The response status tells you the result. Only 200 means that the charge succeeded. Every other response from this operation that has a `retry_payment_result` body has `success: false`, and `error.code` gives the reason:
+
+        | Status | `error.code` | Meaning |
+        | --- | --- | --- |
+        | 200 | — | The charge succeeded, the provider had already collected it, or no amount is unpaid. |
+        | 202 | `processing` | The provider accepted the charge. It settles later (for example, a bank debit). |
+        | 402 | a decline code, for example `card_declined`, `insufficient_funds`, `do_not_honor`, `authentication_required` | The provider declined the payment method. |
+        | 409 | `concurrent_attempt` | Another payment attempt for this invoice is in progress. |
+        | 409 | `PAYMENT_SESSION_EXPIRED` | The payment link expired (after 30 days). Create a new link with `POST /v2/invoices/{id}/payment` and `method: hosted_link`, then retry. If the customer also has no usable saved payment method, the response is 422 instead. |
+        | 409 | another value, or no `code` | The payment session cannot be charged in its current state (for example `session_unusable`, `non_confirmable`, `PAYMENT_PROCESSING`, `PAYMENT_ALREADY_COMPLETED`). Read `error.message` for the cause. |
+        | 422 | `no_payment_method` | The customer has no usable saved payment method. Send a payment link instead. |
+        | 502 | `provider_unavailable` or none | The payment provider did not answer, or the provider failed the charge for a reason that is not known. Retry later. |
+
+        A 500 response has the standard error body, not `retry_payment_result`. It is an internal error, and a retry does not fix it.
+
+        An invoice that does not exist returns 403, the same as an invoice of another merchant.
+
+        This operation is rate limited to one call each minute for each invoice.
+
+        :param id: The invoice ID
+        :param reason: Optional reason for the manual retry (for audit logging)
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.RetryInvoicePaymentRequest(
+            id=id,
+            request_body=models.RetryInvoicePaymentRequestBody(
+                reason=reason,
+            ),
+        )
+
+        req = self._build_request_async(
+            method="POST",
+            path="/v2/invoices/{id}/retryPayment",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request.request_body if request is not None else None,
+                False,
+                True,
+                "json",
+                Optional[models.RetryInvoicePaymentRequestBody],
+            ),
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = await self.do_request_async(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="retryInvoicePayment",
+                oauth2_scopes=None,
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+            ),
+            request=req,
+            error_status_codes=[
+                "400",
+                "402",
+                "403",
+                "409",
+                "422",
+                "429",
+                "4XX",
+                "500",
+                "502",
+                "5XX",
+            ],
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, ["200", "202"], "application/json"):
+            return unmarshal_json_response(models.RetryPaymentResponse, http_res)
+        if utils.match_response(http_res, "400", "application/json"):
+            response_data = unmarshal_json_response(errors.BadRequestUnion, http_res)
+            raise errors.BadRequest(response_data, http_res)
+        if utils.match_response(http_res, ["402", "409", "422"], "application/json"):
+            response_data = unmarshal_json_response(
+                errors.RetryPaymentResponseErrorData, http_res
+            )
+            raise errors.RetryPaymentResponseError(response_data, http_res)
+        if utils.match_response(http_res, ["403", "429"], "application/json"):
+            response_data = unmarshal_json_response(errors.ErrorData, http_res)
+            raise errors.Error(response_data, http_res)
+        if utils.match_response(http_res, "500", "application/json"):
+            response_data = unmarshal_json_response(errors.ErrorData, http_res)
+            raise errors.Error(response_data, http_res)
+        if utils.match_response(http_res, "502", "application/json"):
+            response_data = unmarshal_json_response(
+                errors.RetryPaymentResponseErrorData, http_res
+            )
+            raise errors.RetryPaymentResponseError(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise errors.PaygenticDefaultError(

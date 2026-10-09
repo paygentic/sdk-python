@@ -230,6 +230,7 @@ class Subscriptions(BaseSDK):
         redirect_urls: Optional[
             Union[models.RedirectUrls, models.RedirectUrlsTypedDict]
         ] = None,
+        elapsed_period_billing: Optional[models.ElapsedPeriodBilling] = "none",
         test_clock_id: Optional[str] = None,
         renewal_reminder_enabled: OptionalNullable[bool] = UNSET,
         renewal_reminder_days: OptionalNullable[int] = UNSET,
@@ -270,6 +271,7 @@ class Subscriptions(BaseSDK):
         :param prefund_amount: Deprecated. This field is ignored and has no effect.
         :param minimum_account_balance: Deprecated. This field is ignored and has no effect.
         :param redirect_urls: Optional redirect URLs after payment completion or failure. If not provided, uses default platform behavior.
+        :param elapsed_period_billing: Whether a backdated start bills its elapsed periods. A start is backdated when `startedAt` is more than 24 hours before the subscription is created. `none` bills only charges that fall due from the moment of creation, for a customer whose earlier periods another system already billed. `per_period` bills every charge that fell due from `startedAt`, on one first invoice; it refuses a `startedAt` more than 12 months back. Has no effect on a start that is not backdated. Defaults to `none`.
         :param test_clock_id: Test clock identifier for simulating time-based billing scenarios. Sample values: 'tc_abc123xyz', 'tc_789def456'. Restricted to non-production environments (local, dev, sandbox). Must belong to the same merchant organization.
         :param renewal_reminder_enabled: Override plan setting for renewal reminder emails. When set, this subscription's setting takes precedence over the plan default. Set to true to enable reminders, false to disable, or null/omit to use plan default.
         :param renewal_reminder_days: Override plan setting for number of days before renewal to send the reminder. Only used if renewalReminderEnabled is true (or inherited from plan). Set to null to use plan default.
@@ -311,6 +313,7 @@ class Subscriptions(BaseSDK):
                 redirect_urls, Optional[models.RedirectUrls]
             ),
             started_at=started_at,
+            elapsed_period_billing=elapsed_period_billing,
             test_clock_id=test_clock_id,
             renewal_reminder_enabled=renewal_reminder_enabled,
             renewal_reminder_days=renewal_reminder_days,
@@ -414,6 +417,7 @@ class Subscriptions(BaseSDK):
         redirect_urls: Optional[
             Union[models.RedirectUrls, models.RedirectUrlsTypedDict]
         ] = None,
+        elapsed_period_billing: Optional[models.ElapsedPeriodBilling] = "none",
         test_clock_id: Optional[str] = None,
         renewal_reminder_enabled: OptionalNullable[bool] = UNSET,
         renewal_reminder_days: OptionalNullable[int] = UNSET,
@@ -454,6 +458,7 @@ class Subscriptions(BaseSDK):
         :param prefund_amount: Deprecated. This field is ignored and has no effect.
         :param minimum_account_balance: Deprecated. This field is ignored and has no effect.
         :param redirect_urls: Optional redirect URLs after payment completion or failure. If not provided, uses default platform behavior.
+        :param elapsed_period_billing: Whether a backdated start bills its elapsed periods. A start is backdated when `startedAt` is more than 24 hours before the subscription is created. `none` bills only charges that fall due from the moment of creation, for a customer whose earlier periods another system already billed. `per_period` bills every charge that fell due from `startedAt`, on one first invoice; it refuses a `startedAt` more than 12 months back. Has no effect on a start that is not backdated. Defaults to `none`.
         :param test_clock_id: Test clock identifier for simulating time-based billing scenarios. Sample values: 'tc_abc123xyz', 'tc_789def456'. Restricted to non-production environments (local, dev, sandbox). Must belong to the same merchant organization.
         :param renewal_reminder_enabled: Override plan setting for renewal reminder emails. When set, this subscription's setting takes precedence over the plan default. Set to true to enable reminders, false to disable, or null/omit to use plan default.
         :param renewal_reminder_days: Override plan setting for number of days before renewal to send the reminder. Only used if renewalReminderEnabled is true (or inherited from plan). Set to null to use plan default.
@@ -495,6 +500,7 @@ class Subscriptions(BaseSDK):
                 redirect_urls, Optional[models.RedirectUrls]
             ),
             started_at=started_at,
+            elapsed_period_billing=elapsed_period_billing,
             test_clock_id=test_clock_id,
             renewal_reminder_enabled=renewal_reminder_enabled,
             renewal_reminder_days=renewal_reminder_days,
@@ -1470,6 +1476,260 @@ class Subscriptions(BaseSDK):
         if utils.match_response(http_res, "200", "application/json"):
             return unmarshal_json_response(
                 models.EditSubscriptionIntervalsResponse, http_res
+            )
+        if utils.match_response(http_res, "400", "application/json"):
+            response_data = unmarshal_json_response(errors.BadRequestUnion, http_res)
+            raise errors.BadRequest(response_data, http_res)
+        if utils.match_response(
+            http_res, ["401", "403", "404", "409", "429"], "application/json"
+        ):
+            response_data = unmarshal_json_response(errors.ErrorData, http_res)
+            raise errors.Error(response_data, http_res)
+        if utils.match_response(http_res, "500", "application/json"):
+            response_data = unmarshal_json_response(errors.ErrorData, http_res)
+            raise errors.Error(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.PaygenticDefaultError(
+                "API error occurred", http_res, http_res_text
+            )
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.PaygenticDefaultError(
+                "API error occurred", http_res, http_res_text
+            )
+
+        raise errors.PaygenticDefaultError("Unexpected response received", http_res)
+
+    def migrate_subscription_version(
+        self,
+        *,
+        id: str,
+        target_version_number: int,
+        timing: Optional[models.Timing] = None,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.MigrateSubscriptionVersionResponse:
+        r"""Migrate To A Plan Version
+
+        Moves the subscription to a named version of its plan. By default the move follows the plan's versionTransition. With timing next_period, the move takes effect at the end of the current billing period: the current period bills as before, and each period that starts at or after that boundary bills from the target version. With timing immediate, entitlements change at once, in-arrears prices bill the whole current period at the target version, and in-advance prices change at the end of the current period, with no proration. The target can be an older or a newer published version. A migration always sets versionPolicy to pinned, so a later change of the plan's default version does not move the subscription. To follow the plan default again, call PATCH /v0/subscriptions/{id} with versionPolicy: 'floating'. A second migration before the boundary replaces the first. Migrating to the version the subscription is already on changes nothing except that it pins a floating subscription, so it is safe to repeat. A version number that does not exist on the plan and an archived version both return 404. The request is refused with 409 and a code when: the subscription is not live; the subscription ends at or before the boundary; a kept override has a rate that would mean something else on the new price; a feature's reset period, metric or pricing unit changes; or the new version sells a price that a continuing interval already covers.
+
+        :param id: The subscription ID
+        :param target_version_number: The number of a published version of the subscription's plan.
+        :param timing: When the migration takes effect. `next_period` moves everything at the end of the current billing period. `immediate` changes entitlements at once, bills in-arrears prices for the whole current period at the target version, and changes in-advance prices at the end of the current period. Neither prorates. If absent, the plan's versionTransition applies.
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.MigrateSubscriptionVersionRequestRequest(
+            id=id,
+            migrate_subscription_version_request=models.MigrateSubscriptionVersionRequest(
+                target_version_number=target_version_number,
+                timing=timing,
+            ),
+        )
+
+        req = self._build_request(
+            method="POST",
+            path="/v0/subscriptions/{id}/versionMigration",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=True,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request.migrate_subscription_version_request,
+                False,
+                False,
+                "json",
+                models.MigrateSubscriptionVersionRequest,
+            ),
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = self.do_request(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="migrateSubscriptionVersion",
+                oauth2_scopes=None,
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+            ),
+            request=req,
+            error_status_codes=[
+                "400",
+                "401",
+                "403",
+                "404",
+                "409",
+                "429",
+                "4XX",
+                "500",
+                "5XX",
+            ],
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(
+                models.MigrateSubscriptionVersionResponse, http_res
+            )
+        if utils.match_response(http_res, "400", "application/json"):
+            response_data = unmarshal_json_response(errors.BadRequestUnion, http_res)
+            raise errors.BadRequest(response_data, http_res)
+        if utils.match_response(
+            http_res, ["401", "403", "404", "409", "429"], "application/json"
+        ):
+            response_data = unmarshal_json_response(errors.ErrorData, http_res)
+            raise errors.Error(response_data, http_res)
+        if utils.match_response(http_res, "500", "application/json"):
+            response_data = unmarshal_json_response(errors.ErrorData, http_res)
+            raise errors.Error(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.PaygenticDefaultError(
+                "API error occurred", http_res, http_res_text
+            )
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.PaygenticDefaultError(
+                "API error occurred", http_res, http_res_text
+            )
+
+        raise errors.PaygenticDefaultError("Unexpected response received", http_res)
+
+    async def migrate_subscription_version_async(
+        self,
+        *,
+        id: str,
+        target_version_number: int,
+        timing: Optional[models.Timing] = None,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.MigrateSubscriptionVersionResponse:
+        r"""Migrate To A Plan Version
+
+        Moves the subscription to a named version of its plan. By default the move follows the plan's versionTransition. With timing next_period, the move takes effect at the end of the current billing period: the current period bills as before, and each period that starts at or after that boundary bills from the target version. With timing immediate, entitlements change at once, in-arrears prices bill the whole current period at the target version, and in-advance prices change at the end of the current period, with no proration. The target can be an older or a newer published version. A migration always sets versionPolicy to pinned, so a later change of the plan's default version does not move the subscription. To follow the plan default again, call PATCH /v0/subscriptions/{id} with versionPolicy: 'floating'. A second migration before the boundary replaces the first. Migrating to the version the subscription is already on changes nothing except that it pins a floating subscription, so it is safe to repeat. A version number that does not exist on the plan and an archived version both return 404. The request is refused with 409 and a code when: the subscription is not live; the subscription ends at or before the boundary; a kept override has a rate that would mean something else on the new price; a feature's reset period, metric or pricing unit changes; or the new version sells a price that a continuing interval already covers.
+
+        :param id: The subscription ID
+        :param target_version_number: The number of a published version of the subscription's plan.
+        :param timing: When the migration takes effect. `next_period` moves everything at the end of the current billing period. `immediate` changes entitlements at once, bills in-arrears prices for the whole current period at the target version, and changes in-advance prices at the end of the current period. Neither prorates. If absent, the plan's versionTransition applies.
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.MigrateSubscriptionVersionRequestRequest(
+            id=id,
+            migrate_subscription_version_request=models.MigrateSubscriptionVersionRequest(
+                target_version_number=target_version_number,
+                timing=timing,
+            ),
+        )
+
+        req = self._build_request_async(
+            method="POST",
+            path="/v0/subscriptions/{id}/versionMigration",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=True,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request.migrate_subscription_version_request,
+                False,
+                False,
+                "json",
+                models.MigrateSubscriptionVersionRequest,
+            ),
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = await self.do_request_async(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="migrateSubscriptionVersion",
+                oauth2_scopes=None,
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+            ),
+            request=req,
+            error_status_codes=[
+                "400",
+                "401",
+                "403",
+                "404",
+                "409",
+                "429",
+                "4XX",
+                "500",
+                "5XX",
+            ],
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(
+                models.MigrateSubscriptionVersionResponse, http_res
             )
         if utils.match_response(http_res, "400", "application/json"):
             response_data = unmarshal_json_response(errors.BadRequestUnion, http_res)

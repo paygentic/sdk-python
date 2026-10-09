@@ -9,12 +9,15 @@ Invoice V2 operations supporting billing cycles organized by time periods. Warni
 * [list](#list) - List
 * [list_line_items](#list_line_items) - List Line Items
 * [create_line_item](#create_line_item) - Create Manual Line Item
+* [list_projected_invoices](#list_projected_invoices) - List projected
 * [get](#get) - Get
 * [get_line_items](#get_line_items) - Get Line Items
 * [download_invoice_pdf](#download_invoice_pdf) - Download Invoice PDF
+* [record_invoice_payment](#record_invoice_payment) - Settle Invoice Payment
 * [create_invoice_refund](#create_invoice_refund) - Refund Invoice
 * [list_invoice_refunds](#list_invoice_refunds) - List Invoice Refunds
 * [void_invoice_refund](#void_invoice_refund) - Void Invoice Refund
+* [retry_invoice_payment](#retry_invoice_payment) - Retry Payment
 
 ## list
 
@@ -158,6 +161,54 @@ with Paygentic(
 | errors.Error                 | 500                          | application/json             |
 | errors.PaygenticDefaultError | 4XX, 5XX                     | \*/\*                        |
 
+## list_projected_invoices
+
+List the invoices a subscription will issue in a range of invoice moments, one projected invoice for each distinct invoice moment. Projected invoices are derived on each read and never stored. Each has status PROJECTED, and its id is stable between reads, but GET /v2/invoices/{id} returns 404 for it. Totals EXCLUDE usage: metered charges are not projected, and an invoice moment that has only metered charges is omitted. Tax and sequenceNumber are estimates. The range filters on the invoice moment (invoiceAt) in [from, to). A from before now is treated as now. to must be after from and at most one year after now; now is the subscription's test-clock time when it has a test clock. A terminated subscription returns an empty list. Each invoice carries its lines in lineItems. Authorization is the same as listing invoices.
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="listProjectedInvoices" method="get" path="/v2/invoices/projected" -->
+```python
+import os
+from paygentic_sdk import Paygentic
+
+
+with Paygentic(
+    bearer_auth=os.getenv("PAYGENTIC_BEARER_AUTH", ""),
+) as paygentic:
+
+    res = paygentic.invoices_v2.list_projected_invoices(subscription_id="<id>", limit=10, offset=0)
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                                                                                            | Type                                                                                                                                 | Required                                                                                                                             | Description                                                                                                                          |
+| ------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------ |
+| `subscription_id`                                                                                                                    | *str*                                                                                                                                | :heavy_check_mark:                                                                                                                   | The subscription to project invoices for                                                                                             |
+| `from_`                                                                                                                              | [date](https://docs.python.org/3/library/datetime.html#date-objects)                                                                 | :heavy_minus_sign:                                                                                                                   | Start of the range of invoice moments, inclusive. Defaults to now. A value before now is treated as now.                             |
+| `to`                                                                                                                                 | [date](https://docs.python.org/3/library/datetime.html#date-objects)                                                                 | :heavy_minus_sign:                                                                                                                   | End of the range of invoice moments, exclusive. Defaults to one month after from. Must be after from and at most one year after now. |
+| `limit`                                                                                                                              | *Optional[int]*                                                                                                                      | :heavy_minus_sign:                                                                                                                   | Maximum number of invoices to return                                                                                                 |
+| `offset`                                                                                                                             | *Optional[int]*                                                                                                                      | :heavy_minus_sign:                                                                                                                   | Number of invoices to skip for pagination                                                                                            |
+| `retries`                                                                                                                            | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                                     | :heavy_minus_sign:                                                                                                                   | Configuration to override the default retry behavior of the client.                                                                  |
+
+### Response
+
+**[models.ListProjectedInvoicesResponse](../../models/listprojectedinvoicesresponse.md)**
+
+### Errors
+
+| Error Type                   | Status Code                  | Content Type                 |
+| ---------------------------- | ---------------------------- | ---------------------------- |
+| errors.Error                 | 400                          | application/json             |
+| errors.ValidationError       | 400                          | application/json             |
+| errors.Error                 | 403, 404                     | application/json             |
+| errors.Error                 | 500                          | application/json             |
+| errors.PaygenticDefaultError | 4XX, 5XX                     | \*/\*                        |
+
 ## get
 
 Retrieve a single invoice with real-time aggregates (for ACTIVE/CLOSING/CLOSED) or cached aggregates (for finalized invoices). Optionally include line items with expand=lineItems.
@@ -296,6 +347,62 @@ with Paygentic(
 | errors.Error                 | 500                          | application/json             |
 | errors.PaygenticDefaultError | 4XX, 5XX                     | \*/\*                        |
 
+## record_invoice_payment
+
+Settle an unpaid invoice in status `ISSUED` or `PAYMENT_FAILED`. The `method` field selects how.
+
+- `hosted_link`: create a new hosted payment link and email it to the customer. The invoice stays unpaid until the customer pays on the link. Each call replaces the previous link. A payment link expires after 30 days; to collect an invoice whose link has expired, call this method again.
+- `out_of_band`: record a payment that you collected outside Paygentic. The invoice changes to `PAID` immediately. A second call returns 409.
+
+For `hosted_link`, an invoice that does not exist returns 403, the same as an invoice of another merchant.
+
+Paygentic selects the payment provider from your connected payment account. The response reports the provider.
+
+**Warning:** each `hosted_link` call creates a new link and sends the customer a new email. Do not retry a `hosted_link` call after a timeout: first read the invoice to see if a new link exists.
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="recordInvoicePayment" method="post" path="/v2/invoices/{id}/payment" -->
+```python
+import os
+from paygentic_sdk import Paygentic
+
+
+with Paygentic(
+    bearer_auth=os.getenv("PAYGENTIC_BEARER_AUTH", ""),
+) as paygentic:
+
+    res = paygentic.invoices_v2.record_invoice_payment(id="<id>", method="hosted_link")
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                                                                                                                  | Type                                                                                                                                                       | Required                                                                                                                                                   | Description                                                                                                                                                |
+| ---------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `id`                                                                                                                                                       | *str*                                                                                                                                                      | :heavy_check_mark:                                                                                                                                         | The invoice ID                                                                                                                                             |
+| `method`                                                                                                                                                   | [models.InvoicePaymentMethod](../../models/invoicepaymentmethod.md)                                                                                        | :heavy_check_mark:                                                                                                                                         | How an invoice payment is settled.                                                                                                                         |
+| `reason`                                                                                                                                                   | *Optional[str]*                                                                                                                                            | :heavy_minus_sign:                                                                                                                                         | Optional note for `out_of_band` that describes how you received the payment (for example, 'Wire transfer received 2026-03-25'). Ignored for `hosted_link`. |
+| `retries`                                                                                                                                                  | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)                                                                                           | :heavy_minus_sign:                                                                                                                                         | Configuration to override the default retry behavior of the client.                                                                                        |
+
+### Response
+
+**[models.RecordInvoicePaymentResponse](../../models/recordinvoicepaymentresponse.md)**
+
+### Errors
+
+| Error Type                      | Status Code                     | Content Type                    |
+| ------------------------------- | ------------------------------- | ------------------------------- |
+| errors.Error                    | 400                             | application/json                |
+| errors.ValidationError          | 400                             | application/json                |
+| errors.Error                    | 403, 404, 409                   | application/json                |
+| errors.UnprocessableEntityError | 422                             | application/json                |
+| errors.Error                    | 500                             | application/json                |
+| errors.PaygenticDefaultError    | 4XX, 5XX                        | \*/\*                           |
+
 ## create_invoice_refund
 
 Issue a full refund against a paid invoice by creating a credit note. The invoice stays PAID; the refund is recorded as a child credit note. Accessible to the owning merchant or platform operators. Only works for invoices in PAID status that have not already been refunded. Full refund only — the entire invoice (subtotal + tax) is credited.
@@ -428,3 +535,71 @@ with Paygentic(
 | errors.Error                 | 403, 404                     | application/json             |
 | errors.Error                 | 500                          | application/json             |
 | errors.PaygenticDefaultError | 4XX, 5XX                     | \*/\*                        |
+
+## retry_invoice_payment
+
+Charge the customer's saved payment method again for an unpaid invoice.
+
+The invoice must be in status `ISSUED` or `PAYMENT_FAILED`, auto-charge must be on for its subscription, and the invoice must have a payment session. If not, the response is 400.
+
+The response status tells you the result. Only 200 means that the charge succeeded. Every other response from this operation that has a `retry_payment_result` body has `success: false`, and `error.code` gives the reason:
+
+| Status | `error.code` | Meaning |
+| --- | --- | --- |
+| 200 | — | The charge succeeded, the provider had already collected it, or no amount is unpaid. |
+| 202 | `processing` | The provider accepted the charge. It settles later (for example, a bank debit). |
+| 402 | a decline code, for example `card_declined`, `insufficient_funds`, `do_not_honor`, `authentication_required` | The provider declined the payment method. |
+| 409 | `concurrent_attempt` | Another payment attempt for this invoice is in progress. |
+| 409 | `PAYMENT_SESSION_EXPIRED` | The payment link expired (after 30 days). Create a new link with `POST /v2/invoices/{id}/payment` and `method: hosted_link`, then retry. If the customer also has no usable saved payment method, the response is 422 instead. |
+| 409 | another value, or no `code` | The payment session cannot be charged in its current state (for example `session_unusable`, `non_confirmable`, `PAYMENT_PROCESSING`, `PAYMENT_ALREADY_COMPLETED`). Read `error.message` for the cause. |
+| 422 | `no_payment_method` | The customer has no usable saved payment method. Send a payment link instead. |
+| 502 | `provider_unavailable` or none | The payment provider did not answer, or the provider failed the charge for a reason that is not known. Retry later. |
+
+A 500 response has the standard error body, not `retry_payment_result`. It is an internal error, and a retry does not fix it.
+
+An invoice that does not exist returns 403, the same as an invoice of another merchant.
+
+This operation is rate limited to one call each minute for each invoice.
+
+### Example Usage
+
+<!-- UsageSnippet language="python" operationID="retryInvoicePayment" method="post" path="/v2/invoices/{id}/retryPayment" -->
+```python
+import os
+from paygentic_sdk import Paygentic
+
+
+with Paygentic(
+    bearer_auth=os.getenv("PAYGENTIC_BEARER_AUTH", ""),
+) as paygentic:
+
+    res = paygentic.invoices_v2.retry_invoice_payment(id="<id>")
+
+    # Handle response
+    print(res)
+
+```
+
+### Parameters
+
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `id`                                                                | *str*                                                               | :heavy_check_mark:                                                  | The invoice ID                                                      |
+| `reason`                                                            | *Optional[str]*                                                     | :heavy_minus_sign:                                                  | Optional reason for the manual retry (for audit logging)            |
+| `retries`                                                           | [Optional[utils.RetryConfig]](../../models/utils/retryconfig.md)    | :heavy_minus_sign:                                                  | Configuration to override the default retry behavior of the client. |
+
+### Response
+
+**[models.RetryPaymentResponse](../../models/retrypaymentresponse.md)**
+
+### Errors
+
+| Error Type                       | Status Code                      | Content Type                     |
+| -------------------------------- | -------------------------------- | -------------------------------- |
+| errors.Error                     | 400                              | application/json                 |
+| errors.ValidationError           | 400                              | application/json                 |
+| errors.RetryPaymentResponseError | 402, 409, 422                    | application/json                 |
+| errors.Error                     | 403, 429                         | application/json                 |
+| errors.Error                     | 500                              | application/json                 |
+| errors.RetryPaymentResponseError | 502                              | application/json                 |
+| errors.PaygenticDefaultError     | 4XX, 5XX                         | \*/\*                            |

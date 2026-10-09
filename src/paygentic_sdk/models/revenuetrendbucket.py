@@ -13,12 +13,14 @@ from typing_extensions import Annotated, NotRequired, TypedDict
 class RevenueTrendBucketTypedDict(TypedDict):
     timestamp: datetime
     r"""Start time of this bucket"""
+    revenue: str
+    r"""Revenue for this bucket, computed exactly as netRevenue: invoices issued in the bucket (on periodBasis=billingPeriod, lines billing it), excluding tax, less refunds issued in it, excluding tax. The buckets sum to netRevenue."""
     issued_invoices: str
-    r"""Total amount of all invoices issued in this bucket (all statuses, by issuedAt), excluding tax"""
+    r"""Total amount of all invoices issued in this bucket (all statuses, by issuedAt), excluding tax, before refunds. Revenue is the revenue field."""
     written_off_invoices: str
     r"""Amount of written-off invoices in dollars for this bucket (by writtenOffAt)"""
     completed_payments: str
-    r"""Revenue from completed payments in dollars for this bucket"""
+    r"""Completed payment-link payments in dollars for this bucket, reported beside revenue, not in it"""
     rebates: str
     r"""Gross magnitude of usage-scaled rebates (negative metered line items) on invoices issued in this bucket, in dollars. Netted into issuedInvoices; surfaced here for visibility."""
     group_breakdown: NotRequired[List[GroupTrendEntryTypedDict]]
@@ -29,14 +31,17 @@ class RevenueTrendBucket(BaseModel):
     timestamp: datetime
     r"""Start time of this bucket"""
 
+    revenue: str
+    r"""Revenue for this bucket, computed exactly as netRevenue: invoices issued in the bucket (on periodBasis=billingPeriod, lines billing it), excluding tax, less refunds issued in it, excluding tax. The buckets sum to netRevenue."""
+
     issued_invoices: Annotated[str, pydantic.Field(alias="issuedInvoices")]
-    r"""Total amount of all invoices issued in this bucket (all statuses, by issuedAt), excluding tax"""
+    r"""Total amount of all invoices issued in this bucket (all statuses, by issuedAt), excluding tax, before refunds. Revenue is the revenue field."""
 
     written_off_invoices: Annotated[str, pydantic.Field(alias="writtenOffInvoices")]
     r"""Amount of written-off invoices in dollars for this bucket (by writtenOffAt)"""
 
     completed_payments: Annotated[str, pydantic.Field(alias="completedPayments")]
-    r"""Revenue from completed payments in dollars for this bucket"""
+    r"""Completed payment-link payments in dollars for this bucket, reported beside revenue, not in it"""
 
     rebates: str
     r"""Gross magnitude of usage-scaled rebates (negative metered line items) on invoices issued in this bucket, in dollars. Netted into issuedInvoices; surfaced here for visibility."""

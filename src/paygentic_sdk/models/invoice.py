@@ -119,10 +119,11 @@ InvoiceStatus = Union[
         "CANCELLED",
         "WRITTEN_OFF",
         "FAILED",
+        "PROJECTED",
     ],
     UnrecognizedStr,
 ]
-r"""The current status of the invoice"""
+r"""The current status of the invoice. PROJECTED is returned only by GET /v2/invoices/projected and is never the status of a stored invoice."""
 
 
 class TaxTypedDict(TypedDict):
@@ -233,7 +234,7 @@ class InvoiceTypedDict(TypedDict):
     sequence_number: int
     r"""The sequence number of this invoice period"""
     status: InvoiceStatus
-    r"""The current status of the invoice"""
+    r"""The current status of the invoice. PROJECTED is returned only by GET /v2/invoices/projected and is never the status of a stored invoice."""
     subscription_id: str
     r"""The subscription ID this invoice belongs to"""
     customer_id: str
@@ -325,7 +326,7 @@ class Invoice(BaseModel):
     r"""The sequence number of this invoice period"""
 
     status: InvoiceStatus
-    r"""The current status of the invoice"""
+    r"""The current status of the invoice. PROJECTED is returned only by GET /v2/invoices/projected and is never the status of a stored invoice."""
 
     subscription_id: Annotated[str, pydantic.Field(alias="subscriptionId")]
     r"""The subscription ID this invoice belongs to"""

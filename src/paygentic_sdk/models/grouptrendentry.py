@@ -11,8 +11,10 @@ class GroupTrendEntryTypedDict(TypedDict):
     r"""Unique identifier for the group (e.g. plan ID, or 'other')"""
     group_label: str
     r"""Human-readable label for the group (e.g. plan name)"""
+    revenue: str
+    r"""Revenue for this group in this bucket, computed exactly as netRevenue. A group outside the top N, or with only a refund in the window, counts under 'other'."""
     issued_invoices: str
-    r"""Total issued invoice amount in dollars for this group in this bucket, excluding tax"""
+    r"""Total issued invoice amount in dollars for this group in this bucket, excluding tax, before refunds"""
 
 
 class GroupTrendEntry(BaseModel):
@@ -22,8 +24,11 @@ class GroupTrendEntry(BaseModel):
     group_label: Annotated[str, pydantic.Field(alias="groupLabel")]
     r"""Human-readable label for the group (e.g. plan name)"""
 
+    revenue: str
+    r"""Revenue for this group in this bucket, computed exactly as netRevenue. A group outside the top N, or with only a refund in the window, counts under 'other'."""
+
     issued_invoices: Annotated[str, pydantic.Field(alias="issuedInvoices")]
-    r"""Total issued invoice amount in dollars for this group in this bucket, excluding tax"""
+    r"""Total issued invoice amount in dollars for this group in this bucket, excluding tax, before refunds"""
 
 
 try:
