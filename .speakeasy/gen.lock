@@ -1,19 +1,19 @@
 lockVersion: 2.0.0
 id: d05de326-b60d-4921-81eb-a16eab66dffd
 management:
-  docChecksum: 6d3e87fcfc1ddd166908eac5f553a681
+  docChecksum: b2505479ef0e1902a4ce20be0241dd70
   docVersion: 0.1.0
   speakeasyVersion: 1.761.4
   generationVersion: 2.879.13
-  releaseVersion: 0.5.16
-  configChecksum: faa7a5a11cf75740e27c0ccd44da6a00
+  releaseVersion: 0.5.17
+  configChecksum: 6eb44b35212adf2a017b2715379d7ff2
   repoURL: https://github.com/paygentic/sdk-python.git
   installationURL: https://github.com/paygentic/sdk-python.git
   published: true
 persistentEdits:
-  generation_id: 96b8d029-de1d-4198-9e97-d89bfba982dd
-  pristine_commit_hash: 839c15b6b8887798a3bf981425874173e9895a25
-  pristine_tree_hash: d61270438146e4e91d4b86c380d154c106e1fe21
+  generation_id: f1470929-4419-4aa4-b89a-eede157c0aa8
+  pristine_commit_hash: 21e29d6119989091aad7d018a0c7f36fc8448c2f
+  pristine_tree_hash: ae65bb5e4f9d0024c30622b8aaf2f06842b6fe49
 features:
   python:
     additionalDependencies: 1.0.0
@@ -671,8 +671,8 @@ trackedFiles:
     pristine_git_object: 0d93ea3b8f2789aa89cd36f0bf6537549e5f2443
   docs/models/documentwithheldreason.md:
     id: 824a265ecbdc
-    last_write_checksum: sha1:3f73c3236f4e0a355611227a433ce6c941dd791b
-    pristine_git_object: 8f3b018eaf3c1e0e91c8b8922f498358d1fb2b53
+    last_write_checksum: sha1:c256d85c4681088d440a997b8c1b58c90caa2d23
+    pristine_git_object: 65166d5167ce25a214bdec0ec24cd5a000dd15aa
   docs/models/downloadinvoicepdfrequest.md:
     id: c7b6f52d80ca
     last_write_checksum: sha1:ce1c79f61e818c0c4c414d32816e7efc460e7a10
@@ -1031,8 +1031,8 @@ trackedFiles:
     pristine_git_object: ecaf9fb2a8338862d95a791bbcb9cff36f643726
   docs/models/invoice.md:
     id: 18e2034f11ad
-    last_write_checksum: sha1:dbc1e3b49cdcd14a4cd8b3c76cb0165ccfc72889
-    pristine_git_object: fe9fefdd1cfae879afaa86bd1aa095140044cc61
+    last_write_checksum: sha1:3a082d458eacb9eab9a86ee52cf83f462e46fc77
+    pristine_git_object: f6536eb7606e2a378414e84bd7ac533bd9552e0b
   docs/models/invoicecategorysummary.md:
     id: 028b6380d691
     last_write_checksum: sha1:68ced9d21d8eff1987322aa3fb7fb853a5aec8ce
@@ -2855,8 +2855,8 @@ trackedFiles:
     pristine_git_object: 9e61ec8e7b151c969a51d28d3ba98b3ceb5d18df
   pyproject.toml:
     id: 5d07e7d72637
-    last_write_checksum: sha1:4ce5f1d001df10053281fcafc9943d3bd2925da1
-    pristine_git_object: b9349d6e941fd4ae55014b6aef7154be2d7157ce
+    last_write_checksum: sha1:4fcde6a6e1a16fcaea2fe19c719e1bb41001df96
+    pristine_git_object: d82fc88060a55cf38bdd35d2febaaf2254b397b8
   scripts/prepare_readme.py:
     id: e0c5957a6035
     last_write_checksum: sha1:e2ebd355f72567204499ca62ee72728d9c3dfd95
@@ -2883,8 +2883,8 @@ trackedFiles:
     pristine_git_object: 6dbd4dcba3a5bac1c92beb0f5db31ef3d2944dea
   src/paygentic_sdk/_version.py:
     id: 52c8c5a320dc
-    last_write_checksum: sha1:040d67a8288a59c1bdf1d9f3e8f6b7106695eda6
-    pristine_git_object: 986a79adbd2b6443c7e0e448412c129ead444ee8
+    last_write_checksum: sha1:b5af2315a81728e25cfcd2c0e6e171f7cd9e9951
+    pristine_git_object: dbf86d70c7c86fa323f4c46f5b9662a858a0ea45
   src/paygentic_sdk/approvals.py:
     id: a140b8f5837f
     last_write_checksum: sha1:aa2ecf067ed6c1d12d6cdb02ab4ddbb63172afa3
@@ -3511,8 +3511,8 @@ trackedFiles:
     pristine_git_object: cba78dafa601b85174bf2fdf42f3b1b6512a5884
   src/paygentic_sdk/models/invoice.py:
     id: cf50fbcc1ed7
-    last_write_checksum: sha1:b40174128889691b634ddb2b5e29c18a10d38e87
-    pristine_git_object: 83d169a2c3d03ddbf9c54f0a112323a1cdd7f8b4
+    last_write_checksum: sha1:8d4075a402005f37c2cbe3be709612ea6e4ac54d
+    pristine_git_object: 8359fb0698bc4db3326598f75eccd36abe3ded16
   src/paygentic_sdk/models/invoicecategorysummary.py:
     id: d8a3d10b59b7
     last_write_checksum: sha1:e4c872880c08af589feed8d7abdeee9d409cb685
@@ -7098,4 +7098,3 @@ generatedTests:
   createWebhooks: "2026-10-09T10:19:38Z"
   updateWebhooks: "2026-10-09T10:19:38Z"
   getWebhookPortal: "2026-10-09T10:19:38Z"
-releaseNotes: "## Python SDK Changes:\n* `paygentic.subscriptions.migrate_subscription_version()`: **Added**\n* `paygentic.invoices_v2.list_projected_invoices()`: **Added**\n* `paygentic.invoices_v2.record_invoice_payment()`: **Added**\n* `paygentic.invoices_v2.retry_invoice_payment()`: **Added**\n* `paygentic.merchants.reset()`: **Added**\n* `paygentic.webhooks.get()`: **Added**\n* `paygentic.webhooks.enable()`: **Added**\n* `paygentic.webhooks.update()`: **Added**\n* `paygentic.webhooks.disable()`: **Added**\n* `paygentic.webhooks.get_portal()`: **Added**\n* `paygentic.plans.create()`: \n  *  `request.version_transition` **Added**\n  *  `response.version_transition` **Added**\n* `paygentic.plans.list()`:  `response.data[].version_transition` **Added**\n* `paygentic.plans.list_available()`:  `response.data[].version_transition` **Added**\n* `paygentic.plans.get()`:  `response.version_transition` **Added**\n* `paygentic.plans.update()`: \n  *  `request.version_transition` **Added**\n  *  `response.version_transition` **Added**\n* `paygentic.subscriptions.list()`:  `response.data[]` **Changed**\n* `paygentic.subscriptions.create()`: \n  *  `request.elapsed_period_billing` **Added**\n  *  `response` **Changed**\n* `paygentic.subscriptions.get()`:  `response` **Changed**\n* `paygentic.subscriptions.update_subscription()`:  `response` **Changed**\n* `paygentic.subscriptions.terminate()`:  `response` **Changed**\n* `paygentic.invoices_v2.list()`:  `response.data[].status.enum(projected)` **Added**\n* `paygentic.invoices_v2.get()`:  `response.status.enum(projected)` **Added**\n* `paygentic.revenue.get()`:  `response.trend[]` **Changed**\n* `paygentic.profitability.get_profitability()`:  `response.rows[].cost_data` **Added**\n"
