@@ -1,0 +1,9 @@
+# RevenueAccountTotal
+
+
+## Fields
+
+| Field                                                                                                               | Type                                                                                                                | Required                                                                                                            | Description                                                                                                         |
+| ------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| `currency`                                                                                                          | *str*                                                                                                               | :heavy_check_mark:                                                                                                  | ISO 4217 currency code of every amount in this entry                                                                |
+| `outstanding`                                                                                                       | [models.OutstandingBlock](../models/outstandingblock.md)                                                            | :heavy_check_mark:                                                                                                  | What is owed, gross of tax, from any date. `awaitingPayment` and `paymentFailed` add up to it, in count and amount. |

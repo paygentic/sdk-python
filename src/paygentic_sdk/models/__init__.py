@@ -5,6 +5,7 @@ from typing import Any, TYPE_CHECKING
 from paygentic_sdk.utils.dynamic_imports import lazy_getattr, lazy_dir
 
 if TYPE_CHECKING:
+    from .accountfigure import AccountFigure, AccountFigureTypedDict
     from .address import Address, AddressTypedDict
     from .advancetestclockop import (
         AdvanceTestClockRequest,
@@ -485,6 +486,10 @@ if TYPE_CHECKING:
         GetProfitabilityRequest,
         GetProfitabilityRequestTypedDict,
     )
+    from .getrevenueaccountsop import (
+        GetRevenueAccountsRequest,
+        GetRevenueAccountsRequestTypedDict,
+    )
     from .getrevenueop import (
         GetRevenueBucketWidth,
         GetRevenueRequest,
@@ -925,6 +930,7 @@ if TYPE_CHECKING:
         OutOfBandPaymentResult,
         OutOfBandPaymentResultTypedDict,
     )
+    from .outstandingblock import OutstandingBlock, OutstandingBlockTypedDict
     from .payment import (
         Payment,
         PaymentLineItem,
@@ -1106,6 +1112,13 @@ if TYPE_CHECKING:
         RetryPaymentResponseObject,
         RetryPaymentResponseTypedDict,
     )
+    from .revenueaccountrow import RevenueAccountRow, RevenueAccountRowTypedDict
+    from .revenueaccountsresponse import (
+        RevenueAccountsResponse,
+        RevenueAccountsResponseObject,
+        RevenueAccountsResponseTypedDict,
+    )
+    from .revenueaccounttotal import RevenueAccountTotal, RevenueAccountTotalTypedDict
     from .revenuesummaryresponse import (
         RevenueSummaryResponse,
         RevenueSummaryResponseRevenueRange,
@@ -1470,6 +1483,8 @@ if TYPE_CHECKING:
     from .webhooks import Webhooks, WebhooksObject, WebhooksTypedDict
 
 __all__ = [
+    "AccountFigure",
+    "AccountFigureTypedDict",
     "Address",
     "AddressTypedDict",
     "AdvanceTestClockRequest",
@@ -1831,6 +1846,8 @@ __all__ = [
     "GetProductRequestTypedDict",
     "GetProfitabilityRequest",
     "GetProfitabilityRequestTypedDict",
+    "GetRevenueAccountsRequest",
+    "GetRevenueAccountsRequestTypedDict",
     "GetRevenueBucketWidth",
     "GetRevenueRequest",
     "GetRevenueRequestTypedDict",
@@ -2167,6 +2184,8 @@ __all__ = [
     "OutOfBandPaymentResult",
     "OutOfBandPaymentResultTypedDict",
     "OutsideScopeLabel",
+    "OutstandingBlock",
+    "OutstandingBlockTypedDict",
     "Pagination",
     "PaginationTypedDict",
     "Payment",
@@ -2317,6 +2336,13 @@ __all__ = [
     "RetryPaymentResponse",
     "RetryPaymentResponseObject",
     "RetryPaymentResponseTypedDict",
+    "RevenueAccountRow",
+    "RevenueAccountRowTypedDict",
+    "RevenueAccountTotal",
+    "RevenueAccountTotalTypedDict",
+    "RevenueAccountsResponse",
+    "RevenueAccountsResponseObject",
+    "RevenueAccountsResponseTypedDict",
     "RevenueSummaryResponse",
     "RevenueSummaryResponseRevenueRange",
     "RevenueSummaryResponseRevenueRangeTypedDict",
@@ -2578,6 +2604,8 @@ __all__ = [
 ]
 
 _dynamic_imports: dict[str, str] = {
+    "AccountFigure": ".accountfigure",
+    "AccountFigureTypedDict": ".accountfigure",
     "Address": ".address",
     "AddressTypedDict": ".address",
     "AdvanceTestClockRequest": ".advancetestclockop",
@@ -2942,6 +2970,8 @@ _dynamic_imports: dict[str, str] = {
     "GetProductRequestTypedDict": ".getproductop",
     "GetProfitabilityRequest": ".getprofitabilityop",
     "GetProfitabilityRequestTypedDict": ".getprofitabilityop",
+    "GetRevenueAccountsRequest": ".getrevenueaccountsop",
+    "GetRevenueAccountsRequestTypedDict": ".getrevenueaccountsop",
     "GetRevenueBucketWidth": ".getrevenueop",
     "GetRevenueRequest": ".getrevenueop",
     "GetRevenueRequestTypedDict": ".getrevenueop",
@@ -3273,6 +3303,8 @@ _dynamic_imports: dict[str, str] = {
     "OrderListTypedDict": ".orderlist",
     "OutOfBandPaymentResult": ".outofbandpaymentresult",
     "OutOfBandPaymentResultTypedDict": ".outofbandpaymentresult",
+    "OutstandingBlock": ".outstandingblock",
+    "OutstandingBlockTypedDict": ".outstandingblock",
     "Payment": ".payment",
     "PaymentLineItem": ".payment",
     "PaymentLineItemTypedDict": ".payment",
@@ -3419,6 +3451,13 @@ _dynamic_imports: dict[str, str] = {
     "RetryPaymentResponse": ".retrypaymentresponse",
     "RetryPaymentResponseObject": ".retrypaymentresponse",
     "RetryPaymentResponseTypedDict": ".retrypaymentresponse",
+    "RevenueAccountRow": ".revenueaccountrow",
+    "RevenueAccountRowTypedDict": ".revenueaccountrow",
+    "RevenueAccountsResponse": ".revenueaccountsresponse",
+    "RevenueAccountsResponseObject": ".revenueaccountsresponse",
+    "RevenueAccountsResponseTypedDict": ".revenueaccountsresponse",
+    "RevenueAccountTotal": ".revenueaccounttotal",
+    "RevenueAccountTotalTypedDict": ".revenueaccounttotal",
     "RevenueSummaryResponse": ".revenuesummaryresponse",
     "RevenueSummaryResponseRevenueRange": ".revenuesummaryresponse",
     "RevenueSummaryResponseRevenueRangeTypedDict": ".revenuesummaryresponse",

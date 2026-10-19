@@ -23,7 +23,7 @@ GroupBy = Literal[
     "customer",
     "currency",
 ]
-r"""Group invoice data by dimension. Allowed values: 'plan' (max 5 groups, top 4 + 'other' when exceeding), 'customer' (max 25 groups, top 24 + 'other' when exceeding, sorted by revenue descending), 'currency' (one entry per currency, primary currency first then alphabetical). Note: groupBy values are mutually exclusive — combining them returns a 400 error. When groupBy=currency is active, top-level netRevenue, invoices, and payments fields are omitted; currencyBreakdown is the sole data source."""
+r"""Group invoice data by dimension. Allowed values: 'plan' (max 5 groups, top 4 + 'other' when exceeding), 'customer' (max 25 groups, top 24 + 'other' when exceeding, sorted by revenue descending), both in one currency like an ungrouped read, 'currency' (one entry per currency, primary currency first then alphabetical). Note: groupBy values are mutually exclusive — combining them returns a 400 error. When groupBy=currency is active, top-level netRevenue, invoices, and payments fields are omitted; currencyBreakdown is the sole data source."""
 
 
 PeriodBasis = Literal[
@@ -41,15 +41,15 @@ class GetRevenueRequestTypedDict(TypedDict):
     bucket_width: NotRequired[GetRevenueBucketWidth]
     r"""Time bucket granularity for trend data"""
     merchant_id: NotRequired[str]
-    r"""Filter by merchant ID. At least one of merchantId, subscriptionIds, or customerId must be provided."""
+    r"""The merchant whose revenue to read. Defaults to the merchant your API key belongs to, and is required when you belong to several merchants. Every read is scoped to one merchant; customerId and subscriptionIds narrow it further."""
     customer_id: NotRequired[str]
-    r"""Filter by customer ID. At least one of merchantId, subscriptionIds, or customerId must be provided."""
+    r"""Narrow the read to one of the merchant's customers."""
     subscription_ids: NotRequired[List[str]]
-    r"""Filter by subscription IDs. At least one of merchantId, subscriptionIds, or customerId must be provided."""
+    r"""Narrow the invoice figures to some of the merchant's subscriptions. A payment is not tied to a subscription, so the payment figures are not narrowed by it."""
     currency: NotRequired[str]
-    r"""Filter all results to a single ISO 4217 currency code (e.g. 'USD'). When omitted, results include all currencies."""
+    r"""ISO 4217 currency code (e.g. 'USD') to scope every figure to. Defaults to the merchant's primary currency, except with groupBy=currency, where omitting it returns every currency."""
     group_by: NotRequired[GroupBy]
-    r"""Group invoice data by dimension. Allowed values: 'plan' (max 5 groups, top 4 + 'other' when exceeding), 'customer' (max 25 groups, top 24 + 'other' when exceeding, sorted by revenue descending), 'currency' (one entry per currency, primary currency first then alphabetical). Note: groupBy values are mutually exclusive — combining them returns a 400 error. When groupBy=currency is active, top-level netRevenue, invoices, and payments fields are omitted; currencyBreakdown is the sole data source."""
+    r"""Group invoice data by dimension. Allowed values: 'plan' (max 5 groups, top 4 + 'other' when exceeding), 'customer' (max 25 groups, top 24 + 'other' when exceeding, sorted by revenue descending), both in one currency like an ungrouped read, 'currency' (one entry per currency, primary currency first then alphabetical). Note: groupBy values are mutually exclusive — combining them returns a 400 error. When groupBy=currency is active, top-level netRevenue, invoices, and payments fields are omitted; currencyBreakdown is the sole data source."""
     period_basis: NotRequired[PeriodBasis]
     r"""Which date places revenue inside the window. 'issued' (default) counts whole invoices by their issue date, the basis revenue is recognised on. 'billingPeriod' counts invoice lines by the start of the period each line bills, so a window covering one billing period returns that period's charges, whichever invoices carry them: this month's advance fee and this month's arrears usage. Paid, outstanding and written-off follow each line's invoice; a refund splits across its invoice's lines by subtotal; payments not tied to an invoice are excluded because they bill no period."""
 
@@ -81,34 +81,34 @@ class GetRevenueRequest(BaseModel):
         pydantic.Field(alias="merchantId"),
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = None
-    r"""Filter by merchant ID. At least one of merchantId, subscriptionIds, or customerId must be provided."""
+    r"""The merchant whose revenue to read. Defaults to the merchant your API key belongs to, and is required when you belong to several merchants. Every read is scoped to one merchant; customerId and subscriptionIds narrow it further."""
 
     customer_id: Annotated[
         Optional[str],
         pydantic.Field(alias="customerId"),
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = None
-    r"""Filter by customer ID. At least one of merchantId, subscriptionIds, or customerId must be provided."""
+    r"""Narrow the read to one of the merchant's customers."""
 
     subscription_ids: Annotated[
         Optional[List[str]],
         pydantic.Field(alias="subscriptionIds"),
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = None
-    r"""Filter by subscription IDs. At least one of merchantId, subscriptionIds, or customerId must be provided."""
+    r"""Narrow the invoice figures to some of the merchant's subscriptions. A payment is not tied to a subscription, so the payment figures are not narrowed by it."""
 
     currency: Annotated[
         Optional[str],
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = None
-    r"""Filter all results to a single ISO 4217 currency code (e.g. 'USD'). When omitted, results include all currencies."""
+    r"""ISO 4217 currency code (e.g. 'USD') to scope every figure to. Defaults to the merchant's primary currency, except with groupBy=currency, where omitting it returns every currency."""
 
     group_by: Annotated[
         Optional[GroupBy],
         pydantic.Field(alias="groupBy"),
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = None
-    r"""Group invoice data by dimension. Allowed values: 'plan' (max 5 groups, top 4 + 'other' when exceeding), 'customer' (max 25 groups, top 24 + 'other' when exceeding, sorted by revenue descending), 'currency' (one entry per currency, primary currency first then alphabetical). Note: groupBy values are mutually exclusive — combining them returns a 400 error. When groupBy=currency is active, top-level netRevenue, invoices, and payments fields are omitted; currencyBreakdown is the sole data source."""
+    r"""Group invoice data by dimension. Allowed values: 'plan' (max 5 groups, top 4 + 'other' when exceeding), 'customer' (max 25 groups, top 24 + 'other' when exceeding, sorted by revenue descending), both in one currency like an ungrouped read, 'currency' (one entry per currency, primary currency first then alphabetical). Note: groupBy values are mutually exclusive — combining them returns a 400 error. When groupBy=currency is active, top-level netRevenue, invoices, and payments fields are omitted; currencyBreakdown is the sole data source."""
 
     period_basis: Annotated[
         Optional[PeriodBasis],

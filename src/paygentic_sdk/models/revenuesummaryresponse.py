@@ -47,6 +47,8 @@ class RevenueSummaryResponseRevenueRange(BaseModel):
 class RevenueSummaryResponseTypedDict(TypedDict):
     object: Literal["revenue_summary"]
     r"""Object type identifier"""
+    currency: NotRequired[str]
+    r"""ISO 4217 currency code every figure in the response is in: the requested currency, or the merchant's primary currency when none was requested. Omitted when groupBy=currency is active."""
     net_revenue: NotRequired[str]
     r"""Revenue: what was billed in the period, excluding tax, in units of the currency. On the default issue-date basis it is recognised when each invoice is issued; with periodBasis=billingPeriod, each invoice line counts in the period it bills, and a refund splits across its invoice's lines. An invoice counts whether it was since paid, is still outstanding, failed payment or was written off, less non-voided refunds. It is billings, not cash collected: what customers still owe is invoices.outstanding, including tax, and payment-link collections are under payments. Omitted when groupBy=currency is active."""
     total_refunds: NotRequired[str]
@@ -78,6 +80,9 @@ class RevenueSummaryResponse(BaseModel):
         pydantic.Field(alias="object"),
     ] = "revenue_summary"
     r"""Object type identifier"""
+
+    currency: Optional[str] = None
+    r"""ISO 4217 currency code every figure in the response is in: the requested currency, or the merchant's primary currency when none was requested. Omitted when groupBy=currency is active."""
 
     net_revenue: Annotated[Optional[str], pydantic.Field(alias="netRevenue")] = None
     r"""Revenue: what was billed in the period, excluding tax, in units of the currency. On the default issue-date basis it is recognised when each invoice is issued; with periodBasis=billingPeriod, each invoice line counts in the period it bills, and a refund splits across its invoice's lines. An invoice counts whether it was since paid, is still outstanding, failed payment or was written off, less non-voided refunds. It is billings, not cash collected: what customers still owe is invoices.outstanding, including tax, and payment-link collections are under payments. Omitted when groupBy=currency is active."""
@@ -122,6 +127,7 @@ class RevenueSummaryResponse(BaseModel):
     def serialize_model(self, handler):
         optional_fields = set(
             [
+                "currency",
                 "netRevenue",
                 "totalRefunds",
                 "refundCount",

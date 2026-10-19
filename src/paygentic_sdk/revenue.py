@@ -37,11 +37,11 @@ class Revenue(BaseSDK):
         :param start_time: Start of the time range (ISO 8601 format)
         :param end_time: End of the time range (ISO 8601 format)
         :param bucket_width: Time bucket granularity for trend data
-        :param merchant_id: Filter by merchant ID. At least one of merchantId, subscriptionIds, or customerId must be provided.
-        :param customer_id: Filter by customer ID. At least one of merchantId, subscriptionIds, or customerId must be provided.
-        :param subscription_ids: Filter by subscription IDs. At least one of merchantId, subscriptionIds, or customerId must be provided.
-        :param currency: Filter all results to a single ISO 4217 currency code (e.g. 'USD'). When omitted, results include all currencies.
-        :param group_by: Group invoice data by dimension. Allowed values: 'plan' (max 5 groups, top 4 + 'other' when exceeding), 'customer' (max 25 groups, top 24 + 'other' when exceeding, sorted by revenue descending), 'currency' (one entry per currency, primary currency first then alphabetical). Note: groupBy values are mutually exclusive — combining them returns a 400 error. When groupBy=currency is active, top-level netRevenue, invoices, and payments fields are omitted; currencyBreakdown is the sole data source.
+        :param merchant_id: The merchant whose revenue to read. Defaults to the merchant your API key belongs to, and is required when you belong to several merchants. Every read is scoped to one merchant; customerId and subscriptionIds narrow it further.
+        :param customer_id: Narrow the read to one of the merchant's customers.
+        :param subscription_ids: Narrow the invoice figures to some of the merchant's subscriptions. A payment is not tied to a subscription, so the payment figures are not narrowed by it.
+        :param currency: ISO 4217 currency code (e.g. 'USD') to scope every figure to. Defaults to the merchant's primary currency, except with groupBy=currency, where omitting it returns every currency.
+        :param group_by: Group invoice data by dimension. Allowed values: 'plan' (max 5 groups, top 4 + 'other' when exceeding), 'customer' (max 25 groups, top 24 + 'other' when exceeding, sorted by revenue descending), both in one currency like an ungrouped read, 'currency' (one entry per currency, primary currency first then alphabetical). Note: groupBy values are mutually exclusive — combining them returns a 400 error. When groupBy=currency is active, top-level netRevenue, invoices, and payments fields are omitted; currencyBreakdown is the sole data source.
         :param period_basis: Which date places revenue inside the window. 'issued' (default) counts whole invoices by their issue date, the basis revenue is recognised on. 'billingPeriod' counts invoice lines by the start of the period each line bills, so a window covering one billing period returns that period's charges, whichever invoices carry them: this month's advance fee and this month's arrears usage. Paid, outstanding and written-off follow each line's invoice; a refund splits across its invoice's lines by subtotal; payments not tied to an invoice are excluded because they bill no period.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -159,11 +159,11 @@ class Revenue(BaseSDK):
         :param start_time: Start of the time range (ISO 8601 format)
         :param end_time: End of the time range (ISO 8601 format)
         :param bucket_width: Time bucket granularity for trend data
-        :param merchant_id: Filter by merchant ID. At least one of merchantId, subscriptionIds, or customerId must be provided.
-        :param customer_id: Filter by customer ID. At least one of merchantId, subscriptionIds, or customerId must be provided.
-        :param subscription_ids: Filter by subscription IDs. At least one of merchantId, subscriptionIds, or customerId must be provided.
-        :param currency: Filter all results to a single ISO 4217 currency code (e.g. 'USD'). When omitted, results include all currencies.
-        :param group_by: Group invoice data by dimension. Allowed values: 'plan' (max 5 groups, top 4 + 'other' when exceeding), 'customer' (max 25 groups, top 24 + 'other' when exceeding, sorted by revenue descending), 'currency' (one entry per currency, primary currency first then alphabetical). Note: groupBy values are mutually exclusive — combining them returns a 400 error. When groupBy=currency is active, top-level netRevenue, invoices, and payments fields are omitted; currencyBreakdown is the sole data source.
+        :param merchant_id: The merchant whose revenue to read. Defaults to the merchant your API key belongs to, and is required when you belong to several merchants. Every read is scoped to one merchant; customerId and subscriptionIds narrow it further.
+        :param customer_id: Narrow the read to one of the merchant's customers.
+        :param subscription_ids: Narrow the invoice figures to some of the merchant's subscriptions. A payment is not tied to a subscription, so the payment figures are not narrowed by it.
+        :param currency: ISO 4217 currency code (e.g. 'USD') to scope every figure to. Defaults to the merchant's primary currency, except with groupBy=currency, where omitting it returns every currency.
+        :param group_by: Group invoice data by dimension. Allowed values: 'plan' (max 5 groups, top 4 + 'other' when exceeding), 'customer' (max 25 groups, top 24 + 'other' when exceeding, sorted by revenue descending), both in one currency like an ungrouped read, 'currency' (one entry per currency, primary currency first then alphabetical). Note: groupBy values are mutually exclusive — combining them returns a 400 error. When groupBy=currency is active, top-level netRevenue, invoices, and payments fields are omitted; currencyBreakdown is the sole data source.
         :param period_basis: Which date places revenue inside the window. 'issued' (default) counts whole invoices by their issue date, the basis revenue is recognised on. 'billingPeriod' counts invoice lines by the start of the period each line bills, so a window covering one billing period returns that period's charges, whichever invoices carry them: this month's advance fee and this month's arrears usage. Paid, outstanding and written-off follow each line's invoice; a refund splits across its invoice's lines by subtotal; payments not tied to an invoice are excluded because they bill no period.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -239,6 +239,228 @@ class Revenue(BaseSDK):
             response_data = unmarshal_json_response(errors.BadRequestUnion, http_res)
             raise errors.BadRequest(response_data, http_res)
         if utils.match_response(http_res, ["401", "403"], "application/json"):
+            response_data = unmarshal_json_response(errors.ErrorData, http_res)
+            raise errors.Error(response_data, http_res)
+        if utils.match_response(http_res, "500", "application/json"):
+            response_data = unmarshal_json_response(errors.ErrorData, http_res)
+            raise errors.Error(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.PaygenticDefaultError(
+                "API error occurred", http_res, http_res_text
+            )
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise errors.PaygenticDefaultError(
+                "API error occurred", http_res, http_res_text
+            )
+
+        raise errors.PaygenticDefaultError("Unexpected response received", http_res)
+
+    def get_revenue_accounts(
+        self,
+        *,
+        merchant_id: str,
+        customer_ids: Optional[List[str]] = None,
+        limit: Optional[int] = 50,
+        offset: Optional[int] = 0,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.RevenueAccountsResponse:
+        r"""List customer accounts
+
+        Returns each customer's account as at today, one row per customer and currency, with a total per currency. Every figure covers all dates: there is no date window.
+
+        `outstanding` is what customers owe: every invoice with status `ISSUED` or `PAYMENT_FAILED`, at the amount due printed on the invoice (subtotal and tax, each rounded to the currency's minor unit), so it is gross of tax. Revenue (`GET /v0/revenue`) is net of tax. `outstanding` splits into `awaitingPayment` (status `ISSUED`) and `paymentFailed` (status `PAYMENT_FAILED`, collection has ended); the two always add up to it, in count and amount. A credit invoice (a negative amount due) nets against what is owed and is counted in no `count`; nor is an invoice whose amount due rounds to zero. A customer with nothing counted and nothing owed has no row.
+
+        Amounts are grouped by currency and never combined or converted. `totals` covers every row in the filter, not only the returned page, so the rows on one page add up to `totals` only when the page holds every row. Pages fetched in separate requests are separate reads.
+
+        :param merchant_id: Merchant whose customer accounts to report
+        :param customer_ids: Limit the rows and the totals to these customers of the merchant. A customer of another merchant, or one that does not exist, returns 404. A customer billed in several currencies has a row for each, so set `limit` to cover them.
+        :param limit: Number of rows to return
+        :param offset: Number of rows to skip
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.GetRevenueAccountsRequest(
+            merchant_id=merchant_id,
+            customer_ids=customer_ids,
+            limit=limit,
+            offset=offset,
+        )
+
+        req = self._build_request(
+            method="GET",
+            path="/v0/revenue/accounts",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=False,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = self.do_request(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="getRevenueAccounts",
+                oauth2_scopes=None,
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+            ),
+            request=req,
+            error_status_codes=["400", "401", "403", "404", "4XX", "500", "5XX"],
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(models.RevenueAccountsResponse, http_res)
+        if utils.match_response(http_res, "400", "application/json"):
+            response_data = unmarshal_json_response(errors.BadRequestUnion, http_res)
+            raise errors.BadRequest(response_data, http_res)
+        if utils.match_response(http_res, ["401", "403", "404"], "application/json"):
+            response_data = unmarshal_json_response(errors.ErrorData, http_res)
+            raise errors.Error(response_data, http_res)
+        if utils.match_response(http_res, "500", "application/json"):
+            response_data = unmarshal_json_response(errors.ErrorData, http_res)
+            raise errors.Error(response_data, http_res)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.PaygenticDefaultError(
+                "API error occurred", http_res, http_res_text
+            )
+        if utils.match_response(http_res, "5XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise errors.PaygenticDefaultError(
+                "API error occurred", http_res, http_res_text
+            )
+
+        raise errors.PaygenticDefaultError("Unexpected response received", http_res)
+
+    async def get_revenue_accounts_async(
+        self,
+        *,
+        merchant_id: str,
+        customer_ids: Optional[List[str]] = None,
+        limit: Optional[int] = 50,
+        offset: Optional[int] = 0,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.RevenueAccountsResponse:
+        r"""List customer accounts
+
+        Returns each customer's account as at today, one row per customer and currency, with a total per currency. Every figure covers all dates: there is no date window.
+
+        `outstanding` is what customers owe: every invoice with status `ISSUED` or `PAYMENT_FAILED`, at the amount due printed on the invoice (subtotal and tax, each rounded to the currency's minor unit), so it is gross of tax. Revenue (`GET /v0/revenue`) is net of tax. `outstanding` splits into `awaitingPayment` (status `ISSUED`) and `paymentFailed` (status `PAYMENT_FAILED`, collection has ended); the two always add up to it, in count and amount. A credit invoice (a negative amount due) nets against what is owed and is counted in no `count`; nor is an invoice whose amount due rounds to zero. A customer with nothing counted and nothing owed has no row.
+
+        Amounts are grouped by currency and never combined or converted. `totals` covers every row in the filter, not only the returned page, so the rows on one page add up to `totals` only when the page holds every row. Pages fetched in separate requests are separate reads.
+
+        :param merchant_id: Merchant whose customer accounts to report
+        :param customer_ids: Limit the rows and the totals to these customers of the merchant. A customer of another merchant, or one that does not exist, returns 404. A customer billed in several currencies has a row for each, so set `limit` to cover them.
+        :param limit: Number of rows to return
+        :param offset: Number of rows to skip
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.GetRevenueAccountsRequest(
+            merchant_id=merchant_id,
+            customer_ids=customer_ids,
+            limit=limit,
+            offset=offset,
+        )
+
+        req = self._build_request_async(
+            method="GET",
+            path="/v0/revenue/accounts",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=False,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["429", "500", "502", "503", "504"])
+
+        http_res = await self.do_request_async(
+            hook_ctx=HookContext(
+                config=self.sdk_configuration,
+                base_url=base_url or "",
+                operation_id="getRevenueAccounts",
+                oauth2_scopes=None,
+                security_source=get_security_from_env(
+                    self.sdk_configuration.security, models.Security
+                ),
+            ),
+            request=req,
+            error_status_codes=["400", "401", "403", "404", "4XX", "500", "5XX"],
+            retry_config=retry_config,
+        )
+
+        response_data: Any = None
+        if utils.match_response(http_res, "200", "application/json"):
+            return unmarshal_json_response(models.RevenueAccountsResponse, http_res)
+        if utils.match_response(http_res, "400", "application/json"):
+            response_data = unmarshal_json_response(errors.BadRequestUnion, http_res)
+            raise errors.BadRequest(response_data, http_res)
+        if utils.match_response(http_res, ["401", "403", "404"], "application/json"):
             response_data = unmarshal_json_response(errors.ErrorData, http_res)
             raise errors.Error(response_data, http_res)
         if utils.match_response(http_res, "500", "application/json"):
