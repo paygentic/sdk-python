@@ -4,8 +4,13 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 import httpx
 from paygentic_sdk.errors import PaygenticError
+from paygentic_sdk.models import (
+    authorizationdenialreason as models_authorizationdenialreason,
+)
 from paygentic_sdk.types import BaseModel
-from typing import Any, Dict, Optional
+import pydantic
+from typing import Any, Dict, List, Optional
+from typing_extensions import Annotated
 
 
 class ErrorData(BaseModel):
@@ -17,6 +22,12 @@ class ErrorData(BaseModel):
     r"""Optional semantic business error code for machine-readable discrimination (e.g. 'TAX_NOT_ENABLED'). UPPER_SNAKE_CASE. Clients should check this field, not message."""
     details: Optional[Dict[str, Any]] = None
     r"""Additional error details"""
+    reason: Optional[models_authorizationdenialreason.AuthorizationDenialReason] = None
+    r"""Present on a 403 from the authorization check. Says why access was refused: the caller has no role that grants the permission, the OAuth token lacks the scope, or the caller is not a member of the organization."""
+    required_permissions: Annotated[
+        Optional[List[str]], pydantic.Field(alias="requiredPermissions")
+    ] = None
+    r"""Present on a 403 from the authorization check. The permissions the caller needs for this request."""
 
 
 @dataclass(unsafe_hash=True)

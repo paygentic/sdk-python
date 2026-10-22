@@ -30,6 +30,7 @@ if TYPE_CHECKING:
         ApproveSourceEventRequest,
         ApproveSourceEventRequestTypedDict,
     )
+    from .authorizationdenialreason import AuthorizationDenialReason
     from .billablemetric import (
         BillableMetric,
         BillableMetricAggregation,
@@ -580,6 +581,55 @@ if TYPE_CHECKING:
         IssueEntitlementRequestTypedDict,
     )
     from .item import Item, ItemObject, ItemTypedDict
+    from .linecalculationcontribution import (
+        LineCalculationContribution,
+        LineCalculationContributionTypedDict,
+    )
+    from .linecalculationgiven import (
+        LineCalculationGiven,
+        LineCalculationGivenTypedDict,
+    )
+    from .linecalculationinputprice import (
+        LineCalculationInputPrice,
+        LineCalculationInputPriceTypedDict,
+    )
+    from .linecalculationinputs import (
+        LineCalculationInputs,
+        LineCalculationInputsTypedDict,
+    )
+    from .linecalculationnotapplied import (
+        LineCalculationNotApplied,
+        LineCalculationNotAppliedTypedDict,
+    )
+    from .linecalculationperiod import (
+        LineCalculationPeriod,
+        LineCalculationPeriodTypedDict,
+    )
+    from .linecalculationprecision import (
+        LineCalculationPrecision,
+        LineCalculationPrecisionTypedDict,
+    )
+    from .linecalculationpriceband import (
+        LineCalculationPriceBand,
+        LineCalculationPriceBandTypedDict,
+    )
+    from .linecalculationpricefn import (
+        LineCalculationPriceFn,
+        LineCalculationPriceFnTypedDict,
+    )
+    from .linecalculationresult import (
+        LineCalculationResult,
+        LineCalculationResultTypedDict,
+    )
+    from .linecalculationsource import (
+        LineCalculationSource,
+        LineCalculationSourceTypedDict,
+    )
+    from .linecalculationstep import LineCalculationStep, LineCalculationStepTypedDict
+    from .linecalculationvalue import (
+        LineCalculationValue,
+        LineCalculationValueTypedDict,
+    )
     from .lineitem import (
         LineItem,
         LineItemPaymentTerm,
@@ -593,6 +643,7 @@ if TYPE_CHECKING:
         LineItemsResponseTypedDict,
     )
     from .lineitemssummary import LineItemsSummary, LineItemsSummaryTypedDict
+    from .lineprovenance import LineProvenance, LineProvenanceTypedDict
     from .listapprovalsop import (
         ListApprovalsDecision,
         ListApprovalsKind,
@@ -1507,6 +1558,7 @@ __all__ = [
     "ApprovalTypedDict",
     "ApproveSourceEventRequest",
     "ApproveSourceEventRequestTypedDict",
+    "AuthorizationDenialReason",
     "BillableMetric",
     "BillableMetricAggregation",
     "BillableMetricObject",
@@ -1923,6 +1975,32 @@ __all__ = [
     "Item",
     "ItemObject",
     "ItemTypedDict",
+    "LineCalculationContribution",
+    "LineCalculationContributionTypedDict",
+    "LineCalculationGiven",
+    "LineCalculationGivenTypedDict",
+    "LineCalculationInputPrice",
+    "LineCalculationInputPriceTypedDict",
+    "LineCalculationInputs",
+    "LineCalculationInputsTypedDict",
+    "LineCalculationNotApplied",
+    "LineCalculationNotAppliedTypedDict",
+    "LineCalculationPeriod",
+    "LineCalculationPeriodTypedDict",
+    "LineCalculationPrecision",
+    "LineCalculationPrecisionTypedDict",
+    "LineCalculationPriceBand",
+    "LineCalculationPriceBandTypedDict",
+    "LineCalculationPriceFn",
+    "LineCalculationPriceFnTypedDict",
+    "LineCalculationResult",
+    "LineCalculationResultTypedDict",
+    "LineCalculationSource",
+    "LineCalculationSourceTypedDict",
+    "LineCalculationStep",
+    "LineCalculationStepTypedDict",
+    "LineCalculationValue",
+    "LineCalculationValueTypedDict",
     "LineItem",
     "LineItemPaymentTerm",
     "LineItemStatus",
@@ -1933,6 +2011,8 @@ __all__ = [
     "LineItemsResponseTypedDict",
     "LineItemsSummary",
     "LineItemsSummaryTypedDict",
+    "LineProvenance",
+    "LineProvenanceTypedDict",
     "ListApprovalsDecision",
     "ListApprovalsKind",
     "ListApprovalsRequest",
@@ -2627,6 +2707,7 @@ _dynamic_imports: dict[str, str] = {
     "ApprovalListTypedDict": ".approvallist",
     "ApproveSourceEventRequest": ".approvesourceeventop",
     "ApproveSourceEventRequestTypedDict": ".approvesourceeventop",
+    "AuthorizationDenialReason": ".authorizationdenialreason",
     "BillableMetric": ".billablemetric",
     "BillableMetricAggregation": ".billablemetric",
     "BillableMetricObject": ".billablemetric",
@@ -3046,6 +3127,32 @@ _dynamic_imports: dict[str, str] = {
     "Item": ".item",
     "ItemObject": ".item",
     "ItemTypedDict": ".item",
+    "LineCalculationContribution": ".linecalculationcontribution",
+    "LineCalculationContributionTypedDict": ".linecalculationcontribution",
+    "LineCalculationGiven": ".linecalculationgiven",
+    "LineCalculationGivenTypedDict": ".linecalculationgiven",
+    "LineCalculationInputPrice": ".linecalculationinputprice",
+    "LineCalculationInputPriceTypedDict": ".linecalculationinputprice",
+    "LineCalculationInputs": ".linecalculationinputs",
+    "LineCalculationInputsTypedDict": ".linecalculationinputs",
+    "LineCalculationNotApplied": ".linecalculationnotapplied",
+    "LineCalculationNotAppliedTypedDict": ".linecalculationnotapplied",
+    "LineCalculationPeriod": ".linecalculationperiod",
+    "LineCalculationPeriodTypedDict": ".linecalculationperiod",
+    "LineCalculationPrecision": ".linecalculationprecision",
+    "LineCalculationPrecisionTypedDict": ".linecalculationprecision",
+    "LineCalculationPriceBand": ".linecalculationpriceband",
+    "LineCalculationPriceBandTypedDict": ".linecalculationpriceband",
+    "LineCalculationPriceFn": ".linecalculationpricefn",
+    "LineCalculationPriceFnTypedDict": ".linecalculationpricefn",
+    "LineCalculationResult": ".linecalculationresult",
+    "LineCalculationResultTypedDict": ".linecalculationresult",
+    "LineCalculationSource": ".linecalculationsource",
+    "LineCalculationSourceTypedDict": ".linecalculationsource",
+    "LineCalculationStep": ".linecalculationstep",
+    "LineCalculationStepTypedDict": ".linecalculationstep",
+    "LineCalculationValue": ".linecalculationvalue",
+    "LineCalculationValueTypedDict": ".linecalculationvalue",
     "LineItem": ".lineitem",
     "LineItemPaymentTerm": ".lineitem",
     "LineItemStatus": ".lineitem",
@@ -3056,6 +3163,8 @@ _dynamic_imports: dict[str, str] = {
     "LineItemsResponseTypedDict": ".lineitemsresponse",
     "LineItemsSummary": ".lineitemssummary",
     "LineItemsSummaryTypedDict": ".lineitemssummary",
+    "LineProvenance": ".lineprovenance",
+    "LineProvenanceTypedDict": ".lineprovenance",
     "ListApprovalsDecision": ".listapprovalsop",
     "ListApprovalsKind": ".listapprovalsop",
     "ListApprovalsRequest": ".listapprovalsop",

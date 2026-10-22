@@ -189,7 +189,10 @@ good-names=i,
            _,
            e,
            at,
+           fn,
            id,
+           on,
+           op,
            q,
            to
 

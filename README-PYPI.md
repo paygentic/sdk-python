@@ -674,6 +674,7 @@ with Paygentic(
             print(e.data.message)  # str
             print(e.data.code)  # Optional[str]
             print(e.data.details)  # Optional[Dict[str, Any]]
+            print(e.data.reason)  # Optional[models.AuthorizationDenialReason]
 ```
 
 ### Error Classes
