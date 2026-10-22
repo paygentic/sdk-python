@@ -34,7 +34,8 @@ class ListSubscriptionsRequestTypedDict(TypedDict):
     r"""Return subscriptions for this merchant organization. May be combined with `consumerId` to scope to a single consumer/merchant pair. Cannot be combined with `customerId`."""
     offset: NotRequired[str]
     r"""Number of subscriptions to skip"""
-    status: NotRequired[ListSubscriptionsStatus]
+    status: NotRequired[List[ListSubscriptionsStatus]]
+    r"""Return subscriptions in any of these statuses. Repeat the parameter to pass several, e.g. `?status=active&status=pending_payment`. Omit it to return every status. An SDK leaves an empty list out of the request, so an empty list also returns every status: check for one before calling if it should match nothing."""
     started_before: NotRequired[datetime]
     r"""Filter subscriptions started at or before this ISO 8601 date-time"""
     include: NotRequired[Include]
@@ -76,9 +77,10 @@ class ListSubscriptionsRequest(BaseModel):
     r"""Number of subscriptions to skip"""
 
     status: Annotated[
-        Optional[ListSubscriptionsStatus],
+        Optional[List[ListSubscriptionsStatus]],
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = None
+    r"""Return subscriptions in any of these statuses. Repeat the parameter to pass several, e.g. `?status=active&status=pending_payment`. Omit it to return every status. An SDK leaves an empty list out of the request, so an empty list also returns every status: check for one before calling if it should match nothing."""
 
     started_before: Annotated[
         Optional[datetime],
