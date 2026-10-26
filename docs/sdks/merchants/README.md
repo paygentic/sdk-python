@@ -49,6 +49,6 @@ with Paygentic(
 | ---------------------------- | ---------------------------- | ---------------------------- |
 | errors.Error                 | 400                          | application/json             |
 | errors.ValidationError       | 400                          | application/json             |
-| errors.Error                 | 401, 403                     | application/json             |
+| errors.Error                 | 401, 403, 404                | application/json             |
 | errors.Error                 | 500, 502                     | application/json             |
 | errors.PaygenticDefaultError | 4XX, 5XX                     | \*/\*                        |

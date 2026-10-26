@@ -271,7 +271,7 @@ class WebhooksSDK(BaseSDK):
                 ),
             ),
             request=req,
-            error_status_codes=["400", "401", "403", "4XX", "5XX"],
+            error_status_codes=["400", "401", "403", "404", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -281,7 +281,7 @@ class WebhooksSDK(BaseSDK):
         if utils.match_response(http_res, "400", "application/json"):
             response_data = unmarshal_json_response(errors.BadRequestUnion, http_res)
             raise errors.BadRequest(response_data, http_res)
-        if utils.match_response(http_res, ["401", "403"], "application/json"):
+        if utils.match_response(http_res, ["401", "403", "404"], "application/json"):
             response_data = unmarshal_json_response(errors.ErrorData, http_res)
             raise errors.Error(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):
@@ -368,7 +368,7 @@ class WebhooksSDK(BaseSDK):
                 ),
             ),
             request=req,
-            error_status_codes=["400", "401", "403", "4XX", "5XX"],
+            error_status_codes=["400", "401", "403", "404", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
@@ -378,7 +378,7 @@ class WebhooksSDK(BaseSDK):
         if utils.match_response(http_res, "400", "application/json"):
             response_data = unmarshal_json_response(errors.BadRequestUnion, http_res)
             raise errors.BadRequest(response_data, http_res)
-        if utils.match_response(http_res, ["401", "403"], "application/json"):
+        if utils.match_response(http_res, ["401", "403", "404"], "application/json"):
             response_data = unmarshal_json_response(errors.ErrorData, http_res)
             raise errors.Error(response_data, http_res)
         if utils.match_response(http_res, "4XX", "*"):
@@ -809,7 +809,7 @@ class WebhooksSDK(BaseSDK):
     ) -> models.WebhookPortal:
         r"""Get Portal Access
 
-        Returns a link to the webhook portal, where you add endpoints, choose event types, read the signing secret and inspect deliveries. The link opens without a login and expires one hour after it is issued, at `expiresAt`. Treat it as a secret. Returns 404 unless webhooks are enabled.
+        Returns a link to the webhook portal, where you add endpoints, choose event types, read the signing secret and inspect deliveries. The link opens without a login and expires one hour after it is issued, at `expiresAt`. Treat it as a secret. The link is read-only unless the caller holds `webhooks:write`: a read-only portal shows endpoints and deliveries but does not let you add or change endpoints, read the signing secret or replay messages. Returns 404 unless webhooks are enabled.
 
         :param request: The request object to send.
         :param retries: Override the default retry configuration for this method
@@ -903,7 +903,7 @@ class WebhooksSDK(BaseSDK):
     ) -> models.WebhookPortal:
         r"""Get Portal Access
 
-        Returns a link to the webhook portal, where you add endpoints, choose event types, read the signing secret and inspect deliveries. The link opens without a login and expires one hour after it is issued, at `expiresAt`. Treat it as a secret. Returns 404 unless webhooks are enabled.
+        Returns a link to the webhook portal, where you add endpoints, choose event types, read the signing secret and inspect deliveries. The link opens without a login and expires one hour after it is issued, at `expiresAt`. Treat it as a secret. The link is read-only unless the caller holds `webhooks:write`: a read-only portal shows endpoints and deliveries but does not let you add or change endpoints, read the signing secret or replay messages. Returns 404 unless webhooks are enabled.
 
         :param request: The request object to send.
         :param retries: Override the default retry configuration for this method

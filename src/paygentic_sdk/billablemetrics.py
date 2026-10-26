@@ -113,7 +113,7 @@ class BillableMetrics(BaseSDK):
                 ),
             ),
             request=req,
-            error_status_codes=["400", "401", "403", "4XX", "500", "5XX"],
+            error_status_codes=["400", "401", "403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -123,7 +123,7 @@ class BillableMetrics(BaseSDK):
         if utils.match_response(http_res, "400", "application/json"):
             response_data = unmarshal_json_response(errors.BadRequestUnion, http_res)
             raise errors.BadRequest(response_data, http_res)
-        if utils.match_response(http_res, ["401", "403"], "application/json"):
+        if utils.match_response(http_res, ["401", "403", "404"], "application/json"):
             response_data = unmarshal_json_response(errors.ErrorData, http_res)
             raise errors.Error(response_data, http_res)
         if utils.match_response(http_res, "500", "application/json"):
@@ -244,7 +244,7 @@ class BillableMetrics(BaseSDK):
                 ),
             ),
             request=req,
-            error_status_codes=["400", "401", "403", "4XX", "500", "5XX"],
+            error_status_codes=["400", "401", "403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -254,7 +254,7 @@ class BillableMetrics(BaseSDK):
         if utils.match_response(http_res, "400", "application/json"):
             response_data = unmarshal_json_response(errors.BadRequestUnion, http_res)
             raise errors.BadRequest(response_data, http_res)
-        if utils.match_response(http_res, ["401", "403"], "application/json"):
+        if utils.match_response(http_res, ["401", "403", "404"], "application/json"):
             response_data = unmarshal_json_response(errors.ErrorData, http_res)
             raise errors.Error(response_data, http_res)
         if utils.match_response(http_res, "500", "application/json"):
@@ -1020,7 +1020,7 @@ class BillableMetrics(BaseSDK):
                 ),
             ),
             request=req,
-            error_status_codes=["400", "403", "4XX", "500", "5XX"],
+            error_status_codes=["400", "403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1030,7 +1030,7 @@ class BillableMetrics(BaseSDK):
         if utils.match_response(http_res, "400", "application/json"):
             response_data = unmarshal_json_response(errors.BadRequestUnion, http_res)
             raise errors.BadRequest(response_data, http_res)
-        if utils.match_response(http_res, "403", "application/json"):
+        if utils.match_response(http_res, ["403", "404"], "application/json"):
             response_data = unmarshal_json_response(errors.ErrorData, http_res)
             raise errors.Error(response_data, http_res)
         if utils.match_response(http_res, "500", "application/json"):
@@ -1142,7 +1142,7 @@ class BillableMetrics(BaseSDK):
                 ),
             ),
             request=req,
-            error_status_codes=["400", "403", "4XX", "500", "5XX"],
+            error_status_codes=["400", "403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1152,7 +1152,7 @@ class BillableMetrics(BaseSDK):
         if utils.match_response(http_res, "400", "application/json"):
             response_data = unmarshal_json_response(errors.BadRequestUnion, http_res)
             raise errors.BadRequest(response_data, http_res)
-        if utils.match_response(http_res, "403", "application/json"):
+        if utils.match_response(http_res, ["403", "404"], "application/json"):
             response_data = unmarshal_json_response(errors.ErrorData, http_res)
             raise errors.Error(response_data, http_res)
         if utils.match_response(http_res, "500", "application/json"):
@@ -1261,7 +1261,7 @@ class BillableMetrics(BaseSDK):
                 ),
             ),
             request=req,
-            error_status_codes=["400", "403", "4XX", "500", "5XX"],
+            error_status_codes=["400", "403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1271,7 +1271,7 @@ class BillableMetrics(BaseSDK):
         if utils.match_response(http_res, "400", "application/json"):
             response_data = unmarshal_json_response(errors.BadRequestUnion, http_res)
             raise errors.BadRequest(response_data, http_res)
-        if utils.match_response(http_res, "403", "application/json"):
+        if utils.match_response(http_res, ["403", "404"], "application/json"):
             response_data = unmarshal_json_response(errors.ErrorData, http_res)
             raise errors.Error(response_data, http_res)
         if utils.match_response(http_res, "500", "application/json"):
@@ -1380,7 +1380,7 @@ class BillableMetrics(BaseSDK):
                 ),
             ),
             request=req,
-            error_status_codes=["400", "403", "4XX", "500", "5XX"],
+            error_status_codes=["400", "403", "404", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1390,7 +1390,7 @@ class BillableMetrics(BaseSDK):
         if utils.match_response(http_res, "400", "application/json"):
             response_data = unmarshal_json_response(errors.BadRequestUnion, http_res)
             raise errors.BadRequest(response_data, http_res)
-        if utils.match_response(http_res, "403", "application/json"):
+        if utils.match_response(http_res, ["403", "404"], "application/json"):
             response_data = unmarshal_json_response(errors.ErrorData, http_res)
             raise errors.Error(response_data, http_res)
         if utils.match_response(http_res, "500", "application/json"):
