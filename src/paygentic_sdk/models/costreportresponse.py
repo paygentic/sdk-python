@@ -21,14 +21,22 @@ CostReportResponseObject = Literal["cost_report",]
 
 
 class PeriodTypedDict(TypedDict):
+    r"""The read window, as requested: the report counts from <= t < to. Unlike `costRange`, `to` is not an instant the report covers, so a chart axis ends before it."""
+
     from_: datetime
+    r"""Start of the read window, included."""
     to: datetime
+    r"""End of the read window, excluded."""
 
 
 class Period(BaseModel):
+    r"""The read window, as requested: the report counts from <= t < to. Unlike `costRange`, `to` is not an instant the report covers, so a chart axis ends before it."""
+
     from_: Annotated[datetime, pydantic.Field(alias="from")]
+    r"""Start of the read window, included."""
 
     to: datetime
+    r"""End of the read window, excluded."""
 
 
 class PaginationTypedDict(TypedDict):
@@ -46,7 +54,7 @@ class Pagination(BaseModel):
 
 
 class CostReportResponseCostRangeTypedDict(TypedDict):
-    r"""Where the caller's cost data actually lies in time. Present only when the selected range returned no cost. An object carries the bounds of the real cost events; null means the caller has no cost event at any time; an absent field means the extent was not resolved, because the result was not empty, because the lookup failed, or because the metering service does not serve the bounds method. An absent field must never be read as an absence."""
+    r"""Where the caller's cost data actually lies in time. Present only when the selected range returned no cost. An object carries the bounds of the real cost events; null means the caller has no cost event at any time; an absent field means the extent was not resolved, because the result was not empty, because the lookup failed, or because the metering service does not serve the bounds method. An absent field must never be read as an absence. The bounds are instants that exist and both are included, so a window that holds `to` ends after it."""
 
     from_: datetime
     r"""Earliest cost event instant."""
@@ -55,7 +63,7 @@ class CostReportResponseCostRangeTypedDict(TypedDict):
 
 
 class CostReportResponseCostRange(BaseModel):
-    r"""Where the caller's cost data actually lies in time. Present only when the selected range returned no cost. An object carries the bounds of the real cost events; null means the caller has no cost event at any time; an absent field means the extent was not resolved, because the result was not empty, because the lookup failed, or because the metering service does not serve the bounds method. An absent field must never be read as an absence."""
+    r"""Where the caller's cost data actually lies in time. Present only when the selected range returned no cost. An object carries the bounds of the real cost events; null means the caller has no cost event at any time; an absent field means the extent was not resolved, because the result was not empty, because the lookup failed, or because the metering service does not serve the bounds method. An absent field must never be read as an absence. The bounds are instants that exist and both are included, so a window that holds `to` ends after it."""
 
     from_: Annotated[datetime, pydantic.Field(alias="from")]
     r"""Earliest cost event instant."""
@@ -68,6 +76,7 @@ class CostReportResponseTypedDict(TypedDict):
     currency: str
     r"""ISO 4217 currency code for all monetary values in this response."""
     period: PeriodTypedDict
+    r"""The read window, as requested: the report counts from <= t < to. Unlike `costRange`, `to` is not an instant the report covers, so a chart axis ends before it."""
     group_by: str
     r"""The active grouping dimension (e.g. 'cost', 'customer', or a dynamic dimension key)."""
     total_cost: float
@@ -89,7 +98,7 @@ class CostReportResponseTypedDict(TypedDict):
     empty_group_count: NotRequired[Nullable[int]]
     r"""Groups with neither cost nor usage in the period, counted over the whole report and reported whether or not `excludeEmpty` is set. Null when a cost read failed (see `warnings`): a group empty in the costs that loaded may have usage in the one that failed, so none is counted and `excludeEmpty` leaves nobody out."""
     cost_range: NotRequired[Nullable[CostReportResponseCostRangeTypedDict]]
-    r"""Where the caller's cost data actually lies in time. Present only when the selected range returned no cost. An object carries the bounds of the real cost events; null means the caller has no cost event at any time; an absent field means the extent was not resolved, because the result was not empty, because the lookup failed, or because the metering service does not serve the bounds method. An absent field must never be read as an absence."""
+    r"""Where the caller's cost data actually lies in time. Present only when the selected range returned no cost. An object carries the bounds of the real cost events; null means the caller has no cost event at any time; an absent field means the extent was not resolved, because the result was not empty, because the lookup failed, or because the metering service does not serve the bounds method. An absent field must never be read as an absence. The bounds are instants that exist and both are included, so a window that holds `to` ends after it."""
 
 
 class CostReportResponse(BaseModel):
@@ -97,6 +106,7 @@ class CostReportResponse(BaseModel):
     r"""ISO 4217 currency code for all monetary values in this response."""
 
     period: Period
+    r"""The read window, as requested: the report counts from <= t < to. Unlike `costRange`, `to` is not an instant the report covers, so a chart axis ends before it."""
 
     group_by: Annotated[str, pydantic.Field(alias="groupBy")]
     r"""The active grouping dimension (e.g. 'cost', 'customer', or a dynamic dimension key)."""
@@ -138,7 +148,7 @@ class CostReportResponse(BaseModel):
     cost_range: Annotated[
         OptionalNullable[CostReportResponseCostRange], pydantic.Field(alias="costRange")
     ] = UNSET
-    r"""Where the caller's cost data actually lies in time. Present only when the selected range returned no cost. An object carries the bounds of the real cost events; null means the caller has no cost event at any time; an absent field means the extent was not resolved, because the result was not empty, because the lookup failed, or because the metering service does not serve the bounds method. An absent field must never be read as an absence."""
+    r"""Where the caller's cost data actually lies in time. Present only when the selected range returned no cost. An object carries the bounds of the real cost events; null means the caller has no cost event at any time; an absent field means the extent was not resolved, because the result was not empty, because the lookup failed, or because the metering service does not serve the bounds method. An absent field must never be read as an absence. The bounds are instants that exist and both are included, so a window that holds `to` ends after it."""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

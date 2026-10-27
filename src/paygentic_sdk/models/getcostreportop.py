@@ -34,9 +34,9 @@ r"""Sort direction."""
 
 class GetCostReportRequestTypedDict(TypedDict):
     from_: datetime
-    r"""Start of the query window (ISO 8601)."""
+    r"""Start of the query window, included (ISO 8601)."""
     to: datetime
-    r"""End of the query window (ISO 8601)."""
+    r"""End of the query window, excluded: the read counts from <= t < to (ISO 8601)."""
     group_by: str
     r"""Dimension to group results by. Valid values: 'cost' (group by cost ID), 'customer' (group by customer ID), or any dimension key from a filtered cost's groupBy schema for dynamic dimension grouping. Dynamic dimension values require exactly one costId filter."""
     merchant_id: NotRequired[str]
@@ -73,12 +73,12 @@ class GetCostReportRequest(BaseModel):
         pydantic.Field(alias="from"),
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ]
-    r"""Start of the query window (ISO 8601)."""
+    r"""Start of the query window, included (ISO 8601)."""
 
     to: Annotated[
         datetime, FieldMetadata(query=QueryParamMetadata(style="form", explode=True))
     ]
-    r"""End of the query window (ISO 8601)."""
+    r"""End of the query window, excluded: the read counts from <= t < to (ISO 8601)."""
 
     group_by: Annotated[
         str,

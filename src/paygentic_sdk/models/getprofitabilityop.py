@@ -14,9 +14,9 @@ class GetProfitabilityRequestTypedDict(TypedDict):
     merchant_id: str
     r"""Merchant whose customers to summarize"""
     from_: datetime
-    r"""Start of the time range (ISO 8601 format)"""
+    r"""Start of the read window, included (ISO 8601 format)"""
     to: datetime
-    r"""End of the time range (ISO 8601 format)"""
+    r"""End of the read window, excluded: the read counts from <= t < to, so a month ends at the first instant of the next month (ISO 8601 format)"""
     top_n: NotRequired[int]
     r"""Number of top customers (by profit) to return individually. The rest are rolled into a single 'Other' row."""
     currency: NotRequired[str]
@@ -40,12 +40,12 @@ class GetProfitabilityRequest(BaseModel):
         pydantic.Field(alias="from"),
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ]
-    r"""Start of the time range (ISO 8601 format)"""
+    r"""Start of the read window, included (ISO 8601 format)"""
 
     to: Annotated[
         datetime, FieldMetadata(query=QueryParamMetadata(style="form", explode=True))
     ]
-    r"""End of the time range (ISO 8601 format)"""
+    r"""End of the read window, excluded: the read counts from <= t < to, so a month ends at the first instant of the next month (ISO 8601 format)"""
 
     top_n: Annotated[
         Optional[int],

@@ -34,8 +34,8 @@ class Revenue(BaseSDK):
 
         Returns revenue summary with invoice and payment breakdowns (outstanding/paid/writtenOff), plus a time-series trend. Revenue is what was billed in the period (by default, invoices issued in it; see periodBasis), whatever their status since, less refunds, both excluding tax; completed payments are reported under payments, never in revenue.
 
-        :param start_time: Start of the time range (ISO 8601 format)
-        :param end_time: End of the time range (ISO 8601 format)
+        :param start_time: Start of the read window, included (ISO 8601 format)
+        :param end_time: End of the read window, excluded: the read counts startTime <= t < endTime, so a month ends at the first instant of the next month (ISO 8601 format)
         :param bucket_width: Time bucket granularity for trend data
         :param merchant_id: The merchant whose revenue to read. Defaults to the merchant your API key belongs to, and is required when you belong to several merchants. Every read is scoped to one merchant; customerId and subscriptionIds narrow it further.
         :param customer_id: Narrow the read to one of the merchant's customers.
@@ -156,8 +156,8 @@ class Revenue(BaseSDK):
 
         Returns revenue summary with invoice and payment breakdowns (outstanding/paid/writtenOff), plus a time-series trend. Revenue is what was billed in the period (by default, invoices issued in it; see periodBasis), whatever their status since, less refunds, both excluding tax; completed payments are reported under payments, never in revenue.
 
-        :param start_time: Start of the time range (ISO 8601 format)
-        :param end_time: End of the time range (ISO 8601 format)
+        :param start_time: Start of the read window, included (ISO 8601 format)
+        :param end_time: End of the read window, excluded: the read counts startTime <= t < endTime, so a month ends at the first instant of the next month (ISO 8601 format)
         :param bucket_width: Time bucket granularity for trend data
         :param merchant_id: The merchant whose revenue to read. Defaults to the merchant your API key belongs to, and is required when you belong to several merchants. Every read is scoped to one merchant; customerId and subscriptionIds narrow it further.
         :param customer_id: Narrow the read to one of the merchant's customers.

@@ -1107,8 +1107,8 @@ class Costs(BaseSDK):
         Query usage data and compute cost for a specific cost configuration. To retrieve summaries for all costs belonging to a merchant, first call listCosts to obtain cost IDs, then call this endpoint in parallel for each ID.
 
         :param id: The unique identifier of the cost
-        :param from_: Start of the query window (ISO 8601). Required together with 'to'.
-        :param to: End of the query window (ISO 8601). Required together with 'from'.
+        :param from_: Start of the query window, included (ISO 8601). Required together with 'to'.
+        :param to: End of the query window, excluded: the read counts from <= t < to (ISO 8601). Required together with 'from'.
         :param subject: Filter usage to a specific subject (billing entity). When provided, only cost events matching this subject are included. When omitted, usage is aggregated across all subjects for the merchant.
         :param group_by: Comma-separated dimension keys to group results by.
         :param window: Time window granularity for time-series breakdown.
@@ -1223,8 +1223,8 @@ class Costs(BaseSDK):
         Query usage data and compute cost for a specific cost configuration. To retrieve summaries for all costs belonging to a merchant, first call listCosts to obtain cost IDs, then call this endpoint in parallel for each ID.
 
         :param id: The unique identifier of the cost
-        :param from_: Start of the query window (ISO 8601). Required together with 'to'.
-        :param to: End of the query window (ISO 8601). Required together with 'from'.
+        :param from_: Start of the query window, included (ISO 8601). Required together with 'to'.
+        :param to: End of the query window, excluded: the read counts from <= t < to (ISO 8601). Required together with 'from'.
         :param subject: Filter usage to a specific subject (billing entity). When provided, only cost events matching this subject are included. When omitted, usage is aggregated across all subjects for the merchant.
         :param group_by: Comma-separated dimension keys to group results by.
         :param window: Time window granularity for time-series breakdown.
@@ -1347,8 +1347,8 @@ class Costs(BaseSDK):
 
         Aggregate cost data across costs and customers with grouping, filtering, and time-series breakdown.
 
-        :param from_: Start of the query window (ISO 8601).
-        :param to: End of the query window (ISO 8601).
+        :param from_: Start of the query window, included (ISO 8601).
+        :param to: End of the query window, excluded: the read counts from <= t < to (ISO 8601).
         :param group_by: Dimension to group results by. Valid values: 'cost' (group by cost ID), 'customer' (group by customer ID), or any dimension key from a filtered cost's groupBy schema for dynamic dimension grouping. Dynamic dimension values require exactly one costId filter.
         :param merchant_id: The merchant organization ID. If omitted, defaults to the merchant associated with the authenticated API key.
         :param cost_id: Filter to specific cost(s). Enables dynamic dimension grouping.
@@ -1490,8 +1490,8 @@ class Costs(BaseSDK):
 
         Aggregate cost data across costs and customers with grouping, filtering, and time-series breakdown.
 
-        :param from_: Start of the query window (ISO 8601).
-        :param to: End of the query window (ISO 8601).
+        :param from_: Start of the query window, included (ISO 8601).
+        :param to: End of the query window, excluded: the read counts from <= t < to (ISO 8601).
         :param group_by: Dimension to group results by. Valid values: 'cost' (group by cost ID), 'customer' (group by customer ID), or any dimension key from a filtered cost's groupBy schema for dynamic dimension grouping. Dynamic dimension values require exactly one costId filter.
         :param merchant_id: The merchant organization ID. If omitted, defaults to the merchant associated with the authenticated API key.
         :param cost_id: Filter to specific cost(s). Enables dynamic dimension grouping.

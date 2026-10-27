@@ -35,9 +35,9 @@ r"""Which date places revenue inside the window. 'issued' (default) counts whole
 
 class GetRevenueRequestTypedDict(TypedDict):
     start_time: datetime
-    r"""Start of the time range (ISO 8601 format)"""
+    r"""Start of the read window, included (ISO 8601 format)"""
     end_time: datetime
-    r"""End of the time range (ISO 8601 format)"""
+    r"""End of the read window, excluded: the read counts startTime <= t < endTime, so a month ends at the first instant of the next month (ISO 8601 format)"""
     bucket_width: NotRequired[GetRevenueBucketWidth]
     r"""Time bucket granularity for trend data"""
     merchant_id: NotRequired[str]
@@ -60,14 +60,14 @@ class GetRevenueRequest(BaseModel):
         pydantic.Field(alias="startTime"),
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ]
-    r"""Start of the time range (ISO 8601 format)"""
+    r"""Start of the read window, included (ISO 8601 format)"""
 
     end_time: Annotated[
         datetime,
         pydantic.Field(alias="endTime"),
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ]
-    r"""End of the time range (ISO 8601 format)"""
+    r"""End of the read window, excluded: the read counts startTime <= t < endTime, so a month ends at the first instant of the next month (ISO 8601 format)"""
 
     bucket_width: Annotated[
         Optional[GetRevenueBucketWidth],

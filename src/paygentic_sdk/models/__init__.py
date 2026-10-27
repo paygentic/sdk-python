@@ -715,6 +715,8 @@ if TYPE_CHECKING:
         ListEntitlementsRequestTypedDict,
         ListEntitlementsResponse,
         ListEntitlementsResponseTypedDict,
+        Stale,
+        StaleTypedDict,
     )
     from .listexternalreferencesop import (
         ListExternalReferencesRequest,
@@ -2457,6 +2459,8 @@ __all__ = [
     "SourceRuleTypedDict",
     "SourceType",
     "SourceTypedDict",
+    "Stale",
+    "StaleTypedDict",
     "StandardPriceProperties",
     "StandardPricePropertiesTypedDict",
     "State",
@@ -3217,6 +3221,8 @@ _dynamic_imports: dict[str, str] = {
     "ListEntitlementsRequestTypedDict": ".listentitlementsop",
     "ListEntitlementsResponse": ".listentitlementsop",
     "ListEntitlementsResponseTypedDict": ".listentitlementsop",
+    "Stale": ".listentitlementsop",
+    "StaleTypedDict": ".listentitlementsop",
     "ListExternalReferencesRequest": ".listexternalreferencesop",
     "ListExternalReferencesRequestTypedDict": ".listexternalreferencesop",
     "ListExternalReferencesResponse": ".listexternalreferencesop",

@@ -19,7 +19,7 @@ from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class ProfitabilitySummaryResponseRevenueRangeTypedDict(TypedDict):
-    r"""Where the caller's revenue actually lies in time. Scoped by the same filters as the request (merchant, and where given customer, subscription and currency), so it is not an account-wide statement. Present only when the selected range returned nothing. An object carries the bounds of the real revenue; null means no revenue under these filters at any time; an absent field means the extent was not resolved, because the result was not empty or because the lookup failed. An absent field must never be read as an absence. The bounds may span more than this endpoint's maximum queryable range, so clamp before re-querying."""
+    r"""Where the caller's revenue actually lies in time. Scoped by the same filters as the request (merchant, and where given customer, subscription and currency), so it is not an account-wide statement. Present only when the selected range returned nothing. An object carries the bounds of the real revenue; null means no revenue under these filters at any time; an absent field means the extent was not resolved, because the result was not empty or because the lookup failed. An absent field must never be read as an absence. The bounds are instants that exist and both are included, so a window that holds `to` ends after it. The bounds may span more than this endpoint's maximum queryable range, so clamp before re-querying."""
 
     from_: datetime
     r"""Earliest invoice issue instant."""
@@ -28,7 +28,7 @@ class ProfitabilitySummaryResponseRevenueRangeTypedDict(TypedDict):
 
 
 class ProfitabilitySummaryResponseRevenueRange(BaseModel):
-    r"""Where the caller's revenue actually lies in time. Scoped by the same filters as the request (merchant, and where given customer, subscription and currency), so it is not an account-wide statement. Present only when the selected range returned nothing. An object carries the bounds of the real revenue; null means no revenue under these filters at any time; an absent field means the extent was not resolved, because the result was not empty or because the lookup failed. An absent field must never be read as an absence. The bounds may span more than this endpoint's maximum queryable range, so clamp before re-querying."""
+    r"""Where the caller's revenue actually lies in time. Scoped by the same filters as the request (merchant, and where given customer, subscription and currency), so it is not an account-wide statement. Present only when the selected range returned nothing. An object carries the bounds of the real revenue; null means no revenue under these filters at any time; an absent field means the extent was not resolved, because the result was not empty or because the lookup failed. An absent field must never be read as an absence. The bounds are instants that exist and both are included, so a window that holds `to` ends after it. The bounds may span more than this endpoint's maximum queryable range, so clamp before re-querying."""
 
     from_: Annotated[datetime, pydantic.Field(alias="from")]
     r"""Earliest invoice issue instant."""
@@ -38,7 +38,7 @@ class ProfitabilitySummaryResponseRevenueRange(BaseModel):
 
 
 class ProfitabilitySummaryResponseCostRangeTypedDict(TypedDict):
-    r"""Where the caller's cost data actually lies in time. Present only when the selected range returned no cost. An object carries the bounds of the real cost events; null means the caller has no cost event at any time; an absent field means the extent was not resolved, because the result was not empty, because the lookup failed, or because the metering service does not serve the bounds method. An absent field must never be read as an absence."""
+    r"""Where the caller's cost data actually lies in time. Present only when the selected range returned no cost. An object carries the bounds of the real cost events; null means the caller has no cost event at any time; an absent field means the extent was not resolved, because the result was not empty, because the lookup failed, or because the metering service does not serve the bounds method. An absent field must never be read as an absence. The bounds are instants that exist and both are included, so a window that holds `to` ends after it."""
 
     from_: datetime
     r"""Earliest cost event instant."""
@@ -47,7 +47,7 @@ class ProfitabilitySummaryResponseCostRangeTypedDict(TypedDict):
 
 
 class ProfitabilitySummaryResponseCostRange(BaseModel):
-    r"""Where the caller's cost data actually lies in time. Present only when the selected range returned no cost. An object carries the bounds of the real cost events; null means the caller has no cost event at any time; an absent field means the extent was not resolved, because the result was not empty, because the lookup failed, or because the metering service does not serve the bounds method. An absent field must never be read as an absence."""
+    r"""Where the caller's cost data actually lies in time. Present only when the selected range returned no cost. An object carries the bounds of the real cost events; null means the caller has no cost event at any time; an absent field means the extent was not resolved, because the result was not empty, because the lookup failed, or because the metering service does not serve the bounds method. An absent field must never be read as an absence. The bounds are instants that exist and both are included, so a window that holds `to` ends after it."""
 
     from_: Annotated[datetime, pydantic.Field(alias="from")]
     r"""Earliest cost event instant."""
@@ -76,9 +76,9 @@ class ProfitabilitySummaryResponseTypedDict(TypedDict):
     revenue_range: NotRequired[
         Nullable[ProfitabilitySummaryResponseRevenueRangeTypedDict]
     ]
-    r"""Where the caller's revenue actually lies in time. Scoped by the same filters as the request (merchant, and where given customer, subscription and currency), so it is not an account-wide statement. Present only when the selected range returned nothing. An object carries the bounds of the real revenue; null means no revenue under these filters at any time; an absent field means the extent was not resolved, because the result was not empty or because the lookup failed. An absent field must never be read as an absence. The bounds may span more than this endpoint's maximum queryable range, so clamp before re-querying."""
+    r"""Where the caller's revenue actually lies in time. Scoped by the same filters as the request (merchant, and where given customer, subscription and currency), so it is not an account-wide statement. Present only when the selected range returned nothing. An object carries the bounds of the real revenue; null means no revenue under these filters at any time; an absent field means the extent was not resolved, because the result was not empty or because the lookup failed. An absent field must never be read as an absence. The bounds are instants that exist and both are included, so a window that holds `to` ends after it. The bounds may span more than this endpoint's maximum queryable range, so clamp before re-querying."""
     cost_range: NotRequired[Nullable[ProfitabilitySummaryResponseCostRangeTypedDict]]
-    r"""Where the caller's cost data actually lies in time. Present only when the selected range returned no cost. An object carries the bounds of the real cost events; null means the caller has no cost event at any time; an absent field means the extent was not resolved, because the result was not empty, because the lookup failed, or because the metering service does not serve the bounds method. An absent field must never be read as an absence."""
+    r"""Where the caller's cost data actually lies in time. Present only when the selected range returned no cost. An object carries the bounds of the real cost events; null means the caller has no cost event at any time; an absent field means the extent was not resolved, because the result was not empty, because the lookup failed, or because the metering service does not serve the bounds method. An absent field must never be read as an absence. The bounds are instants that exist and both are included, so a window that holds `to` ends after it."""
 
 
 class ProfitabilitySummaryResponse(BaseModel):
@@ -124,13 +124,13 @@ class ProfitabilitySummaryResponse(BaseModel):
         OptionalNullable[ProfitabilitySummaryResponseRevenueRange],
         pydantic.Field(alias="revenueRange"),
     ] = UNSET
-    r"""Where the caller's revenue actually lies in time. Scoped by the same filters as the request (merchant, and where given customer, subscription and currency), so it is not an account-wide statement. Present only when the selected range returned nothing. An object carries the bounds of the real revenue; null means no revenue under these filters at any time; an absent field means the extent was not resolved, because the result was not empty or because the lookup failed. An absent field must never be read as an absence. The bounds may span more than this endpoint's maximum queryable range, so clamp before re-querying."""
+    r"""Where the caller's revenue actually lies in time. Scoped by the same filters as the request (merchant, and where given customer, subscription and currency), so it is not an account-wide statement. Present only when the selected range returned nothing. An object carries the bounds of the real revenue; null means no revenue under these filters at any time; an absent field means the extent was not resolved, because the result was not empty or because the lookup failed. An absent field must never be read as an absence. The bounds are instants that exist and both are included, so a window that holds `to` ends after it. The bounds may span more than this endpoint's maximum queryable range, so clamp before re-querying."""
 
     cost_range: Annotated[
         OptionalNullable[ProfitabilitySummaryResponseCostRange],
         pydantic.Field(alias="costRange"),
     ] = UNSET
-    r"""Where the caller's cost data actually lies in time. Present only when the selected range returned no cost. An object carries the bounds of the real cost events; null means the caller has no cost event at any time; an absent field means the extent was not resolved, because the result was not empty, because the lookup failed, or because the metering service does not serve the bounds method. An absent field must never be read as an absence."""
+    r"""Where the caller's cost data actually lies in time. Present only when the selected range returned no cost. An object carries the bounds of the real cost events; null means the caller has no cost event at any time; an absent field means the extent was not resolved, because the result was not empty, because the lookup failed, or because the metering service does not serve the bounds method. An absent field must never be read as an absence. The bounds are instants that exist and both are included, so a window that holds `to` ends after it."""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

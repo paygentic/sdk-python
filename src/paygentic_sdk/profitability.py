@@ -33,8 +33,8 @@ class Profitability(BaseSDK):
         Returns a per-customer profitability summary for a merchant over a date range. Each row aggregates revenue (invoices issued in the period, whatever their status since, less refunds, both excluding tax; the same figure /v0/revenue reports), cost (from metered cost discovery), profit, and margin. Customers are ranked by profit descending and capped at topN; the remainder is rolled into a single self-consistent 'Other' row whose revenue, cost, and profit reflect the same set of customers. Rows are joined against the merchant's customer list, so meter subjects that match no customer are dropped. Soft-deleted customers with revenue or cost in the period are folded into a single 'deleted' row, which always comes last, after 'Other', and takes no top-N slot.
 
         :param merchant_id: Merchant whose customers to summarize
-        :param from_: Start of the time range (ISO 8601 format)
-        :param to: End of the time range (ISO 8601 format)
+        :param from_: Start of the read window, included (ISO 8601 format)
+        :param to: End of the read window, excluded: the read counts from <= t < to, so a month ends at the first instant of the next month (ISO 8601 format)
         :param top_n: Number of top customers (by profit) to return individually. The rest are rolled into a single 'Other' row.
         :param currency: ISO 4217 currency code to scope the summary. Defaults to the merchant's primary currency.
         :param exclude_empty: When true, leave customers with neither revenue nor cost in the period out of `rows`. They are dropped before ranking, so they take no top-N slot and are not folded into the 'Other' row. `emptyCustomerCount` says how many there are either way.
@@ -151,8 +151,8 @@ class Profitability(BaseSDK):
         Returns a per-customer profitability summary for a merchant over a date range. Each row aggregates revenue (invoices issued in the period, whatever their status since, less refunds, both excluding tax; the same figure /v0/revenue reports), cost (from metered cost discovery), profit, and margin. Customers are ranked by profit descending and capped at topN; the remainder is rolled into a single self-consistent 'Other' row whose revenue, cost, and profit reflect the same set of customers. Rows are joined against the merchant's customer list, so meter subjects that match no customer are dropped. Soft-deleted customers with revenue or cost in the period are folded into a single 'deleted' row, which always comes last, after 'Other', and takes no top-N slot.
 
         :param merchant_id: Merchant whose customers to summarize
-        :param from_: Start of the time range (ISO 8601 format)
-        :param to: End of the time range (ISO 8601 format)
+        :param from_: Start of the read window, included (ISO 8601 format)
+        :param to: End of the read window, excluded: the read counts from <= t < to, so a month ends at the first instant of the next month (ISO 8601 format)
         :param top_n: Number of top customers (by profit) to return individually. The rest are rolled into a single 'Other' row.
         :param currency: ISO 4217 currency code to scope the summary. Defaults to the merchant's primary currency.
         :param exclude_empty: When true, leave customers with neither revenue nor cost in the period out of `rows`. They are dropped before ranking, so they take no top-N slot and are not folded into the 'Other' row. `emptyCustomerCount` says how many there are either way.

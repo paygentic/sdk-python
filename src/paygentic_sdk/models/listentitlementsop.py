@@ -126,6 +126,20 @@ class ListEntitlementsRequest(BaseModel):
 ListEntitlementsObject = Literal["list",]
 
 
+class StaleTypedDict(TypedDict):
+    r"""Present only when the database can't be reached, or the list takes more than a second to compute. The response is then the last result for this same request in the past hour, computed at `computedAt`."""
+
+    computed_at: datetime
+    r"""When this result was computed."""
+
+
+class Stale(BaseModel):
+    r"""Present only when the database can't be reached, or the list takes more than a second to compute. The response is then the last result for this same request in the past hour, computed at `computedAt`."""
+
+    computed_at: Annotated[datetime, pydantic.Field(alias="computedAt")]
+    r"""When this result was computed."""
+
+
 class ListEntitlementsResponseTypedDict(TypedDict):
     r"""Successfully retrieved the list of entitlements for the customer."""
 
@@ -134,6 +148,8 @@ class ListEntitlementsResponseTypedDict(TypedDict):
     pagination: OffsetPaginationTypedDict
     r"""Offset-based pagination response."""
     object: NotRequired[ListEntitlementsObject]
+    stale: NotRequired[StaleTypedDict]
+    r"""Present only when the database can't be reached, or the list takes more than a second to compute. The response is then the last result for this same request in the past hour, computed at `computedAt`."""
 
 
 class ListEntitlementsResponse(BaseModel):
@@ -147,9 +163,12 @@ class ListEntitlementsResponse(BaseModel):
 
     object: Optional[ListEntitlementsObject] = "list"
 
+    stale: Optional[Stale] = None
+    r"""Present only when the database can't be reached, or the list takes more than a second to compute. The response is then the last result for this same request in the past hour, computed at `computedAt`."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["object"])
+        optional_fields = set(["object", "stale"])
         serialized = handler(self)
         m = {}
 
@@ -162,3 +181,9 @@ class ListEntitlementsResponse(BaseModel):
                     m[k] = val
 
         return m
+
+
+try:
+    Stale.model_rebuild()
+except NameError:
+    pass
