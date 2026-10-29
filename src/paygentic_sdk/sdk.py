@@ -27,6 +27,7 @@ if TYPE_CHECKING:
     from paygentic_sdk.fees import Fees
     from paygentic_sdk.invoices_v2 import InvoicesV2
     from paygentic_sdk.items import Items
+    from paygentic_sdk.me_sdk import MeSDK
     from paygentic_sdk.merchantintegrations import MerchantIntegrations
     from paygentic_sdk.merchants import Merchants
     from paygentic_sdk.orders import Orders
@@ -51,6 +52,8 @@ class Paygentic(BaseSDK):
     See the [Quickstart](https://docs.paygentic.io/getting-started/quickstart) to go from zero to billing in a handful of steps.
     """
 
+    me: "MeSDK"
+    r"""The caller: who it is in its active organization and what it can do"""
     billable_metrics: "BillableMetrics"
     customers: "Customers"
     r"""A `Customer` is an entity connected to a `Merchant` via a `Subscription`. This represents the merchant-facing perspective of `Consumers` who purchase their `Products`."""
@@ -104,6 +107,7 @@ class Paygentic(BaseSDK):
     webhooks: "WebhooksSDK"
     r"""Endpoints for setting up webhook integrations and administering webhook settings"""
     _sub_sdk_map = {
+        "me": ("paygentic_sdk.me_sdk", "MeSDK"),
         "billable_metrics": ("paygentic_sdk.billablemetrics", "BillableMetrics"),
         "customers": ("paygentic_sdk.customers", "Customers"),
         "entitlements": ("paygentic_sdk.entitlements", "Entitlements"),

@@ -320,7 +320,7 @@ with Paygentic(
     bearer_auth=os.getenv("PAYGENTIC_BEARER_AUTH", ""),
 ) as paygentic:
 
-    res = paygentic.billable_metrics.create(aggregation="SUM", description="Tracks total tokens consumed per API call.", merchant_id="org_YS8jkP59V71TdUvj", name="Token Counter", unit="tokens", event_type="<value>", product_id="prod_abc123")
+    res = paygentic.me.get_me()
 
     # Handle response
     print(res)
@@ -445,6 +445,10 @@ with Paygentic(
 * [list_items](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/items/README.md#list_items) - List
 * [get_item](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/items/README.md#get_item) - Get
 * [update_item](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/items/README.md#update_item) - Update
+
+### [Me](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/mesdk/README.md)
+
+* [get_me](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/mesdk/README.md#get_me) - Get the caller
 
 ### [MerchantIntegrations](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/merchantintegrations/README.md)
 
@@ -600,7 +604,7 @@ with Paygentic(
     bearer_auth=os.getenv("PAYGENTIC_BEARER_AUTH", ""),
 ) as paygentic:
 
-    res = paygentic.billable_metrics.create(aggregation="SUM", description="Tracks total tokens consumed per API call.", merchant_id="org_YS8jkP59V71TdUvj", name="Token Counter", unit="tokens", event_type="<value>", product_id="prod_abc123",
+    res = paygentic.me.get_me(,
         RetryConfig("backoff", BackoffStrategy(1, 50, 1.1, 100), False))
 
     # Handle response
@@ -620,7 +624,7 @@ with Paygentic(
     bearer_auth=os.getenv("PAYGENTIC_BEARER_AUTH", ""),
 ) as paygentic:
 
-    res = paygentic.billable_metrics.create(aggregation="SUM", description="Tracks total tokens consumed per API call.", merchant_id="org_YS8jkP59V71TdUvj", name="Token Counter", unit="tokens", event_type="<value>", product_id="prod_abc123")
+    res = paygentic.me.get_me()
 
     # Handle response
     print(res)
@@ -654,7 +658,7 @@ with Paygentic(
     res = None
     try:
 
-        res = paygentic.billable_metrics.create(aggregation="SUM", description="Tracks total tokens consumed per API call.", merchant_id="org_YS8jkP59V71TdUvj", name="Token Counter", unit="tokens", event_type="<value>", product_id="prod_abc123")
+        res = paygentic.me.get_me()
 
         # Handle response
         print(res)
@@ -680,7 +684,7 @@ with Paygentic(
 ### Error Classes
 **Primary errors:**
 * [`PaygenticError`](https://github.com/paygentic/sdk-python/blob/master/./src/paygentic_sdk/errors/paygenticerror.py): The base class for HTTP error responses.
-  * [`Error`](https://github.com/paygentic/sdk-python/blob/master/./src/paygentic_sdk/errors/error.py): *
+  * [`Error`](https://github.com/paygentic/sdk-python/blob/master/./src/paygentic_sdk/errors/error.py): Unauthorized - Authentication failed or user does not have permissions. *
 
 <details><summary>Less common errors (12)</summary>
 
@@ -693,13 +697,13 @@ with Paygentic(
 
 
 **Inherit from [`PaygenticError`](https://github.com/paygentic/sdk-python/blob/master/./src/paygentic_sdk/errors/paygenticerror.py)**:
-* [`ValidationError`](https://github.com/paygentic/sdk-python/blob/master/./src/paygentic_sdk/errors/validationerror.py): Bad Request - The request could not be understood or was missing required parameters. Status code `400`. Applicable to 100 of 154 methods.*
-* [`RetryPaymentResponseError`](https://github.com/paygentic/sdk-python/blob/master/./src/paygentic_sdk/errors/retrypaymentresponseerror.py): The result of a payment retry. Every response status of the retry operation that is not an error envelope uses this shape. Applicable to 1 of 154 methods.*
-* [`DeleteCustomerConflictError`](https://github.com/paygentic/sdk-python/blob/master/./src/paygentic_sdk/errors/deletecustomerconflicterror.py): Customer cannot be deleted due to active dependencies. Status code `409`. Applicable to 1 of 154 methods.*
-* [`DeleteFeeConflictError`](https://github.com/paygentic/sdk-python/blob/master/./src/paygentic_sdk/errors/deletefeeconflicterror.py): Fee cannot be deleted because it has associated prices. Status code `409`. Applicable to 1 of 154 methods.*
-* [`UpdatePriceConflictError`](https://github.com/paygentic/sdk-python/blob/master/./src/paygentic_sdk/errors/updatepriceconflicterror.py): Price cannot be restructured because a subscription still bills it directly. Status code `409`. Applicable to 1 of 154 methods.*
-* [`DeletePriceConflictError`](https://github.com/paygentic/sdk-python/blob/master/./src/paygentic_sdk/errors/deletepriceconflicterror.py): Price cannot be deleted because a live plan still references it. Status code `409`. Applicable to 1 of 154 methods.*
-* [`UnprocessableEntityError`](https://github.com/paygentic/sdk-python/blob/master/./src/paygentic_sdk/errors/unprocessableentityerror.py): `hosted_link` only: Paygentic cannot create a payment link. The `code` field gives the cause: `INVOICE_NOT_LINKABLE_STATUS` (the invoice is not `ISSUED` or `PAYMENT_FAILED`; do not retry), `INVOICE_NO_BALANCE` (no amount is unpaid; treat the invoice as paid), or `MERCHANT_NO_PAYMENT_ACCOUNT` (the merchant has no connected payment account; retry after onboarding is complete). Status code `422`. Applicable to 1 of 154 methods.*
+* [`ValidationError`](https://github.com/paygentic/sdk-python/blob/master/./src/paygentic_sdk/errors/validationerror.py): Bad Request - The request could not be understood or was missing required parameters. Status code `400`. Applicable to 100 of 155 methods.*
+* [`RetryPaymentResponseError`](https://github.com/paygentic/sdk-python/blob/master/./src/paygentic_sdk/errors/retrypaymentresponseerror.py): The result of a payment retry. Every response status of the retry operation that is not an error envelope uses this shape. Applicable to 1 of 155 methods.*
+* [`DeleteCustomerConflictError`](https://github.com/paygentic/sdk-python/blob/master/./src/paygentic_sdk/errors/deletecustomerconflicterror.py): Customer cannot be deleted due to active dependencies. Status code `409`. Applicable to 1 of 155 methods.*
+* [`DeleteFeeConflictError`](https://github.com/paygentic/sdk-python/blob/master/./src/paygentic_sdk/errors/deletefeeconflicterror.py): Fee cannot be deleted because it has associated prices. Status code `409`. Applicable to 1 of 155 methods.*
+* [`UpdatePriceConflictError`](https://github.com/paygentic/sdk-python/blob/master/./src/paygentic_sdk/errors/updatepriceconflicterror.py): Price cannot be restructured because a subscription still bills it directly. Status code `409`. Applicable to 1 of 155 methods.*
+* [`DeletePriceConflictError`](https://github.com/paygentic/sdk-python/blob/master/./src/paygentic_sdk/errors/deletepriceconflicterror.py): Price cannot be deleted because a live plan still references it. Status code `409`. Applicable to 1 of 155 methods.*
+* [`UnprocessableEntityError`](https://github.com/paygentic/sdk-python/blob/master/./src/paygentic_sdk/errors/unprocessableentityerror.py): `hosted_link` only: Paygentic cannot create a payment link. The `code` field gives the cause: `INVOICE_NOT_LINKABLE_STATUS` (the invoice is not `ISSUED` or `PAYMENT_FAILED`; do not retry), `INVOICE_NO_BALANCE` (no amount is unpaid; treat the invoice as paid), or `MERCHANT_NO_PAYMENT_ACCOUNT` (the merchant has no connected payment account; retry after onboarding is complete). Status code `422`. Applicable to 1 of 155 methods.*
 * [`ResponseValidationError`](https://github.com/paygentic/sdk-python/blob/master/./src/paygentic_sdk/errors/responsevalidationerror.py): Type mismatch between the response data and the expected Pydantic model. Provides access to the Pydantic validation error via the `cause` attribute.
 
 </details>
@@ -731,7 +735,7 @@ with Paygentic(
     bearer_auth=os.getenv("PAYGENTIC_BEARER_AUTH", ""),
 ) as paygentic:
 
-    res = paygentic.billable_metrics.create(aggregation="SUM", description="Tracks total tokens consumed per API call.", merchant_id="org_YS8jkP59V71TdUvj", name="Token Counter", unit="tokens", event_type="<value>", product_id="prod_abc123")
+    res = paygentic.me.get_me()
 
     # Handle response
     print(res)
@@ -751,7 +755,7 @@ with Paygentic(
     bearer_auth=os.getenv("PAYGENTIC_BEARER_AUTH", ""),
 ) as paygentic:
 
-    res = paygentic.billable_metrics.create(aggregation="SUM", description="Tracks total tokens consumed per API call.", merchant_id="org_YS8jkP59V71TdUvj", name="Token Counter", unit="tokens", event_type="<value>", product_id="prod_abc123")
+    res = paygentic.me.get_me()
 
     # Handle response
     print(res)

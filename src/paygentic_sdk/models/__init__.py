@@ -899,6 +899,8 @@ if TYPE_CHECKING:
         ListTestClocksResponseTypedDict,
     )
     from .mappingcapabilities import MappingCapabilities, MappingCapabilitiesTypedDict
+    from .me import Me, MeTypedDict, OrganizationType
+    from .mecredential import MeCredential, MeCredentialType, MeCredentialTypedDict
     from .merchantintegration import (
         MerchantIntegration,
         MerchantIntegrationObject,
@@ -1004,6 +1006,7 @@ if TYPE_CHECKING:
         PaymentSessionTypedDict,
     )
     from .paymentsummary import PaymentSummary, PaymentSummaryTypedDict
+    from .permission import Permission
     from .plan import (
         BillingCadence,
         Plan,
@@ -2193,6 +2196,11 @@ __all__ = [
     "ListTestClocksResponseTypedDict",
     "MappingCapabilities",
     "MappingCapabilitiesTypedDict",
+    "Me",
+    "MeCredential",
+    "MeCredentialType",
+    "MeCredentialTypedDict",
+    "MeTypedDict",
     "Merchant",
     "MerchantIntegration",
     "MerchantIntegrationObject",
@@ -2263,6 +2271,7 @@ __all__ = [
     "OrderObject",
     "OrderType",
     "OrderTypedDict",
+    "OrganizationType",
     "OutOfBandPaymentResult",
     "OutOfBandPaymentResultTypedDict",
     "OutsideScopeLabel",
@@ -2299,6 +2308,7 @@ __all__ = [
     "Period",
     "PeriodBasis",
     "PeriodTypedDict",
+    "Permission",
     "Plan",
     "PlanCreditAllocation",
     "PlanCreditAllocationTypedDict",
@@ -3351,6 +3361,12 @@ _dynamic_imports: dict[str, str] = {
     "ListTestClocksResponseTypedDict": ".listtestclocksop",
     "MappingCapabilities": ".mappingcapabilities",
     "MappingCapabilitiesTypedDict": ".mappingcapabilities",
+    "Me": ".me",
+    "MeTypedDict": ".me",
+    "OrganizationType": ".me",
+    "MeCredential": ".mecredential",
+    "MeCredentialType": ".mecredential",
+    "MeCredentialTypedDict": ".mecredential",
     "MerchantIntegration": ".merchantintegration",
     "MerchantIntegrationObject": ".merchantintegration",
     "MerchantIntegrationTypedDict": ".merchantintegration",
@@ -3435,6 +3451,7 @@ _dynamic_imports: dict[str, str] = {
     "PaymentSessionTypedDict": ".paymentsession",
     "PaymentSummary": ".paymentsummary",
     "PaymentSummaryTypedDict": ".paymentsummary",
+    "Permission": ".permission",
     "BillingCadence": ".plan",
     "Plan": ".plan",
     "PlanObject": ".plan",

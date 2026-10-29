@@ -8,7 +8,7 @@ from typing_extensions import Annotated, TypedDict
 
 
 class OutstandingBlockTypedDict(TypedDict):
-    r"""What is owed, gross of tax, from any date. `awaitingPayment` and `paymentFailed` add up to it, in count and amount."""
+    r"""What is owed, gross of tax, from any date. `awaitingPayment` and `paymentFailed` add up to it, in count and amount. `overdue` is a part of `awaitingPayment`."""
 
     count: int
     r"""Number of unpaid invoices with an amount due above zero. A credit invoice, or one whose amount due rounds to zero, is not counted."""
@@ -18,10 +18,12 @@ class OutstandingBlockTypedDict(TypedDict):
     r"""The part with status `ISSUED`, including any credit invoice"""
     payment_failed: AccountFigureTypedDict
     r"""The part with status `PAYMENT_FAILED`: collection has ended"""
+    overdue: AccountFigureTypedDict
+    r"""The invoices of `awaitingPayment` past their due date: status `ISSUED`, no card retry scheduled, and a due date before the start of today, UTC. Today is the subscription's test clock when test clocks are enabled. A subset of `awaitingPayment` by count. A credit invoice is never overdue, so the amount can exceed `awaitingPayment.amount`."""
 
 
 class OutstandingBlock(BaseModel):
-    r"""What is owed, gross of tax, from any date. `awaitingPayment` and `paymentFailed` add up to it, in count and amount."""
+    r"""What is owed, gross of tax, from any date. `awaitingPayment` and `paymentFailed` add up to it, in count and amount. `overdue` is a part of `awaitingPayment`."""
 
     count: int
     r"""Number of unpaid invoices with an amount due above zero. A credit invoice, or one whose amount due rounds to zero, is not counted."""
@@ -34,6 +36,9 @@ class OutstandingBlock(BaseModel):
 
     payment_failed: Annotated[AccountFigure, pydantic.Field(alias="paymentFailed")]
     r"""The part with status `PAYMENT_FAILED`: collection has ended"""
+
+    overdue: AccountFigure
+    r"""The invoices of `awaitingPayment` past their due date: status `ISSUED`, no card retry scheduled, and a due date before the start of today, UTC. Today is the subscription's test clock when test clocks are enabled. A subset of `awaitingPayment` by count. A credit invoice is never overdue, so the amount can exceed `awaitingPayment.amount`."""
 
 
 try:

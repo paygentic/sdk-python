@@ -32,6 +32,8 @@ class ErrorData(BaseModel):
 
 @dataclass(unsafe_hash=True)
 class Error(PaygenticError):
+    r"""Unauthorized - Authentication failed or user does not have permissions"""
+
     data: ErrorData = field(hash=False)
 
     def __init__(

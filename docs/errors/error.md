@@ -1,5 +1,7 @@
 # Error
 
+Unauthorized - Authentication failed or user does not have permissions
+
 
 ## Fields
 
