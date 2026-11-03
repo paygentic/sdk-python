@@ -25,7 +25,7 @@ class SubscriptionIntervalChangeTypedDict(TypedDict):
     merchant_id: str
     subscription_id: str
     change_reason: ChangeReason
-    r"""Why a change was made. `correction` fixes data to match what was agreed; `migration` moves a contract from another system; `commercial` is a real change to the deal. Defaults to `unspecified`."""
+    r"""Why a change was made. `correction` repairs data that was entered wrong; `migration` moves a contract from another system; `commercial` is a real change to the deal; `contractual` applies a step the original contract scheduled, such as an annual uplift. Defaults to `unspecified`."""
     description: Nullable[str]
     metadata: Dict[str, IntervalChangeMetadataTypedDict]
     r"""Your own key-value data about the change, such as a CRM deal ID."""
@@ -44,7 +44,7 @@ class SubscriptionIntervalChange(BaseModel):
     subscription_id: Annotated[str, pydantic.Field(alias="subscriptionId")]
 
     change_reason: Annotated[ChangeReason, pydantic.Field(alias="changeReason")]
-    r"""Why a change was made. `correction` fixes data to match what was agreed; `migration` moves a contract from another system; `commercial` is a real change to the deal. Defaults to `unspecified`."""
+    r"""Why a change was made. `correction` repairs data that was entered wrong; `migration` moves a contract from another system; `commercial` is a real change to the deal; `contractual` applies a step the original contract scheduled, such as an annual uplift. Defaults to `unspecified`."""
 
     description: Nullable[str]
 

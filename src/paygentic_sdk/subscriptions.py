@@ -279,7 +279,7 @@ class Subscriptions(BaseSDK):
         :param session_expiry_minutes: Number of minutes until the payment session expires. Defaults to 240 minutes (4 hours) if not provided.
         :param version_policy: How the subscription follows new versions of its plan. `floating` follows the plan's default version: when the default changes, the subscription bills from the new default from its next billing period. `pinned` keeps the plan version that the subscription holds. A subscription created without a value is `floating`. A change to this value does not change a billing period that has already started.
         :param metadata: Free-form merchant metadata to attach to the subscription. Values must be strings, numbers, or booleans.
-        :param change_reason: Why a change was made. `correction` fixes data to match what was agreed; `migration` moves a contract from another system; `commercial` is a real change to the deal. Defaults to `unspecified`.
+        :param change_reason: Why a change was made. `correction` repairs data that was entered wrong; `migration` moves a contract from another system; `commercial` is a real change to the deal; `contractual` applies a step the original contract scheduled, such as an annual uplift. Defaults to `unspecified`.
         :param change_description: A free-text note on why these intervals are changing.
         :param change_metadata: Your own key-value data about the change, such as a CRM deal ID.
         :param retries: Override the default retry configuration for this method
@@ -466,7 +466,7 @@ class Subscriptions(BaseSDK):
         :param session_expiry_minutes: Number of minutes until the payment session expires. Defaults to 240 minutes (4 hours) if not provided.
         :param version_policy: How the subscription follows new versions of its plan. `floating` follows the plan's default version: when the default changes, the subscription bills from the new default from its next billing period. `pinned` keeps the plan version that the subscription holds. A subscription created without a value is `floating`. A change to this value does not change a billing period that has already started.
         :param metadata: Free-form merchant metadata to attach to the subscription. Values must be strings, numbers, or booleans.
-        :param change_reason: Why a change was made. `correction` fixes data to match what was agreed; `migration` moves a contract from another system; `commercial` is a real change to the deal. Defaults to `unspecified`.
+        :param change_reason: Why a change was made. `correction` repairs data that was entered wrong; `migration` moves a contract from another system; `commercial` is a real change to the deal; `contractual` applies a step the original contract scheduled, such as an annual uplift. Defaults to `unspecified`.
         :param change_description: A free-text note on why these intervals are changing.
         :param change_metadata: Your own key-value data about the change, such as a CRM deal ID.
         :param retries: Override the default retry configuration for this method
@@ -2402,7 +2402,7 @@ class Subscriptions(BaseSDK):
 
         :param id: The subscription ID
         :param reason: Cancellation explanation text. Sample values: 'Customer requested cancellation', 'Payment failure', 'Service migration', 'Contract expiration'
-        :param change_reason: Why a change was made. `correction` fixes data to match what was agreed; `migration` moves a contract from another system; `commercial` is a real change to the deal. Defaults to `unspecified`.
+        :param change_reason: Why a change was made. `correction` repairs data that was entered wrong; `migration` moves a contract from another system; `commercial` is a real change to the deal; `contractual` applies a step the original contract scheduled, such as an annual uplift. Defaults to `unspecified`.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -2517,7 +2517,7 @@ class Subscriptions(BaseSDK):
 
         :param id: The subscription ID
         :param reason: Cancellation explanation text. Sample values: 'Customer requested cancellation', 'Payment failure', 'Service migration', 'Contract expiration'
-        :param change_reason: Why a change was made. `correction` fixes data to match what was agreed; `migration` moves a contract from another system; `commercial` is a real change to the deal. Defaults to `unspecified`.
+        :param change_reason: Why a change was made. `correction` repairs data that was entered wrong; `migration` moves a contract from another system; `commercial` is a real change to the deal; `contractual` applies a step the original contract scheduled, such as an annual uplift. Defaults to `unspecified`.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds

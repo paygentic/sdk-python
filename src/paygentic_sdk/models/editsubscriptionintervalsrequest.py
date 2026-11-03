@@ -33,7 +33,7 @@ class EditSubscriptionIntervalsRequest3TypedDict(TypedDict):
     edit: NotRequired[List[SubscriptionIntervalEditOpTypedDict]]
     r"""Changes to existing intervals."""
     change_reason: NotRequired[ChangeReason]
-    r"""Why a change was made. `correction` fixes data to match what was agreed; `migration` moves a contract from another system; `commercial` is a real change to the deal. Defaults to `unspecified`."""
+    r"""Why a change was made. `correction` repairs data that was entered wrong; `migration` moves a contract from another system; `commercial` is a real change to the deal; `contractual` applies a step the original contract scheduled, such as an annual uplift. Defaults to `unspecified`."""
     description: NotRequired[str]
     r"""A free-text note on why these intervals are changing."""
     metadata: NotRequired[Dict[str, IntervalChangeMetadataTypedDict]]
@@ -53,7 +53,7 @@ class EditSubscriptionIntervalsRequest3(BaseModel):
     change_reason: Annotated[
         Optional[ChangeReason], pydantic.Field(alias="changeReason")
     ] = None
-    r"""Why a change was made. `correction` fixes data to match what was agreed; `migration` moves a contract from another system; `commercial` is a real change to the deal. Defaults to `unspecified`."""
+    r"""Why a change was made. `correction` repairs data that was entered wrong; `migration` moves a contract from another system; `commercial` is a real change to the deal; `contractual` applies a step the original contract scheduled, such as an annual uplift. Defaults to `unspecified`."""
 
     description: Optional[str] = None
     r"""A free-text note on why these intervals are changing."""
@@ -88,7 +88,7 @@ class EditSubscriptionIntervalsRequest2TypedDict(TypedDict):
     remove: NotRequired[List[SubscriptionIntervalRemoveOpTypedDict]]
     r"""Intervals to remove outright."""
     change_reason: NotRequired[ChangeReason]
-    r"""Why a change was made. `correction` fixes data to match what was agreed; `migration` moves a contract from another system; `commercial` is a real change to the deal. Defaults to `unspecified`."""
+    r"""Why a change was made. `correction` repairs data that was entered wrong; `migration` moves a contract from another system; `commercial` is a real change to the deal; `contractual` applies a step the original contract scheduled, such as an annual uplift. Defaults to `unspecified`."""
     description: NotRequired[str]
     r"""A free-text note on why these intervals are changing."""
     metadata: NotRequired[Dict[str, IntervalChangeMetadataTypedDict]]
@@ -108,7 +108,7 @@ class EditSubscriptionIntervalsRequest2(BaseModel):
     change_reason: Annotated[
         Optional[ChangeReason], pydantic.Field(alias="changeReason")
     ] = None
-    r"""Why a change was made. `correction` fixes data to match what was agreed; `migration` moves a contract from another system; `commercial` is a real change to the deal. Defaults to `unspecified`."""
+    r"""Why a change was made. `correction` repairs data that was entered wrong; `migration` moves a contract from another system; `commercial` is a real change to the deal; `contractual` applies a step the original contract scheduled, such as an annual uplift. Defaults to `unspecified`."""
 
     description: Optional[str] = None
     r"""A free-text note on why these intervals are changing."""
@@ -143,7 +143,7 @@ class EditSubscriptionIntervalsRequest1TypedDict(TypedDict):
     remove: NotRequired[List[SubscriptionIntervalRemoveOpTypedDict]]
     r"""Intervals to remove outright."""
     change_reason: NotRequired[ChangeReason]
-    r"""Why a change was made. `correction` fixes data to match what was agreed; `migration` moves a contract from another system; `commercial` is a real change to the deal. Defaults to `unspecified`."""
+    r"""Why a change was made. `correction` repairs data that was entered wrong; `migration` moves a contract from another system; `commercial` is a real change to the deal; `contractual` applies a step the original contract scheduled, such as an annual uplift. Defaults to `unspecified`."""
     description: NotRequired[str]
     r"""A free-text note on why these intervals are changing."""
     metadata: NotRequired[Dict[str, IntervalChangeMetadataTypedDict]]
@@ -163,7 +163,7 @@ class EditSubscriptionIntervalsRequest1(BaseModel):
     change_reason: Annotated[
         Optional[ChangeReason], pydantic.Field(alias="changeReason")
     ] = None
-    r"""Why a change was made. `correction` fixes data to match what was agreed; `migration` moves a contract from another system; `commercial` is a real change to the deal. Defaults to `unspecified`."""
+    r"""Why a change was made. `correction` repairs data that was entered wrong; `migration` moves a contract from another system; `commercial` is a real change to the deal; `contractual` applies a step the original contract scheduled, such as an annual uplift. Defaults to `unspecified`."""
 
     description: Optional[str] = None
     r"""A free-text note on why these intervals are changing."""

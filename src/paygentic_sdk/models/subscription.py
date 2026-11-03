@@ -222,6 +222,7 @@ TerminationChangeReason = Union[
         "correction",
         "migration",
         "unspecified",
+        "contractual",
     ],
     UnrecognizedStr,
 ]

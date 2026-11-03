@@ -187,7 +187,7 @@ class CreateSubscriptionRequestTypedDict(TypedDict):
     metadata: NotRequired[Dict[str, SubscriptionMetadataTypedDict]]
     r"""Free-form merchant metadata to attach to the subscription. Values must be strings, numbers, or booleans."""
     change_reason: NotRequired[ChangeReason]
-    r"""Why a change was made. `correction` fixes data to match what was agreed; `migration` moves a contract from another system; `commercial` is a real change to the deal. Defaults to `unspecified`."""
+    r"""Why a change was made. `correction` repairs data that was entered wrong; `migration` moves a contract from another system; `commercial` is a real change to the deal; `contractual` applies a step the original contract scheduled, such as an annual uplift. Defaults to `unspecified`."""
     change_description: NotRequired[str]
     r"""A free-text note on why these intervals are changing."""
     change_metadata: NotRequired[Dict[str, IntervalChangeMetadataTypedDict]]
@@ -281,7 +281,7 @@ class CreateSubscriptionRequest(BaseModel):
     change_reason: Annotated[
         Optional[ChangeReason], pydantic.Field(alias="changeReason")
     ] = None
-    r"""Why a change was made. `correction` fixes data to match what was agreed; `migration` moves a contract from another system; `commercial` is a real change to the deal. Defaults to `unspecified`."""
+    r"""Why a change was made. `correction` repairs data that was entered wrong; `migration` moves a contract from another system; `commercial` is a real change to the deal; `contractual` applies a step the original contract scheduled, such as an annual uplift. Defaults to `unspecified`."""
 
     change_description: Annotated[
         Optional[str], pydantic.Field(alias="changeDescription")

@@ -16,15 +16,8 @@ from paygentic_sdk.types import (
 from paygentic_sdk.utils import FieldMetadata, PathParamMetadata, RequestMetadata
 import pydantic
 from pydantic import model_serializer
-from typing import List, Literal, Optional
+from typing import List, Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
-
-
-UpdatePricePaymentTerm = Literal[
-    "in_arrears",
-    "in_advance",
-]
-r"""Billing timing preference: 'in_advance' (prepaid — charged upfront or drawn from a prepaid commitment) or 'in_arrears' (charged at period end)."""
 
 
 class UpdatePriceRequestBodyTypedDict(TypedDict):
@@ -39,10 +32,6 @@ class UpdatePriceRequestBodyTypedDict(TypedDict):
     model: NotRequired[PriceModelInput]
     r"""The pricing model to set. 'standard' and 'volume' are accepted. Legacy 'dynamic'/'percentage' prices can still be edited (other fields) but cannot be switched back to those models. Percentage/revenue-share is expressed via 'standard' with a unit-price multiplier."""
     properties: NotRequired[PricePropertiesTypedDict]
-    payment_term: NotRequired[UpdatePricePaymentTerm]
-    r"""Billing timing preference: 'in_advance' (prepaid — charged upfront or drawn from a prepaid commitment) or 'in_arrears' (charged at period end)."""
-    billing_cadence: NotRequired[Nullable[str]]
-    r"""ISO 8601 duration for recurring fees (e.g., 'P1M' for monthly, 'P1Y' for yearly, or 'P0D' for one-time)"""
     feature: NotRequired[Nullable[PriceFeatureInputTypedDict]]
     r"""Feature to associate. Set to null to remove existing feature. Omit to leave unchanged."""
     grant_discount_enabled: NotRequired[bool]
@@ -83,16 +72,6 @@ class UpdatePriceRequestBody(BaseModel):
 
     properties: Optional[PriceProperties] = None
 
-    payment_term: Annotated[
-        Optional[UpdatePricePaymentTerm], pydantic.Field(alias="paymentTerm")
-    ] = None
-    r"""Billing timing preference: 'in_advance' (prepaid — charged upfront or drawn from a prepaid commitment) or 'in_arrears' (charged at period end)."""
-
-    billing_cadence: Annotated[
-        OptionalNullable[str], pydantic.Field(alias="billingCadence")
-    ] = UNSET
-    r"""ISO 8601 duration for recurring fees (e.g., 'P1M' for monthly, 'P1Y' for yearly, or 'P0D' for one-time)"""
-
     feature: OptionalNullable[PriceFeatureInput] = UNSET
     r"""Feature to associate. Set to null to remove existing feature. Omit to leave unchanged."""
 
@@ -125,8 +104,6 @@ class UpdatePriceRequestBody(BaseModel):
                 "invoiceDisplayGroup",
                 "model",
                 "properties",
-                "paymentTerm",
-                "billingCadence",
                 "feature",
                 "grantDiscountEnabled",
                 "isObligation",
@@ -135,9 +112,7 @@ class UpdatePriceRequestBody(BaseModel):
                 "quantity",
             ]
         )
-        nullable_fields = set(
-            ["pricingUnitId", "invoiceDisplayGroup", "billingCadence", "feature"]
-        )
+        nullable_fields = set(["pricingUnitId", "invoiceDisplayGroup", "feature"])
         serialized = handler(self)
         m = {}
 

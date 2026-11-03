@@ -14,7 +14,7 @@ class TerminateSubscriptionRequestBodyTypedDict(TypedDict):
     reason: str
     r"""Cancellation explanation text. Sample values: 'Customer requested cancellation', 'Payment failure', 'Service migration', 'Contract expiration'"""
     change_reason: NotRequired[ChangeReason]
-    r"""Why a change was made. `correction` fixes data to match what was agreed; `migration` moves a contract from another system; `commercial` is a real change to the deal. Defaults to `unspecified`."""
+    r"""Why a change was made. `correction` repairs data that was entered wrong; `migration` moves a contract from another system; `commercial` is a real change to the deal; `contractual` applies a step the original contract scheduled, such as an annual uplift. Defaults to `unspecified`."""
 
 
 class TerminateSubscriptionRequestBody(BaseModel):
@@ -24,7 +24,7 @@ class TerminateSubscriptionRequestBody(BaseModel):
     change_reason: Annotated[
         Optional[ChangeReason], pydantic.Field(alias="changeReason")
     ] = None
-    r"""Why a change was made. `correction` fixes data to match what was agreed; `migration` moves a contract from another system; `commercial` is a real change to the deal. Defaults to `unspecified`."""
+    r"""Why a change was made. `correction` repairs data that was entered wrong; `migration` moves a contract from another system; `commercial` is a real change to the deal; `contractual` applies a step the original contract scheduled, such as an annual uplift. Defaults to `unspecified`."""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

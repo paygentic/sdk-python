@@ -1447,7 +1447,6 @@ if TYPE_CHECKING:
     from .updatepriceop import (
         UpdatePriceDetails,
         UpdatePriceDetailsTypedDict,
-        UpdatePricePaymentTerm,
         UpdatePriceRequest,
         UpdatePriceRequestBody,
         UpdatePriceRequestBodyTypedDict,
@@ -2623,7 +2622,6 @@ __all__ = [
     "UpdatePlanTaxBehavior",
     "UpdatePriceDetails",
     "UpdatePriceDetailsTypedDict",
-    "UpdatePricePaymentTerm",
     "UpdatePriceRequest",
     "UpdatePriceRequestBody",
     "UpdatePriceRequestBodyTypedDict",
@@ -3785,7 +3783,6 @@ _dynamic_imports: dict[str, str] = {
     "UpdatePlanTaxBehavior": ".updateplanop",
     "UpdatePriceDetails": ".updatepriceop",
     "UpdatePriceDetailsTypedDict": ".updatepriceop",
-    "UpdatePricePaymentTerm": ".updatepriceop",
     "UpdatePriceRequest": ".updatepriceop",
     "UpdatePriceRequestBody": ".updatepriceop",
     "UpdatePriceRequestBodyTypedDict": ".updatepriceop",

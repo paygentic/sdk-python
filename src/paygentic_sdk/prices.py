@@ -702,8 +702,6 @@ class Prices(BaseSDK):
         properties: Optional[
             Union[models.PriceProperties, models.PricePropertiesTypedDict]
         ] = None,
-        payment_term: Optional[models.UpdatePricePaymentTerm] = None,
-        billing_cadence: OptionalNullable[str] = UNSET,
         feature: OptionalNullable[
             Union[models.PriceFeatureInput, models.PriceFeatureInputTypedDict]
         ] = UNSET,
@@ -719,6 +717,8 @@ class Prices(BaseSDK):
     ) -> models.Price:
         r"""Update
 
+        Updates a price. `paymentTerm` and `billingCadence` are fixed when the price is created: a request that sends either one is refused with a 400. To change them, create a new price.
+
         :param id: The unique identifier of the price
         :param billable_metric_id: Unique identifier for a billable metric
         :param pricing_unit_id: Denominate this metered price in a pricing unit (credits). Set to a pricing unit ID to draw down a credit pool, null to revert to real currency, or omit to leave unchanged.
@@ -726,8 +726,6 @@ class Prices(BaseSDK):
         :param invoice_display_group: Presentation only. Prices sharing this value, within one billing period, print as a single row on the rendered invoice PDF and are described by this string. Every member still bills its own line item on the ledger, this API and the compliance document. The combined row's rate is derived from the members' own rates. Requires the 'standard' pricing model. Sample values: 'Cross Border Fees', 'FX Fees'
         :param model: The pricing model to set. 'standard' and 'volume' are accepted. Legacy 'dynamic'/'percentage' prices can still be edited (other fields) but cannot be switched back to those models. Percentage/revenue-share is expressed via 'standard' with a unit-price multiplier.
         :param properties:
-        :param payment_term: Billing timing preference: 'in_advance' (prepaid — charged upfront or drawn from a prepaid commitment) or 'in_arrears' (charged at period end).
-        :param billing_cadence: ISO 8601 duration for recurring fees (e.g., 'P1M' for monthly, 'P1Y' for yearly, or 'P0D' for one-time)
         :param feature: Feature to associate. Set to null to remove existing feature. Omit to leave unchanged.
         :param grant_discount_enabled: When true, grants applied to a subscription will discount usage charged by this price. Only supported for standard metered prices.
         :param is_obligation: A fixed amount owed whole rather than a per-period rate. An obligation is not prorated over a partial first period: when a subscription starts before its billing anchor, no truncated stub is billed and the first charge is the full amount at the next anchor. An obligation also refuses an interval boundary that falls strictly inside one of its own billing periods, since part of an amount owed whole is not a thing to bill. Defaults to false, which is a rate and is today's behaviour for every price. Not supported on a metered price, whose amount resolves from usage at close.
@@ -760,8 +758,6 @@ class Prices(BaseSDK):
                 properties=utils.get_pydantic_model(
                     properties, Optional[models.PriceProperties]
                 ),
-                payment_term=payment_term,
-                billing_cadence=billing_cadence,
                 feature=utils.get_pydantic_model(
                     feature, OptionalNullable[models.PriceFeatureInput]
                 ),
@@ -862,8 +858,6 @@ class Prices(BaseSDK):
         properties: Optional[
             Union[models.PriceProperties, models.PricePropertiesTypedDict]
         ] = None,
-        payment_term: Optional[models.UpdatePricePaymentTerm] = None,
-        billing_cadence: OptionalNullable[str] = UNSET,
         feature: OptionalNullable[
             Union[models.PriceFeatureInput, models.PriceFeatureInputTypedDict]
         ] = UNSET,
@@ -879,6 +873,8 @@ class Prices(BaseSDK):
     ) -> models.Price:
         r"""Update
 
+        Updates a price. `paymentTerm` and `billingCadence` are fixed when the price is created: a request that sends either one is refused with a 400. To change them, create a new price.
+
         :param id: The unique identifier of the price
         :param billable_metric_id: Unique identifier for a billable metric
         :param pricing_unit_id: Denominate this metered price in a pricing unit (credits). Set to a pricing unit ID to draw down a credit pool, null to revert to real currency, or omit to leave unchanged.
@@ -886,8 +882,6 @@ class Prices(BaseSDK):
         :param invoice_display_group: Presentation only. Prices sharing this value, within one billing period, print as a single row on the rendered invoice PDF and are described by this string. Every member still bills its own line item on the ledger, this API and the compliance document. The combined row's rate is derived from the members' own rates. Requires the 'standard' pricing model. Sample values: 'Cross Border Fees', 'FX Fees'
         :param model: The pricing model to set. 'standard' and 'volume' are accepted. Legacy 'dynamic'/'percentage' prices can still be edited (other fields) but cannot be switched back to those models. Percentage/revenue-share is expressed via 'standard' with a unit-price multiplier.
         :param properties:
-        :param payment_term: Billing timing preference: 'in_advance' (prepaid — charged upfront or drawn from a prepaid commitment) or 'in_arrears' (charged at period end).
-        :param billing_cadence: ISO 8601 duration for recurring fees (e.g., 'P1M' for monthly, 'P1Y' for yearly, or 'P0D' for one-time)
         :param feature: Feature to associate. Set to null to remove existing feature. Omit to leave unchanged.
         :param grant_discount_enabled: When true, grants applied to a subscription will discount usage charged by this price. Only supported for standard metered prices.
         :param is_obligation: A fixed amount owed whole rather than a per-period rate. An obligation is not prorated over a partial first period: when a subscription starts before its billing anchor, no truncated stub is billed and the first charge is the full amount at the next anchor. An obligation also refuses an interval boundary that falls strictly inside one of its own billing periods, since part of an amount owed whole is not a thing to bill. Defaults to false, which is a rate and is today's behaviour for every price. Not supported on a metered price, whose amount resolves from usage at close.
@@ -920,8 +914,6 @@ class Prices(BaseSDK):
                 properties=utils.get_pydantic_model(
                     properties, Optional[models.PriceProperties]
                 ),
-                payment_term=payment_term,
-                billing_cadence=billing_cadence,
                 feature=utils.get_pydantic_model(
                     feature, OptionalNullable[models.PriceFeatureInput]
                 ),

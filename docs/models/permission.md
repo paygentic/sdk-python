@@ -45,6 +45,8 @@ This is an open enum. Unrecognized values will not fail type checks.
 - `"portalSessions:read"`
 - `"platformUsers:read"`
 - `"platformAdmin:read"`
+- `"loginLockout:read"`
+- `"platformSystem:read"`
 - `"organizationCreation:read"`
 - `"compliance:read"`
 - `"taxSettings:read"`
@@ -88,6 +90,8 @@ This is an open enum. Unrecognized values will not fail type checks.
 - `"portalSessions:write"`
 - `"platformUsers:write"`
 - `"platformAdmin:write"`
+- `"loginLockout:write"`
+- `"platformSystem:write"`
 - `"organizationCreation:write"`
 - `"compliance:write"`
 - `"taxSettings:write"`
