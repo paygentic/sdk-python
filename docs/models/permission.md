@@ -108,6 +108,7 @@ This is an open enum. Unrecognized values will not fail type checks.
 - `"events:write"`
 - `"invoices:issue"`
 - `"invoices:void"`
+- `"invoices:transition"`
 - `"payments:refund"`
 - `"organization:delete"`
 - `"ownership:transfer"`

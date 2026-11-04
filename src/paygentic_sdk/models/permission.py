@@ -99,6 +99,7 @@ Permission = Union[
         "events:write",
         "invoices:issue",
         "invoices:void",
+        "invoices:transition",
         "payments:refund",
         "organization:delete",
         "ownership:transfer",

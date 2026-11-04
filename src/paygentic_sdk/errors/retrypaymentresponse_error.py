@@ -27,6 +27,8 @@ class RetryPaymentResponseErrorData(BaseModel):
     r"""The provider's payment reference for the charge, when the provider has one."""
     error: Optional[models_retrypaymenterror.RetryPaymentError] = None
     r"""Why a payment retry did not collect the money."""
+    request_id: Annotated[Optional[str], pydantic.Field(alias="requestId")] = None
+    r"""Identifies this request in our logs. Include it when you contact support. Also sent in the `request-id` response header."""
 
 
 @dataclass(unsafe_hash=True)

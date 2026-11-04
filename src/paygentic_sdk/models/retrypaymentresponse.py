@@ -26,6 +26,8 @@ class RetryPaymentResponseTypedDict(TypedDict):
     r"""The provider's payment reference for the charge, when the provider has one."""
     error: NotRequired[RetryPaymentErrorTypedDict]
     r"""Why a payment retry did not collect the money."""
+    request_id: NotRequired[str]
+    r"""Identifies this request in our logs. Include it when you contact support. Also sent in the `request-id` response header."""
 
 
 class RetryPaymentResponse(BaseModel):
@@ -48,9 +50,12 @@ class RetryPaymentResponse(BaseModel):
     error: Optional[RetryPaymentError] = None
     r"""Why a payment retry did not collect the money."""
 
+    request_id: Annotated[Optional[str], pydantic.Field(alias="requestId")] = None
+    r"""Identifies this request in our logs. Include it when you contact support. Also sent in the `request-id` response header."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["paymentIntentId", "error"])
+        optional_fields = set(["paymentIntentId", "error", "requestId"])
         serialized = handler(self)
         m = {}
 

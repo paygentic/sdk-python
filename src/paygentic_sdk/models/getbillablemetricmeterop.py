@@ -24,7 +24,7 @@ class GetBillableMetricMeterRequestTypedDict(TypedDict):
     from_: datetime
     r"""Start of query window (ISO 8601)"""
     to: datetime
-    r"""End of query window (ISO 8601)"""
+    r"""End of query window (ISO 8601). At most 403 days after `from`."""
     subject: NotRequired[str]
     r"""Filter by customer/user ID"""
     window_size: NotRequired[GetBillableMetricMeterWindowSize]
@@ -54,7 +54,7 @@ class GetBillableMetricMeterRequest(BaseModel):
     to: Annotated[
         datetime, FieldMetadata(query=QueryParamMetadata(style="form", explode=True))
     ]
-    r"""End of query window (ISO 8601)"""
+    r"""End of query window (ISO 8601). At most 403 days after `from`."""
 
     subject: Annotated[
         Optional[str],

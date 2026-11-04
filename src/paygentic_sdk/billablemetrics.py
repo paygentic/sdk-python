@@ -950,7 +950,7 @@ class BillableMetrics(BaseSDK):
 
         :param id:
         :param from_: Start of query window (ISO 8601)
-        :param to: End of query window (ISO 8601)
+        :param to: End of query window (ISO 8601). At most 403 days after `from`.
         :param subject: Filter by customer/user ID
         :param window_size: Time bucket granularity
         :param filter_group_by: JSON-encoded dimension filter (e.g. {\"key\":\"value\"})
@@ -1072,7 +1072,7 @@ class BillableMetrics(BaseSDK):
 
         :param id:
         :param from_: Start of query window (ISO 8601)
-        :param to: End of query window (ISO 8601)
+        :param to: End of query window (ISO 8601). At most 403 days after `from`.
         :param subject: Filter by customer/user ID
         :param window_size: Time bucket granularity
         :param filter_group_by: JSON-encoded dimension filter (e.g. {\"key\":\"value\"})
@@ -1193,7 +1193,7 @@ class BillableMetrics(BaseSDK):
 
         :param id:
         :param from_: Start of query window (ISO 8601)
-        :param to: End of query window (ISO 8601)
+        :param to: End of query window (ISO 8601). At most 403 days after `from`.
         :param subject: Filter by subject (typically the customer/user ID)
         :param limit: Maximum number of events to return
         :param offset: Number of events to skip
@@ -1312,7 +1312,7 @@ class BillableMetrics(BaseSDK):
 
         :param id:
         :param from_: Start of query window (ISO 8601)
-        :param to: End of query window (ISO 8601)
+        :param to: End of query window (ISO 8601). At most 403 days after `from`.
         :param subject: Filter by subject (typically the customer/user ID)
         :param limit: Maximum number of events to return
         :param offset: Number of events to skip

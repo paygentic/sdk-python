@@ -6,10 +6,14 @@ import httpx
 from paygentic_sdk.errors import PaygenticError
 from paygentic_sdk.models import deletepriceop as models_deletepriceop
 from paygentic_sdk.types import BaseModel
+import pydantic
 from typing import Optional
+from typing_extensions import Annotated
 
 
 class DeletePriceConflictErrorData(BaseModel):
+    request_id: Annotated[Optional[str], pydantic.Field(alias="requestId")] = None
+    r"""Identifies this request in our logs. Include it when you contact support. Also sent in the `request-id` response header."""
     error: Optional[str] = None
     message: Optional[str] = None
     details: Optional[models_deletepriceop.DeletePriceDetails] = None

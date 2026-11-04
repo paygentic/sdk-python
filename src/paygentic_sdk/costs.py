@@ -1108,7 +1108,7 @@ class Costs(BaseSDK):
 
         :param id: The unique identifier of the cost
         :param from_: Start of the query window, included (ISO 8601). Required together with 'to'.
-        :param to: End of the query window, excluded: the read counts from <= t < to (ISO 8601). Required together with 'from'.
+        :param to: End of the query window, excluded: the read counts from <= t < to (ISO 8601). Required together with 'from'. At most 403 days after `from`.
         :param subject: Filter usage to a specific subject (billing entity). When provided, only cost events matching this subject are included. When omitted, usage is aggregated across all subjects for the merchant.
         :param group_by: Comma-separated dimension keys to group results by.
         :param window: Time window granularity for time-series breakdown.
@@ -1224,7 +1224,7 @@ class Costs(BaseSDK):
 
         :param id: The unique identifier of the cost
         :param from_: Start of the query window, included (ISO 8601). Required together with 'to'.
-        :param to: End of the query window, excluded: the read counts from <= t < to (ISO 8601). Required together with 'from'.
+        :param to: End of the query window, excluded: the read counts from <= t < to (ISO 8601). Required together with 'from'. At most 403 days after `from`.
         :param subject: Filter usage to a specific subject (billing entity). When provided, only cost events matching this subject are included. When omitted, usage is aggregated across all subjects for the merchant.
         :param group_by: Comma-separated dimension keys to group results by.
         :param window: Time window granularity for time-series breakdown.

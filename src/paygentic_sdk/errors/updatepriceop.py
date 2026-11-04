@@ -6,13 +6,17 @@ import httpx
 from paygentic_sdk.errors import PaygenticError
 from paygentic_sdk.models import updatepriceop as models_updatepriceop
 from paygentic_sdk.types import BaseModel
+import pydantic
 from typing import Optional
+from typing_extensions import Annotated
 
 
 class UpdatePriceConflictErrorData(BaseModel):
     message: str
     code: str
     r"""Machine-readable conflict code. Open set: a new code may appear, so branch on the ones you handle and treat anything else as an unhandled conflict."""
+    request_id: Annotated[Optional[str], pydantic.Field(alias="requestId")] = None
+    r"""Identifies this request in our logs. Include it when you contact support. Also sent in the `request-id` response header."""
     error: Optional[str] = None
     details: Optional[models_updatepriceop.UpdatePriceDetails] = None
 

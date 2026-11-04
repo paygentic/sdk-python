@@ -24,7 +24,7 @@ class GetCostSummaryRequestTypedDict(TypedDict):
     from_: datetime
     r"""Start of the query window, included (ISO 8601). Required together with 'to'."""
     to: datetime
-    r"""End of the query window, excluded: the read counts from <= t < to (ISO 8601). Required together with 'from'."""
+    r"""End of the query window, excluded: the read counts from <= t < to (ISO 8601). Required together with 'from'. At most 403 days after `from`."""
     subject: NotRequired[str]
     r"""Filter usage to a specific subject (billing entity). When provided, only cost events matching this subject are included. When omitted, usage is aggregated across all subjects for the merchant."""
     group_by: NotRequired[str]
@@ -51,7 +51,7 @@ class GetCostSummaryRequest(BaseModel):
     to: Annotated[
         datetime, FieldMetadata(query=QueryParamMetadata(style="form", explode=True))
     ]
-    r"""End of the query window, excluded: the read counts from <= t < to (ISO 8601). Required together with 'from'."""
+    r"""End of the query window, excluded: the read counts from <= t < to (ISO 8601). Required together with 'from'. At most 403 days after `from`."""
 
     subject: Annotated[
         Optional[str],

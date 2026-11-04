@@ -6,7 +6,9 @@ import httpx
 from paygentic_sdk.errors import PaygenticError
 from paygentic_sdk.models import validationerror as models_validationerror
 from paygentic_sdk.types import BaseModel
+import pydantic
 from typing import List, Optional
+from typing_extensions import Annotated
 
 
 class ValidationErrorData(BaseModel):
@@ -16,6 +18,8 @@ class ValidationErrorData(BaseModel):
     r"""Array of field-specific validation errors"""
     error: Optional[models_validationerror.ErrorEnum] = "validation_error"
     r"""Error type indicating validation failure"""
+    request_id: Annotated[Optional[str], pydantic.Field(alias="requestId")] = None
+    r"""Identifies this request in our logs. Include it when you contact support. Also sent in the `request-id` response header."""
 
 
 @dataclass(unsafe_hash=True)

@@ -28,6 +28,8 @@ class ErrorData(BaseModel):
         Optional[List[str]], pydantic.Field(alias="requiredPermissions")
     ] = None
     r"""Present on a 403 from the authorization check. The permissions the caller needs for this request."""
+    request_id: Annotated[Optional[str], pydantic.Field(alias="requestId")] = None
+    r"""Identifies this request in our logs. Include it when you contact support. Also sent in the `request-id` response header."""
 
 
 @dataclass(unsafe_hash=True)
