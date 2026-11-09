@@ -27,7 +27,7 @@ class ExternalReferenceTypedDict(TypedDict):
     merchant_id: str
     r"""Unique identifier for an organization"""
     entity_type: EntityType
-    r"""The type of Paygentic entity this external reference points at"""
+    r"""The type of Paygentic entity this external reference points at. `subscriptionProposal` and `subscription` references link a subscription proposal, and the subscription its approval creates, to the CRM record they come from. They are read-only through these endpoints."""
     entity_id: str
     provider: str
     r"""Lowercase snake_case provider identifier (e.g. `salesforce`, `netsuite`)"""
@@ -52,7 +52,7 @@ class ExternalReference(BaseModel):
     r"""Unique identifier for an organization"""
 
     entity_type: Annotated[EntityType, pydantic.Field(alias="entityType")]
-    r"""The type of Paygentic entity this external reference points at"""
+    r"""The type of Paygentic entity this external reference points at. `subscriptionProposal` and `subscription` references link a subscription proposal, and the subscription its approval creates, to the CRM record they come from. They are read-only through these endpoints."""
 
     entity_id: Annotated[str, pydantic.Field(alias="entityId")]
 

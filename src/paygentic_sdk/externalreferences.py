@@ -16,7 +16,7 @@ class ExternalReferences(BaseSDK):
         self,
         *,
         merchant_id: str,
-        entity_type: models.EntityType,
+        entity_type: models.EntityTypeInput,
         entity_id: str,
         provider: str,
         external_id: str,
@@ -33,7 +33,7 @@ class ExternalReferences(BaseSDK):
         r"""Create
 
         :param merchant_id: Unique identifier for an organization
-        :param entity_type: The type of Paygentic entity this external reference points at
+        :param entity_type: The type of Paygentic entity a new external reference points at
         :param entity_id: Paygentic id of the entity, e.g. `itm_xxx`
         :param provider: Lowercase snake_case provider identifier (e.g. `salesforce`, `netsuite`)
         :param external_id: Identifier of the record in the external system
@@ -150,7 +150,7 @@ class ExternalReferences(BaseSDK):
         self,
         *,
         merchant_id: str,
-        entity_type: models.EntityType,
+        entity_type: models.EntityTypeInput,
         entity_id: str,
         provider: str,
         external_id: str,
@@ -167,7 +167,7 @@ class ExternalReferences(BaseSDK):
         r"""Create
 
         :param merchant_id: Unique identifier for an organization
-        :param entity_type: The type of Paygentic entity this external reference points at
+        :param entity_type: The type of Paygentic entity a new external reference points at
         :param entity_id: Paygentic id of the entity, e.g. `itm_xxx`
         :param provider: Lowercase snake_case provider identifier (e.g. `salesforce`, `netsuite`)
         :param external_id: Identifier of the record in the external system
@@ -973,14 +973,16 @@ class ExternalReferences(BaseSDK):
                 ),
             ),
             request=req,
-            error_status_codes=["401", "403", "404", "4XX", "500", "5XX"],
+            error_status_codes=["401", "403", "404", "409", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
         response_data: Any = None
         if utils.match_response(http_res, "204", "*"):
             return
-        if utils.match_response(http_res, ["401", "403", "404"], "application/json"):
+        if utils.match_response(
+            http_res, ["401", "403", "404", "409"], "application/json"
+        ):
             response_data = unmarshal_json_response(errors.ErrorData, http_res)
             raise errors.Error(response_data, http_res)
         if utils.match_response(http_res, "500", "application/json"):
@@ -1066,14 +1068,16 @@ class ExternalReferences(BaseSDK):
                 ),
             ),
             request=req,
-            error_status_codes=["401", "403", "404", "4XX", "500", "5XX"],
+            error_status_codes=["401", "403", "404", "409", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
         response_data: Any = None
         if utils.match_response(http_res, "204", "*"):
             return
-        if utils.match_response(http_res, ["401", "403", "404"], "application/json"):
+        if utils.match_response(
+            http_res, ["401", "403", "404", "409"], "application/json"
+        ):
             response_data = unmarshal_json_response(errors.ErrorData, http_res)
             raise errors.Error(response_data, http_res)
         if utils.match_response(http_res, "500", "application/json"):

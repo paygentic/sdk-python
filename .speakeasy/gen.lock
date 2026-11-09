@@ -1,19 +1,19 @@
 lockVersion: 2.0.0
 id: d05de326-b60d-4921-81eb-a16eab66dffd
 management:
-  docChecksum: 63a83ac6c8bf4a1442e7c3322ab2f650
+  docChecksum: 9be10b4246cb0160175fb9c258a5428e
   docVersion: 0.1.0
   speakeasyVersion: 1.761.4
   generationVersion: 2.879.13
-  releaseVersion: 0.6.6
-  configChecksum: 591205d3a7508b2f7af0af53e7dff8ff
+  releaseVersion: 0.6.7
+  configChecksum: bdc726dfc0c77bb3520416c22e859925
   repoURL: https://github.com/paygentic/sdk-python.git
   installationURL: https://github.com/paygentic/sdk-python.git
   published: true
 persistentEdits:
-  generation_id: b93bfa7b-d563-4e41-a853-172f2fa4bbcd
-  pristine_commit_hash: a5a91c51caf3681aa94fde98bbd2b63c1c7f6454
-  pristine_tree_hash: 77d5c7e4797a26a8d9e0a471f6eb96845a6702ae
+  generation_id: 8a720ac4-75ff-41d3-b9a3-af77eca535e6
+  pristine_commit_hash: 74593aa403688f6ff4a4cae6bbbcc11faa2fd50e
+  pristine_tree_hash: 01b6fab56d5876984f65888dcfa8248cbaccf82a
 features:
   python:
     additionalDependencies: 1.0.0
@@ -384,8 +384,8 @@ trackedFiles:
     pristine_git_object: a29dfb8d10300a439d9cbe8c1add1f6f7b5f9b2a
   docs/models/createexternalreferencerequest.md:
     id: 1c21a3d65a90
-    last_write_checksum: sha1:4a97f22c5d0388fefb35bc87881fd6c71cb5d69b
-    pristine_git_object: b05d1f746f673c07037b677f41766b1526ad89a0
+    last_write_checksum: sha1:b8fa1cb343fc6cfb521ca3a7e6cd39023bf21563
+    pristine_git_object: 915fca9147b92bb17022f448957b7f85d900ad5b
   docs/models/createfeaturerequest.md:
     id: 211ab3177f76
     last_write_checksum: sha1:9c129d0e210b56211d86474c0c9dc83b5d7e2dfa
@@ -756,8 +756,12 @@ trackedFiles:
     pristine_git_object: f3c033d9e0afab70049b56c0665fa52dd9fe5499
   docs/models/entitytype.md:
     id: 130a2f7038b0
-    last_write_checksum: sha1:bedd4394c21f001cf650d32f03743b9d5ca09192
-    pristine_git_object: 329ca80d7e2c408584dedea38b36545c4d45d221
+    last_write_checksum: sha1:cd0e845ea1c7eec01d16fc1ba47a7776be411a0c
+    pristine_git_object: fb5c0fc3736d4340c5216e2321313e3fe90c4635
+  docs/models/entitytypeinput.md:
+    id: 54d009735a2c
+    last_write_checksum: sha1:8badd32389e569c271a75dedd7f8003d09654504
+    pristine_git_object: 6be897141136256a49a65465680e5d951f055c0c
   docs/models/error.md:
     id: b96a6fb71e96
     last_write_checksum: sha1:ea382e715328a06091a36da9a6974d6062983098
@@ -780,8 +784,8 @@ trackedFiles:
     pristine_git_object: 0ac8344fd8d39f56ba93a8a35f7415a06cc48c7b
   docs/models/externalreference.md:
     id: d97b79f6185e
-    last_write_checksum: sha1:4f3f29f366d480be874932ada4f9cd7d63952366
-    pristine_git_object: 7689198ee94295ad8f0f5088ab4c537dad045c49
+    last_write_checksum: sha1:34f137e36937584e9ef6d86d2fcf156f101c408a
+    pristine_git_object: 66e5626ea6d8c73633eee52a34477f6c3dae230b
   docs/models/externalreferenceobject.md:
     id: e3bef0c29e8d
     last_write_checksum: sha1:6d64a251004b2d6cb31d7d90365af4805254f8dd
@@ -2712,8 +2716,8 @@ trackedFiles:
     pristine_git_object: 6d5b8f227e83d009ed9d1321949b2807596920f4
   docs/models/updatesubscriptionstatus.md:
     id: 53fb360238ec
-    last_write_checksum: sha1:657758c651be9c2e5b2c6515d63528a5b8045364
-    pristine_git_object: 12438cfbcadc2df42e4e453050486a942b5f0aef
+    last_write_checksum: sha1:e70fea3be7608a5922f17f814483e1278960d8fb
+    pristine_git_object: 127022a579e4f0d0d16547d3575b3a9ed3c66e4e
   docs/models/updateuserrequest.md:
     id: 4630cfae46e2
     last_write_checksum: sha1:abfa513d9b70e0323ad597fad57f6aa918b38390
@@ -2836,8 +2840,8 @@ trackedFiles:
     pristine_git_object: 84e6a4f2e2f83af73e67a6c567f0f51be716b460
   docs/sdks/billablemetrics/README.md:
     id: 4a5403fb7335
-    last_write_checksum: sha1:5577f378f2b7f08e3a98d4c7063a7d8d88a66e35
-    pristine_git_object: 17ae41055669334eef83c4d503d8c3f43b9a319a
+    last_write_checksum: sha1:82df46a0ada10af90e89a098dad2f33fc7baaae9
+    pristine_git_object: eabba5ca2f9689c5a088df0587b9d02573c8c51c
   docs/sdks/billingschedules/README.md:
     id: 1a90809e9831
     last_write_checksum: sha1:cbbb70aac9e3825290daa9d77817fbaaf957cf63
@@ -2860,8 +2864,8 @@ trackedFiles:
     pristine_git_object: 6ed1aeac49eb1a679f1b026404535b9b2b5e5bc3
   docs/sdks/externalreferences/README.md:
     id: eadd619e15f3
-    last_write_checksum: sha1:b1376fd58ec4484c798aaa189f86d582230cf1c6
-    pristine_git_object: 4e404c34552f30ba7af0f62d87d5d2e3afe535ab
+    last_write_checksum: sha1:07d225888fc5be12e18709de8492ea82ee9aacb9
+    pristine_git_object: 0aff4878cc66addec1aee4ddf40862cb65f671e1
   docs/sdks/featuressdk/README.md:
     id: 8780de75d2a3
     last_write_checksum: sha1:a8a86312dc14444fd0d082c20ba43172cbd60878
@@ -2968,8 +2972,8 @@ trackedFiles:
     pristine_git_object: 27c175bd16f0c914e6832755477fb34260ba903f
   pyproject.toml:
     id: 5d07e7d72637
-    last_write_checksum: sha1:2e6278c00dd4f268869634fb1ff54e10660f7cc5
-    pristine_git_object: 76626d93bbc6652343f60c85ad33369b50a88b67
+    last_write_checksum: sha1:2459f6757c7017bc556303f850c746048f3828cb
+    pristine_git_object: f4589ab5b7166b9e23c50ca978339ffe1a9f9500
   scripts/prepare_readme.py:
     id: e0c5957a6035
     last_write_checksum: sha1:e2ebd355f72567204499ca62ee72728d9c3dfd95
@@ -2996,8 +3000,8 @@ trackedFiles:
     pristine_git_object: 6dbd4dcba3a5bac1c92beb0f5db31ef3d2944dea
   src/paygentic_sdk/_version.py:
     id: 52c8c5a320dc
-    last_write_checksum: sha1:1fa2f5d040a768bea9322f3eaa860b9735678942
-    pristine_git_object: c9a7b9523fb459e15c3e6081e1dbf1a1b6c3b227
+    last_write_checksum: sha1:d9610cf94fadd18aa73c9f6ea875765faf8270f5
+    pristine_git_object: d510b508af2e29d3bda5baafb0bdd289922463e0
   src/paygentic_sdk/approvals.py:
     id: a140b8f5837f
     last_write_checksum: sha1:aa2ecf067ed6c1d12d6cdb02ab4ddbb63172afa3
@@ -3008,8 +3012,8 @@ trackedFiles:
     pristine_git_object: b51d7eacd4d3f78e55ae3e2d9a1593d4c33b5538
   src/paygentic_sdk/billablemetrics.py:
     id: ecbb145b7f82
-    last_write_checksum: sha1:d9c2f728d99b8fc124b8ec05a6d75959c00e6f06
-    pristine_git_object: c3e807ae1d58749502c7bd4e14161b8925529446
+    last_write_checksum: sha1:1013554ed0249022b9cf102dacb0d03520ee60aa
+    pristine_git_object: 96ce008ed1a7e8e4dc66c516299b7d0eb714a74f
   src/paygentic_sdk/billing_schedules.py:
     id: e0d0ee003afd
     last_write_checksum: sha1:eac317cc9cdf16cdb825b01a987171bc31b961fe
@@ -3088,8 +3092,8 @@ trackedFiles:
     pristine_git_object: 676e19716198a23e77d7ebeb16d97c189421fff4
   src/paygentic_sdk/externalreferences.py:
     id: e4617dbb80a7
-    last_write_checksum: sha1:08f44b93f156a1d5dbd1cebc860ffc0d5b9430b8
-    pristine_git_object: 64b2396b32e02c13bd5bfd458f66b1ff47d9effd
+    last_write_checksum: sha1:5e919d69a13054e0007b019d18d9bc47918d78c7
+    pristine_git_object: 257ea98cc3baf75cb7470e62333f0a0c94a853fb
   src/paygentic_sdk/features_sdk.py:
     id: b0c6d8146a83
     last_write_checksum: sha1:8f0b3d3a7ea0fa48955541f21288dc1a3742c04e
@@ -3128,8 +3132,8 @@ trackedFiles:
     pristine_git_object: fd0b089b5833ed991419e4ebbd3017976afd5e8a
   src/paygentic_sdk/models/__init__.py:
     id: af295ac47d07
-    last_write_checksum: sha1:abec4942e7d1f8138edfb3eaa4eb855c37c11845
-    pristine_git_object: ef0afe699c5a78646e4d68dcf9410d022d8b60fd
+    last_write_checksum: sha1:d08db46bce4c1c982e383e36fa160114afb14163
+    pristine_git_object: 28ea77fd8aa97a3786fab646a3e17502bc52cc48
   src/paygentic_sdk/models/accountfigure.py:
     id: ba722388c901
     last_write_checksum: sha1:df07390bf08a5f298853d7749cae06edc4c04942
@@ -3236,8 +3240,8 @@ trackedFiles:
     pristine_git_object: cc3a4584476c4e9699e3eb2ab5f34e8aa4f9c526
   src/paygentic_sdk/models/createexternalreferenceop.py:
     id: 2c4397811bf8
-    last_write_checksum: sha1:0ee1989acd3c91ef4f0fb3c63ca9160c8b2967fd
-    pristine_git_object: 7ec0d31fdcb217f6642e8c57b2dcb183e7398dc7
+    last_write_checksum: sha1:bd3055b001436a1c332474f7a27812b895e0f298
+    pristine_git_object: a61966718ab39ad22f60ac8f3e11e66d9338e3b1
   src/paygentic_sdk/models/createfeatureop.py:
     id: ca325dd306cf
     last_write_checksum: sha1:661a7e7cca01e5e3d9c0296dfcd62895ab3484e3
@@ -3452,16 +3456,20 @@ trackedFiles:
     pristine_git_object: f95722d9db466eb54701885d848c9a203574e373
   src/paygentic_sdk/models/entitytype.py:
     id: 17098d9fe09c
-    last_write_checksum: sha1:d2c9e7e6518f809a37dcd2129a6dc31d33c51291
-    pristine_git_object: b28baa51c6ab04314f63fef5eea445364374730b
+    last_write_checksum: sha1:22a5040c8d64e1c51ce9713031ac6790e581f088
+    pristine_git_object: b49be21676635c93ef92314a55b8faff8f0c66c1
+  src/paygentic_sdk/models/entitytypeinput.py:
+    id: 22628445d233
+    last_write_checksum: sha1:848fb53280d731d611120215025a0a3d466308f0
+    pristine_git_object: 76cf14bc99b243d4f84968f902f2ba7818403bb4
   src/paygentic_sdk/models/eventresponse.py:
     id: 1723c2675f5e
     last_write_checksum: sha1:024b63109fc4d54935aadf7b17eb996223c0e945
     pristine_git_object: 3aff4d8a2addd8bd6cc1c1a61c55a0734abfcb42
   src/paygentic_sdk/models/externalreference.py:
     id: 6b5743ebdbdc
-    last_write_checksum: sha1:1e560bebf3342ff1d2e6b000cb480c4a3e7e771c
-    pristine_git_object: 2423a25e7784b6fc38c5fd4cdb5f9f87ae536a12
+    last_write_checksum: sha1:5646baf6ac6fb4b6cc6b8fb280b53b48fcb844b8
+    pristine_git_object: 52d3ba3b73b66e8ca62dbfd3a19570ec0f606be8
   src/paygentic_sdk/models/feature.py:
     id: 051de7df24e9
     last_write_checksum: sha1:04d682988415e5b66d0a3c28d4b06874efed5b46
@@ -4392,8 +4400,8 @@ trackedFiles:
     pristine_git_object: f6124b0e705ce372ee3fac5c8b575ded1584b1cb
   src/paygentic_sdk/models/updatesubscriptionop.py:
     id: 619185029da9
-    last_write_checksum: sha1:40fe8d0459fffd2471f2064e48db54c496fee1f2
-    pristine_git_object: 6033be869346aa958af528d25e12f49b13d78fb9
+    last_write_checksum: sha1:3026900e27f9b9071beb1cd4e0d0c559759bf7a4
+    pristine_git_object: 7cb077d79ad197333d678bd5bb2b587f730d61f6
   src/paygentic_sdk/models/updateuserop.py:
     id: da6c856bbeac
     last_write_checksum: sha1:8d22616acd043765642c080b38b3466f4167ac68
@@ -7336,4 +7344,4 @@ generatedTests:
   getWebhookPortal: "2026-10-09T10:19:38Z"
   getRevenueAccounts: "2026-10-19T19:44:08Z"
   getMe: "2026-10-29T09:07:12Z"
-releaseNotes: "## Python SDK Changes:\n* `paygentic.me.get_me()`: \n  *  `response.permissions[].enum(invoices:transition)` **Added**\n  *  `error.request_id` **Added**\n* `paygentic.billable_metrics.create()`:  `error` **Changed**\n* `paygentic.billable_metrics.list()`:  `error.request_id` **Added**\n* `paygentic.billable_metrics.get()`:  `error.request_id` **Added**\n* `paygentic.billable_metrics.update()`:  `error` **Changed**\n* `paygentic.billable_metrics.meter()`:  `error` **Changed**\n* `paygentic.billable_metrics.list_events()`:  `error` **Changed**\n* `paygentic.customers.list()`:  `error` **Changed**\n* `paygentic.customers.create()`:  `error` **Changed**\n* `paygentic.customers.get()`:  `error.request_id` **Added**\n* `paygentic.customers.delete()`:  `error.request_id` **Added**\n* `paygentic.customers.update()`:  `error` **Changed**\n* `paygentic.customers.list_customer_payment_methods()`:  `error.request_id` **Added**\n* `paygentic.customers.create_customer_payment_method()`:  `error` **Changed**\n* `paygentic.entitlements.list()`:  `error` **Changed**\n* `paygentic.entitlements.issue()`:  `error` **Changed**\n* `paygentic.entitlements.get()`:  `error` **Changed**\n* `paygentic.entitlements.grants.list()`:  `error` **Changed**\n* `paygentic.entitlements.grants.create()`:  `error` **Changed**\n* `paygentic.entitlements.grants.purchase()`:  `error` **Changed**\n* `paygentic.entitlements.grants.get()`:  `error` **Changed**\n* `paygentic.entitlements.grants.void()`:  `error` **Changed**\n* `paygentic.features.list()`:  `error` **Changed**\n* `paygentic.features.create()`:  `error` **Changed**\n* `paygentic.features.get()`:  `error.request_id` **Added**\n* `paygentic.features.update()`:  `error` **Changed**\n* `paygentic.features.delete()`:  `error.request_id` **Added**\n* `paygentic.fees.create()`:  `error` **Changed**\n* `paygentic.fees.list()`:  `error.request_id` **Added**\n* `paygentic.fees.get()`:  `error.request_id` **Added**\n* `paygentic.fees.update()`:  `error` **Changed**\n* `paygentic.fees.delete()`:  `error.request_id` **Added**\n* `paygentic.plans.create()`:  `error` **Changed**\n* `paygentic.plans.list()`:  `error` **Changed**\n* `paygentic.plans.list_available()`:  `error` **Changed**\n* `paygentic.plans.get()`:  `error` **Changed**\n* `paygentic.plans.update()`:  `error` **Changed**\n* `paygentic.plans.list_plan_versions()`:  `error` **Changed**\n* `paygentic.plans.mint_plan_version()`:  `error` **Changed**\n* `paygentic.plans.get_plan_version()`:  `error` **Changed**\n* `paygentic.plans.transition_plan_version()`:  `error` **Changed**\n* `paygentic.prices.create()`:  `error` **Changed**\n* `paygentic.prices.list()`:  `error` **Changed**\n* `paygentic.prices.get()`:  `error` **Changed**\n* `paygentic.prices.update()`:  `error` **Changed**\n* `paygentic.prices.delete()`:  `error` **Changed**\n* `paygentic.products.create()`:  `error` **Changed**\n* `paygentic.products.list()`:  `error` **Changed**\n* `paygentic.products.get()`:  `error.request_id` **Added**\n* `paygentic.products.update()`:  `error.request_id` **Added**\n* `paygentic.sources.create()`:  `error` **Changed**\n* `paygentic.sources.list()`:  `error.request_id` **Added**\n* `paygentic.sources.get()`:  `error.request_id` **Added**\n* `paygentic.sources.update()`:  `error` **Changed**\n* `paygentic.sources.events.list()`:  `error.request_id` **Added**\n* `paygentic.sources.events.approve()`:  `error` **Changed**\n* `paygentic.sources.events.reject()`:  `error` **Changed**\n* `paygentic.sources.events.bulk_approve()`:  `error` **Changed**\n* `paygentic.sources.events.bulk_reject()`:  `error` **Changed**\n* `paygentic.sources.rules.list()`:  `error` **Changed**\n* `paygentic.sources.rules.create()`:  `error` **Changed**\n* `paygentic.sources.rules.get()`:  `error` **Changed**\n* `paygentic.sources.rules.update()`:  `error` **Changed**\n* `paygentic.sources.rules.delete()`:  `error` **Changed**\n* `paygentic.subscriptions.list()`:  `error` **Changed**\n* `paygentic.subscriptions.create()`:  `error` **Changed**\n* `paygentic.subscriptions.get()`:  `error.request_id` **Added**\n* `paygentic.subscriptions.update_subscription()`:  `error` **Changed**\n* `paygentic.subscriptions.get_subscription_intervals()`:  `error.request_id` **Added**\n* `paygentic.subscriptions.edit_subscription_intervals()`:  `error` **Changed**\n* `paygentic.subscriptions.migrate_subscription_version()`:  `error` **Changed**\n* `paygentic.subscriptions.list_subscription_interval_changes()`:  `error.request_id` **Added**\n* `paygentic.subscriptions.list_interval_changes()`:  `error` **Changed**\n* `paygentic.subscriptions.generate_portal_link()`:  `error.request_id` **Added**\n* `paygentic.subscriptions.terminate()`:  `error` **Changed**\n* `paygentic.subscriptions.reconcile_subscription_features()`:  `error` **Changed**\n* `paygentic.subscriptions.list_subscription_adjustments()`:  `error.request_id` **Added**\n* `paygentic.subscriptions.create_subscription_adjustment()`:  `error` **Changed**\n* `paygentic.subscriptions.delete_subscription_adjustment()`:  `error.request_id` **Added**\n* `paygentic.users.get()`:  `error.request_id` **Added**\n* `paygentic.users.update()`:  `error.request_id` **Added**\n* `paygentic.invoices_v2.list()`:  `error.request_id` **Added**\n* `paygentic.invoices_v2.list_line_items()`:  `error` **Changed**\n* `paygentic.invoices_v2.create_line_item()`:  `error` **Changed**\n* `paygentic.invoices_v2.list_projected_invoices()`:  `error` **Changed**\n* `paygentic.invoices_v2.get()`:  `error` **Changed**\n* `paygentic.invoices_v2.get_line_items()`:  `error` **Changed**\n* `paygentic.invoices_v2.download_invoice_pdf()`:  `error.request_id` **Added**\n* `paygentic.invoices_v2.record_invoice_payment()`:  `error` **Changed**\n* `paygentic.invoices_v2.create_invoice_refund()`:  `error` **Changed**\n* `paygentic.invoices_v2.list_invoice_refunds()`:  `error.request_id` **Added**\n* `paygentic.invoices_v2.void_invoice_refund()`:  `error` **Changed**\n* `paygentic.invoices_v2.retry_invoice_payment()`: \n  *  `response.request_id` **Added**\n  *  `error` **Changed**\n* `paygentic.payments.list()`:  `error.request_id` **Added**\n* `paygentic.payments.create()`:  `error` **Changed**\n* `paygentic.payments.get()`:  `error.request_id` **Added**\n* `paygentic.payment_sessions.list_payment_sessions()`:  `error.request_id` **Added**\n* `paygentic.events.ingest()`:  `error` **Changed**\n* `paygentic.costs.create_cost()`:  `error` **Changed**\n* `paygentic.costs.list_costs()`:  `error.request_id` **Added**\n* `paygentic.costs.get_cost()`:  `error.request_id` **Added**\n* `paygentic.costs.update_cost()`:  `error` **Changed**\n* `paygentic.costs.delete_cost()`:  `error.request_id` **Added**\n* `paygentic.costs.get_cost_summary()`:  `error` **Changed**\n* `paygentic.costs.get_cost_report()`:  `error` **Changed**\n* `paygentic.revenue.get()`:  `error` **Changed**\n* `paygentic.revenue.get_revenue_accounts()`:  `error` **Changed**\n* `paygentic.profitability.get_profitability()`:  `error` **Changed**\n* `paygentic.test_clocks.list()`:  `error.request_id` **Added**\n* `paygentic.test_clocks.create()`:  `error.request_id` **Added**\n* `paygentic.test_clocks.get()`:  `error.request_id` **Added**\n* `paygentic.test_clocks.advance()`:  `error.request_id` **Added**\n* `paygentic.test_clocks.delete()`:  `error.request_id` **Added**\n* `paygentic.merchants.reset()`:  `error` **Changed**\n* `paygentic.external_references.create_external_reference()`:  `error` **Changed**\n* `paygentic.external_references.list_external_references()`:  `error` **Changed**\n* `paygentic.external_references.get_external_reference()`:  `error.request_id` **Added**\n* `paygentic.external_references.update_external_reference()`:  `error` **Changed**\n* `paygentic.external_references.delete_external_reference()`:  `error.request_id` **Added**\n* `paygentic.items.create_item()`:  `error` **Changed**\n* `paygentic.items.list_items()`:  `error` **Changed**\n* `paygentic.items.get_item()`:  `error.request_id` **Added**\n* `paygentic.items.update_item()`:  `error` **Changed**\n* `paygentic.orders.create_order()`:  `error` **Changed**\n* `paygentic.orders.list_orders()`:  `error` **Changed**\n* `paygentic.orders.get_order()`:  `error.request_id` **Added**\n* `paygentic.orders.update_order()`:  `error` **Changed**\n* `paygentic.orders.delete_order()`:  `error.request_id` **Added**\n* `paygentic.orders.create_order_line_item()`:  `error` **Changed**\n* `paygentic.orders.update_order_line_item()`:  `error` **Changed**\n* `paygentic.orders.delete_order_line_item()`:  `error.request_id` **Added**\n* `paygentic.billing_schedules.list_billing_schedules()`:  `error` **Changed**\n* `paygentic.billing_schedules.create_billing_schedule()`:  `error` **Changed**\n* `paygentic.billing_schedules.get_billing_schedule()`:  `error.request_id` **Added**\n* `paygentic.billing_schedules.update_billing_schedule()`:  `error` **Changed**\n* `paygentic.billing_schedules.delete_billing_schedule()`:  `error.request_id` **Added**\n* `paygentic.billing_schedules.list_schedule_intervals()`:  `error.request_id` **Added**\n* `paygentic.billing_schedules.replace_schedule_intervals()`:  `error` **Changed**\n* `paygentic.billing_schedules.list_schedule_invoices()`:  `error.request_id` **Added**\n* `paygentic.billing_schedules.generate_schedule_invoices()`:  `error` **Changed**\n* `paygentic.salesforce.list_salesforce_accounts()`:  `error` **Changed**\n* `paygentic.merchant_integrations.list_merchant_integrations()`:  `error` **Changed**\n* `paygentic.merchant_integrations.upsert_merchant_integration()`:  `error` **Changed**\n* `paygentic.merchant_integrations.get_merchant_integration()`:  `error.request_id` **Added**\n* `paygentic.merchant_integrations.disconnect_merchant_integration()`:  `error.request_id` **Added**\n* `paygentic.approvals.create_approval()`:  `error` **Changed**\n* `paygentic.approvals.list_approvals()`:  `error` **Changed**\n* `paygentic.approvals.get_approval()`:  `error.request_id` **Added**\n* `paygentic.approvals.update_approval()`:  `error` **Changed**\n* `paygentic.webhooks.get()`:  `error.request_id` **Added**\n* `paygentic.webhooks.enable()`:  `error` **Changed**\n* `paygentic.webhooks.update()`:  `error` **Changed**\n* `paygentic.webhooks.disable()`:  `error.request_id` **Added**\n* `paygentic.webhooks.get_portal()`:  `error.request_id` **Added**\n"
+releaseNotes: "## Python SDK Changes:\n* `paygentic.subscriptions.update_subscription()`: \n  *  `request.status.enum(active)` **Removed** (Breaking ⚠️)\n* `paygentic.invoices_v2.list()`:  `response.data[].line_items.items[].external_references[].entity_type` **Changed**\n* `paygentic.invoices_v2.list_line_items()`:  `response.items[].external_references[].entity_type` **Changed**\n* `paygentic.invoices_v2.list_projected_invoices()`:  `response.data[].line_items.items[].external_references[].entity_type` **Changed**\n* `paygentic.invoices_v2.get()`:  `response.line_items.items[].external_references[].entity_type` **Changed**\n* `paygentic.invoices_v2.get_line_items()`:  `response.items[].external_references[].entity_type` **Changed**\n* `paygentic.invoices_v2.record_invoice_payment()`:  `response.union(out_of_band).invoice.line_items.items[].external_references[].entity_type` **Changed**\n* `paygentic.external_references.create_external_reference()`:  `response.entity_type` **Changed**\n* `paygentic.external_references.list_external_references()`: \n  *  `request.entity_type` **Changed**\n  *  `response.data[].entity_type` **Changed**\n* `paygentic.external_references.get_external_reference()`:  `response.entity_type` **Changed**\n* `paygentic.external_references.update_external_reference()`:  `response.entity_type` **Changed**\n* `paygentic.external_references.delete_external_reference()`:  `error.status[409]` **Added**\n* `paygentic.items.create_item()`:  `response.external_references[].entity_type` **Changed**\n* `paygentic.items.list_items()`:  `response.data[].external_references[].entity_type` **Changed**\n* `paygentic.items.get_item()`:  `response.external_references[].entity_type` **Changed**\n* `paygentic.items.update_item()`:  `response.external_references[].entity_type` **Changed**\n"

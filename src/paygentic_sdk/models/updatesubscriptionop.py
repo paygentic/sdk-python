@@ -17,10 +17,7 @@ from typing import Literal, Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
 
 
-UpdateSubscriptionStatus = Literal[
-    "active",
-    "terminated",
-]
+UpdateSubscriptionStatus = Literal["terminated",]
 
 
 class UpdateSubscriptionRequestBodyTypedDict(TypedDict):

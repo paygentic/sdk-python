@@ -4,11 +4,10 @@
 
 ```python
 from paygentic_sdk.models import UpdateSubscriptionStatus
-value: UpdateSubscriptionStatus = "active"
+value: UpdateSubscriptionStatus = "terminated"
 ```
 
 
 ## Values
 
-- `"active"`
 - `"terminated"`

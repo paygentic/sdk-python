@@ -9,7 +9,9 @@ EntityType = Union[
     Literal[
         "item",
         "customer",
+        "subscriptionProposal",
+        "subscription",
     ],
     UnrecognizedStr,
 ]
-r"""The type of Paygentic entity this external reference points at"""
+r"""The type of Paygentic entity this external reference points at. `subscriptionProposal` and `subscription` references link a subscription proposal, and the subscription its approval creates, to the CRM record they come from. They are read-only through these endpoints."""

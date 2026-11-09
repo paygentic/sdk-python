@@ -403,6 +403,7 @@ if TYPE_CHECKING:
         UsagePeriodTypedDict,
     )
     from .entitytype import EntityType
+    from .entitytypeinput import EntityTypeInput
     from .eventresponse import (
         EventResponse,
         EventResponseObject,
@@ -1820,6 +1821,7 @@ __all__ = [
     "EntitlementTemplateStaticTypedDict",
     "EntitlementTemplateTypedDict",
     "EntityType",
+    "EntityTypeInput",
     "Error",
     "ErrorEnum",
     "ErrorTypedDict",
@@ -2988,6 +2990,7 @@ _dynamic_imports: dict[str, str] = {
     "UsagePeriod": ".entitlementtemplate",
     "UsagePeriodTypedDict": ".entitlementtemplate",
     "EntityType": ".entitytype",
+    "EntityTypeInput": ".entitytypeinput",
     "EventResponse": ".eventresponse",
     "EventResponseObject": ".eventresponse",
     "EventResponseTypedDict": ".eventresponse",
