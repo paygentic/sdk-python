@@ -108,7 +108,7 @@ class PlanTypedDict(TypedDict):
     billing_version: NotRequired[int]
     r"""Billing engine version. Managed by Paygentic support."""
     billing_anchor: NotRequired[Nullable[datetime]]
-    r"""ISO 8601 datetime reference point for billing period alignment. Must be in the past or present at the time of creation or update. When set, all subscriptions created under this plan align their first billing period to the next recurrence of this anchor. Null means each subscription uses its own start time (hour-rounded) as the anchor."""
+    r"""ISO 8601 datetime reference point for billing period alignment. Must be in the past or present at the time of creation or update. When set, subscriptions created under this plan align their first billing period to the next recurrence of this anchor, unless the create names its own `billingAnchor`. Null means each subscription uses its own start time (hour-rounded) as the anchor, unless the create names one."""
     credit_allocations: NotRequired[List[PlanCreditAllocationTypedDict]]
     r"""Credit-pool funding declarations for this plan. Each entry funds a distinct pricing unit's credit pool when a subscription to this plan activates: the allocated amount is minted as a credit grant on the customer's pool for that pricing unit, once at activation, or on a recurring basis only when that allocation explicitly sets recurrencePeriod. A plan may declare zero or more allocations; no two allocations on the same plan target the same pricingUnitId."""
     default_version_id: NotRequired[str]
@@ -208,7 +208,7 @@ class Plan(BaseModel):
     billing_anchor: Annotated[
         OptionalNullable[datetime], pydantic.Field(alias="billingAnchor")
     ] = UNSET
-    r"""ISO 8601 datetime reference point for billing period alignment. Must be in the past or present at the time of creation or update. When set, all subscriptions created under this plan align their first billing period to the next recurrence of this anchor. Null means each subscription uses its own start time (hour-rounded) as the anchor."""
+    r"""ISO 8601 datetime reference point for billing period alignment. Must be in the past or present at the time of creation or update. When set, subscriptions created under this plan align their first billing period to the next recurrence of this anchor, unless the create names its own `billingAnchor`. Null means each subscription uses its own start time (hour-rounded) as the anchor, unless the create names one."""
 
     credit_allocations: Annotated[
         Optional[List[PlanCreditAllocation]], pydantic.Field(alias="creditAllocations")

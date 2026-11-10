@@ -231,6 +231,7 @@ class Subscriptions(BaseSDK):
             Union[models.RedirectUrls, models.RedirectUrlsTypedDict]
         ] = None,
         elapsed_period_billing: Optional[models.ElapsedPeriodBilling] = "none",
+        billing_anchor: Optional[datetime] = None,
         test_clock_id: Optional[str] = None,
         renewal_reminder_enabled: OptionalNullable[bool] = UNSET,
         renewal_reminder_days: OptionalNullable[int] = UNSET,
@@ -272,6 +273,7 @@ class Subscriptions(BaseSDK):
         :param minimum_account_balance: Deprecated. This field is ignored and has no effect.
         :param redirect_urls: Optional redirect URLs after payment completion or failure. If not provided, uses default platform behavior.
         :param elapsed_period_billing: Whether a backdated start bills its elapsed periods. A start is backdated when `startedAt` is more than 24 hours before the subscription is created. `none` bills only charges that fall due from the moment of creation, for a customer whose earlier periods another system already billed. `per_period` bills every charge that fell due from `startedAt`, on one first invoice; it refuses a `startedAt` more than 12 months back. Has no effect on a start that is not backdated. Defaults to `none`.
+        :param billing_anchor: A billing anchor for this subscription, in place of the plan's. Any instant, past or future. The subscription's billing anchor is its first recurrence on or after `startedAt`, stepping back or forward by whole billing cadences. Example: on a monthly plan, an anchor of '2027-01-31T00:00:00Z' with a start of '2026-10-10T00:00:00Z' gives '2026-10-31T00:00:00Z'. A create is refused with 400 when the resolved anchor does not line up with the usage period anchor of a feature that credits unused balance. Omit it to use the plan's billing anchor. A repeated create that names an anchor resolving to a different instant than the existing subscription's gets 409.
         :param test_clock_id: Test clock identifier for simulating time-based billing scenarios. Sample values: 'tc_abc123xyz', 'tc_789def456'. Restricted to non-production environments (local, dev, sandbox). Must belong to the same merchant organization.
         :param renewal_reminder_enabled: Override plan setting for renewal reminder emails. When set, this subscription's setting takes precedence over the plan default. Set to true to enable reminders, false to disable, or null/omit to use plan default.
         :param renewal_reminder_days: Override plan setting for number of days before renewal to send the reminder. Only used if renewalReminderEnabled is true (or inherited from plan). Set to null to use plan default.
@@ -314,6 +316,7 @@ class Subscriptions(BaseSDK):
             ),
             started_at=started_at,
             elapsed_period_billing=elapsed_period_billing,
+            billing_anchor=billing_anchor,
             test_clock_id=test_clock_id,
             renewal_reminder_enabled=renewal_reminder_enabled,
             renewal_reminder_days=renewal_reminder_days,
@@ -418,6 +421,7 @@ class Subscriptions(BaseSDK):
             Union[models.RedirectUrls, models.RedirectUrlsTypedDict]
         ] = None,
         elapsed_period_billing: Optional[models.ElapsedPeriodBilling] = "none",
+        billing_anchor: Optional[datetime] = None,
         test_clock_id: Optional[str] = None,
         renewal_reminder_enabled: OptionalNullable[bool] = UNSET,
         renewal_reminder_days: OptionalNullable[int] = UNSET,
@@ -459,6 +463,7 @@ class Subscriptions(BaseSDK):
         :param minimum_account_balance: Deprecated. This field is ignored and has no effect.
         :param redirect_urls: Optional redirect URLs after payment completion or failure. If not provided, uses default platform behavior.
         :param elapsed_period_billing: Whether a backdated start bills its elapsed periods. A start is backdated when `startedAt` is more than 24 hours before the subscription is created. `none` bills only charges that fall due from the moment of creation, for a customer whose earlier periods another system already billed. `per_period` bills every charge that fell due from `startedAt`, on one first invoice; it refuses a `startedAt` more than 12 months back. Has no effect on a start that is not backdated. Defaults to `none`.
+        :param billing_anchor: A billing anchor for this subscription, in place of the plan's. Any instant, past or future. The subscription's billing anchor is its first recurrence on or after `startedAt`, stepping back or forward by whole billing cadences. Example: on a monthly plan, an anchor of '2027-01-31T00:00:00Z' with a start of '2026-10-10T00:00:00Z' gives '2026-10-31T00:00:00Z'. A create is refused with 400 when the resolved anchor does not line up with the usage period anchor of a feature that credits unused balance. Omit it to use the plan's billing anchor. A repeated create that names an anchor resolving to a different instant than the existing subscription's gets 409.
         :param test_clock_id: Test clock identifier for simulating time-based billing scenarios. Sample values: 'tc_abc123xyz', 'tc_789def456'. Restricted to non-production environments (local, dev, sandbox). Must belong to the same merchant organization.
         :param renewal_reminder_enabled: Override plan setting for renewal reminder emails. When set, this subscription's setting takes precedence over the plan default. Set to true to enable reminders, false to disable, or null/omit to use plan default.
         :param renewal_reminder_days: Override plan setting for number of days before renewal to send the reminder. Only used if renewalReminderEnabled is true (or inherited from plan). Set to null to use plan default.
@@ -501,6 +506,7 @@ class Subscriptions(BaseSDK):
             ),
             started_at=started_at,
             elapsed_period_billing=elapsed_period_billing,
+            billing_anchor=billing_anchor,
             test_clock_id=test_clock_id,
             renewal_reminder_enabled=renewal_reminder_enabled,
             renewal_reminder_days=renewal_reminder_days,

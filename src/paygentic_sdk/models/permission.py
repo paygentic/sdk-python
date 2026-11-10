@@ -24,6 +24,7 @@ Permission = Union[
         "pricingUnits:read",
         "subscriptions:read",
         "subscriptionAdjustments:read",
+        "subscriptionProposals:read",
         "discounts:read",
         "grants:read",
         "entitlements:read",
@@ -69,6 +70,7 @@ Permission = Union[
         "pricingUnits:write",
         "subscriptions:write",
         "subscriptionAdjustments:write",
+        "subscriptionProposals:write",
         "discounts:write",
         "grants:write",
         "entitlements:write",
@@ -111,6 +113,7 @@ Permission = Union[
         "subscriptions:taxExempt",
         "subscriptions:autoApprove",
         "organization:resetData",
+        "subscriptionProposals:approve",
     ],
     UnrecognizedStr,
 ]

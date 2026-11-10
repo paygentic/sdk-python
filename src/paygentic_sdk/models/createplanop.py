@@ -81,7 +81,7 @@ class CreatePlanRequestTypedDict(TypedDict):
     billing_version: NotRequired[BillingVersion]
     r"""Billing engine version. Only 1 (Standard, line-item billing with metered usage support) is accepted for new plans; omitting the field defaults to 1. 0 (Legacy, fee-schedule billing) is rejected — it exists only on plans created before this restriction."""
     billing_anchor: NotRequired[Nullable[datetime]]
-    r"""ISO 8601 datetime reference point for billing period alignment. Must be in the past or present. When set, subscriptions created under this plan align their first billing period to the next recurrence of this anchor."""
+    r"""ISO 8601 datetime reference point for billing period alignment. Must be in the past or present. When set, subscriptions created under this plan align their first billing period to the next recurrence of this anchor, unless the create names its own `billingAnchor`."""
     credit_allocations: NotRequired[List[PlanCreditAllocationTypedDict]]
     r"""Credit-pool funding declarations for this plan. Each entry funds a distinct pricing unit's credit pool when a subscription to this plan activates: the allocated amount is minted as a credit grant on the customer's pool for that pricing unit, once at activation, or on a recurring basis only when that allocation explicitly sets recurrencePeriod. A plan may declare zero or more allocations; no two allocations on the same plan may target the same pricingUnitId."""
     stable_price_ids: NotRequired[bool]
@@ -157,7 +157,7 @@ class CreatePlanRequest(BaseModel):
     billing_anchor: Annotated[
         OptionalNullable[datetime], pydantic.Field(alias="billingAnchor")
     ] = UNSET
-    r"""ISO 8601 datetime reference point for billing period alignment. Must be in the past or present. When set, subscriptions created under this plan align their first billing period to the next recurrence of this anchor."""
+    r"""ISO 8601 datetime reference point for billing period alignment. Must be in the past or present. When set, subscriptions created under this plan align their first billing period to the next recurrence of this anchor, unless the create names its own `billingAnchor`."""
 
     credit_allocations: Annotated[
         Optional[List[PlanCreditAllocation]], pydantic.Field(alias="creditAllocations")

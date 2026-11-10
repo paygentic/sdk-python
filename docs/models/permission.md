@@ -33,6 +33,7 @@ This is an open enum. Unrecognized values will not fail type checks.
 - `"pricingUnits:read"`
 - `"subscriptions:read"`
 - `"subscriptionAdjustments:read"`
+- `"subscriptionProposals:read"`
 - `"discounts:read"`
 - `"grants:read"`
 - `"entitlements:read"`
@@ -78,6 +79,7 @@ This is an open enum. Unrecognized values will not fail type checks.
 - `"pricingUnits:write"`
 - `"subscriptions:write"`
 - `"subscriptionAdjustments:write"`
+- `"subscriptionProposals:write"`
 - `"discounts:write"`
 - `"grants:write"`
 - `"entitlements:write"`
@@ -120,3 +122,4 @@ This is an open enum. Unrecognized values will not fail type checks.
 - `"subscriptions:taxExempt"`
 - `"subscriptions:autoApprove"`
 - `"organization:resetData"`
+- `"subscriptionProposals:approve"`
