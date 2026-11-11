@@ -163,7 +163,7 @@ class CreateSubscriptionRequestTypedDict(TypedDict):
     customer_id: NotRequired[str]
     r"""Unique identifier for a customer"""
     ending_at: NotRequired[datetime]
-    r"""Subscription expiration timestamp in ISO 8601 format. Sample values: '2024-12-31T23:59:59Z', '2025-01-15T10:30:00Z'. Omit for indefinite subscriptions."""
+    r"""Subscription expiration timestamp in ISO 8601 format. Sample values: '2024-12-31T23:59:59Z', '2025-01-15T10:30:00Z'. Omit for indefinite subscriptions. Must be after startedAt: a value at or before it is rejected with 400."""
     prefund_amount: NotRequired[str]
     r"""Deprecated. This field is ignored and has no effect."""
     minimum_account_balance: NotRequired[str]
@@ -219,7 +219,7 @@ class CreateSubscriptionRequest(BaseModel):
     r"""Unique identifier for a customer"""
 
     ending_at: Annotated[Optional[datetime], pydantic.Field(alias="endingAt")] = None
-    r"""Subscription expiration timestamp in ISO 8601 format. Sample values: '2024-12-31T23:59:59Z', '2025-01-15T10:30:00Z'. Omit for indefinite subscriptions."""
+    r"""Subscription expiration timestamp in ISO 8601 format. Sample values: '2024-12-31T23:59:59Z', '2025-01-15T10:30:00Z'. Omit for indefinite subscriptions. Must be after startedAt: a value at or before it is rejected with 400."""
 
     prefund_amount: Annotated[
         Optional[str],

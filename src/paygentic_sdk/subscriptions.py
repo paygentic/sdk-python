@@ -268,7 +268,7 @@ class Subscriptions(BaseSDK):
         :param tax_exempt: When true, forces tax rate to 0%. Use for customers with verified tax-exempt status.
         :param customer: Fields to create a new customer and consumer. Will use an existing consumer if one exists with the same email address. Required if `customerId` is not provided. Address with complete tax information (country, state, zipCode) is required for tax calculation when using Paygentic Tax.
         :param customer_id: Unique identifier for a customer
-        :param ending_at: Subscription expiration timestamp in ISO 8601 format. Sample values: '2024-12-31T23:59:59Z', '2025-01-15T10:30:00Z'. Omit for indefinite subscriptions.
+        :param ending_at: Subscription expiration timestamp in ISO 8601 format. Sample values: '2024-12-31T23:59:59Z', '2025-01-15T10:30:00Z'. Omit for indefinite subscriptions. Must be after startedAt: a value at or before it is rejected with 400.
         :param prefund_amount: Deprecated. This field is ignored and has no effect.
         :param minimum_account_balance: Deprecated. This field is ignored and has no effect.
         :param redirect_urls: Optional redirect URLs after payment completion or failure. If not provided, uses default platform behavior.
@@ -458,7 +458,7 @@ class Subscriptions(BaseSDK):
         :param tax_exempt: When true, forces tax rate to 0%. Use for customers with verified tax-exempt status.
         :param customer: Fields to create a new customer and consumer. Will use an existing consumer if one exists with the same email address. Required if `customerId` is not provided. Address with complete tax information (country, state, zipCode) is required for tax calculation when using Paygentic Tax.
         :param customer_id: Unique identifier for a customer
-        :param ending_at: Subscription expiration timestamp in ISO 8601 format. Sample values: '2024-12-31T23:59:59Z', '2025-01-15T10:30:00Z'. Omit for indefinite subscriptions.
+        :param ending_at: Subscription expiration timestamp in ISO 8601 format. Sample values: '2024-12-31T23:59:59Z', '2025-01-15T10:30:00Z'. Omit for indefinite subscriptions. Must be after startedAt: a value at or before it is rejected with 400.
         :param prefund_amount: Deprecated. This field is ignored and has no effect.
         :param minimum_account_balance: Deprecated. This field is ignored and has no effect.
         :param redirect_urls: Optional redirect URLs after payment completion or failure. If not provided, uses default platform behavior.
