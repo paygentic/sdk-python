@@ -23,7 +23,7 @@ class UpdatePriceConflictErrorData(BaseModel):
 
 @dataclass(unsafe_hash=True)
 class UpdatePriceConflictError(PaygenticError):
-    r"""Price cannot be restructured because a subscription still bills it directly"""
+    r"""Price cannot be changed: a subscription still bills it directly, or a pending subscription proposal names it"""
 
     data: UpdatePriceConflictErrorData = field(hash=False)
 

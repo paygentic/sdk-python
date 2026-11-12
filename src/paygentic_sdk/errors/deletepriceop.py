@@ -21,7 +21,7 @@ class DeletePriceConflictErrorData(BaseModel):
 
 @dataclass(unsafe_hash=True)
 class DeletePriceConflictError(PaygenticError):
-    r"""Price cannot be deleted because a live plan still references it"""
+    r"""Price cannot be deleted: a live plan or subscription still references it, or a pending subscription proposal names it"""
 
     data: DeletePriceConflictErrorData = field(hash=False)
 

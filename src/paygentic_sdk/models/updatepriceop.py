@@ -157,6 +157,10 @@ class UpdatePriceDetailsTypedDict(TypedDict):
     price_id: NotRequired[str]
     fields: NotRequired[List[str]]
     subscription_count: NotRequired[int]
+    subscription_proposal_ids: NotRequired[List[str]]
+    r"""Up to ten of the pending subscription proposals that name the price"""
+    subscription_proposal_count: NotRequired[int]
+    r"""How many pending subscription proposals name the price"""
 
 
 class UpdatePriceDetails(BaseModel):
@@ -168,9 +172,27 @@ class UpdatePriceDetails(BaseModel):
         Optional[int], pydantic.Field(alias="subscriptionCount")
     ] = None
 
+    subscription_proposal_ids: Annotated[
+        Optional[List[str]], pydantic.Field(alias="subscriptionProposalIds")
+    ] = None
+    r"""Up to ten of the pending subscription proposals that name the price"""
+
+    subscription_proposal_count: Annotated[
+        Optional[int], pydantic.Field(alias="subscriptionProposalCount")
+    ] = None
+    r"""How many pending subscription proposals name the price"""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["priceId", "fields", "subscriptionCount"])
+        optional_fields = set(
+            [
+                "priceId",
+                "fields",
+                "subscriptionCount",
+                "subscriptionProposalIds",
+                "subscriptionProposalCount",
+            ]
+        )
         serialized = handler(self)
         m = {}
 

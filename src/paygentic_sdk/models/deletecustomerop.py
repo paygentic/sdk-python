@@ -29,6 +29,7 @@ DeleteCustomerType = Union[
         "invoices",
         "disputes",
         "entitlements",
+        "subscriptionProposals",
     ],
     UnrecognizedStr,
 ]
