@@ -171,7 +171,7 @@ class CreateSubscriptionRequestTypedDict(TypedDict):
     redirect_urls: NotRequired[RedirectUrlsTypedDict]
     r"""Optional redirect URLs after payment completion or failure. If not provided, uses default platform behavior."""
     elapsed_period_billing: NotRequired[ElapsedPeriodBilling]
-    r"""Whether a backdated start bills its elapsed periods. A start is backdated when `startedAt` is more than 24 hours before the subscription is created. `none` bills only charges that fall due from the moment of creation, for a customer whose earlier periods another system already billed. `per_period` bills every charge that fell due from `startedAt`, on one first invoice; it refuses a `startedAt` more than 12 months back. Has no effect on a start that is not backdated. Defaults to `none`."""
+    r"""Whether a backdated start bills its elapsed periods. A start is backdated when `startedAt` is more than 24 hours before the subscription is created. `none` bills only charges that fall due from the moment of creation, for a customer whose earlier periods another system already billed. `per_period` bills every charge that fell due from `startedAt`, on one first invoice; it refuses a `startedAt` more than 12 months back, with the code `PER_PERIOD_LOOKBACK_EXCEEDED`. Has no effect on a start that is not backdated. Defaults to `none`."""
     billing_anchor: NotRequired[datetime]
     r"""A billing anchor for this subscription, in place of the plan's. Any instant, past or future. The subscription's billing anchor is its first recurrence on or after `startedAt`, stepping back or forward by whole billing cadences. Example: on a monthly plan, an anchor of '2027-01-31T00:00:00Z' with a start of '2026-10-10T00:00:00Z' gives '2026-10-31T00:00:00Z'. A create is refused with 400 when the resolved anchor does not line up with the usage period anchor of a feature that credits unused balance. Omit it to use the plan's billing anchor. A repeated create that names an anchor resolving to a different instant than the existing subscription's gets 409."""
     test_clock_id: NotRequired[str]
@@ -181,7 +181,7 @@ class CreateSubscriptionRequestTypedDict(TypedDict):
     renewal_reminder_days: NotRequired[Nullable[int]]
     r"""Override plan setting for number of days before renewal to send the reminder. Only used if renewalReminderEnabled is true (or inherited from plan). Set to null to use plan default."""
     payment_term_days: NotRequired[int]
-    r"""Payment term in days (\"Net X\") applied to every invoice the subscription generates: invoice dueAt = invoice issue date + paymentTermDays. Defaults to 0 (\"due on issue\"). A non-zero value is only valid alongside bankTransferOnly=true."""
+    r"""Payment term in days (\"Net X\") applied to every invoice the subscription generates: invoice dueAt = invoice issue date + paymentTermDays. Defaults to 0 (\"due on issue\"). A non-zero value needs `metadata.bankTransferOnly: true`; without it the request answers 400 `PAYMENT_TERM_DAYS_REQUIRES_BANK_TRANSFER_ONLY`."""
     session_expiry_minutes: NotRequired[float]
     r"""Number of minutes until the payment session expires. Defaults to 240 minutes (4 hours) if not provided."""
     version_policy: NotRequired[SubscriptionVersionPolicy]
@@ -247,7 +247,7 @@ class CreateSubscriptionRequest(BaseModel):
     elapsed_period_billing: Annotated[
         Optional[ElapsedPeriodBilling], pydantic.Field(alias="elapsedPeriodBilling")
     ] = "none"
-    r"""Whether a backdated start bills its elapsed periods. A start is backdated when `startedAt` is more than 24 hours before the subscription is created. `none` bills only charges that fall due from the moment of creation, for a customer whose earlier periods another system already billed. `per_period` bills every charge that fell due from `startedAt`, on one first invoice; it refuses a `startedAt` more than 12 months back. Has no effect on a start that is not backdated. Defaults to `none`."""
+    r"""Whether a backdated start bills its elapsed periods. A start is backdated when `startedAt` is more than 24 hours before the subscription is created. `none` bills only charges that fall due from the moment of creation, for a customer whose earlier periods another system already billed. `per_period` bills every charge that fell due from `startedAt`, on one first invoice; it refuses a `startedAt` more than 12 months back, with the code `PER_PERIOD_LOOKBACK_EXCEEDED`. Has no effect on a start that is not backdated. Defaults to `none`."""
 
     billing_anchor: Annotated[
         Optional[datetime], pydantic.Field(alias="billingAnchor")
@@ -270,7 +270,7 @@ class CreateSubscriptionRequest(BaseModel):
     payment_term_days: Annotated[
         Optional[int], pydantic.Field(alias="paymentTermDays")
     ] = None
-    r"""Payment term in days (\"Net X\") applied to every invoice the subscription generates: invoice dueAt = invoice issue date + paymentTermDays. Defaults to 0 (\"due on issue\"). A non-zero value is only valid alongside bankTransferOnly=true."""
+    r"""Payment term in days (\"Net X\") applied to every invoice the subscription generates: invoice dueAt = invoice issue date + paymentTermDays. Defaults to 0 (\"due on issue\"). A non-zero value needs `metadata.bankTransferOnly: true`; without it the request answers 400 `PAYMENT_TERM_DAYS_REQUIRES_BANK_TRANSFER_ONLY`."""
 
     session_expiry_minutes: Annotated[
         Optional[float], pydantic.Field(alias="sessionExpiryMinutes")
