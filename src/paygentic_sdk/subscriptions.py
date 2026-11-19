@@ -7,7 +7,7 @@ from paygentic_sdk._hooks import HookContext
 from paygentic_sdk.types import BaseModel, OptionalNullable, UNSET
 from paygentic_sdk.utils import get_security_from_env
 from paygentic_sdk.utils.unmarshal_json_response import unmarshal_json_response
-from typing import Any, Dict, Mapping, Optional, Union, cast
+from typing import Any, Dict, List, Mapping, Optional, Union, cast
 
 
 class Subscriptions(BaseSDK):
@@ -252,6 +252,24 @@ class Subscriptions(BaseSDK):
                 Dict[str, models.IntervalChangeMetadataTypedDict],
             ]
         ] = None,
+        add_prices: Optional[
+            Union[
+                List[models.SubscriptionCreateAddPriceOp],
+                List[models.SubscriptionCreateAddPriceOpTypedDict],
+            ]
+        ] = None,
+        override_prices: Optional[
+            Union[
+                List[models.SubscriptionCreateOverridePriceOp],
+                List[models.SubscriptionCreateOverridePriceOpTypedDict],
+            ]
+        ] = None,
+        remove_prices: Optional[
+            Union[
+                List[models.SubscriptionCreateRemovePriceOp],
+                List[models.SubscriptionCreateRemovePriceOpTypedDict],
+            ]
+        ] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -284,6 +302,9 @@ class Subscriptions(BaseSDK):
         :param change_reason: Why a change was made. `correction` repairs data that was entered wrong; `migration` moves a contract from another system; `commercial` is a real change to the deal; `contractual` applies a step the original contract scheduled, such as an annual uplift. Defaults to `unspecified`.
         :param change_description: A free-text note on why these intervals are changing.
         :param change_metadata: Your own key-value data about the change, such as a CRM deal ID.
+        :param add_prices: Catalog prices to bill on this subscription that its plan version does not carry. Each must be owned by the same merchant and use the standard price model.
+        :param override_prices: Rate or quantity overrides for prices the plan version does carry.
+        :param remove_prices: Plan prices this subscription does not bill.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -327,6 +348,16 @@ class Subscriptions(BaseSDK):
             change_reason=change_reason,
             change_description=change_description,
             change_metadata=change_metadata,
+            add_prices=utils.get_pydantic_model(
+                add_prices, Optional[List[models.SubscriptionCreateAddPriceOp]]
+            ),
+            override_prices=utils.get_pydantic_model(
+                override_prices,
+                Optional[List[models.SubscriptionCreateOverridePriceOp]],
+            ),
+            remove_prices=utils.get_pydantic_model(
+                remove_prices, Optional[List[models.SubscriptionCreateRemovePriceOp]]
+            ),
         )
 
         req = self._build_request(
@@ -442,6 +473,24 @@ class Subscriptions(BaseSDK):
                 Dict[str, models.IntervalChangeMetadataTypedDict],
             ]
         ] = None,
+        add_prices: Optional[
+            Union[
+                List[models.SubscriptionCreateAddPriceOp],
+                List[models.SubscriptionCreateAddPriceOpTypedDict],
+            ]
+        ] = None,
+        override_prices: Optional[
+            Union[
+                List[models.SubscriptionCreateOverridePriceOp],
+                List[models.SubscriptionCreateOverridePriceOpTypedDict],
+            ]
+        ] = None,
+        remove_prices: Optional[
+            Union[
+                List[models.SubscriptionCreateRemovePriceOp],
+                List[models.SubscriptionCreateRemovePriceOpTypedDict],
+            ]
+        ] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -474,6 +523,9 @@ class Subscriptions(BaseSDK):
         :param change_reason: Why a change was made. `correction` repairs data that was entered wrong; `migration` moves a contract from another system; `commercial` is a real change to the deal; `contractual` applies a step the original contract scheduled, such as an annual uplift. Defaults to `unspecified`.
         :param change_description: A free-text note on why these intervals are changing.
         :param change_metadata: Your own key-value data about the change, such as a CRM deal ID.
+        :param add_prices: Catalog prices to bill on this subscription that its plan version does not carry. Each must be owned by the same merchant and use the standard price model.
+        :param override_prices: Rate or quantity overrides for prices the plan version does carry.
+        :param remove_prices: Plan prices this subscription does not bill.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -517,6 +569,16 @@ class Subscriptions(BaseSDK):
             change_reason=change_reason,
             change_description=change_description,
             change_metadata=change_metadata,
+            add_prices=utils.get_pydantic_model(
+                add_prices, Optional[List[models.SubscriptionCreateAddPriceOp]]
+            ),
+            override_prices=utils.get_pydantic_model(
+                override_prices,
+                Optional[List[models.SubscriptionCreateOverridePriceOp]],
+            ),
+            remove_prices=utils.get_pydantic_model(
+                remove_prices, Optional[List[models.SubscriptionCreateRemovePriceOp]]
+            ),
         )
 
         req = self._build_request_async(

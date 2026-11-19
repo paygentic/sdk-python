@@ -7,6 +7,18 @@ from .intervalchangemetadata import (
     IntervalChangeMetadata,
     IntervalChangeMetadataTypedDict,
 )
+from .subscriptioncreateaddpriceop import (
+    SubscriptionCreateAddPriceOp,
+    SubscriptionCreateAddPriceOpTypedDict,
+)
+from .subscriptioncreateoverridepriceop import (
+    SubscriptionCreateOverridePriceOp,
+    SubscriptionCreateOverridePriceOpTypedDict,
+)
+from .subscriptioncreateremovepriceop import (
+    SubscriptionCreateRemovePriceOp,
+    SubscriptionCreateRemovePriceOpTypedDict,
+)
 from .subscriptionmetadata import SubscriptionMetadata, SubscriptionMetadataTypedDict
 from .subscriptionversionpolicy import SubscriptionVersionPolicy
 from datetime import datetime
@@ -19,7 +31,7 @@ from paygentic_sdk.types import (
 )
 import pydantic
 from pydantic import model_serializer
-from typing import Dict, Optional
+from typing import Dict, List, Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
 
 
@@ -194,6 +206,12 @@ class CreateSubscriptionRequestTypedDict(TypedDict):
     r"""A free-text note on why these intervals are changing."""
     change_metadata: NotRequired[Dict[str, IntervalChangeMetadataTypedDict]]
     r"""Your own key-value data about the change, such as a CRM deal ID."""
+    add_prices: NotRequired[List[SubscriptionCreateAddPriceOpTypedDict]]
+    r"""Catalog prices to bill on this subscription that its plan version does not carry. Each must be owned by the same merchant and use the standard price model."""
+    override_prices: NotRequired[List[SubscriptionCreateOverridePriceOpTypedDict]]
+    r"""Rate or quantity overrides for prices the plan version does carry."""
+    remove_prices: NotRequired[List[SubscriptionCreateRemovePriceOpTypedDict]]
+    r"""Plan prices this subscription does not bill."""
 
 
 class CreateSubscriptionRequest(BaseModel):
@@ -301,6 +319,23 @@ class CreateSubscriptionRequest(BaseModel):
     ] = None
     r"""Your own key-value data about the change, such as a CRM deal ID."""
 
+    add_prices: Annotated[
+        Optional[List[SubscriptionCreateAddPriceOp]], pydantic.Field(alias="addPrices")
+    ] = None
+    r"""Catalog prices to bill on this subscription that its plan version does not carry. Each must be owned by the same merchant and use the standard price model."""
+
+    override_prices: Annotated[
+        Optional[List[SubscriptionCreateOverridePriceOp]],
+        pydantic.Field(alias="overridePrices"),
+    ] = None
+    r"""Rate or quantity overrides for prices the plan version does carry."""
+
+    remove_prices: Annotated[
+        Optional[List[SubscriptionCreateRemovePriceOp]],
+        pydantic.Field(alias="removePrices"),
+    ] = None
+    r"""Plan prices this subscription does not bill."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
@@ -325,6 +360,9 @@ class CreateSubscriptionRequest(BaseModel):
                 "changeReason",
                 "changeDescription",
                 "changeMetadata",
+                "addPrices",
+                "overridePrices",
+                "removePrices",
             ]
         )
         nullable_fields = set(["renewalReminderEnabled", "renewalReminderDays"])

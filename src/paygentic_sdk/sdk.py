@@ -40,6 +40,7 @@ if TYPE_CHECKING:
     from paygentic_sdk.revenue import Revenue
     from paygentic_sdk.salesforce import Salesforce
     from paygentic_sdk.sources import Sources
+    from paygentic_sdk.subscription_proposals import SubscriptionProposals
     from paygentic_sdk.subscriptions import Subscriptions
     from paygentic_sdk.test_clocks import TestClocks
     from paygentic_sdk.users import Users
@@ -72,6 +73,8 @@ class Paygentic(BaseSDK):
     r"""A `Source` is an external data provider capable of automatically creating usage events. Configuration occurs at the plan level, enabling data retrieval from third-party platforms such as Stripe to produce billable events."""
     subscriptions: "Subscriptions"
     r"""A `Subscription` is a customer's commitment to purchase a `Product` following the terms of a `Plan` and its linked `Prices`."""
+    subscription_proposals: "SubscriptionProposals"
+    r"""A `SubscriptionProposal` holds the values of a subscription until a person on your team approves or rejects it. Nothing is billed while it waits."""
     users: "Users"
     r"""A `User` is an entity granted access to an Organization's resources. All operations are performed by users."""
     invoices_v2: "InvoicesV2"
@@ -118,6 +121,10 @@ class Paygentic(BaseSDK):
         "products": ("paygentic_sdk.products", "Products"),
         "sources": ("paygentic_sdk.sources", "Sources"),
         "subscriptions": ("paygentic_sdk.subscriptions", "Subscriptions"),
+        "subscription_proposals": (
+            "paygentic_sdk.subscription_proposals",
+            "SubscriptionProposals",
+        ),
         "users": ("paygentic_sdk.users", "Users"),
         "invoices_v2": ("paygentic_sdk.invoices_v2", "InvoicesV2"),
         "payments": ("paygentic_sdk.payments", "Payments"),

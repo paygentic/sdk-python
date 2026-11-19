@@ -25,6 +25,10 @@ if TYPE_CHECKING:
         RetryPaymentResponseError,
         RetryPaymentResponseErrorData,
     )
+    from .subscriptionproposalconflict_error import (
+        SubscriptionProposalConflictError,
+        SubscriptionProposalConflictErrorData,
+    )
     from .updatepriceop import UpdatePriceConflictError, UpdatePriceConflictErrorData
     from .validationerror import ValidationError, ValidationErrorData
 
@@ -45,6 +49,8 @@ __all__ = [
     "ResponseValidationError",
     "RetryPaymentResponseError",
     "RetryPaymentResponseErrorData",
+    "SubscriptionProposalConflictError",
+    "SubscriptionProposalConflictErrorData",
     "UnprocessableEntityError",
     "UnprocessableEntityErrorData",
     "UpdatePriceConflictError",
@@ -71,6 +77,8 @@ _dynamic_imports: dict[str, str] = {
     "ResponseValidationError": ".responsevalidationerror",
     "RetryPaymentResponseError": ".retrypaymentresponse_error",
     "RetryPaymentResponseErrorData": ".retrypaymentresponse_error",
+    "SubscriptionProposalConflictError": ".subscriptionproposalconflict_error",
+    "SubscriptionProposalConflictErrorData": ".subscriptionproposalconflict_error",
     "UpdatePriceConflictError": ".updatepriceop",
     "UpdatePriceConflictErrorData": ".updatepriceop",
     "ValidationError": ".validationerror",

@@ -3,25 +3,21 @@
 from __future__ import annotations
 from .mecredential import MeCredential, MeCredentialTypedDict
 from .permission import Permission
-from paygentic_sdk.types import BaseModel, UnrecognizedStr
+from paygentic_sdk.types import BaseModel
 import pydantic
-from typing import List, Literal, Union
+from typing import List, Literal
 from typing_extensions import Annotated, TypedDict
 
 
-OrganizationType = Union[
-    Literal[
-        "merchant",
-        "consumer",
-    ],
-    UnrecognizedStr,
-]
+OrganizationType = Literal["merchant",]
+r"""The type of the active organization. Always merchant: the API makes no merchant/consumer distinction."""
 
 
 class MeTypedDict(TypedDict):
     user_id: str
     organization_id: str
     organization_type: OrganizationType
+    r"""The type of the active organization. Always merchant: the API makes no merchant/consumer distinction."""
     roles: List[str]
     r"""The role names of the caller in the active organization."""
     permissions: List[Permission]
@@ -38,6 +34,7 @@ class Me(BaseModel):
     organization_type: Annotated[
         OrganizationType, pydantic.Field(alias="organizationType")
     ]
+    r"""The type of the active organization. Always merchant: the API makes no merchant/consumer distinction."""
 
     roles: List[str]
     r"""The role names of the caller in the active organization."""

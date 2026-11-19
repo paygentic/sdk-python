@@ -250,6 +250,7 @@ if TYPE_CHECKING:
     from .createsubscriptionadjustmentrequest import (
         CreateSubscriptionAdjustmentRequest,
         CreateSubscriptionAdjustmentRequestTypedDict,
+        UnknownCreateSubscriptionAdjustmentRequest,
     )
     from .createsubscriptionop import (
         CreateSubscriptionAddress,
@@ -260,6 +261,12 @@ if TYPE_CHECKING:
         CreateSubscriptionRequestTypedDict,
         RedirectUrls,
         RedirectUrlsTypedDict,
+    )
+    from .createsubscriptionproposalop import (
+        CreateSubscriptionProposalRedirectUrls,
+        CreateSubscriptionProposalRedirectUrlsTypedDict,
+        CreateSubscriptionProposalRequest,
+        CreateSubscriptionProposalRequestTypedDict,
     )
     from .createtestclockop import (
         CreateTestClockRequest,
@@ -289,6 +296,10 @@ if TYPE_CHECKING:
         CustomerPaymentSessionStatus,
         CustomerPaymentSessionTypedDict,
         Mode,
+    )
+    from .decidesubscriptionproposalop import (
+        DecideSubscriptionProposalRequest,
+        DecideSubscriptionProposalRequestTypedDict,
     )
     from .deletebillingscheduleop import (
         DeleteBillingScheduleRequest,
@@ -508,6 +519,11 @@ if TYPE_CHECKING:
     from .getsubscriptionop import (
         GetSubscriptionRequest,
         GetSubscriptionRequestTypedDict,
+    )
+    from .getsubscriptionproposalop import (
+        Expand,
+        GetSubscriptionProposalRequest,
+        GetSubscriptionProposalRequestTypedDict,
     )
     from .gettestclockop import GetTestClockRequest, GetTestClockRequestTypedDict
     from .getuserop import GetUserRequest, GetUserRequestTypedDict
@@ -882,6 +898,19 @@ if TYPE_CHECKING:
     from .listsubscriptionintervalchangesop import (
         ListSubscriptionIntervalChangesRequest,
         ListSubscriptionIntervalChangesRequestTypedDict,
+    )
+    from .listsubscriptionproposalprojectedinvoicesop import (
+        ListSubscriptionProposalProjectedInvoicesObject,
+        ListSubscriptionProposalProjectedInvoicesRequest,
+        ListSubscriptionProposalProjectedInvoicesRequestTypedDict,
+        ListSubscriptionProposalProjectedInvoicesResponse,
+        ListSubscriptionProposalProjectedInvoicesResponseTypedDict,
+    )
+    from .listsubscriptionproposalsop import (
+        ListSubscriptionProposalsRequest,
+        ListSubscriptionProposalsRequestTypedDict,
+        ListSubscriptionProposalsResponse,
+        ListSubscriptionProposalsResponseTypedDict,
     )
     from .listsubscriptionsop import (
         Include,
@@ -1267,6 +1296,18 @@ if TYPE_CHECKING:
         SubscriptionAdjustmentsResponse,
         SubscriptionAdjustmentsResponseTypedDict,
     )
+    from .subscriptioncreateaddpriceop import (
+        SubscriptionCreateAddPriceOp,
+        SubscriptionCreateAddPriceOpTypedDict,
+    )
+    from .subscriptioncreateoverridepriceop import (
+        SubscriptionCreateOverridePriceOp,
+        SubscriptionCreateOverridePriceOpTypedDict,
+    )
+    from .subscriptioncreateremovepriceop import (
+        SubscriptionCreateRemovePriceOp,
+        SubscriptionCreateRemovePriceOpTypedDict,
+    )
     from .subscriptioninterval import (
         SubscriptionInterval,
         SubscriptionIntervalBillingMode,
@@ -1324,6 +1365,51 @@ if TYPE_CHECKING:
         SubscriptionPortal,
         SubscriptionPortalObject,
         SubscriptionPortalTypedDict,
+    )
+    from .subscriptionproposal import (
+        SubscriptionProposal,
+        SubscriptionProposalObject,
+        SubscriptionProposalTypedDict,
+    )
+    from .subscriptionproposalconflict_error import (
+        SubscriptionProposalConflictErrorType,
+    )
+    from .subscriptionproposalconflictcode import SubscriptionProposalConflictCode
+    from .subscriptionproposalconflictdetails import (
+        SubscriptionProposalConflictDetails,
+        SubscriptionProposalConflictDetailsTypedDict,
+    )
+    from .subscriptionproposaldecider import (
+        SubscriptionProposalDecider,
+        SubscriptionProposalDeciderType,
+        SubscriptionProposalDeciderTypedDict,
+    )
+    from .subscriptionproposaldecision import (
+        SubscriptionProposalDecision,
+        SubscriptionProposalDecisionDecision,
+        SubscriptionProposalDecisionTypedDict,
+    )
+    from .subscriptionproposalexternalreference import (
+        SubscriptionProposalExternalReference,
+        SubscriptionProposalExternalReferenceTypedDict,
+    )
+    from .subscriptionproposalrefusedresync import (
+        Code,
+        SubscriptionProposalRefusedResync,
+        SubscriptionProposalRefusedResyncTypedDict,
+    )
+    from .subscriptionproposalrejectionreason import SubscriptionProposalRejectionReason
+    from .subscriptionproposalrevision import (
+        SubscriptionProposalRevision,
+        SubscriptionProposalRevisionTypedDict,
+    )
+    from .subscriptionproposalstatus import SubscriptionProposalStatus
+    from .subscriptionproposalvalues import (
+        SubscriptionProposalRedirectUrls,
+        SubscriptionProposalRedirectUrlsTypedDict,
+        SubscriptionProposalValues,
+        SubscriptionProposalValuesElapsedPeriodBilling,
+        SubscriptionProposalValuesTypedDict,
     )
     from .subscriptionreconciliation import (
         Features,
@@ -1478,6 +1564,15 @@ if TYPE_CHECKING:
         UpdateSubscriptionRequestTypedDict,
         UpdateSubscriptionStatus,
     )
+    from .updatesubscriptionproposalop import (
+        UpdateSubscriptionProposalElapsedPeriodBilling,
+        UpdateSubscriptionProposalRedirectUrls,
+        UpdateSubscriptionProposalRedirectUrlsTypedDict,
+        UpdateSubscriptionProposalRequest,
+        UpdateSubscriptionProposalRequestBody,
+        UpdateSubscriptionProposalRequestBodyTypedDict,
+        UpdateSubscriptionProposalRequestTypedDict,
+    )
     from .updateuserop import (
         UpdateUserRequest,
         UpdateUserRequestBody,
@@ -1599,6 +1694,7 @@ __all__ = [
     "BulkRejectSourceEventsResponse",
     "BulkRejectSourceEventsResponseTypedDict",
     "ChangeReason",
+    "Code",
     "Consumer",
     "ConsumerTypedDict",
     "Cost",
@@ -1716,6 +1812,10 @@ __all__ = [
     "CreateSubscriptionAdjustmentRequestTypedDict",
     "CreateSubscriptionCustomer",
     "CreateSubscriptionCustomerTypedDict",
+    "CreateSubscriptionProposalRedirectUrls",
+    "CreateSubscriptionProposalRedirectUrlsTypedDict",
+    "CreateSubscriptionProposalRequest",
+    "CreateSubscriptionProposalRequestTypedDict",
     "CreateSubscriptionRequest",
     "CreateSubscriptionRequestTypedDict",
     "CreateTestClockRequest",
@@ -1738,6 +1838,8 @@ __all__ = [
     "CustomerScope",
     "CustomerScopeTypedDict",
     "CustomerTypedDict",
+    "DecideSubscriptionProposalRequest",
+    "DecideSubscriptionProposalRequestTypedDict",
     "DeleteBillingScheduleRequest",
     "DeleteBillingScheduleRequestTypedDict",
     "DeleteCostRequest",
@@ -1829,6 +1931,7 @@ __all__ = [
     "EventResponseObject",
     "EventResponseTypedDict",
     "EventType",
+    "Expand",
     "ExternalReference",
     "ExternalReferenceObject",
     "ExternalReferenceTypedDict",
@@ -1915,6 +2018,8 @@ __all__ = [
     "GetSourceRuleRequestTypedDict",
     "GetSubscriptionIntervalsRequest",
     "GetSubscriptionIntervalsRequestTypedDict",
+    "GetSubscriptionProposalRequest",
+    "GetSubscriptionProposalRequestTypedDict",
     "GetSubscriptionRequest",
     "GetSubscriptionRequestTypedDict",
     "GetTestClockRequest",
@@ -2184,6 +2289,15 @@ __all__ = [
     "ListSubscriptionAdjustmentsRequestTypedDict",
     "ListSubscriptionIntervalChangesRequest",
     "ListSubscriptionIntervalChangesRequestTypedDict",
+    "ListSubscriptionProposalProjectedInvoicesObject",
+    "ListSubscriptionProposalProjectedInvoicesRequest",
+    "ListSubscriptionProposalProjectedInvoicesRequestTypedDict",
+    "ListSubscriptionProposalProjectedInvoicesResponse",
+    "ListSubscriptionProposalProjectedInvoicesResponseTypedDict",
+    "ListSubscriptionProposalsRequest",
+    "ListSubscriptionProposalsRequestTypedDict",
+    "ListSubscriptionProposalsResponse",
+    "ListSubscriptionProposalsResponseTypedDict",
     "ListSubscriptionsRequest",
     "ListSubscriptionsRequestTypedDict",
     "ListSubscriptionsResponse",
@@ -2487,6 +2601,12 @@ __all__ = [
     "SubscriptionAdjustmentTypedDict",
     "SubscriptionAdjustmentsResponse",
     "SubscriptionAdjustmentsResponseTypedDict",
+    "SubscriptionCreateAddPriceOp",
+    "SubscriptionCreateAddPriceOpTypedDict",
+    "SubscriptionCreateOverridePriceOp",
+    "SubscriptionCreateOverridePriceOpTypedDict",
+    "SubscriptionCreateRemovePriceOp",
+    "SubscriptionCreateRemovePriceOpTypedDict",
     "SubscriptionCustomer",
     "SubscriptionCustomerTypedDict",
     "SubscriptionElapsedPeriodBilling",
@@ -2527,6 +2647,32 @@ __all__ = [
     "SubscriptionPortal",
     "SubscriptionPortalObject",
     "SubscriptionPortalTypedDict",
+    "SubscriptionProposal",
+    "SubscriptionProposalConflictCode",
+    "SubscriptionProposalConflictDetails",
+    "SubscriptionProposalConflictDetailsTypedDict",
+    "SubscriptionProposalConflictErrorType",
+    "SubscriptionProposalDecider",
+    "SubscriptionProposalDeciderType",
+    "SubscriptionProposalDeciderTypedDict",
+    "SubscriptionProposalDecision",
+    "SubscriptionProposalDecisionDecision",
+    "SubscriptionProposalDecisionTypedDict",
+    "SubscriptionProposalExternalReference",
+    "SubscriptionProposalExternalReferenceTypedDict",
+    "SubscriptionProposalObject",
+    "SubscriptionProposalRedirectUrls",
+    "SubscriptionProposalRedirectUrlsTypedDict",
+    "SubscriptionProposalRefusedResync",
+    "SubscriptionProposalRefusedResyncTypedDict",
+    "SubscriptionProposalRejectionReason",
+    "SubscriptionProposalRevision",
+    "SubscriptionProposalRevisionTypedDict",
+    "SubscriptionProposalStatus",
+    "SubscriptionProposalTypedDict",
+    "SubscriptionProposalValues",
+    "SubscriptionProposalValuesElapsedPeriodBilling",
+    "SubscriptionProposalValuesTypedDict",
     "SubscriptionReconciliation",
     "SubscriptionReconciliationLineItems",
     "SubscriptionReconciliationLineItemsTypedDict",
@@ -2557,6 +2703,7 @@ __all__ = [
     "TransitionPlanVersionRequestRequest",
     "TransitionPlanVersionRequestRequestTypedDict",
     "TransitionPlanVersionRequestTypedDict",
+    "UnknownCreateSubscriptionAdjustmentRequest",
     "UnknownEntitlementDetail",
     "UnknownEntitlementListItem",
     "UnknownPaymentUnion",
@@ -2641,6 +2788,13 @@ __all__ = [
     "UpdateSourceRequestTypedDict",
     "UpdateSourceRuleRequest",
     "UpdateSourceRuleRequestTypedDict",
+    "UpdateSubscriptionProposalElapsedPeriodBilling",
+    "UpdateSubscriptionProposalRedirectUrls",
+    "UpdateSubscriptionProposalRedirectUrlsTypedDict",
+    "UpdateSubscriptionProposalRequest",
+    "UpdateSubscriptionProposalRequestBody",
+    "UpdateSubscriptionProposalRequestBodyTypedDict",
+    "UpdateSubscriptionProposalRequestTypedDict",
     "UpdateSubscriptionRequest",
     "UpdateSubscriptionRequestBody",
     "UpdateSubscriptionRequestBodyTypedDict",
@@ -2879,6 +3033,7 @@ _dynamic_imports: dict[str, str] = {
     "CreateSubscriptionAdjustmentRequestRequestTypedDict": ".createsubscriptionadjustmentop",
     "CreateSubscriptionAdjustmentRequest": ".createsubscriptionadjustmentrequest",
     "CreateSubscriptionAdjustmentRequestTypedDict": ".createsubscriptionadjustmentrequest",
+    "UnknownCreateSubscriptionAdjustmentRequest": ".createsubscriptionadjustmentrequest",
     "CreateSubscriptionAddress": ".createsubscriptionop",
     "CreateSubscriptionAddressTypedDict": ".createsubscriptionop",
     "CreateSubscriptionCustomer": ".createsubscriptionop",
@@ -2887,6 +3042,10 @@ _dynamic_imports: dict[str, str] = {
     "CreateSubscriptionRequestTypedDict": ".createsubscriptionop",
     "RedirectUrls": ".createsubscriptionop",
     "RedirectUrlsTypedDict": ".createsubscriptionop",
+    "CreateSubscriptionProposalRedirectUrls": ".createsubscriptionproposalop",
+    "CreateSubscriptionProposalRedirectUrlsTypedDict": ".createsubscriptionproposalop",
+    "CreateSubscriptionProposalRequest": ".createsubscriptionproposalop",
+    "CreateSubscriptionProposalRequestTypedDict": ".createsubscriptionproposalop",
     "CreateTestClockRequest": ".createtestclockop",
     "CreateTestClockRequestTypedDict": ".createtestclockop",
     "CreateUsageDiscountAdjustment": ".createusagediscountadjustment",
@@ -2907,6 +3066,8 @@ _dynamic_imports: dict[str, str] = {
     "CustomerPaymentSessionStatus": ".customerpaymentsession",
     "CustomerPaymentSessionTypedDict": ".customerpaymentsession",
     "Mode": ".customerpaymentsession",
+    "DecideSubscriptionProposalRequest": ".decidesubscriptionproposalop",
+    "DecideSubscriptionProposalRequestTypedDict": ".decidesubscriptionproposalop",
     "DeleteBillingScheduleRequest": ".deletebillingscheduleop",
     "DeleteBillingScheduleRequestTypedDict": ".deletebillingscheduleop",
     "DeleteCostRequest": ".deletecostop",
@@ -3081,6 +3242,9 @@ _dynamic_imports: dict[str, str] = {
     "GetSubscriptionIntervalsRequestTypedDict": ".getsubscriptionintervalsop",
     "GetSubscriptionRequest": ".getsubscriptionop",
     "GetSubscriptionRequestTypedDict": ".getsubscriptionop",
+    "Expand": ".getsubscriptionproposalop",
+    "GetSubscriptionProposalRequest": ".getsubscriptionproposalop",
+    "GetSubscriptionProposalRequestTypedDict": ".getsubscriptionproposalop",
     "GetTestClockRequest": ".gettestclockop",
     "GetTestClockRequestTypedDict": ".gettestclockop",
     "GetUserRequest": ".getuserop",
@@ -3348,6 +3512,15 @@ _dynamic_imports: dict[str, str] = {
     "ListSubscriptionAdjustmentsRequestTypedDict": ".listsubscriptionadjustmentsop",
     "ListSubscriptionIntervalChangesRequest": ".listsubscriptionintervalchangesop",
     "ListSubscriptionIntervalChangesRequestTypedDict": ".listsubscriptionintervalchangesop",
+    "ListSubscriptionProposalProjectedInvoicesObject": ".listsubscriptionproposalprojectedinvoicesop",
+    "ListSubscriptionProposalProjectedInvoicesRequest": ".listsubscriptionproposalprojectedinvoicesop",
+    "ListSubscriptionProposalProjectedInvoicesRequestTypedDict": ".listsubscriptionproposalprojectedinvoicesop",
+    "ListSubscriptionProposalProjectedInvoicesResponse": ".listsubscriptionproposalprojectedinvoicesop",
+    "ListSubscriptionProposalProjectedInvoicesResponseTypedDict": ".listsubscriptionproposalprojectedinvoicesop",
+    "ListSubscriptionProposalsRequest": ".listsubscriptionproposalsop",
+    "ListSubscriptionProposalsRequestTypedDict": ".listsubscriptionproposalsop",
+    "ListSubscriptionProposalsResponse": ".listsubscriptionproposalsop",
+    "ListSubscriptionProposalsResponseTypedDict": ".listsubscriptionproposalsop",
     "Include": ".listsubscriptionsop",
     "ListSubscriptionsRequest": ".listsubscriptionsop",
     "ListSubscriptionsRequestTypedDict": ".listsubscriptionsop",
@@ -3667,6 +3840,12 @@ _dynamic_imports: dict[str, str] = {
     "SubscriptionAdjustmentTypedDict": ".subscriptionadjustment",
     "SubscriptionAdjustmentsResponse": ".subscriptionadjustmentsresponse",
     "SubscriptionAdjustmentsResponseTypedDict": ".subscriptionadjustmentsresponse",
+    "SubscriptionCreateAddPriceOp": ".subscriptioncreateaddpriceop",
+    "SubscriptionCreateAddPriceOpTypedDict": ".subscriptioncreateaddpriceop",
+    "SubscriptionCreateOverridePriceOp": ".subscriptioncreateoverridepriceop",
+    "SubscriptionCreateOverridePriceOpTypedDict": ".subscriptioncreateoverridepriceop",
+    "SubscriptionCreateRemovePriceOp": ".subscriptioncreateremovepriceop",
+    "SubscriptionCreateRemovePriceOpTypedDict": ".subscriptioncreateremovepriceop",
     "SubscriptionInterval": ".subscriptioninterval",
     "SubscriptionIntervalBillingMode": ".subscriptioninterval",
     "SubscriptionIntervalKind": ".subscriptioninterval",
@@ -3703,6 +3882,33 @@ _dynamic_imports: dict[str, str] = {
     "SubscriptionPortal": ".subscriptionportal",
     "SubscriptionPortalObject": ".subscriptionportal",
     "SubscriptionPortalTypedDict": ".subscriptionportal",
+    "SubscriptionProposal": ".subscriptionproposal",
+    "SubscriptionProposalObject": ".subscriptionproposal",
+    "SubscriptionProposalTypedDict": ".subscriptionproposal",
+    "SubscriptionProposalConflictErrorType": ".subscriptionproposalconflict_error",
+    "SubscriptionProposalConflictCode": ".subscriptionproposalconflictcode",
+    "SubscriptionProposalConflictDetails": ".subscriptionproposalconflictdetails",
+    "SubscriptionProposalConflictDetailsTypedDict": ".subscriptionproposalconflictdetails",
+    "SubscriptionProposalDecider": ".subscriptionproposaldecider",
+    "SubscriptionProposalDeciderType": ".subscriptionproposaldecider",
+    "SubscriptionProposalDeciderTypedDict": ".subscriptionproposaldecider",
+    "SubscriptionProposalDecision": ".subscriptionproposaldecision",
+    "SubscriptionProposalDecisionDecision": ".subscriptionproposaldecision",
+    "SubscriptionProposalDecisionTypedDict": ".subscriptionproposaldecision",
+    "SubscriptionProposalExternalReference": ".subscriptionproposalexternalreference",
+    "SubscriptionProposalExternalReferenceTypedDict": ".subscriptionproposalexternalreference",
+    "Code": ".subscriptionproposalrefusedresync",
+    "SubscriptionProposalRefusedResync": ".subscriptionproposalrefusedresync",
+    "SubscriptionProposalRefusedResyncTypedDict": ".subscriptionproposalrefusedresync",
+    "SubscriptionProposalRejectionReason": ".subscriptionproposalrejectionreason",
+    "SubscriptionProposalRevision": ".subscriptionproposalrevision",
+    "SubscriptionProposalRevisionTypedDict": ".subscriptionproposalrevision",
+    "SubscriptionProposalStatus": ".subscriptionproposalstatus",
+    "SubscriptionProposalRedirectUrls": ".subscriptionproposalvalues",
+    "SubscriptionProposalRedirectUrlsTypedDict": ".subscriptionproposalvalues",
+    "SubscriptionProposalValues": ".subscriptionproposalvalues",
+    "SubscriptionProposalValuesElapsedPeriodBilling": ".subscriptionproposalvalues",
+    "SubscriptionProposalValuesTypedDict": ".subscriptionproposalvalues",
     "Features": ".subscriptionreconciliation",
     "FeaturesTypedDict": ".subscriptionreconciliation",
     "SubscriptionReconciliation": ".subscriptionreconciliation",
@@ -3808,6 +4014,13 @@ _dynamic_imports: dict[str, str] = {
     "UpdateSubscriptionRequestBodyTypedDict": ".updatesubscriptionop",
     "UpdateSubscriptionRequestTypedDict": ".updatesubscriptionop",
     "UpdateSubscriptionStatus": ".updatesubscriptionop",
+    "UpdateSubscriptionProposalElapsedPeriodBilling": ".updatesubscriptionproposalop",
+    "UpdateSubscriptionProposalRedirectUrls": ".updatesubscriptionproposalop",
+    "UpdateSubscriptionProposalRedirectUrlsTypedDict": ".updatesubscriptionproposalop",
+    "UpdateSubscriptionProposalRequest": ".updatesubscriptionproposalop",
+    "UpdateSubscriptionProposalRequestBody": ".updatesubscriptionproposalop",
+    "UpdateSubscriptionProposalRequestBodyTypedDict": ".updatesubscriptionproposalop",
+    "UpdateSubscriptionProposalRequestTypedDict": ".updatesubscriptionproposalop",
     "UpdateUserRequest": ".updateuserop",
     "UpdateUserRequestBody": ".updateuserop",
     "UpdateUserRequestBodyTypedDict": ".updateuserop",

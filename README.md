@@ -546,6 +546,15 @@ with Paygentic(
 * [update](docs/sdks/rules/README.md#update) - Update Rule
 * [delete](docs/sdks/rules/README.md#delete) - Delete Rule
 
+### [SubscriptionProposals](docs/sdks/subscriptionproposals/README.md)
+
+* [list_subscription_proposals](docs/sdks/subscriptionproposals/README.md#list_subscription_proposals) - List
+* [create_subscription_proposal](docs/sdks/subscriptionproposals/README.md#create_subscription_proposal) - Create
+* [get_subscription_proposal](docs/sdks/subscriptionproposals/README.md#get_subscription_proposal) - Get
+* [update_subscription_proposal](docs/sdks/subscriptionproposals/README.md#update_subscription_proposal) - Amend
+* [decide_subscription_proposal](docs/sdks/subscriptionproposals/README.md#decide_subscription_proposal) - Approve or reject
+* [list_subscription_proposal_projected_invoices](docs/sdks/subscriptionproposals/README.md#list_subscription_proposal_projected_invoices) - List projected
+
 ### [Subscriptions](docs/sdks/subscriptions/README.md)
 
 * [list](docs/sdks/subscriptions/README.md#list) - List
@@ -686,7 +695,7 @@ with Paygentic(
 * [`PaygenticError`](./src/paygentic_sdk/errors/paygenticerror.py): The base class for HTTP error responses.
   * [`Error`](./src/paygentic_sdk/errors/error.py): Unauthorized - Authentication failed or user does not have permissions. *
 
-<details><summary>Less common errors (12)</summary>
+<details><summary>Less common errors (13)</summary>
 
 <br />
 
@@ -697,13 +706,14 @@ with Paygentic(
 
 
 **Inherit from [`PaygenticError`](./src/paygentic_sdk/errors/paygenticerror.py)**:
-* [`ValidationError`](./src/paygentic_sdk/errors/validationerror.py): Bad Request - The request could not be understood or was missing required parameters. Status code `400`. Applicable to 100 of 155 methods.*
-* [`RetryPaymentResponseError`](./src/paygentic_sdk/errors/retrypaymentresponseerror.py): The result of a payment retry. Every response status of the retry operation that is not an error envelope uses this shape. Applicable to 1 of 155 methods.*
-* [`DeleteCustomerConflictError`](./src/paygentic_sdk/errors/deletecustomerconflicterror.py): Customer cannot be deleted due to active dependencies. Status code `409`. Applicable to 1 of 155 methods.*
-* [`DeleteFeeConflictError`](./src/paygentic_sdk/errors/deletefeeconflicterror.py): Fee cannot be deleted because it has associated prices. Status code `409`. Applicable to 1 of 155 methods.*
-* [`UpdatePriceConflictError`](./src/paygentic_sdk/errors/updatepriceconflicterror.py): Price cannot be changed: a subscription still bills it directly, or a pending subscription proposal names it. Status code `409`. Applicable to 1 of 155 methods.*
-* [`DeletePriceConflictError`](./src/paygentic_sdk/errors/deletepriceconflicterror.py): Price cannot be deleted: a live plan or subscription still references it, or a pending subscription proposal names it. Status code `409`. Applicable to 1 of 155 methods.*
-* [`UnprocessableEntityError`](./src/paygentic_sdk/errors/unprocessableentityerror.py): `hosted_link` only: Paygentic cannot create a payment link. The `code` field gives the cause: `INVOICE_NOT_LINKABLE_STATUS` (the invoice is not `ISSUED` or `PAYMENT_FAILED`; do not retry), `INVOICE_NO_BALANCE` (no amount is unpaid; treat the invoice as paid), or `MERCHANT_NO_PAYMENT_ACCOUNT` (the merchant has no connected payment account; retry after onboarding is complete). Status code `422`. Applicable to 1 of 155 methods.*
+* [`ValidationError`](./src/paygentic_sdk/errors/validationerror.py): Bad Request - The request could not be understood or was missing required parameters. Status code `400`. Applicable to 106 of 161 methods.*
+* [`SubscriptionProposalConflictError`](./src/paygentic_sdk/errors/subscriptionproposalconflicterror.py): A 409 of a proposal route. Branch on `code`, never on `message`. Status code `409`. Applicable to 4 of 161 methods.*
+* [`RetryPaymentResponseError`](./src/paygentic_sdk/errors/retrypaymentresponseerror.py): The result of a payment retry. Every response status of the retry operation that is not an error envelope uses this shape. Applicable to 1 of 161 methods.*
+* [`DeleteCustomerConflictError`](./src/paygentic_sdk/errors/deletecustomerconflicterror.py): Customer cannot be deleted due to active dependencies. Status code `409`. Applicable to 1 of 161 methods.*
+* [`DeleteFeeConflictError`](./src/paygentic_sdk/errors/deletefeeconflicterror.py): Fee cannot be deleted because it has associated prices. Status code `409`. Applicable to 1 of 161 methods.*
+* [`UpdatePriceConflictError`](./src/paygentic_sdk/errors/updatepriceconflicterror.py): Price cannot be changed: a subscription still bills it directly, or a pending subscription proposal names it. Status code `409`. Applicable to 1 of 161 methods.*
+* [`DeletePriceConflictError`](./src/paygentic_sdk/errors/deletepriceconflicterror.py): Price cannot be deleted: a live plan or subscription still references it, or a pending subscription proposal names it. Status code `409`. Applicable to 1 of 161 methods.*
+* [`UnprocessableEntityError`](./src/paygentic_sdk/errors/unprocessableentityerror.py): `hosted_link` only: Paygentic cannot create a payment link. The `code` field gives the cause: `INVOICE_NOT_LINKABLE_STATUS` (the invoice is not `ISSUED` or `PAYMENT_FAILED`; do not retry), `INVOICE_NO_BALANCE` (no amount is unpaid; treat the invoice as paid), or `MERCHANT_NO_PAYMENT_ACCOUNT` (the merchant has no connected payment account; retry after onboarding is complete). Status code `422`. Applicable to 1 of 161 methods.*
 * [`ResponseValidationError`](./src/paygentic_sdk/errors/responsevalidationerror.py): Type mismatch between the response data and the expected Pydantic model. Provides access to the Pydantic validation error via the `cause` attribute.
 
 </details>

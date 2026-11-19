@@ -17,8 +17,12 @@ from .createusagediscountadjustment import (
     CreateUsageDiscountAdjustment,
     CreateUsageDiscountAdjustmentTypedDict,
 )
-from pydantic import Field
-from typing import Union
+from functools import partial
+from paygentic_sdk.types import BaseModel
+from paygentic_sdk.utils.unions import parse_open_union
+from pydantic import ConfigDict
+from pydantic.functional_validators import BeforeValidator
+from typing import Any, Literal, Union
 from typing_extensions import Annotated, TypeAliasType
 
 
@@ -34,13 +38,40 @@ CreateSubscriptionAdjustmentRequestTypedDict = TypeAliasType(
 r"""One adjustment to attach to the subscription. The type decides which number the body carries: a rate for percentageDiscount, a unit count and one target price for usageDiscount, and a contracted quantity and one target price for minimumQuantity and maximumQuantity."""
 
 
+class UnknownCreateSubscriptionAdjustmentRequest(BaseModel):
+    r"""A CreateSubscriptionAdjustmentRequest variant the SDK doesn't recognize. Preserves the raw payload."""
+
+    type: Literal["UNKNOWN"] = "UNKNOWN"
+    raw: Any
+    is_unknown: Literal[True] = True
+
+    model_config = ConfigDict(frozen=True)
+
+
+_CREATE_SUBSCRIPTION_ADJUSTMENT_REQUEST_VARIANTS: dict[str, Any] = {
+    "percentageDiscount": CreatePercentageDiscountAdjustment,
+    "usageDiscount": CreateUsageDiscountAdjustment,
+    "minimumQuantity": CreateMinimumQuantityAdjustment,
+    "maximumQuantity": CreateMaximumQuantityAdjustment,
+}
+
+
 CreateSubscriptionAdjustmentRequest = Annotated[
     Union[
         CreatePercentageDiscountAdjustment,
         CreateUsageDiscountAdjustment,
         CreateMinimumQuantityAdjustment,
         CreateMaximumQuantityAdjustment,
+        UnknownCreateSubscriptionAdjustmentRequest,
     ],
-    Field(discriminator="type"),
+    BeforeValidator(
+        partial(
+            parse_open_union,
+            disc_key="type",
+            variants=_CREATE_SUBSCRIPTION_ADJUSTMENT_REQUEST_VARIANTS,
+            unknown_cls=UnknownCreateSubscriptionAdjustmentRequest,
+            union_name="CreateSubscriptionAdjustmentRequest",
+        )
+    ),
 ]
 r"""One adjustment to attach to the subscription. The type decides which number the body carries: a rate for percentageDiscount, a unit count and one target price for usageDiscount, and a contracted quantity and one target price for minimumQuantity and maximumQuantity."""
