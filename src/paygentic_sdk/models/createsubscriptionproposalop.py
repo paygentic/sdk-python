@@ -110,9 +110,9 @@ class CreateSubscriptionProposalRequestTypedDict(TypedDict):
     renewal_reminder_days: NotRequired[Nullable[int]]
     r"""Override plan setting for number of days before renewal to send the reminder. Only used if renewalReminderEnabled is true (or inherited from plan). Set to null to use plan default."""
     payment_term_days: NotRequired[int]
-    r"""Payment term in days (\"Net X\") applied to every invoice the subscription generates: invoice dueAt = invoice issue date + paymentTermDays. Defaults to 0 (\"due on issue\"). A non-zero value needs `metadata.bankTransferOnly: true`; without it the request answers 400 `PAYMENT_TERM_DAYS_REQUIRES_BANK_TRANSFER_ONLY`."""
+    r"""Payment term in days (\"Net X\") applied to every invoice the subscription generates: invoice dueAt = invoice issue date + paymentTermDays. Defaults to 0 (\"due on issue\"). Valid on any subscription, whatever its payment method. With a non-zero value Invoice 0's payment session expires at its due date, and sending `sessionExpiryMinutes` with it answers 400 `SESSION_EXPIRY_NOT_ALLOWED_WITH_PAYMENT_TERM`."""
     session_expiry_minutes: NotRequired[float]
-    r"""Number of minutes until the payment session expires. Defaults to 240 minutes (4 hours) if not provided."""
+    r"""Number of minutes until the payment session expires. Defaults to 240 minutes (4 hours) if not provided. Not accepted with a non-zero `paymentTermDays`: the session then expires at the invoice due date."""
     version_policy: NotRequired[SubscriptionVersionPolicy]
     r"""How the subscription follows new versions of its plan. `floating` follows the plan's default version: when the default changes, the subscription bills from the new default from its next billing period. `pinned` keeps the plan version that the subscription holds. A subscription created without a value is `floating`. A change to this value does not change a billing period that has already started."""
     metadata: NotRequired[Dict[str, SubscriptionMetadataTypedDict]]
@@ -209,12 +209,12 @@ class CreateSubscriptionProposalRequest(BaseModel):
     payment_term_days: Annotated[
         Optional[int], pydantic.Field(alias="paymentTermDays")
     ] = None
-    r"""Payment term in days (\"Net X\") applied to every invoice the subscription generates: invoice dueAt = invoice issue date + paymentTermDays. Defaults to 0 (\"due on issue\"). A non-zero value needs `metadata.bankTransferOnly: true`; without it the request answers 400 `PAYMENT_TERM_DAYS_REQUIRES_BANK_TRANSFER_ONLY`."""
+    r"""Payment term in days (\"Net X\") applied to every invoice the subscription generates: invoice dueAt = invoice issue date + paymentTermDays. Defaults to 0 (\"due on issue\"). Valid on any subscription, whatever its payment method. With a non-zero value Invoice 0's payment session expires at its due date, and sending `sessionExpiryMinutes` with it answers 400 `SESSION_EXPIRY_NOT_ALLOWED_WITH_PAYMENT_TERM`."""
 
     session_expiry_minutes: Annotated[
         Optional[float], pydantic.Field(alias="sessionExpiryMinutes")
     ] = None
-    r"""Number of minutes until the payment session expires. Defaults to 240 minutes (4 hours) if not provided."""
+    r"""Number of minutes until the payment session expires. Defaults to 240 minutes (4 hours) if not provided. Not accepted with a non-zero `paymentTermDays`: the session then expires at the invoice due date."""
 
     version_policy: Annotated[
         Optional[SubscriptionVersionPolicy], pydantic.Field(alias="versionPolicy")

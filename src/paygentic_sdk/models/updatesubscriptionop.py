@@ -40,7 +40,7 @@ class UpdateSubscriptionRequestBodyTypedDict(TypedDict):
     renewal_reminder_days: NotRequired[Nullable[int]]
     r"""Override plan setting for number of days before renewal to send the reminder. Set to null to use plan default."""
     payment_term_days: NotRequired[int]
-    r"""Payment term in days (\"Net X\") applied to subsequently generated invoices: invoice dueAt = invoice issue date + paymentTermDays. A non-zero value is only valid on a subscription created with `metadata.bankTransferOnly: true`. Set 0 for \"due on issue\". Already-issued invoices keep their snapshotted dueAt."""
+    r"""Payment term in days (\"Net X\") applied to subsequently generated invoices: invoice dueAt = invoice issue date + paymentTermDays. Valid on any subscription, whatever its payment method. Set 0 for \"due on issue\". Already-issued invoices keep their snapshotted dueAt."""
     version_policy: NotRequired[SubscriptionVersionPolicy]
     r"""How the subscription follows new versions of its plan. `floating` follows the plan's default version: when the default changes, the subscription bills from the new default from its next billing period. `pinned` keeps the plan version that the subscription holds. A subscription created without a value is `floating`. A change to this value does not change a billing period that has already started."""
 
@@ -91,7 +91,7 @@ class UpdateSubscriptionRequestBody(BaseModel):
     payment_term_days: Annotated[
         Optional[int], pydantic.Field(alias="paymentTermDays")
     ] = None
-    r"""Payment term in days (\"Net X\") applied to subsequently generated invoices: invoice dueAt = invoice issue date + paymentTermDays. A non-zero value is only valid on a subscription created with `metadata.bankTransferOnly: true`. Set 0 for \"due on issue\". Already-issued invoices keep their snapshotted dueAt."""
+    r"""Payment term in days (\"Net X\") applied to subsequently generated invoices: invoice dueAt = invoice issue date + paymentTermDays. Valid on any subscription, whatever its payment method. Set 0 for \"due on issue\". Already-issued invoices keep their snapshotted dueAt."""
 
     version_policy: Annotated[
         Optional[SubscriptionVersionPolicy], pydantic.Field(alias="versionPolicy")

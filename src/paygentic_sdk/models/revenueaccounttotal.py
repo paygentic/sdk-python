@@ -10,7 +10,7 @@ class RevenueAccountTotalTypedDict(TypedDict):
     currency: str
     r"""ISO 4217 currency code of every amount in this entry"""
     outstanding: OutstandingBlockTypedDict
-    r"""What is owed, gross of tax, from any date. `awaitingPayment` and `paymentFailed` add up to it, in count and amount. `overdue` is a part of `awaitingPayment`."""
+    r"""What is owed, gross of tax, from any date. `awaitingPayment` and `paymentFailed` add up to it, in count and amount. `overdue` overlaps both and is a subset of neither, so do not add it to them or subtract it from them."""
 
 
 class RevenueAccountTotal(BaseModel):
@@ -18,4 +18,4 @@ class RevenueAccountTotal(BaseModel):
     r"""ISO 4217 currency code of every amount in this entry"""
 
     outstanding: OutstandingBlock
-    r"""What is owed, gross of tax, from any date. `awaitingPayment` and `paymentFailed` add up to it, in count and amount. `overdue` is a part of `awaitingPayment`."""
+    r"""What is owed, gross of tax, from any date. `awaitingPayment` and `paymentFailed` add up to it, in count and amount. `overdue` overlaps both and is a subset of neither, so do not add it to them or subtract it from them."""
