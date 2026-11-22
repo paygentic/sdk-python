@@ -19,6 +19,8 @@ class ListPricesRequestTypedDict(TypedDict):
     r"""Number of prices to return"""
     offset: NotRequired[int]
     r"""Number of prices to skip"""
+    include_superseded: NotRequired[bool]
+    r"""Include a price that is only an older rate of a slot a live plan bills today. It still bills subscriptions pinned to its version, so set this to list every price that can bill."""
 
 
 class ListPricesRequest(BaseModel):
@@ -48,9 +50,18 @@ class ListPricesRequest(BaseModel):
     ] = 0
     r"""Number of prices to skip"""
 
+    include_superseded: Annotated[
+        Optional[bool],
+        pydantic.Field(alias="includeSuperseded"),
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = False
+    r"""Include a price that is only an older rate of a slot a live plan bills today. It still bills subscriptions pinned to its version, so set this to list every price that can bill."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["billableMetricId", "merchantId", "limit", "offset"])
+        optional_fields = set(
+            ["billableMetricId", "merchantId", "limit", "offset", "includeSuperseded"]
+        )
         serialized = handler(self)
         m = {}
 

@@ -15,6 +15,8 @@ from typing_extensions import Annotated, NotRequired, TypedDict
 class ListSubscriptionProposalsRequestTypedDict(TypedDict):
     merchant_id: NotRequired[str]
     r"""Return only this merchant's proposals."""
+    subscription_id: NotRequired[str]
+    r"""Return only the proposal whose approval created this subscription. A subscription that no proposal created, or a subscription of a merchant the caller cannot read, gives an empty list. A `merchantId` the caller cannot read is still refused with 403."""
     status: NotRequired[List[SubscriptionProposalStatus]]
     r"""Return proposals in any of these statuses. Repeat the parameter to pass several, e.g. `?status=pending&status=approved`. Omit it to return every status."""
     limit: NotRequired[int]
@@ -30,6 +32,13 @@ class ListSubscriptionProposalsRequest(BaseModel):
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = None
     r"""Return only this merchant's proposals."""
+
+    subscription_id: Annotated[
+        Optional[str],
+        pydantic.Field(alias="subscriptionId"),
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Return only the proposal whose approval created this subscription. A subscription that no proposal created, or a subscription of a merchant the caller cannot read, gives an empty list. A `merchantId` the caller cannot read is still refused with 403."""
 
     status: Annotated[
         Optional[List[SubscriptionProposalStatus]],
@@ -51,7 +60,9 @@ class ListSubscriptionProposalsRequest(BaseModel):
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["merchantId", "status", "limit", "offset"])
+        optional_fields = set(
+            ["merchantId", "subscriptionId", "status", "limit", "offset"]
+        )
         serialized = handler(self)
         m = {}
 
