@@ -132,6 +132,22 @@ if TYPE_CHECKING:
         CreateCostRequestTypedDict,
         CreateCostType,
     )
+    from .createcreditpoolgrantop import (
+        CreateCreditPoolGrantRequest,
+        CreateCreditPoolGrantRequestBody,
+        CreateCreditPoolGrantRequestBodyTypedDict,
+        CreateCreditPoolGrantRequestTypedDict,
+    )
+    from .createcreditpoolop import (
+        CreateCreditPoolRequest,
+        CreateCreditPoolRequestTypedDict,
+    )
+    from .createcreditpoolpurchaseop import (
+        CreateCreditPoolPurchaseRequest,
+        CreateCreditPoolPurchaseRequestTypedDict,
+        CreateCreditPoolPurchaseResponse,
+        CreateCreditPoolPurchaseResponseTypedDict,
+    )
     from .createcustomerop import (
         CreateCustomerConsumer,
         CreateCustomerConsumerTypedDict,
@@ -230,6 +246,10 @@ if TYPE_CHECKING:
         CreatePriceRequest,
         CreatePriceRequestTypedDict,
     )
+    from .createpricingunitop import (
+        CreatePricingUnitRequest,
+        CreatePricingUnitRequestTypedDict,
+    )
     from .createproductop import (
         CreateProductRequest,
         CreateProductRequestTypedDict,
@@ -277,6 +297,47 @@ if TYPE_CHECKING:
         CreateUsageDiscountAdjustmentTypedDict,
     )
     from .createwebhooksop import CreateWebhooksRequest, CreateWebhooksRequestTypedDict
+    from .creditpool import CreditPool, CreditPoolObject, CreditPoolTypedDict
+    from .creditpoolgrant import (
+        CreditPoolGrant,
+        CreditPoolGrantObject,
+        CreditPoolGrantTypedDict,
+    )
+    from .creditpoolgrantbalance import (
+        CreditPoolGrantBalance,
+        CreditPoolGrantBalanceObject,
+        CreditPoolGrantBalanceTypedDict,
+    )
+    from .creditpoolgrantlist import (
+        CreditPoolGrantList,
+        CreditPoolGrantListObject,
+        CreditPoolGrantListTypedDict,
+    )
+    from .creditpoolgrantstatus import CreditPoolGrantStatus
+    from .creditpoolledgerbucket import (
+        CreditPoolLedgerBucket,
+        CreditPoolLedgerBucketTypedDict,
+    )
+    from .creditpoolledgerbucketedresponse import (
+        CreditPoolLedgerBucketedResponse,
+        CreditPoolLedgerBucketedResponseTypedDict,
+    )
+    from .creditpoolledgerentry import (
+        CreditPoolLedgerEntry,
+        CreditPoolLedgerEntryGrant,
+        CreditPoolLedgerEntryGrantTypedDict,
+        CreditPoolLedgerEntryObject,
+        CreditPoolLedgerEntryTypedDict,
+        EntryType,
+    )
+    from .creditpoolledgeritemizedresponse import (
+        CreditPoolLedgerItemizedResponse,
+        CreditPoolLedgerItemizedResponseTypedDict,
+    )
+    from .creditpoolledgerperiod import (
+        CreditPoolLedgerPeriod,
+        CreditPoolLedgerPeriodTypedDict,
+    )
     from .currencybreakdownentry import (
         CurrencyBreakdownEntry,
         CurrencyBreakdownEntryTypedDict,
@@ -467,6 +528,15 @@ if TYPE_CHECKING:
         GetCostSummaryRequestTypedDict,
         Window,
     )
+    from .getcreditpoolledgerop import (
+        GetCreditPoolLedgerEntryType,
+        GetCreditPoolLedgerRequest,
+        GetCreditPoolLedgerRequestTypedDict,
+        GetCreditPoolLedgerResponse,
+        GetCreditPoolLedgerResponseTypedDict,
+        Granularity,
+    )
+    from .getcreditpoolop import GetCreditPoolRequest, GetCreditPoolRequestTypedDict
     from .getcustomerop import GetCustomerRequest, GetCustomerRequestTypedDict
     from .getentitlementgrantop import (
         GetEntitlementGrantRequest,
@@ -494,6 +564,7 @@ if TYPE_CHECKING:
     from .getplanop import GetPlanRequest, GetPlanRequestTypedDict
     from .getplanversionop import GetPlanVersionRequest, GetPlanVersionRequestTypedDict
     from .getpriceop import GetPriceRequest, GetPriceRequestTypedDict
+    from .getpricingunitop import GetPricingUnitRequest, GetPricingUnitRequestTypedDict
     from .getproductop import GetProductRequest, GetProductRequestTypedDict
     from .getprofitabilityop import (
         GetProfitabilityRequest,
@@ -705,6 +776,16 @@ if TYPE_CHECKING:
         ListCostsResponse,
         ListCostsResponseTypedDict,
     )
+    from .listcreditpoolgrantsop import (
+        ListCreditPoolGrantsRequest,
+        ListCreditPoolGrantsRequestTypedDict,
+    )
+    from .listcreditpoolsop import (
+        ListCreditPoolsRequest,
+        ListCreditPoolsRequestTypedDict,
+        ListCreditPoolsResponse,
+        ListCreditPoolsResponseTypedDict,
+    )
     from .listcustomerpaymentmethodsop import (
         ListCustomerPaymentMethodsObject,
         ListCustomerPaymentMethodsRequest,
@@ -838,6 +919,12 @@ if TYPE_CHECKING:
         ListPricesRequestTypedDict,
         ListPricesResponse,
         ListPricesResponseTypedDict,
+    )
+    from .listpricingunitsop import (
+        ListPricingUnitsRequest,
+        ListPricingUnitsRequestTypedDict,
+        ListPricingUnitsResponse,
+        ListPricingUnitsResponseTypedDict,
     )
     from .listproductsop import (
         ListProductsRequest,
@@ -1080,6 +1167,21 @@ if TYPE_CHECKING:
         PlanVersionSummaryStatus,
         PlanVersionSummaryTypedDict,
     )
+    from .poolgrantpurchaseaccepted import (
+        PoolGrantPurchaseAccepted,
+        PoolGrantPurchaseAcceptedTypedDict,
+    )
+    from .poolgrantpurchaserequest import (
+        PoolGrantPurchaseRequest,
+        PoolGrantPurchaseRequestTypedDict,
+    )
+    from .poolgrantpurchaseresponse import (
+        PoolGrantPurchaseResponse,
+        PoolGrantPurchaseResponseObject,
+        PoolGrantPurchaseResponsePaymentSession,
+        PoolGrantPurchaseResponsePaymentSessionTypedDict,
+        PoolGrantPurchaseResponseTypedDict,
+    )
     from .price import Price, PriceObject, PricePaymentTerm, PriceTypedDict
     from .pricefeature import (
         PriceFeature,
@@ -1106,6 +1208,7 @@ if TYPE_CHECKING:
         VolumeTierTypedDict,
     )
     from .pricetax import OutsideScopeLabel, PriceTax, PriceTaxTypedDict, SupplyScope
+    from .pricingunit import PricingUnit, PricingUnitObject, PricingUnitTypedDict
     from .product import Product, ProductObject, ProductTypedDict
     from .profitabilityrow import CostData, ProfitabilityRow, ProfitabilityRowTypedDict
     from .profitabilitysummaryresponse import (
@@ -1732,6 +1835,16 @@ __all__ = [
     "CreateCostRequest",
     "CreateCostRequestTypedDict",
     "CreateCostType",
+    "CreateCreditPoolGrantRequest",
+    "CreateCreditPoolGrantRequestBody",
+    "CreateCreditPoolGrantRequestBodyTypedDict",
+    "CreateCreditPoolGrantRequestTypedDict",
+    "CreateCreditPoolPurchaseRequest",
+    "CreateCreditPoolPurchaseRequestTypedDict",
+    "CreateCreditPoolPurchaseResponse",
+    "CreateCreditPoolPurchaseResponseTypedDict",
+    "CreateCreditPoolRequest",
+    "CreateCreditPoolRequestTypedDict",
     "CreateCustomerConsumer",
     "CreateCustomerConsumerTypedDict",
     "CreateCustomerPaymentMethodRequest",
@@ -1796,6 +1909,8 @@ __all__ = [
     "CreatePricePaymentTerm",
     "CreatePriceRequest",
     "CreatePriceRequestTypedDict",
+    "CreatePricingUnitRequest",
+    "CreatePricingUnitRequestTypedDict",
     "CreateProductRequest",
     "CreateProductRequestTypedDict",
     "CreateRuleRequest",
@@ -1824,6 +1939,32 @@ __all__ = [
     "CreateUsageDiscountAdjustmentTypedDict",
     "CreateWebhooksRequest",
     "CreateWebhooksRequestTypedDict",
+    "CreditPool",
+    "CreditPoolGrant",
+    "CreditPoolGrantBalance",
+    "CreditPoolGrantBalanceObject",
+    "CreditPoolGrantBalanceTypedDict",
+    "CreditPoolGrantList",
+    "CreditPoolGrantListObject",
+    "CreditPoolGrantListTypedDict",
+    "CreditPoolGrantObject",
+    "CreditPoolGrantStatus",
+    "CreditPoolGrantTypedDict",
+    "CreditPoolLedgerBucket",
+    "CreditPoolLedgerBucketTypedDict",
+    "CreditPoolLedgerBucketedResponse",
+    "CreditPoolLedgerBucketedResponseTypedDict",
+    "CreditPoolLedgerEntry",
+    "CreditPoolLedgerEntryGrant",
+    "CreditPoolLedgerEntryGrantTypedDict",
+    "CreditPoolLedgerEntryObject",
+    "CreditPoolLedgerEntryTypedDict",
+    "CreditPoolLedgerItemizedResponse",
+    "CreditPoolLedgerItemizedResponseTypedDict",
+    "CreditPoolLedgerPeriod",
+    "CreditPoolLedgerPeriodTypedDict",
+    "CreditPoolObject",
+    "CreditPoolTypedDict",
     "Currency",
     "CurrencyBreakdownEntry",
     "CurrencyBreakdownEntryTypedDict",
@@ -1924,6 +2065,7 @@ __all__ = [
     "EntitlementTemplateTypedDict",
     "EntityType",
     "EntityTypeInput",
+    "EntryType",
     "Error",
     "ErrorEnum",
     "ErrorTypedDict",
@@ -1973,6 +2115,13 @@ __all__ = [
     "GetCostRequestTypedDict",
     "GetCostSummaryRequest",
     "GetCostSummaryRequestTypedDict",
+    "GetCreditPoolLedgerEntryType",
+    "GetCreditPoolLedgerRequest",
+    "GetCreditPoolLedgerRequestTypedDict",
+    "GetCreditPoolLedgerResponse",
+    "GetCreditPoolLedgerResponseTypedDict",
+    "GetCreditPoolRequest",
+    "GetCreditPoolRequestTypedDict",
     "GetCustomerRequest",
     "GetCustomerRequestTypedDict",
     "GetEntitlementGrantRequest",
@@ -2003,6 +2152,8 @@ __all__ = [
     "GetPlanVersionRequestTypedDict",
     "GetPriceRequest",
     "GetPriceRequestTypedDict",
+    "GetPricingUnitRequest",
+    "GetPricingUnitRequestTypedDict",
     "GetProductRequest",
     "GetProductRequestTypedDict",
     "GetProfitabilityRequest",
@@ -2033,6 +2184,7 @@ __all__ = [
     "Grant",
     "GrantObject",
     "GrantTypedDict",
+    "Granularity",
     "Group",
     "GroupBy",
     "GroupInvoiceSummary",
@@ -2156,6 +2308,12 @@ __all__ = [
     "ListCostsRequestTypedDict",
     "ListCostsResponse",
     "ListCostsResponseTypedDict",
+    "ListCreditPoolGrantsRequest",
+    "ListCreditPoolGrantsRequestTypedDict",
+    "ListCreditPoolsRequest",
+    "ListCreditPoolsRequestTypedDict",
+    "ListCreditPoolsResponse",
+    "ListCreditPoolsResponseTypedDict",
     "ListCustomerPaymentMethodsObject",
     "ListCustomerPaymentMethodsRequest",
     "ListCustomerPaymentMethodsRequestTypedDict",
@@ -2249,6 +2407,10 @@ __all__ = [
     "ListPricesRequestTypedDict",
     "ListPricesResponse",
     "ListPricesResponseTypedDict",
+    "ListPricingUnitsRequest",
+    "ListPricingUnitsRequestTypedDict",
+    "ListPricingUnitsResponse",
+    "ListPricingUnitsResponseTypedDict",
     "ListProductsRequest",
     "ListProductsRequestTypedDict",
     "ListProductsResponse",
@@ -2455,6 +2617,15 @@ __all__ = [
     "PlanVersionSummaryStatus",
     "PlanVersionSummaryTypedDict",
     "PlanVersionTypedDict",
+    "PoolGrantPurchaseAccepted",
+    "PoolGrantPurchaseAcceptedTypedDict",
+    "PoolGrantPurchaseRequest",
+    "PoolGrantPurchaseRequestTypedDict",
+    "PoolGrantPurchaseResponse",
+    "PoolGrantPurchaseResponseObject",
+    "PoolGrantPurchaseResponsePaymentSession",
+    "PoolGrantPurchaseResponsePaymentSessionTypedDict",
+    "PoolGrantPurchaseResponseTypedDict",
     "Price",
     "PriceFeature",
     "PriceFeatureFeature",
@@ -2472,6 +2643,9 @@ __all__ = [
     "PriceTax",
     "PriceTaxTypedDict",
     "PriceTypedDict",
+    "PricingUnit",
+    "PricingUnitObject",
+    "PricingUnitTypedDict",
     "PriorPeriod",
     "PriorPeriodTypedDict",
     "ProcessingMode",
@@ -2953,6 +3127,16 @@ _dynamic_imports: dict[str, str] = {
     "CreateCostRequest": ".createcostop",
     "CreateCostRequestTypedDict": ".createcostop",
     "CreateCostType": ".createcostop",
+    "CreateCreditPoolGrantRequest": ".createcreditpoolgrantop",
+    "CreateCreditPoolGrantRequestBody": ".createcreditpoolgrantop",
+    "CreateCreditPoolGrantRequestBodyTypedDict": ".createcreditpoolgrantop",
+    "CreateCreditPoolGrantRequestTypedDict": ".createcreditpoolgrantop",
+    "CreateCreditPoolRequest": ".createcreditpoolop",
+    "CreateCreditPoolRequestTypedDict": ".createcreditpoolop",
+    "CreateCreditPoolPurchaseRequest": ".createcreditpoolpurchaseop",
+    "CreateCreditPoolPurchaseRequestTypedDict": ".createcreditpoolpurchaseop",
+    "CreateCreditPoolPurchaseResponse": ".createcreditpoolpurchaseop",
+    "CreateCreditPoolPurchaseResponseTypedDict": ".createcreditpoolpurchaseop",
     "CreateCustomerConsumer": ".createcustomerop",
     "CreateCustomerConsumerTypedDict": ".createcustomerop",
     "CreateCustomerRequest": ".createcustomerop",
@@ -3019,6 +3203,8 @@ _dynamic_imports: dict[str, str] = {
     "CreatePricePaymentTerm": ".createpriceop",
     "CreatePriceRequest": ".createpriceop",
     "CreatePriceRequestTypedDict": ".createpriceop",
+    "CreatePricingUnitRequest": ".createpricingunitop",
+    "CreatePricingUnitRequestTypedDict": ".createpricingunitop",
     "CreateProductRequest": ".createproductop",
     "CreateProductRequestTypedDict": ".createproductop",
     "Metadata": ".createproductop",
@@ -3052,6 +3238,33 @@ _dynamic_imports: dict[str, str] = {
     "CreateUsageDiscountAdjustmentTypedDict": ".createusagediscountadjustment",
     "CreateWebhooksRequest": ".createwebhooksop",
     "CreateWebhooksRequestTypedDict": ".createwebhooksop",
+    "CreditPool": ".creditpool",
+    "CreditPoolObject": ".creditpool",
+    "CreditPoolTypedDict": ".creditpool",
+    "CreditPoolGrant": ".creditpoolgrant",
+    "CreditPoolGrantObject": ".creditpoolgrant",
+    "CreditPoolGrantTypedDict": ".creditpoolgrant",
+    "CreditPoolGrantBalance": ".creditpoolgrantbalance",
+    "CreditPoolGrantBalanceObject": ".creditpoolgrantbalance",
+    "CreditPoolGrantBalanceTypedDict": ".creditpoolgrantbalance",
+    "CreditPoolGrantList": ".creditpoolgrantlist",
+    "CreditPoolGrantListObject": ".creditpoolgrantlist",
+    "CreditPoolGrantListTypedDict": ".creditpoolgrantlist",
+    "CreditPoolGrantStatus": ".creditpoolgrantstatus",
+    "CreditPoolLedgerBucket": ".creditpoolledgerbucket",
+    "CreditPoolLedgerBucketTypedDict": ".creditpoolledgerbucket",
+    "CreditPoolLedgerBucketedResponse": ".creditpoolledgerbucketedresponse",
+    "CreditPoolLedgerBucketedResponseTypedDict": ".creditpoolledgerbucketedresponse",
+    "CreditPoolLedgerEntry": ".creditpoolledgerentry",
+    "CreditPoolLedgerEntryGrant": ".creditpoolledgerentry",
+    "CreditPoolLedgerEntryGrantTypedDict": ".creditpoolledgerentry",
+    "CreditPoolLedgerEntryObject": ".creditpoolledgerentry",
+    "CreditPoolLedgerEntryTypedDict": ".creditpoolledgerentry",
+    "EntryType": ".creditpoolledgerentry",
+    "CreditPoolLedgerItemizedResponse": ".creditpoolledgeritemizedresponse",
+    "CreditPoolLedgerItemizedResponseTypedDict": ".creditpoolledgeritemizedresponse",
+    "CreditPoolLedgerPeriod": ".creditpoolledgerperiod",
+    "CreditPoolLedgerPeriodTypedDict": ".creditpoolledgerperiod",
     "CurrencyBreakdownEntry": ".currencybreakdownentry",
     "CurrencyBreakdownEntryTypedDict": ".currencybreakdownentry",
     "Customer": ".customer",
@@ -3193,6 +3406,14 @@ _dynamic_imports: dict[str, str] = {
     "GetCostSummaryRequest": ".getcostsummaryop",
     "GetCostSummaryRequestTypedDict": ".getcostsummaryop",
     "Window": ".getcostsummaryop",
+    "GetCreditPoolLedgerEntryType": ".getcreditpoolledgerop",
+    "GetCreditPoolLedgerRequest": ".getcreditpoolledgerop",
+    "GetCreditPoolLedgerRequestTypedDict": ".getcreditpoolledgerop",
+    "GetCreditPoolLedgerResponse": ".getcreditpoolledgerop",
+    "GetCreditPoolLedgerResponseTypedDict": ".getcreditpoolledgerop",
+    "Granularity": ".getcreditpoolledgerop",
+    "GetCreditPoolRequest": ".getcreditpoolop",
+    "GetCreditPoolRequestTypedDict": ".getcreditpoolop",
     "GetCustomerRequest": ".getcustomerop",
     "GetCustomerRequestTypedDict": ".getcustomerop",
     "GetEntitlementGrantRequest": ".getentitlementgrantop",
@@ -3223,6 +3444,8 @@ _dynamic_imports: dict[str, str] = {
     "GetPlanVersionRequestTypedDict": ".getplanversionop",
     "GetPriceRequest": ".getpriceop",
     "GetPriceRequestTypedDict": ".getpriceop",
+    "GetPricingUnitRequest": ".getpricingunitop",
+    "GetPricingUnitRequestTypedDict": ".getpricingunitop",
     "GetProductRequest": ".getproductop",
     "GetProductRequestTypedDict": ".getproductop",
     "GetProfitabilityRequest": ".getprofitabilityop",
@@ -3376,6 +3599,12 @@ _dynamic_imports: dict[str, str] = {
     "ListCostsRequestTypedDict": ".listcostsop",
     "ListCostsResponse": ".listcostsop",
     "ListCostsResponseTypedDict": ".listcostsop",
+    "ListCreditPoolGrantsRequest": ".listcreditpoolgrantsop",
+    "ListCreditPoolGrantsRequestTypedDict": ".listcreditpoolgrantsop",
+    "ListCreditPoolsRequest": ".listcreditpoolsop",
+    "ListCreditPoolsRequestTypedDict": ".listcreditpoolsop",
+    "ListCreditPoolsResponse": ".listcreditpoolsop",
+    "ListCreditPoolsResponseTypedDict": ".listcreditpoolsop",
     "ListCustomerPaymentMethodsObject": ".listcustomerpaymentmethodsop",
     "ListCustomerPaymentMethodsRequest": ".listcustomerpaymentmethodsop",
     "ListCustomerPaymentMethodsRequestTypedDict": ".listcustomerpaymentmethodsop",
@@ -3472,6 +3701,10 @@ _dynamic_imports: dict[str, str] = {
     "ListPricesRequestTypedDict": ".listpricesop",
     "ListPricesResponse": ".listpricesop",
     "ListPricesResponseTypedDict": ".listpricesop",
+    "ListPricingUnitsRequest": ".listpricingunitsop",
+    "ListPricingUnitsRequestTypedDict": ".listpricingunitsop",
+    "ListPricingUnitsResponse": ".listpricingunitsop",
+    "ListPricingUnitsResponseTypedDict": ".listpricingunitsop",
     "ListProductsRequest": ".listproductsop",
     "ListProductsRequestTypedDict": ".listproductsop",
     "ListProductsResponse": ".listproductsop",
@@ -3659,6 +3892,15 @@ _dynamic_imports: dict[str, str] = {
     "PlanVersionSummaryObject": ".planversionsummary",
     "PlanVersionSummaryStatus": ".planversionsummary",
     "PlanVersionSummaryTypedDict": ".planversionsummary",
+    "PoolGrantPurchaseAccepted": ".poolgrantpurchaseaccepted",
+    "PoolGrantPurchaseAcceptedTypedDict": ".poolgrantpurchaseaccepted",
+    "PoolGrantPurchaseRequest": ".poolgrantpurchaserequest",
+    "PoolGrantPurchaseRequestTypedDict": ".poolgrantpurchaserequest",
+    "PoolGrantPurchaseResponse": ".poolgrantpurchaseresponse",
+    "PoolGrantPurchaseResponseObject": ".poolgrantpurchaseresponse",
+    "PoolGrantPurchaseResponsePaymentSession": ".poolgrantpurchaseresponse",
+    "PoolGrantPurchaseResponsePaymentSessionTypedDict": ".poolgrantpurchaseresponse",
+    "PoolGrantPurchaseResponseTypedDict": ".poolgrantpurchaseresponse",
     "Price": ".price",
     "PriceObject": ".price",
     "PricePaymentTerm": ".price",
@@ -3688,6 +3930,9 @@ _dynamic_imports: dict[str, str] = {
     "PriceTax": ".pricetax",
     "PriceTaxTypedDict": ".pricetax",
     "SupplyScope": ".pricetax",
+    "PricingUnit": ".pricingunit",
+    "PricingUnitObject": ".pricingunit",
+    "PricingUnitTypedDict": ".pricingunit",
     "Product": ".product",
     "ProductObject": ".product",
     "ProductTypedDict": ".product",

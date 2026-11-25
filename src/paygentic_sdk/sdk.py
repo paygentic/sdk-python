@@ -19,6 +19,7 @@ if TYPE_CHECKING:
     from paygentic_sdk.billablemetrics import BillableMetrics
     from paygentic_sdk.billing_schedules import BillingSchedules
     from paygentic_sdk.costs import Costs
+    from paygentic_sdk.creditpools import CreditPools
     from paygentic_sdk.customers import Customers
     from paygentic_sdk.entitlements import Entitlements
     from paygentic_sdk.events import Events
@@ -35,6 +36,7 @@ if TYPE_CHECKING:
     from paygentic_sdk.payments import Payments
     from paygentic_sdk.plans import Plans
     from paygentic_sdk.prices import Prices
+    from paygentic_sdk.pricingunits import PricingUnits
     from paygentic_sdk.products import Products
     from paygentic_sdk.profitability import Profitability
     from paygentic_sdk.revenue import Revenue
@@ -67,6 +69,10 @@ class Paygentic(BaseSDK):
     r"""A `Plan` links a collection of `Prices` to a `Product`. It functions as a pricing structure document for a particular feature set or service offering."""
     prices: "Prices"
     r"""A `Price` determines the monetary value for a single unit of a `Billable Metric`. Prices are exclusively grouped within a `Plan`."""
+    pricing_units: "PricingUnits"
+    r"""A `PricingUnit` is a merchant-scoped catalog object that names a credit denomination and the rate (`conversionRate`) at which it converts to an invoicing `currency`. Credit-denominated prices draw a customer's balance for the unit; the unit holds no balance itself."""
+    credit_pools: "CreditPools"
+    r"""A `CreditPool` is the `(customer, pricingUnit)` identity that credit-denominated prices draw down. The balance itself lives on grants, not on the pool; the pool survives subscription changes. There is one pool per `(customer, pricingUnit)`."""
     products: "Products"
     r"""A `Product` is an offering sold by a `Merchant`. It includes product metadata like title, summary, and pricing details. `Plans`, `Prices`, and `Subscriptions` are all associated with products."""
     sources: "Sources"
@@ -118,6 +124,8 @@ class Paygentic(BaseSDK):
         "fees": ("paygentic_sdk.fees", "Fees"),
         "plans": ("paygentic_sdk.plans", "Plans"),
         "prices": ("paygentic_sdk.prices", "Prices"),
+        "pricing_units": ("paygentic_sdk.pricingunits", "PricingUnits"),
+        "credit_pools": ("paygentic_sdk.creditpools", "CreditPools"),
         "products": ("paygentic_sdk.products", "Products"),
         "sources": ("paygentic_sdk.sources", "Sources"),
         "subscriptions": ("paygentic_sdk.subscriptions", "Subscriptions"),

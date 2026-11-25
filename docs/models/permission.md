@@ -57,6 +57,7 @@ This is an open enum. Unrecognized values will not fail type checks.
 - `"externalAccounts:read"`
 - `"externalReferences:read"`
 - `"merchantIntegrations:read"`
+- `"accountingConnections:read"`
 - `"webhooks:read"`
 - `"testClocks:read"`
 - `"approvals:read"`
@@ -103,6 +104,7 @@ This is an open enum. Unrecognized values will not fail type checks.
 - `"externalAccounts:write"`
 - `"externalReferences:write"`
 - `"merchantIntegrations:write"`
+- `"accountingConnections:write"`
 - `"webhooks:write"`
 - `"testClocks:write"`
 - `"approvals:write"`

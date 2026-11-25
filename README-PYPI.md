@@ -372,6 +372,16 @@ with Paygentic(
 * [get_cost_summary](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/costs/README.md#get_cost_summary) - Query Summary
 * [get_cost_report](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/costs/README.md#get_cost_report) - Report
 
+### [CreditPools](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/creditpools/README.md)
+
+* [create_credit_pool](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/creditpools/README.md#create_credit_pool) - Create or resolve
+* [list_credit_pools](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/creditpools/README.md#list_credit_pools) - List
+* [get_credit_pool](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/creditpools/README.md#get_credit_pool) - Get
+* [list_credit_pool_grants](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/creditpools/README.md#list_credit_pool_grants) - List grants
+* [create_credit_pool_grant](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/creditpools/README.md#create_credit_pool_grant) - Grant credits
+* [get_credit_pool_ledger](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/creditpools/README.md#get_credit_pool_ledger) - Get ledger
+* [create_credit_pool_purchase](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/creditpools/README.md#create_credit_pool_purchase) - Purchase credits
+
 ### [Customers](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/customers/README.md)
 
 * [list](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/customers/README.md#list) - List by Merchant
@@ -502,6 +512,12 @@ with Paygentic(
 * [get](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/prices/README.md#get) - Get
 * [update](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/prices/README.md#update) - Update
 * [delete](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/prices/README.md#delete) - Delete
+
+### [PricingUnits](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/pricingunits/README.md)
+
+* [create_pricing_unit](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/pricingunits/README.md#create_pricing_unit) - Create
+* [list_pricing_units](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/pricingunits/README.md#list_pricing_units) - List
+* [get_pricing_unit](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/pricingunits/README.md#get_pricing_unit) - Get
 
 ### [Products](https://github.com/paygentic/sdk-python/blob/master/docs/sdks/products/README.md)
 
@@ -706,14 +722,14 @@ with Paygentic(
 
 
 **Inherit from [`PaygenticError`](https://github.com/paygentic/sdk-python/blob/master/./src/paygentic_sdk/errors/paygenticerror.py)**:
-* [`ValidationError`](https://github.com/paygentic/sdk-python/blob/master/./src/paygentic_sdk/errors/validationerror.py): Bad Request - The request could not be understood or was missing required parameters. Status code `400`. Applicable to 106 of 161 methods.*
-* [`SubscriptionProposalConflictError`](https://github.com/paygentic/sdk-python/blob/master/./src/paygentic_sdk/errors/subscriptionproposalconflicterror.py): A 409 of a proposal route. Branch on `code`, never on `message`. Status code `409`. Applicable to 4 of 161 methods.*
-* [`RetryPaymentResponseError`](https://github.com/paygentic/sdk-python/blob/master/./src/paygentic_sdk/errors/retrypaymentresponseerror.py): The result of a payment retry. Every response status of the retry operation that is not an error envelope uses this shape. Applicable to 1 of 161 methods.*
-* [`DeleteCustomerConflictError`](https://github.com/paygentic/sdk-python/blob/master/./src/paygentic_sdk/errors/deletecustomerconflicterror.py): Customer cannot be deleted due to active dependencies. Status code `409`. Applicable to 1 of 161 methods.*
-* [`DeleteFeeConflictError`](https://github.com/paygentic/sdk-python/blob/master/./src/paygentic_sdk/errors/deletefeeconflicterror.py): Fee cannot be deleted because it has associated prices. Status code `409`. Applicable to 1 of 161 methods.*
-* [`UpdatePriceConflictError`](https://github.com/paygentic/sdk-python/blob/master/./src/paygentic_sdk/errors/updatepriceconflicterror.py): Price cannot be changed: a subscription still bills it directly, or a pending subscription proposal names it. Status code `409`. Applicable to 1 of 161 methods.*
-* [`DeletePriceConflictError`](https://github.com/paygentic/sdk-python/blob/master/./src/paygentic_sdk/errors/deletepriceconflicterror.py): Price cannot be deleted: a live plan or subscription still references it, or a pending subscription proposal names it. Status code `409`. Applicable to 1 of 161 methods.*
-* [`UnprocessableEntityError`](https://github.com/paygentic/sdk-python/blob/master/./src/paygentic_sdk/errors/unprocessableentityerror.py): `hosted_link` only: Paygentic cannot create a payment link. The `code` field gives the cause: `INVOICE_NOT_LINKABLE_STATUS` (the invoice is not `ISSUED` or `PAYMENT_FAILED`; do not retry), `INVOICE_NO_BALANCE` (no amount is unpaid; treat the invoice as paid), or `MERCHANT_NO_PAYMENT_ACCOUNT` (the merchant has no connected payment account; retry after onboarding is complete). Status code `422`. Applicable to 1 of 161 methods.*
+* [`ValidationError`](https://github.com/paygentic/sdk-python/blob/master/./src/paygentic_sdk/errors/validationerror.py): Bad Request - The request could not be understood or was missing required parameters. Status code `400`. Applicable to 114 of 171 methods.*
+* [`SubscriptionProposalConflictError`](https://github.com/paygentic/sdk-python/blob/master/./src/paygentic_sdk/errors/subscriptionproposalconflicterror.py): A 409 of a proposal route. Branch on `code`, never on `message`. Status code `409`. Applicable to 4 of 171 methods.*
+* [`RetryPaymentResponseError`](https://github.com/paygentic/sdk-python/blob/master/./src/paygentic_sdk/errors/retrypaymentresponseerror.py): The result of a payment retry. Every response status of the retry operation that is not an error envelope uses this shape. Applicable to 1 of 171 methods.*
+* [`DeleteCustomerConflictError`](https://github.com/paygentic/sdk-python/blob/master/./src/paygentic_sdk/errors/deletecustomerconflicterror.py): Customer cannot be deleted due to active dependencies. Status code `409`. Applicable to 1 of 171 methods.*
+* [`DeleteFeeConflictError`](https://github.com/paygentic/sdk-python/blob/master/./src/paygentic_sdk/errors/deletefeeconflicterror.py): Fee cannot be deleted because it has associated prices. Status code `409`. Applicable to 1 of 171 methods.*
+* [`UpdatePriceConflictError`](https://github.com/paygentic/sdk-python/blob/master/./src/paygentic_sdk/errors/updatepriceconflicterror.py): Price cannot be changed: a subscription still bills it directly, or a pending subscription proposal names it. Status code `409`. Applicable to 1 of 171 methods.*
+* [`DeletePriceConflictError`](https://github.com/paygentic/sdk-python/blob/master/./src/paygentic_sdk/errors/deletepriceconflicterror.py): Price cannot be deleted: a live plan or subscription still references it, or a pending subscription proposal names it. Status code `409`. Applicable to 1 of 171 methods.*
+* [`UnprocessableEntityError`](https://github.com/paygentic/sdk-python/blob/master/./src/paygentic_sdk/errors/unprocessableentityerror.py): `hosted_link` only: Paygentic cannot create a payment link. The `code` field gives the cause: `INVOICE_NOT_LINKABLE_STATUS` (the invoice is not `ISSUED` or `PAYMENT_FAILED`; do not retry), `INVOICE_NO_BALANCE` (no amount is unpaid; treat the invoice as paid), or `MERCHANT_NO_PAYMENT_ACCOUNT` (the merchant has no connected payment account; retry after onboarding is complete). Status code `422`. Applicable to 1 of 171 methods.*
 * [`ResponseValidationError`](https://github.com/paygentic/sdk-python/blob/master/./src/paygentic_sdk/errors/responsevalidationerror.py): Type mismatch between the response data and the expected Pydantic model. Provides access to the Pydantic validation error via the `cause` attribute.
 
 </details>

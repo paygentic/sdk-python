@@ -860,6 +860,8 @@ class Subscriptions(BaseSDK):
     ) -> models.Subscription:
         r"""Update
 
+        Updates the subscription's settings. Switching `versionPolicy` to `floating` is refused with 400 when following the plan's default version would credit unused balance on a reset cycle that is not the subscription's billing period: a feature the default starts must reset from the subscription's billing anchor, and a feature the subscription keeps goes on resetting on its current cycle.
+
         :param id:
         :param ending_at:
         :param status:
@@ -949,7 +951,7 @@ class Subscriptions(BaseSDK):
                 ),
             ),
             request=req,
-            error_status_codes=["400", "401", "403", "404", "4XX", "500", "5XX"],
+            error_status_codes=["400", "401", "403", "404", "429", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -959,7 +961,9 @@ class Subscriptions(BaseSDK):
         if utils.match_response(http_res, "400", "application/json"):
             response_data = unmarshal_json_response(errors.BadRequestUnion, http_res)
             raise errors.BadRequest(response_data, http_res)
-        if utils.match_response(http_res, ["401", "403", "404"], "application/json"):
+        if utils.match_response(
+            http_res, ["401", "403", "404", "429"], "application/json"
+        ):
             response_data = unmarshal_json_response(errors.ErrorData, http_res)
             raise errors.Error(response_data, http_res)
         if utils.match_response(http_res, "500", "application/json"):
@@ -1000,6 +1004,8 @@ class Subscriptions(BaseSDK):
         http_headers: Optional[Mapping[str, str]] = None,
     ) -> models.Subscription:
         r"""Update
+
+        Updates the subscription's settings. Switching `versionPolicy` to `floating` is refused with 400 when following the plan's default version would credit unused balance on a reset cycle that is not the subscription's billing period: a feature the default starts must reset from the subscription's billing anchor, and a feature the subscription keeps goes on resetting on its current cycle.
 
         :param id:
         :param ending_at:
@@ -1090,7 +1096,7 @@ class Subscriptions(BaseSDK):
                 ),
             ),
             request=req,
-            error_status_codes=["400", "401", "403", "404", "4XX", "500", "5XX"],
+            error_status_codes=["400", "401", "403", "404", "429", "4XX", "500", "5XX"],
             retry_config=retry_config,
         )
 
@@ -1100,7 +1106,9 @@ class Subscriptions(BaseSDK):
         if utils.match_response(http_res, "400", "application/json"):
             response_data = unmarshal_json_response(errors.BadRequestUnion, http_res)
             raise errors.BadRequest(response_data, http_res)
-        if utils.match_response(http_res, ["401", "403", "404"], "application/json"):
+        if utils.match_response(
+            http_res, ["401", "403", "404", "429"], "application/json"
+        ):
             response_data = unmarshal_json_response(errors.ErrorData, http_res)
             raise errors.Error(response_data, http_res)
         if utils.match_response(http_res, "500", "application/json"):
@@ -1582,7 +1590,7 @@ class Subscriptions(BaseSDK):
     ) -> models.MigrateSubscriptionVersionResponse:
         r"""Migrate To A Plan Version
 
-        Moves the subscription to a named version of its plan. By default the move follows the plan's versionTransition. With timing next_period, the move takes effect at the end of the current billing period: the current period bills as before, and each period that starts at or after that boundary bills from the target version. With timing immediate, entitlements change at once, in-arrears prices bill the whole current period at the target version, and in-advance prices change at the end of the current period, with no proration. The target can be an older or a newer published version. A migration always sets versionPolicy to pinned, so a later change of the plan's default version does not move the subscription. To follow the plan default again, call PATCH /v0/subscriptions/{id} with versionPolicy: 'floating'. A second migration before the boundary replaces the first. Migrating to the version the subscription is already on changes nothing except that it pins a floating subscription, so it is safe to repeat. A version number that does not exist on the plan and an archived version both return 404. The request is refused with 409 and a code when: the subscription is not live; the subscription ends at or before the boundary; a kept override has a rate that would mean something else on the new price; a feature's reset period, metric or pricing unit changes; or the new version sells a price that a continuing interval already covers.
+        Moves the subscription to a named version of its plan. By default the move follows the plan's versionTransition. With timing next_period, the move takes effect at the end of the current billing period: the current period bills as before, and each period that starts at or after that boundary bills from the target version. With timing immediate, entitlements change at once, in-arrears prices bill the whole current period at the target version, and in-advance prices change at the end of the current period, with no proration. The target can be an older or a newer published version. A migration always sets versionPolicy to pinned, so a later change of the plan's default version does not move the subscription. To follow the plan default again, call PATCH /v0/subscriptions/{id} with versionPolicy: 'floating'. A second migration before the boundary replaces the first. Migrating to the version the subscription is already on changes nothing except that it pins a floating subscription, so it is safe to repeat. A version number that does not exist on the plan and an archived version both return 404. The request is refused with 409 and a code when: the subscription is not live; the subscription ends at or before the boundary; a kept override has a rate that would mean something else on the new price; a feature's reset period, metric or pricing unit changes; the new version sells a price that a continuing interval already covers; or the new version starts a feature that credits unused balance, or turns that credit on for a feature the subscription keeps, whose reset cycle is not the subscription's billing period (for a kept feature, the cycle its current entitlement resets on): a usage period interval other than the plan's billing cadence, or a usage period anchor that is not the subscription's billing anchor, date and time, moved by whole periods (code MIGRATION_RESET_CYCLE_MISALIGNED).
 
         :param id: The subscription ID
         :param target_version_number: The number of a published version of the subscription's plan.
@@ -1709,7 +1717,7 @@ class Subscriptions(BaseSDK):
     ) -> models.MigrateSubscriptionVersionResponse:
         r"""Migrate To A Plan Version
 
-        Moves the subscription to a named version of its plan. By default the move follows the plan's versionTransition. With timing next_period, the move takes effect at the end of the current billing period: the current period bills as before, and each period that starts at or after that boundary bills from the target version. With timing immediate, entitlements change at once, in-arrears prices bill the whole current period at the target version, and in-advance prices change at the end of the current period, with no proration. The target can be an older or a newer published version. A migration always sets versionPolicy to pinned, so a later change of the plan's default version does not move the subscription. To follow the plan default again, call PATCH /v0/subscriptions/{id} with versionPolicy: 'floating'. A second migration before the boundary replaces the first. Migrating to the version the subscription is already on changes nothing except that it pins a floating subscription, so it is safe to repeat. A version number that does not exist on the plan and an archived version both return 404. The request is refused with 409 and a code when: the subscription is not live; the subscription ends at or before the boundary; a kept override has a rate that would mean something else on the new price; a feature's reset period, metric or pricing unit changes; or the new version sells a price that a continuing interval already covers.
+        Moves the subscription to a named version of its plan. By default the move follows the plan's versionTransition. With timing next_period, the move takes effect at the end of the current billing period: the current period bills as before, and each period that starts at or after that boundary bills from the target version. With timing immediate, entitlements change at once, in-arrears prices bill the whole current period at the target version, and in-advance prices change at the end of the current period, with no proration. The target can be an older or a newer published version. A migration always sets versionPolicy to pinned, so a later change of the plan's default version does not move the subscription. To follow the plan default again, call PATCH /v0/subscriptions/{id} with versionPolicy: 'floating'. A second migration before the boundary replaces the first. Migrating to the version the subscription is already on changes nothing except that it pins a floating subscription, so it is safe to repeat. A version number that does not exist on the plan and an archived version both return 404. The request is refused with 409 and a code when: the subscription is not live; the subscription ends at or before the boundary; a kept override has a rate that would mean something else on the new price; a feature's reset period, metric or pricing unit changes; the new version sells a price that a continuing interval already covers; or the new version starts a feature that credits unused balance, or turns that credit on for a feature the subscription keeps, whose reset cycle is not the subscription's billing period (for a kept feature, the cycle its current entitlement resets on): a usage period interval other than the plan's billing cadence, or a usage period anchor that is not the subscription's billing anchor, date and time, moved by whole periods (code MIGRATION_RESET_CYCLE_MISALIGNED).
 
         :param id: The subscription ID
         :param target_version_number: The number of a published version of the subscription's plan.
